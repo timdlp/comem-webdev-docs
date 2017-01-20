@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset='utf-8'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Droid Serif';
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
+        margin: 1em 0;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        background-color: #dddddd;
+      }
+
+      .remark-slide-scaler {
+        overflow-y: scroll;
+      }
+
+      .container {
+        clear: both;
+      }
+
+      ul li {
+        margin-top: 0.4em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th, td {
+        padding: 0.2em;
+      }
+
+      table tbody th, td {
+        border-top: 1px solid #c0c0c0;
+      }
+
+      blockquote {
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id='source'>
+# Collaborating with Git
+
+<!-- START doctoc -->
+<!-- END doctoc -->
+
+
+
+
+
+---
+### Cloning a Git repository
+
+You can get a Git repository either by cloning an existing one or creating a new one and importing a project's files into it.
+Let's start by getting an existing repository – the repository for this course:
+
+```bash
+$> git clone https://github.com/MediaComem/comem-webdev.git
+remote: Counting objects: 155, done.
+remote: Compressing objects: 100% (99/99), done.
+remote: Total 155 (delta 51), reused 142 (delta 38), pack-reused 0
+Receiving objects: 100% (155/155), 656.15 KiB | 520.00 KiB/s, done.
+Resolving deltas: 100% (51/51), done.
+```
+
+It will create a directory named `comem-webdev`, initialize a `.git` repository inside it, pull down all the data for that repository, and check out a working copy of the latest version.
+
+If you wish to clone the repository into another directory name, you can specify that as the next command line option:
+
+```bash
+$> git clone https://github.com/MediaComem/comem-webdev.git awesome-stuff
+```
+
+Note that Git will perform a **full copy** of all data that the server has: every version of every file for the history of the project is pulled down by default.
+
+    </textarea>
+    <script src='https://remarkjs.com/downloads/remark-latest.min.js'></script>
+    <script>
+      var slideshow = remark.create({
+        navigation: {
+          scroll: false
+        },
+        highlightLines: true,
+        highlightSpans: true,
+        countIncrementalSlides: false
+      });
+    </script>
+  </body>
+</html>

@@ -13,17 +13,34 @@
         font-family: 'Droid Serif';
       }
 
-      h1, h2, h3 {
+      h1, h2, h3, h4 {
         font-family: 'Yanone Kaffeesatz';
         font-weight: normal;
       }
 
-      img {
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
         margin: 1em 0;
       }
 
       .remark-code, .remark-inline-code {
         font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        background-color: #dddddd;
       }
 
       .remark-slide-scaler {
@@ -32,10 +49,6 @@
 
       .container {
         clear: both;
-      }
-
-      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
-        text-decoration: underline;
       }
 
       ul li {
@@ -63,6 +76,21 @@
   <body>
     <textarea id='source'>
 # JavaScript Introduction
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [JavaScript defines **6 types**](#javascript-defines-6-types)
+- [JavaScript is a **dynamic** language](#javascript-is-a-dynamic-language)
+- [There are **2 scopes** for variables: the (evil) global scope and the function scope](#there-are-2-scopes-for-variables-the-evil-global-scope-and-the-function-scope)
+- [JavaScript supports **first-class functions**](#javascript-supports-first-class-functions)
+- [Objects are **dynamic bags** of properties](#objects-are-dynamic-bags-of-properties)
+- [Array are **objects**](#array-are-objects)
+- [The language has no support for **classes**](#the-language-has-no-support-for-classes)
+- [Every object **inherits** from a **prototype** object](#every-object-inherits-from-a-prototype-object)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 
