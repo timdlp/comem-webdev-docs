@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset='utf-8'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400i,700i);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400i);
+
+      body {
+        font-family: 'Droid Serif';
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
+        margin: 1em 0;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        background-color: #dddddd;
+      }
+
+      .remark-slide-scaler {
+        overflow-y: scroll;
+      }
+
+      .container {
+        clear: both;
+      }
+
+      ul li {
+        margin-top: 0.4em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th, td {
+        padding: 0.2em;
+      }
+
+      table tbody th, td {
+        border-top: 1px solid #c0c0c0;
+      }
+
+      blockquote {
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id='source'>
+# JavaScript Prototypes
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [JavaScript has **prototypal inheritance**](#javascript-has-prototypal-inheritance)
+  - [ES5 has no support for **classes**](#es5-has-no-support-for-classes)
+  - [Every object **inherits** from a **prototype** object](#every-object-inherits-from-a-prototype-object)
+- [TODO](#todo)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
+
+---
+
+class: center, middle 
+
+## JavaScript has **prototypal inheritance**
+
+
+
+
+
+---
+### ES5 has no support for **classes**
+
+TODO: ES6 classes
+
+There are 3 ways to create objects.
+
+```js
+// Create an object with a literal
+var person = {
+  firstName: "olivier",
+  lastName: "liechti"
+};
+
+// Create an object with a prototype
+var child = Object.create(person);
+
+// Create an object with a constructor
+var child = new Person("olivier", "liechti");
+```
+
+* **class** is a reserved word in JavaScript, but it is not used in the current version of the language (reserved for the future).
+* A **constructor** is a function like any other (uppercase is a coding convention).
+* It is the use of the **new** keyword that triggers the object creation process.
+
+
+
+---
+### Every object **inherits** from a **prototype** object
+
+TODO: add graph
+
+```js
+// Prints "Skywalker" on the console
+console.log(child.lastName);
+```
+
+* Every object inherits from a prototype object. It **inherits and can override** its properties, including its methods.
+* Objects created with object literals inherit from **Object.prototype**.
+* When you access the property of an object, JavaScript **looks up the prototype chain** until it finds an ancestor that has a value for this property.
+
+
+
+---
+## TODO
+
+* [Symbols][js-symbol]
+
+  The data type "symbol" is a primitive data type having the quality that values of this type can be used to make object properties that are anonymous.
+  Every symbol value returned from Symbol() is unique.  A symbol value may be used as an identifier for object properties; this is the data type's only purpose.
+
+    </textarea>
+    <script src='https://remarkjs.com/downloads/remark-latest.min.js'></script>
+    <script>
+      var slideshow = remark.create({
+        navigation: {
+          scroll: false
+        },
+        highlightLines: true,
+        highlightSpans: true,
+        countIncrementalSlides: false
+      });
+    </script>
+  </body>
+</html>
