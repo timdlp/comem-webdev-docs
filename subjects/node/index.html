@@ -97,6 +97,8 @@
   - [Node.js has many modules out of the box](#nodejs-has-many-modules-out-of-the-box)
   - [The HTTP module](#the-http-module)
   - [Event emitters](#event-emitters)
+- [Modularizing](#modularizing)
+  - [Writing Node.js modules](#writing-nodejs-modules)
 - [Resources](#resources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -444,6 +446,63 @@ server.on('request', function(message) {
 
 
 ]
+---
+
+class: center, middle 
+
+## Modularizing
+
+
+
+
+
+---
+### Writing Node.js modules
+
+TODO: rewrite this slide
+
+m1.js
+
+```js
+module.exports.a = "b";
+
+module.exports.hello = function() {
+  console.log("Hello!");
+};
+```
+
+m2.js
+
+```js
+module.exports = function(name) {
+  console.log("Hello " + name + "!");
+};
+```
+
+myScript.js
+
+```js
+var module1 = require("./m1");
+
+console.log(module1.a);
+module1.hello();
+
+var module2 = require("./m2");
+
+module2("World");
+```
+
+Run it!
+
+```js
+$> node myScript.js
+b
+Hello!
+Hello World!
+```
+
+
+
 ---
 ## Resources
 

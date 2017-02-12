@@ -81,191 +81,640 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [What is a package manager?](#what-is-a-package-manager)
 - [What is npm?](#what-is-npm)
-- [npm commands](#npm-commands)
+  - [Why use a package manager?](#why-use-a-package-manager)
+  - [There are many package managers](#there-are-many-package-managers)
+  - [The npm registry](#the-npm-registry)
+  - [npm packages](#npm-packages)
+- [The npm command](#the-npm-command)
+  - [How do I use it?](#how-do-i-use-it)
+- [npm init](#npm-init)
+  - [Interactively create a package.json file](#interactively-create-a-packagejson-file)
+  - [What it looks like](#what-it-looks-like)
 - [npm install](#npm-install)
-- [How do I reuse code?](#how-do-i-reuse-code)
-- [How do I reuse code through npm?](#how-do-i-reuse-code-through-npm)
+  - [Installing packages](#installing-packages)
+  - [Using installed packages](#using-installed-packages)
+  - [Tracking installed packages](#tracking-installed-packages)
+  - [The --save option](#the---save-option)
+  - [npm install with a package.json](#npm-install-with-a-packagejson)
+  - [The --save-dev and --production option](#the---save-dev-and---production-option)
+  - [The --global option](#the---global-option)
 - [npm publish](#npm-publish)
-- [How do I install myHelloModule and use it?](#how-do-i-install-myhellomodule-and-use-it)
-- [How do I use npm if I'm lazy?](#how-do-i-use-npm-if-im-lazy)
+  - [What do I need to publish?](#what-do-i-need-to-publish)
+  - [Publishing](#publishing)
+  - [Avoiding publication](#avoiding-publication)
+- [npm scripts](#npm-scripts)
+  - [The scripts property](#the-scripts-property)
+  - [Lifecycle scripts](#lifecycle-scripts)
+  - [Custom scripts](#custom-scripts)
+  - [Scripts and the PATH](#scripts-and-the-path)
 - [Resources](#resources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
----
-## What is a package manager?
 
-* Not reinventing the wheel...
-* Building on the shoulders of giants.
 
 ---
+
+class: center, middle 
+
 ## What is npm?
 
-npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.
 
-It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.
 
-https://docs.npmjs.com/getting-started/what-is-npm
+> "npm is the **package manager** for JavaScript. Find, share, and reuse packages of code from hundreds of thousands of developers — and assemble them in powerful new ways."
 
-npm is a set of command line tools that work together with the node registry
 
-TODO: registry & package screenshot
 
 ---
-## npm commands
+### Why use a package manager?
 
-TODO: npm help screenshot
+* Use code or applications that **other developers** have written to solve particular problems
+* Regularly check if there are any **upgrades** and download them
+* **Share** your own code with the community or **reuse** code across projects
 
----
-## npm install
+<p class='center'><img src='images/shoulders-of-giants.jpg' width='100%' /></p>
 
-* You can install packages with npm install [options] <name>:
-  * globally (this is the case for tools and CLI utilities used across projects):
-    * You need to use the -g flag if you want to do that (and often sudo on Unix systems).
-  * locally to a project (this is the case for libs that your code depends on):
-    * In this case, you first use npm init which will create a package.json file. This file lists the packages you use and at what versions.
-    * Then you can use npm install with the --save flag, which will install the latest version of the package you want and save its version to the package file.
-    * The modules are stored in a (often large) directory named node_modules, which you typically add to your .gitignore file.
+
 
 ---
-## How do I reuse code?
+### There are many package managers
 
-m1.js
+For programming languages:
 
-```js
-module.exports.a = "b";
+| Package manager | Language |
+| :---            | :---     |
+| Composer        | PHP      |
+| Maven           | Java     |
+| npm             | Node.js  |
+| RubyGems        | Ruby     |
+| pip             | Python   |
 
-module.exports.hello = function() {
-  console.log("Hello!");
-};
-```
+For operating systems:
 
-m2.js
+| Package manager                   | OS                   |
+| :---                              | :---                 |
+| Advanced Package Tool (apt)       | Debian, Ubuntu       |
+| Homebrew                          | Mac OS X             |
+| Yellowdog Updater, Modified (yum) | RHEL, Fedora, CentOS |
 
-```js
-module.exports = function(name) {
-  console.log("Hello " + name + "!");
-};
-```
 
-myScript.js
-
-```js
-var module1 = require("./m1");
-
-console.log(module1.a);
-module1.hello();
-
-var module2 = require("./m2");
-
-module2("World");
-```
-
-Run it!
-
-```js
-$> node myScript.js
-b
-Hello!
-Hello World!
-```
 
 ---
-## How do I reuse code through npm?
+### The npm registry
 
-* Someone wrote myHello
-* I want to use it in myScript
-* How?
+> "The [npm registry][npm] hosts over a quarter million packages of reusable code — the largest code registry in the world."
+
+<img src='images/popular-packages.png' width='100%' />
+
+
 
 ---
-## npm publish
+### npm packages
 
-myHello/hello.js
+An npm **package** or **module** is a basically:
 
-```js
-module.exports.hello = function() {
-  console.log("Hello!");
-};
-```
-
-myHello/package.json
+* A directory with some files in it
+* A [package.json][package.json] file with some metadata about the package:
 
 ```json
 {
-  "name": "myHello",
-  "version": "1.0.0",
-  "description": "My awesome module.",
-  "main": "./hello.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jdoe/hello"
+  "name": "my-project",
+  "version": "1.3.2",
+  "description": "It's great",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
   },
+  "dependencies": {
+    "express": "^4.13.3",
+    "lodash": "~3.1.0"
+  },
+  "keywords": [ "awesome", "project" ],
   "author": "John Doe <john.doe@example.com>",
   "license": "MIT"
 }
 ```
 
-Publish it!
 
-```bash
-$> cd myHelloModule
-$> npm publish
-```
 
 ---
-## How do I install myHelloModule and use it?
 
-Add the package as a dependency to your own package:
+class: center, middle 
 
-myScript/package.json
+## The npm command
+
+
+
+npm is also a set of command line tools that work together with the registry.
+
+
+
+---
+### How do I use it?
+
+```bash
+$> npm help
+
+Usage: npm <command>
+
+where <command> is one of:
+    access, adduser, bin, bugs, c, cache, completion, config,
+    ddp, dedupe, deprecate, dist-tag, docs, edit, explore, get,
+    `help`, help-search, i, `init`, `install`, install-test, it, link,
+    list, ln, login, logout, ls, `outdated`, owner, pack, ping,
+    prefix, prune, `publish`, rb, rebuild, repo, restart, root,
+    `run`, run-script, s, se, search, set, shrinkwrap, star,
+    stars, `start`, stop, t, tag, team, test, tst, un, uninstall,
+    unpublish, unstar, up, update, v, version, view, whoami
+
+npm <cmd> -h     quick help on <cmd>
+npm -l           display full usage info
+npm help <term>  search for help on <term>
+npm help npm     involved overview
+```
+
+
+
+---
+
+class: center, middle 
+
+## npm init
+
+
+
+Create a new package
+
+
+
+---
+### Interactively create a package.json file
+
+Create and move into a new project directory:
+
+```bash
+$> cd /path/to/projects
+$> mkdir npm-demo
+$> cd npm-demo
+```
+
+Run `npm init`:
+
+```bash
+$> npm init
+This utility will walk you through creating a package.json file.
+It only covers the most common items, and tries to guess sensible defaults.
+
+...
+
+Press ^C at any time to quit.
+name: (npm-demo)
+version: (1.0.0)
+description: npm demo
+entry point: (index.js)
+test command:
+git repository:
+keywords: npm, demo
+author: John Doe <john.doe@example.com>
+license: (ISC)
+```
+
+
+
+---
+### What it looks like
 
 ```json
 {
-  "name": "myApp",
+  "name": "npm-demo",
   "version": "1.0.0",
-  "description": "My awesome app.",
-  "main": "script.js",
-  "dependencies": {
-    "myHello": "1.0.0"
-  }
+  "description": "npm demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [ "npm", "demo" ],
+  "author": "John Doe <john.doe@example.com>",
+  "license": "ISC"
 }
 ```
 
-Install dependencies:
+Read the [documentation][package.json] to find out everything you can configure in this file.
+
+
+
+---
+
+class: center, middle 
+
+## npm install
+
+
+
+Install a package
+
+
+
+---
+### Installing packages
+
+When you install a package, npm creates a `node_modules` directory where it saves the downloaded packages.
 
 ```bash
-$> npm install
+$> npm install lodash
+npm-demo@1.0.0 /path/to/projects/npm-demo
+└── lodash@4.17.4
+
+$> ls
+node_modules package.json
+
+$> ls node_modules
+lodash
 ```
 
-Require and use the dependencies:
 
-myScript/script.js
+
+---
+### Using installed packages
+
+Any script under the directory where `package.json` and  `node_modules` are can `require` the installed packages:
+
+Create a `script.js` file next to `package.json`:
 
 ```js
-var myHello = require("myHello");
+const lodash = require('lodash');
 
-myHello.hello();
+let numbers = [ 1, 1, 2, 3, 2 ];
+console.log(lodash.uniq(numbers));
 ```
 
-Enjoy:
+Now run it:
 
 ```bash
 $> node script.js
-Hello!
+[ 1, 2, 3 ]
+```
+
+You have used the `uniq` function from the `lodash` package,
+which returns an array with its duplicate elements removed.
+
+
+
+---
+### Tracking installed packages
+
+Now remove the `node_modules` directory:
+
+```bash
+rm -fr node_modules
+```
+
+Your script should no longer work since the `lodash` package is no longer available:
+
+```bash
+$> node script.js
+module.js:471
+    throw err;
+    ^
+
+Error: Cannot find module 'lodash'
+```
+
+
+
+---
+### The --save option
+
+Adding the `--save` option will make npm track the dependency:
+
+```bash
+$> npm install --save lodash
+npm-demo@1.0.0 /path/to/projects/npm-demo
+└── lodash@4.17.4
+```
+
+A new `dependencies` section should have appeared in your `package.json` file:
+
+```json
+{
+  "name": "npm-demo",
+* "dependencies": {
+*   "lodash": "^4.7.14"
+* },
+  ...
+}
+```
+
+
+
+---
+### npm install with a package.json
+
+If you delete the `node_modules` directory again and run `npm install`:
+
+```bash
+$> rm -fr node_modules
+$> npm install
+npm-demo@1.0.0 /path/to/projects/npm-demo
+└── lodash@4.17.4
+```
+
+npm has installed the `lodash` package again.
+
+If you don't specify a package to install,
+the install command will read the `package.json` and install the dependencies listed there.
+
+Don't forget the `--save` option when adding dependencies to your project.
+That way, other members of the team will just have to run `npm install`.
+
+
+
+---
+### The --save-dev and --production option
+
+You often use two kinds of packages:
+
+* Dependencies that your program or application needs to run (e.g. a database client)
+* Development dependencies that you use during development but do not need to run the application (e.g. a live-reload server)
+
+```bash
+npm install --save-dev gulp
+```
+
+A `devDependencies` section will be added to your `package.json`:
+
+```json
+{
+* "devDependencies": {
+*   "gulp": "^0.9.0"
+* }
+  ...
+}
+```
+
+* `npm install` - Install all dependencies (use when developing)
+* `npm install --production` - Install only normal dependencies (use it to install on a server where you do not need your development tools)
+
+
+
+---
+### The --global option
+
+Some packages can be installed **globally**.
+Use the `--global` or `-g` option:
+
+```bash
+$> npm install --global http-server
+```
+
+If you get an `EACCES` error, you need to run `sudo npm install ...` or follow [this procedure][npm-fix-permissions].
+
+Global packages usually provide a **command-line tool**.
+In this case, the `http-server` package is a simple command-line HTTP server:
+
+```bash
+$> http-server
+Starting up http-server, serving ./
+Available on:
+  http://127.0.0.1:8080
+  http://10.178.123.132:8080
+Hit CTRL-C to stop the server
 ```
 
 ---
-## How do I use npm if I'm lazy?
+#### Where are global packages installed?
 
-Install the latest version of a new module and automatically save it to your package.json file:
+Packages installed globally are **not** in a `node_modules` directory in your project.
+They are local to your machine, and **are not saved as dependencies**.
+
+Use `npm config` if you want to see where they are installed:
 
 ```bash
-$> npm install --save myHello
+$> npm config get prefix
+/usr/local
+
+$> ls /usr/local/lib/node_modules
+http-server
 ```
 
-Note: Your package.json file must already exist.
+
+
+---
+
+class: center, middle 
+
+## npm publish
+
+
+
+Publish a package
+
+
+
+---
+### What do I need to publish?
+
+You need a valid `package.json` file.
+
+You should also set the `main` property:
+
+```json
+{
+  "name": "npm-demo",
+* "main": "./script.js",
+  ...
+}
+```
+
+When people `require` your module after installing it,
+they will get the same result as if they had required that file.
+
+
+
+---
+### Publishing
+
+Publishing is as simple as running the `npm publish` command in the directory where your `package.json` file is located:
+
+```js
+npm publish
+```
+
+You of course need an **npm account**.
+
+You can only publish a new package if the package name is not already used.
+Names are registered on a **first-come, first-serve** basis.
+
+
+
+---
+### Avoiding publication
+
+Sometimes you write code that should not be published:
+
+* A website (something where using `require` makes no sense)
+* A private package with confidential information
+
+In these cases, you can set the `private` property of the `package.json` file:
+
+```json
+{
+  "name": "npm-demo",
+* "private": true,
+  ...
+}
+```
+
+`npm publish` will then refuse to publish the package.
+
+
+
+---
+
+class: center, middle 
+
+## npm scripts
+
+
+
+Running scripts with npm
+
+
+
+---
+### The scripts property
+
+The `scripts` section of the `package.json` file defines scripts that can be run on the command line:
+
+```json
+{
+  "name": "npm-demo",
+* "scripts": {
+*   "start": "node script.js"
+* },
+  ...
+}
+```
+
+Here we define that running `npm start` should execute our script with Node.js:
+
+```bash
+$> npm start
+
+> npm-demo@1.0.0 start /path/to/projects/npm-demo
+> node script.js
+
+[ 1, 2, 3 ]
+```
+
+
+
+---
+### Lifecycle scripts
+
+The following scripts are "standard" scripts:
+
+| Script  | Purpose                              | Triggered by
+| :---    | :---                                 | :---
+| start   | Run your program                     | `npm start`
+| stop    | Stop your program                    | `npm stop`
+| restart | Restart your program                 | `npm restart`
+| test    | Run automated tests for your program | `npm test`
+
+Read the [documentation][npm-scripts] to see all the available lifecycle scripts.
+
+
+
+---
+### Custom scripts
+
+You can also define your own custom scripts:
+
+```json
+{
+  "name": "npm-demo",
+* "scripts": {
+*   "hello": "echo Hello World!"
+* },
+  ...
+}
+```
+
+These scripts are run with `npm run <script>`:
+
+```bash
+$> npm run serve-static
+
+> npm-demo@1.0.0 serve-static /path/to/projects/npm-demo
+> echo Hello World!
+
+Hello World!
+```
+
+
+
+---
+### Scripts and the PATH
+
+Package scripts (both lifecycle and custom scripts) have an interesting property:
+
+* If you add packages that provide **command-line tools** as dependencies,
+  their binaries will be **added to the PATH**.
+* It's a way to add package dependencies that are normally installed globally,
+  so that your team doesn't have to reinstall them on every machine.
+
+---
+#### Installing a "global" module as a dependency
+
+Uninstall the global version of the static HTTP server we used earlier,
+and install it as a development dependency instead:
+
+```bash
+$> npm uninstall --global http-server
+$> npm install --save-dev http-server
+```
+
+You should no longer be able to run it:
+
+```bash
+$> http-server
+http-server: command not found
+```
+
+Since it was not installed globally, its binary is **not in the PATH**.
+
+---
+#### Running a "global" module with a run script
+
+However, if you put it in a custom package script:
+
+```json
+{
+  "name": "npm-demo",
+* "scripts": {
+*   "serve-static": "http-server"
+* },
+  ...
+}
+```
+
+It works because npm puts it in the PATH for you.
+
+```bash
+$> npm run serve-static
+
+> npm-demo@1.0.0 serve-static /path/to/projects/npm-demo
+> http-server
+
+Starting up http-server, serving ./
+Available on:
+  http://127.0.0.1:8080
+  http://10.192.112.121:8080
+Hit CTRL-C to stop the server
+```
+
+
 
 ---
 ## Resources
@@ -274,6 +723,13 @@ Note: Your package.json file must already exist.
   https://docs.npmjs.com/cli/npm
 * package.json format
   https://docs.npmjs.com/files/package.json
+
+
+
+[npm]: https://www.npmjs.com
+[npm-fix-permissions]: https://docs.npmjs.com/getting-started/fixing-npm-permissions
+[npm-scripts]: https://docs.npmjs.com/misc/scripts
+[package.json]: https://docs.npmjs.com/files/package.json
 
     </textarea>
     <script src='https://remarkjs.com/downloads/remark-latest.min.js'></script>
