@@ -82,35 +82,7 @@ Requirements:
 * [Google Chrome][chrome] (recommended, any browser with developer tools will do)
 * [Postman][postman] (recommended, any tool that makes raw HTTP requests will do)
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
-- [What is a Web Service?](#what-is-a-web-service)
-- [Big web services](#big-web-services)
-  - [Remote procedure call (RPC) or remote method invocation (RMI)](#remote-procedure-call-rpc-or-remote-method-invocation-rmi)
-  - [Web services standards](#web-services-standards)
-  - [Pros & cons](#pros--cons)
-- [RESTful web services](#restful-web-services)
-  - [What is a REST API?](#what-is-a-rest-api)
-  - [Principles of a REST architecture](#principles-of-a-rest-architecture)
-  - [What is a web resource?](#what-is-a-web-resource)
-  - [[Uniform Resource Locator (URL)][url]](#uniform-resource-locator-urlurl)
-  - [Resource vs. representation](#resource-vs-representation)
-- [[HyperText Transfer Protocol (HTTP)][http]](#hypertext-transfer-protocol-httphttp)
-  - [HTTP is a request-response protocol](#http-is-a-request-response-protocol)
-  - [Anatomy of an HTTP request](#anatomy-of-an-http-request)
-  - [Anatomy of an HTTP response](#anatomy-of-an-http-response)
-  - [HTTP provides the [content negotiation][http-content-negotiation] mechanisms](#http-provides-the-content-negotiationhttp-content-negotiation-mechanisms)
-- [[Create, read, update, delete (CRUD)][crud]](#create-read-update-delete-crudcrud)
-  - [Create](#create)
-  - [Read](#read)
-  - [Update](#update)
-  - [Delete](#delete)
-  - [CRUD summary](#crud-summary)
-- [Resources](#resources)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 
@@ -125,9 +97,7 @@ How can they find each other, know what logic can be invoked, and talk to each o
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## Big web services
 
 
@@ -164,6 +134,7 @@ Many standards:
   * support for security
   * transactions
   * reliable transfer
+
 ]
 .grid-50[
 
@@ -176,11 +147,10 @@ Many standards:
   * theoretical human readability
 
 
+
 ]
 ---
-
-class: center, middle 
-
+class: center, middle
 ## RESTful web services
 
 
@@ -228,6 +198,7 @@ Something that can be uniquely identified on the web:
 
 * An article published in the "24 heures" newspaper
 * A person's resume
+
 ]
 .grid-50[
 
@@ -235,14 +206,16 @@ Something that can be uniquely identified on the web:
 
 * The collection of articles published in the sport section of the newspaper
 * The list of grades of the student Jean Dupont
+
 ]
 .container[
-]
+
 .grid-50[
 
 **Intangible things**
 
 * The current price of the Nestlé stock quote
+
 ]
 .grid-50[
 
@@ -251,6 +224,8 @@ Something that can be uniquely identified on the web:
 * The vending machine in the school hallway
 
 
+
+]
 ]
 ---
 ### [Uniform Resource Locator (URL)][url]
@@ -283,9 +258,7 @@ scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## [HyperText Transfer Protocol (HTTP)][http]
 
 
@@ -581,6 +554,7 @@ Content-Type: application/json
   "episodes": 60
 }
 ```
+
 ]
 .grid-50[
 
@@ -611,6 +585,7 @@ Content-Type: text/html
 ```
 
 
+
 ]
 ---
 ## [Create, read, update, delete (CRUD)][crud]
@@ -626,6 +601,8 @@ Since REST deals primarily with **resources**, in a REST API you will (mostly):
 
 ---
 ### Create
+
+TODO: adapt (content copied from previous course's slides)
 
 ```http
 POST /people HTTP/1.1
@@ -663,6 +640,8 @@ HTTP 201 Created: The request has been fulfilled and resulted in a new resource 
 ---
 ### Read
 
+TODO: adapt (content copied from previous course's slides)
+
 ```http
 GET /people HTTP/1.1
 ```
@@ -683,6 +662,8 @@ HTTP 200 OK: Standard response for successful HTTP requests. In a GET request, t
 
 ---
 #### Collection resource vs. single resource
+
+TODO: adapt (content copied from previous course's slides)
 
 ```http
 GET /people/3orv8nrg HTTP/1.1
@@ -706,6 +687,8 @@ Content-type: application/json
 
 ---
 ### Update
+
+TODO: adapt (content copied from previous course's slides)
 
 ```http
 PUT /people/3orv8nrg HTTP/1.1
@@ -747,6 +730,8 @@ TODO: partial update with PATCH example
 
 ---
 ### Delete
+
+TODO: adapt (content copied from previous course's slides)
 
 ```http
 DELETE /people/3orv8nrg HTTP/1.1

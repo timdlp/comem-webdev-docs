@@ -77,38 +77,12 @@
     <textarea id='source'>
 # Node.js Introduction
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
-- [What is [Node.js][node]?](#what-is-nodejsnode)
-  - [Installation](#installation)
-  - [Which Node.js version to choose?](#which-nodejs-version-to-choose)
-- [Synchronous vs. Asynchronous](#synchronous-vs-asynchronous)
-  - [Synchronous code](#synchronous-code)
-  - [Asynchronous code](#asynchronous-code)
-  - [Non-blocking I/O](#non-blocking-io)
-  - [Your Node.js code is single-threaded](#your-nodejs-code-is-single-threaded)
-  - [The event loop](#the-event-loop)
-  - [Other event-driven, non-blocking I/O architectures](#other-event-driven-non-blocking-io-architectures)
-- [Node.js callback convention](#nodejs-callback-convention)
-  - [**Always** check for errors](#always-check-for-errors)
-- [Node.js core modules](#nodejs-core-modules)
-  - [Node.js has many modules out of the box](#nodejs-has-many-modules-out-of-the-box)
-  - [The HTTP module](#the-http-module)
-  - [Event emitters](#event-emitters)
-- [Modularizing](#modularizing)
-  - [Writing Node.js modules](#writing-nodejs-modules)
-- [Resources](#resources)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## What is [Node.js][node]?
 
 
@@ -140,9 +114,7 @@ class: center, middle
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## Synchronous vs. Asynchronous
 
 
@@ -330,9 +302,7 @@ Do not forget the `return` either, or use `else`, to ensure that your "success" 
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## Node.js core modules
 
 
@@ -356,6 +326,7 @@ class: center, middle
 * DNS
 * Domain
 * Errors
+
 ]
 .grid-30[
 
@@ -371,6 +342,7 @@ class: center, middle
 * **Process**
 * Punycode
 * Query Strings
+
 ]
 .grid-30[
 
@@ -387,6 +359,7 @@ class: center, middle
 * V8
 * VM
 * ZLIB
+
 
 
 ]
@@ -431,6 +404,7 @@ You can register callback functions to **react** to these events:
 .grid-30[
 
 <img src='images/http-events.png' width='100%' />
+
 ]
 .grid-70[
 
@@ -445,11 +419,10 @@ server.on('request', function(message) {
 ```
 
 
+
 ]
 ---
-
-class: center, middle 
-
+class: center, middle
 ## Modularizing
 
 
@@ -459,7 +432,7 @@ class: center, middle
 ---
 ### Writing Node.js modules
 
-TODO: rewrite this slide
+TODO: adapt (content copy-pasted from previous course's slides)
 
 m1.js
 

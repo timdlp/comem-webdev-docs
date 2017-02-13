@@ -77,40 +77,12 @@
     <textarea id='source'>
 # JavaScript
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
-- [What is JavaScript?](#what-is-javascript)
-  - [JavaScript is still evolving](#javascript-is-still-evolving)
-  - [JavaScript ES6 support](#javascript-es6-support)
-- [JavaScript types](#javascript-types)
-  - [JavaScript has 6 primitive data types](#javascript-has-6-primitive-data-types)
-  - [JavaScript has **dynamic** objects](#javascript-has-dynamic-objects)
-  - [Array are **objects**](#array-are-objects)
-  - [JavaScript is **untyped**](#javascript-is-untyped)
-- [JavaScript supports [first-class functions][first-class-functions]](#javascript-supports-first-class-functionsfirst-class-functions)
-  - [Storing functions in variables or data structures](#storing-functions-in-variables-or-data-structures)
-  - [Returning functions from a function](#returning-functions-from-a-function)
-  - [Passing functions as arguments](#passing-functions-as-arguments)
-  - [Functional programming](#functional-programming)
-- [Variables](#variables)
-  - [Defining variables](#defining-variables)
-  - [Dynamic or constant variables](#dynamic-or-constant-variables)
-  - [The function scope](#the-function-scope)
-  - [The block scope](#the-block-scope)
-  - [The (evil) global scope](#the-evil-global-scope)
-- [TODO](#todo)
-- [Resources](#resources)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## What is JavaScript?
 
 
@@ -147,9 +119,7 @@ In server-side code running with the latest **Node.js** versions, all **ES6** fe
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## JavaScript types
 
 
@@ -184,6 +154,7 @@ console.log(isInteger(4)); // true
 // Symbols are unique identifiers
 console.log(Symbol('foo') == aSymbol); // false
 ```
+
 ]
 .grid-30[
 
@@ -195,11 +166,13 @@ The types are:
 * Null
 * Undefined
 * Symbol (**ES6**)
+
 ]
 .container[
 
 * Note that `null` is a type, but `typeof null === object`.
   This is a [remnant][js-typeof-null] from the first version of JavaScript.
+
 
 
 ]
@@ -235,12 +208,14 @@ lastName: John
 gender: male
 zip: 1446
 ```
+
 ]
 .grid-40[
 
 Objects have **no class**, they are **dynamic bags** of properties.
 
 Every object has a **different list of properties**.
+
 
 
 ]
@@ -298,9 +273,7 @@ The type can **change** over time.
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## JavaScript supports [first-class functions][first-class-functions]
 
 
@@ -439,9 +412,7 @@ console.log(lastNames); // [ "Doe", "Smith", "Smith" ]
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## Variables
 
 

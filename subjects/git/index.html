@@ -81,45 +81,7 @@ This is a condensed version of the first chapters of the [Git Book](https://git-
 
 ---
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
-- [What is Git?](#what-is-git)
-- [What is version control?](#what-is-version-control)
-- [A short history](#a-short-history)
-  - [**Local** version control systems](#local-version-control-systems)
-  - [**Centralized** version control systems](#centralized-version-control-systems)
-  - [**Distributed** version control systems](#distributed-version-control-systems)
-- [Git basics](#git-basics)
-  - [Snapshots, not differences](#snapshots-not-differences)
-  - [Nearly every operation is local](#nearly-every-operation-is-local)
-  - [Git has integrity](#git-has-integrity)
-  - [What's in a Git project?](#whats-in-a-git-project)
-  - [The three states](#the-three-states)
-- [Getting started](#getting-started)
-  - [Installing Git](#installing-git)
-  - [First-time Git setup](#first-time-git-setup)
-  - [Creating a new repository](#creating-a-new-repository)
-  - [Checking the status of your files](#checking-the-status-of-your-files)
-  - [Adding new files](#adding-new-files)
-  - [Committing your changes](#committing-your-changes)
-  - [Modifying files](#modifying-files)
-  - [Removing files](#removing-files)
-  - [Moving files](#moving-files)
-  - [Making changes outside of Git](#making-changes-outside-of-git)
-- [Viewing the commit history](#viewing-the-commit-history)
-  - [Viewing the changes in the history](#viewing-the-changes-in-the-history)
-  - [Viewing the list of changed files](#viewing-the-list-of-changed-files)
-  - [Viewing the history with a custom format](#viewing-the-history-with-a-custom-format)
-  - [Limiting log output](#limiting-log-output)
-- [Undoing things](#undoing-things)
-  - [Unmodifying a modified file](#unmodifying-a-modified-file)
-  - [Unstaging a staged file](#unstaging-a-staged-file)
-  - [Changing the commit message](#changing-the-commit-message)
-- [Aliases](#aliases)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 
@@ -163,9 +125,7 @@ What can I do with it?
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## A short history
 
 
@@ -182,10 +142,12 @@ class: center, middle
 You can manually copy your files into another directory to keep old versions.
 
 Systems such as [RCS][rcs] were developed to automate this process.
+
 ]
 .grid-40[
 
 <img src='images/local-vcs.png' width='100%' />
+
 ]
 .container[
 
@@ -193,6 +155,7 @@ Systems such as [RCS][rcs] were developed to automate this process.
 
 * It is easy to forget which directory you’re in and accidentally write to the wrong file or copy over files you don’t mean to.
 * This is limited to your computer: how do you **collaborate** with other people?
+
 
 
 
@@ -208,10 +171,12 @@ and clients check out files from that central place.
 
 You can **collaborate** with other people through the server,
 and administrators have **fine-grained control** over who can do what.
+
 ]
 .grid-40[
 
 <img src='images/centralized-vcs.png' width='100%' />
+
 ]
 .container[
 
@@ -220,6 +185,7 @@ and administrators have **fine-grained control** over who can do what.
 * The centralized server is a **single point of failure**.
   If it goes down, then nobody can collaborate at all or save versioned change to anything they're working on.
 * If the server's hard disk becomes corrupt and proper backups haven't been kept, you **lose the entire history** of the project except whatever single snapshots people happen to have on their local machines.
+
 
 
 
@@ -236,6 +202,7 @@ Clients don't just check out the latest snapshot of the files: they **fully mirr
 * If any server dies, any of the client repositories can be copied back up to the server to **restore** it.
 * You can **collaborate** with different groups of people in different ways simultaneously within the same project.
   This allows you to set up [several types of workflows][distributed-workflows] that aren't possible in centralized systems, such as hierarchical models.
+
 ]
 .grid-50[
 
@@ -244,11 +211,10 @@ Clients don't just check out the latest snapshot of the files: they **fully mirr
 
 
 
+
 ]
 ---
-
-class: center, middle 
-
+class: center, middle
 ## Git basics
 
 
@@ -269,6 +235,7 @@ Git thinks of its data more like a set of **snapshots** of a miniature filesyste
 Every time you save the state of your project in Git, it basically takes a picture of what all your files look like at that moment and stores a reference to that snapshot.
 To be efficient, **if files have not changed, Git doesn't store the file again**, just a link to the previous identical file it has already stored.
 Git thinks about its data more like a stream of snapshots.
+
 ]
 .grid-50[
 
@@ -279,6 +246,7 @@ Git thinks about its data more like a stream of snapshots.
 **Snapshots**
 
 <img src='images/snapshots.png' width='100%' />
+
 
 
 
@@ -760,6 +728,7 @@ What does this mean?
 Use `git diff` with the `--staged` option to show **staged** changes.
 
 You can also use it without the option to see **unstaged** changes.
+
 ]
 .grid-60[
 
@@ -792,6 +761,7 @@ index e5db1d9..f74a87a 100644
  Hello Bob
 +Hi Jane
 ```
+
 ]
 ---
 #### Staging area versus working directory
@@ -1186,9 +1156,10 @@ You should not do this if you have already shared this commit with others.
 
 
 ---
-## Aliases
+## TODO
 
-TODO: aliases
+* Aliases
+* Ignoring files
 
 
 

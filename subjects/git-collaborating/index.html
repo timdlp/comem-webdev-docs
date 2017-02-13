@@ -83,40 +83,7 @@ Requirements:
 * A [GitHub][github] account
 * A Unix shell (Git Bash is installed with Git on Windows)
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
-- [Group work](#group-work)
-- [Distributed version control system](#distributed-version-control-system)
-  - [What is a remote?](#what-is-a-remote)
-  - [Centralized workflow](#centralized-workflow)
-  - [Working with GitHub](#working-with-github)
-- [Sharing changes](#sharing-changes)
-  - [A: create a repository on GitHub](#a-create-a-repository-on-github)
-  - [A: add B as a collaborator](#a-add-b-as-a-collaborator)
-  - [A: add a remote to your local repository](#a-add-a-remote-to-your-local-repository)
-  - [A: push your commits to the shared repository](#a-push-your-commits-to-the-shared-repository)
-  - [A: remote branches](#a-remote-branches)
-  - [B: clone the shared repository](#b-clone-the-shared-repository)
-  - [B: remote branches](#b-remote-branches)
-  - [B: make local changes](#b-make-local-changes)
-  - [B: check the state of branches](#b-check-the-state-of-branches)
-  - [A: check the state of branches](#a-check-the-state-of-branches)
-  - [A: fetch changes from the shared repository](#a-fetch-changes-from-the-shared-repository)
-  - [A: check the state of branches](#a-check-the-state-of-branches-1)
-  - [Using git pull](#using-git-pull)
-- [Managing conflicting commit histories](#managing-conflicting-commit-histories)
-  - [A: fix the bug](#a-fix-the-bug)
-  - [B: make other changes](#b-make-other-changes)
-  - [Rejected pushes](#rejected-pushes)
-  - [Divergent history](#divergent-history)
-  - [B: pull changes from the shared repository](#b-pull-changes-from-the-shared-repository)
-  - [B: check the conflict markers](#b-check-the-conflict-markers)
-  - [B: check the state of branches](#b-check-the-state-of-branches-1)
-  - [B: push the changes](#b-push-the-changes)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ---
 ## Group work
@@ -129,9 +96,7 @@ The tutorial assumes that you have followed the [previous Git tutorial][git-tuto
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## Distributed version control system
 
 
@@ -189,9 +154,7 @@ TODO: add ssh key to account
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## Sharing changes
 
 
@@ -208,10 +171,12 @@ Clone repositories, push and pull commits
 .grid-20[
 
 <img src='images/github-new-repo-menu.png' width='100%' />
+
 ]
 .grid-80[
 
 <img src='images/github-new-repo.jpg' width='90%' />
+
 
 
 ]
@@ -277,18 +242,21 @@ The command `git push [remote] [branch]` tells Git to push the commit pointed to
 .grid-60[
 
 <img src='images/demo-1-git-push.png' width='100%' />
+
 ]
 .grid-40[
 
 The commit objects and file snapshots have been **pushed** (or uploaded) to the GitHub repository.
 
 This includes not only the commit pointed to by master, but also the **entire history** of the repository up to that commit.
+
 ]
 .container[
 
 Note the **origin/master** branch that has appeared in your local repository.
 This is a **remote-tracking branch**.
 It tells you where the **master** branch points to on the **origin** remote (the GitHub repository in this case).
+
 
 
 ]
@@ -320,17 +288,20 @@ The `git clone [url]` command copies the repository to your machine.
 .grid-60[
 
 <img src='images/demo-2-git-clone.png' width='100%' />
+
 ]
 .grid-40[
 
 The entire history of the project is **pulled** (or downloaded) from the GitHub repository.
 
 Git will also automatically checkout the **master** branch in the working directory so you have something to work from.
+
 ]
 .container[
 
 Again, Git has created a **remote-tracking branch** in Person B's repository,
 so that you can know what the current state of the remote is.
+
 
 
 ]
@@ -354,12 +325,14 @@ $> git commit -m "Shorter filenames"
 .grid-60[
 
 <img src='images/demo-3-local-commit.png' width='100%' />
+
 ]
 .grid-40[
 
 This is now the state of the shared repository and **Person B**'s local repository.
 
 There is a new commit in **Person B**'s repository that is not in the shared GitHub repository.
+
 ]
 .container[
 
@@ -370,6 +343,7 @@ $> git push origin master
 ```
 
 
+
 ]
 ---
 ### A: check the state of branches
@@ -377,6 +351,7 @@ $> git push origin master
 .grid-60[
 
 <img src='images/demo-4-remote-out-of-sync.png' width='100%' />
+
 ]
 .grid-40[
 
@@ -384,12 +359,14 @@ This is now the state from **Person A**'s perspective.
 
 Notice that the new commit is in the shared repository (on GitHub)
 but that the remote-tracking branch origin/master **is not up-to-date** in **Person A**'s repository.
+
 ]
 .container[
 
 Git does not automatically sync repositories.
 **As far as Person A knows** looking at information from their local repository,
 the master branch still points to `4f94ga` in the shared repository.
+
 
 
 ]
@@ -411,12 +388,14 @@ From github.com:PersonA/github-demo
 .grid-60[
 
 <img src='images/demo-5-git-fetch.png' width='100%' />
+
 ]
 .grid-40[
 
 The new commit is now here and the remote-tracking branch has been updated.
 
 However, the local master branch **has not moved** and the working directory has **not been updated**.
+
 
 
 ]
@@ -437,12 +416,14 @@ Fast-forward
 .grid-60[
 
 <img src='images/demo-6-git-merge.png' width='100%' />
+
 ]
 .grid-40[
 
 As expected, master has been fast-forwarded to the commit pointed to by origin/master and the working directory has been updated.
 
 **Person A**'s repository is now up-to-date.
+
 
 
 ]
@@ -467,9 +448,7 @@ $> git merge origin/master
 
 
 ---
-
-class: center, middle 
-
+class: center, middle
 ## Managing conflicting commit histories
 
 
@@ -539,12 +518,14 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 .grid-60[
 
 <img src='images/demo-7-b-state.png' width='100%' />
+
 ]
 .grid-40[
 
 The push was **rejected** by the remote repository. Why?
 
 This is the state of **Person B**'s repository right now.
+
 
 
 ]
@@ -554,6 +535,7 @@ This is the state of **Person B**'s repository right now.
 .grid-60[
 
 <img src='images/demo-8-git-fetch.png' width='100%' />
+
 ]
 .grid-40[
 
@@ -561,6 +543,7 @@ It's for the same reason as in the previous tutorial:
 **Person A** and **Person B**'s work have diverged from a common ancestor.
 
 If **Person B** did a `git fetch` now, this is what their repository would look like.
+
 
 
 ]
