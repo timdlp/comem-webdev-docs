@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Git Introduction (COMEM+ Web Dev)</title>
+    <title>Git Introduction (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -162,12 +162,10 @@ You can manually copy your files into another directory to keep old versions.
 
 Systems such as [RCS][rcs] were developed to automate this process.
 
-
 ]
 .grid-40[
 
 <img src='images/local-vcs.png' width='100%' />
-
 
 ]
 .container[
@@ -176,7 +174,6 @@ Systems such as [RCS][rcs] were developed to automate this process.
 
 * It is easy to forget which directory you’re in and accidentally write to the wrong file or copy over files you don’t mean to.
 * This is limited to your computer: how do you **collaborate** with other people?
-
 
 
 
@@ -194,12 +191,10 @@ and clients check out files from that central place.
 You can **collaborate** with other people through the server,
 and administrators have **fine-grained control** over who can do what.
 
-
 ]
 .grid-40[
 
 <img src='images/centralized-vcs.png' width='100%' />
-
 
 ]
 .container[
@@ -209,7 +204,6 @@ and administrators have **fine-grained control** over who can do what.
 * The centralized server is a **single point of failure**.
   If it goes down, then nobody can collaborate at all or save versioned change to anything they're working on.
 * If the server's hard disk becomes corrupt and proper backups haven't been kept, you **lose the entire history** of the project except whatever single snapshots people happen to have on their local machines.
-
 
 
 
@@ -228,12 +222,10 @@ Clients don't just check out the latest snapshot of the files: they **fully mirr
 * You can **collaborate** with different groups of people in different ways simultaneously within the same project.
   This allows you to set up [several types of workflows][distributed-workflows] that aren't possible in centralized systems, such as hierarchical models.
 
-
 ]
 .grid-50[
 
 <img src='images/distributed-vcs.png' width='100%' />
-
 
 
 
@@ -263,7 +255,6 @@ Every time you save the state of your project in Git, it basically takes a pictu
 To be efficient, **if files have not changed, Git doesn't store the file again**, just a link to the previous identical file it has already stored.
 Git thinks about its data more like a stream of snapshots.
 
-
 ]
 .grid-50[
 
@@ -274,7 +265,6 @@ Git thinks about its data more like a stream of snapshots.
 **Snapshots**
 
 <img src='images/snapshots.png' width='100%' />
-
 
 
 
@@ -758,7 +748,6 @@ Use `git diff` with the `--staged` option to show **staged** changes.
 
 You can also use it without the option to see **unstaged** changes.
 
-
 ]
 .grid-60[
 
@@ -791,7 +780,6 @@ index e5db1d9..f74a87a 100644
  Hello Bob
 +Hi Jane
 ```
-
 
 ]
 ---
