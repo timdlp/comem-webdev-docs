@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Command Line Introduction (COMEM+ Web Dev)</title>
+    <title>Command Line Introduction (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -55,14 +55,6 @@
         clear: both;
       }
 
-      .gitbashlogo {
-        text-align: center;
-      }
-
-      .gitbashlogo > img {
-        width: 80%;
-      }
-
       ul li {
         margin-top: 0.4em;
       }
@@ -78,6 +70,10 @@
 
       table tbody th, td {
         border-top: 1px solid #c0c0c0;
+      }
+
+      pre:first-child {
+        margin-top: 0;
       }
 
       blockquote {
@@ -146,7 +142,7 @@ You're going to install **Git Bash**, an alternate CLI that emulates a UNIX-like
 
 .grid-30[
 
-<p class='gitbashlogo'><img src='images/gitbashlogo.png' /></p>
+<p class='center'><img src='images/gitbashlogo.png' width='70%' /></p>
 
 
 ]
@@ -231,9 +227,9 @@ To quit these helps or commands, use the `q` key.
 ---
 ### Command : `pwd`
 
-When the CLI starts, it places you in your **personnal directory**.
+When the CLI starts, it places you in your **personnal folder**.
 
-From there you can navigate your filesystem to go to other directories.
+From there you can navigate your filesystem to go to other folders.
 
 But first, you might want to check **where** you currently are. To do this, use the `pwd` command:
 
@@ -242,20 +238,18 @@ $> pwd
 /Users/Batman
 ```
 
-> The `pwd` command, that means "print working directory", gives you the absolute path to the directory you're currently in.
+> The `pwd` command, that means "print working directory", gives you the absolute path to the folder you're currently in.
 
 ---
 ### Command : `ls`
 
-Now that you know where you are, you might want to know **what your current directory is containing**.
-
-To do this, use the `ls` command:
+Now that you know where you are, you might want to know **what your current folder is containing**. To do this, use the `ls` command:
 
 ```bash
 $> ls
 [lots and lots of files]
 ```
-> The `ls` command, that means "local storage", lists the files and directories that the current directory contains.
+> The `ls` command, that means "local storage", lists the files and folders that the current directory contains.
 
 By default, `ls` doesn't list **hidden elements**.
 
@@ -271,9 +265,9 @@ $> ls -a
 
 It's time to go out a little and move to another directory.
 
-Suppose you have a _"Documents"_ directory in your personnal directory, that contains another directory, _"TopSecret"_, to which you want to go.
+Suppose you have a _"Documents"_ folder in your personnal folder, that contains another folder, _"TopSecret"_, to which you want to go.
 
-To do this, use the `cd` command, passing it as argument **the path to the directory** you want to go to.
+To do this, use the `cd` command, passing it as argument **the path to the folder** you want to go to.
 
 ```bash
 # You can use relative path...
@@ -284,7 +278,7 @@ $> cd Documents/TopSecret
 # ...or use absolute path
 $> cd /Users/Batman/Documents/TopSecret
 ```
-> While you type the name of directories or files, hit the `Tab` key after having entered some letters and your CLI can try and autocomplete the name.
+> While you type the name of folders or files, hit the `Tab` key after having entered some letters and your CLI can try and autocomplete the name.
 
 ???
 
@@ -309,7 +303,7 @@ Documents/ Downloads/
 ---
 #### `cd` shortcuts
 
-At anytime and from anywhere, you can return to your **personnal directory** with the `cd` command, using the `~` shortcut as argument:
+At anytime and from anywhere, you can return to your **personnal folder** with the `cd` command, using the `~` shortcut as argument:
 
 > To type the `~` character, use this combination:
 > * `AltGr + ^` on **Windows**
@@ -320,37 +314,37 @@ $> cd ~
 $> pwd
 /Users/Batman
 ```
-You can also drag and drop a directory from your Explorer or your Finder to the CLI to see its absolute path automaticaly written.
+You can also drag and drop a folder from your Explorer or your Finder to the CLI to see its absolute path automaticaly written.
 
 ```bash
 $> cd
-# Drag'n'drop a directory from your Explorer/Finder, and...
+# Drag'n'drop a folder from your Explorer/Finder, and...
 $> cd /Users/Batman/Pictures/
 ```
 
 ---
 ### Command : `mkdir`
 
-You can create directories with the CLI.
+You can create folders with the CLI.
 
 To do this, you need to use the `mkdir` command, passing it either...
-* the **name** of the directory to create, if you want to create it in the current directory
+* the **name** of the folder to create, if you want to create it in the current directory
 * 
 ```bash
 $> mkdir BatmobileSchematics
 ```
-* the **path** to the directory, if you want to create it elsewhere
+* the **path** to the folder, if you want to create it elsewhere
 * 
 ```bash
 $> mkdir /Users/Batman/BatmobileSchematics
 ```
-> All directories but the last should be already existing.
+> All folders but the last should be already existing.
 
 ???
 
-If you want to create a directory that should be inside another directory that doesn't exist, `mkdir` will raise an error by default.
+If you want to create a folder that should be inside another folder that doesn't exist, `mkdir` will raise an error by default.
 
-But if you pass it the `-p` argument, `mkdir` will create all the non-existing directories
+But if you pass it the `-p` argument, `mkdir` will create all the non-existing folders
 
 ```bash
 $> ls
@@ -365,7 +359,7 @@ $> mkdir -p Pictures/Vacation/Gotham
 ---
 ## Naming things when using CLI
 
-You should avoid using (in directories et files name):
+You should avoid using (in folders et files name):
 
 * **spaces** _(they're used to separate arguments in command)_
 * **accentuated characters** 
@@ -374,15 +368,15 @@ They can cause **errors** in some scripts or tools, and will inevitably complica
 
 ```bash
 # Will not work
-$> cd ./My Wonderful Directory/
+$> cd ./My Wonderful Folder/
 ```
-> This command will be interpreted as a call to the `cd` command with three arguments : `./My`, `Wonderful` and `Directory/`.
+> This command will be interpreted as a call to the `cd` command with three arguments : `./My`, `Wonderful` and `Folder/`.
 
 You **can** use names with space, but you have to **escape** them first, using **quotation marks** around:
 
 ```bash
 # This will work
-$> cd ./"My Wonderful Directory"/
+$> cd ./"My Wonderful Folder"/
 ```
 ---
 ## For Windows Users
@@ -406,17 +400,17 @@ Instead, Git Bash has two shortcuts custom shortcuts:
 > You can still use the **Right-clik > Paste** manipulation if you don't have the `Insert` key.
 
 ---
-## The `PATH` variable
+## Manipulating the PATH
 
-When you type a command in the CLI, it will try to see **if it knows this command**, by looking in some directories to see if there is an **executable file that matchs the requested name**.
+When you type a command in the CLI, it will try to see **if it knows this command**, by looking in some folders to see if there is an **executable file that matchs the requested name**.
 
 ```bash
 $> rubbish
 bash: rubbish: command not found
 ```
-> This means that the CLI failed to found the executable named `rubbish` in any of the directories where it looked.
+> This means that the CLI failed to found the executable named `rubbish` in any of the folders where it looked.
 
-The list of the directories (and their paths) in which the CLI searches is stored in the `PATH` variable, each of them being separated with a `:`.
+The list of the folders (and their paths) in which the CLI searches is stored in the `PATH` variable, each of them being separated with a `:`.
 
 You can print the content of your `PATH` variable to see this list:
 
@@ -424,8 +418,6 @@ You can print the content of your `PATH` variable to see this list:
 $> echo $PATH
 /usr/local/bin:/bin:/usr/bin:Users/Batman/BatRadar/bin
 ```
----
-### Adding a new path 
 
 ---
 ## TODO
@@ -434,6 +426,7 @@ $> echo $PATH
 * vim basics (some tools automatically open vim: do not panic, command vs insert mode, esc, i, :wq, :q!) 
 
 [gitbash]: https://git-for-windows.github.io/
+
     </textarea>
     <script src='https://remarkjs.com/downloads/remark-latest.min.js'></script>
     <script>
