@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Collaborating with Git (COMEM+ Web Dev)</title>
+    <title>Collaborating with Git (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -40,7 +40,11 @@
       }
 
       .remark-inline-code {
-        background-color: #dddddd;
+        padding: 0 2px;
+        background-color: #eee;
+        color: indianred;
+        border-radius: 3px;
+        border: thin solid #dddddd;
       }
 
       .remark-slide-scaler {
@@ -49,6 +53,14 @@
 
       .container {
         clear: both;
+      }
+
+      .gitbashlogo {
+        text-align: center;
+      }
+
+      .gitbashlogo > img {
+        width: 80%;
       }
 
       ul li {
@@ -70,6 +82,9 @@
 
       blockquote {
         font-style: italic;
+        border-left: 5px solid khaki;
+        margin-left: 0;
+        padding-left: 35px;
       }
     </style>
   </head>
@@ -172,10 +187,12 @@ Clone repositories, push and pull commits
 
 <img src='images/github-new-repo-menu.png' width='100%' />
 
+
 ]
 .grid-80[
 
 <img src='images/github-new-repo.jpg' width='90%' />
+
 
 
 
@@ -243,6 +260,7 @@ The command `git push [remote] [branch]` tells Git to push the commit pointed to
 
 <img src='images/demo-1-git-push.png' width='100%' />
 
+
 ]
 .grid-40[
 
@@ -250,12 +268,14 @@ The commit objects and file snapshots have been **pushed** (or uploaded) to the 
 
 This includes not only the commit pointed to by master, but also the **entire history** of the repository up to that commit.
 
+
 ]
 .container[
 
 Note the **origin/master** branch that has appeared in your local repository.
 This is a **remote-tracking branch**.
 It tells you where the **master** branch points to on the **origin** remote (the GitHub repository in this case).
+
 
 
 
@@ -289,6 +309,7 @@ The `git clone [url]` command copies the repository to your machine.
 
 <img src='images/demo-2-git-clone.png' width='100%' />
 
+
 ]
 .grid-40[
 
@@ -296,11 +317,13 @@ The entire history of the project is **pulled** (or downloaded) from the GitHub 
 
 Git will also automatically checkout the **master** branch in the working directory so you have something to work from.
 
+
 ]
 .container[
 
 Again, Git has created a **remote-tracking branch** in Person B's repository,
 so that you can know what the current state of the remote is.
+
 
 
 
@@ -326,12 +349,14 @@ $> git commit -m "Shorter filenames"
 
 <img src='images/demo-3-local-commit.png' width='100%' />
 
+
 ]
 .grid-40[
 
 This is now the state of the shared repository and **Person B**'s local repository.
 
 There is a new commit in **Person B**'s repository that is not in the shared GitHub repository.
+
 
 ]
 .container[
@@ -344,6 +369,7 @@ $> git push origin master
 
 
 
+
 ]
 ---
 ### A: check the state of branches
@@ -351,6 +377,7 @@ $> git push origin master
 .grid-60[
 
 <img src='images/demo-4-remote-out-of-sync.png' width='100%' />
+
 
 ]
 .grid-40[
@@ -360,12 +387,14 @@ This is now the state from **Person A**'s perspective.
 Notice that the new commit is in the shared repository (on GitHub)
 but that the remote-tracking branch origin/master **is not up-to-date** in **Person A**'s repository.
 
+
 ]
 .container[
 
 Git does not automatically sync repositories.
 **As far as Person A knows** looking at information from their local repository,
 the master branch still points to `4f94ga` in the shared repository.
+
 
 
 
@@ -389,12 +418,14 @@ From github.com:PersonA/github-demo
 
 <img src='images/demo-5-git-fetch.png' width='100%' />
 
+
 ]
 .grid-40[
 
 The new commit is now here and the remote-tracking branch has been updated.
 
 However, the local master branch **has not moved** and the working directory has **not been updated**.
+
 
 
 
@@ -417,12 +448,14 @@ Fast-forward
 
 <img src='images/demo-6-git-merge.png' width='100%' />
 
+
 ]
 .grid-40[
 
 As expected, master has been fast-forwarded to the commit pointed to by origin/master and the working directory has been updated.
 
 **Person A**'s repository is now up-to-date.
+
 
 
 
@@ -519,12 +552,14 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 <img src='images/demo-7-b-state.png' width='100%' />
 
+
 ]
 .grid-40[
 
 The push was **rejected** by the remote repository. Why?
 
 This is the state of **Person B**'s repository right now.
+
 
 
 
@@ -536,6 +571,7 @@ This is the state of **Person B**'s repository right now.
 
 <img src='images/demo-8-git-fetch.png' width='100%' />
 
+
 ]
 .grid-40[
 
@@ -543,6 +579,7 @@ It's for the same reason as in the previous tutorial:
 **Person A** and **Person B**'s work have diverged from a common ancestor.
 
 If **Person B** did a `git fetch` now, this is what their repository would look like.
+
 
 
 

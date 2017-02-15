@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Command Line Introduction (COMEM+ Web Dev)</title>
+    <title>Command Line Introduction (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -40,7 +40,11 @@
       }
 
       .remark-inline-code {
-        background-color: #dddddd;
+        padding: 0 2px;
+        background-color: #eee;
+        color: indianred;
+        border-radius: 3px;
+        border: thin solid #dddddd;
       }
 
       .remark-slide-scaler {
@@ -49,6 +53,14 @@
 
       .container {
         clear: both;
+      }
+
+      .gitbashlogo {
+        text-align: center;
+      }
+
+      .gitbashlogo > img {
+        width: 80%;
       }
 
       ul li {
@@ -70,6 +82,9 @@
 
       blockquote {
         font-style: italic;
+        border-left: 5px solid khaki;
+        margin-left: 0;
+        padding-left: 35px;
       }
     </style>
   </head>
@@ -80,17 +95,345 @@
 
 
 ---
+## What is the Command Line Interface (CLI)
+
+The CLI is a tool that allows you to use your computer by writing what you want to do (i.e. **commands**), instead of clicking on things.
+
+It's installed on computers (almost) since the beginnings of time, but it has evolved a little since then. It usually looks something like this:
+
+<p class='center'><img src='images/cli.jpg' width='100%' /></p>
+
+---
+### Why use it
+
+CLI is not very user-friendly or visually appealing but it has several advantages:
+
+* Requires very **few resources**
+* Can be easily **automated** through scripting
+* Is ultimatly **more powerful and efficient** than any GUI
+
+For these reasons, a lot of tools _(especially development tools)_ don't have any GUI and are only usable through a CLI.
+
+**Thus, the CLI is a required tool for any nowadays developer.**
+
+---
+### Open a CLI
+
+**CLI are available in every actual OS.**
+
+.grid-50[
+
+On **UNIX-like** systems _(like MacOS or Linux)_, it's called the **Terminal**.
+
+You can use it right away, as it's the _de-facto_ standard.
+
+
+]
+.grid-50[
+
+On **Windows**, the default CLI is called **Invite de commandes** or **cmd**.
+
+But it does not use the same syntax than UNIX-like CLI have _(plus, it's bad)_.
+
+> **You'll need to install an alternative.**
+
+
+]
+---
+### Install Git Bash (Windows users only)
+
+You're going to install **Git Bash**, an alternate CLI that emulates a UNIX-like terminal on Windows.
+
+.grid-30[
+
+<p class='gitbashlogo'><img src='images/gitbashlogo.png' /></p>
+
+
+]
+.grid-70[
+
+You can download the **Git Bash Installer** on the [Git for Windows website][gitbash].
+
+When it's done, install the software, without changing any default options.
+
+Then, search and open the **Git Bash** software.
+
+
+]
+---
+## How to use the CLI
+
+When you open the CLI you should find a blank screen with something like this:
+
+```bash
+$>
+```
+These symbols represent **the prompt** and are used to indicate that you have the lead, that is the computer is waiting for you to type something for it to execute.
+
+> To stop any running process and force the CLI to give you back the lead, hit the `Ctrl + c` command.
+
+**For consistency, we will always use the `$>` symbols to represent the prompt.**
+
+???
+
+Please note that, depending on your OS and your CLI, the prompt can be composed of different characters.
+
+When the computer's working, the prompt disappear and you won't have the lead until the prompt reappear again.
+
+---
+### Writing commands
+
+A command is a word that you have to type on the CLI, that will tell the computer what it have to do.
+
+The syntax for using command could be resumed like this:
+
+```bash
+$> name [argument ...]
+```
+**Note the use of space to separate the differents elements of a command.**
+
+* `name` represents the name of the command you want to execute
+* `[argument ...]` represents additionnal information has to how the command must be executed, **each of them separeted by a space**.
+
+---
+### Command : `help`
+
+The first command you'd like to type is the `help` command.
+
+As its name implies, it's designed to **give you some help** depending on the context.
+
+Executing the command alone will bring up a **list of available commands**.
+
+```bash
+$> help
+```
+Executing it with the name of a command will bring up **all you need to know about said command**:
+
+```bash
+$> help help
+```
+This `help` command is only available for **system's commands**, but most of the tools that you'll install offer help through the `--help` argument:
+
+```bash
+$> [command name] --help
+```
+---
+#### Interactive helps
+
+Some helps or commands will print their result all over the screen, effectively hidding the prompt or the previous interactions.
+
+Usually, it means that these helps or commands have content that takes more than one screen to be shown.
+
+You can "scroll" down  line-by-line using the `Enter` key, each stroke printing one more line at the bottom of the screen.
+
+To quit these helps or commands, use the `q` key.
+
+---
+### Command : `pwd`
+
+When the CLI starts, it places you in your **personnal directory**.
+
+From there you can navigate your filesystem to go to other directories.
+
+But first, you might want to check **where** you currently are. To do this, use the `pwd` command:
+
+```bash
+$> pwd
+/Users/Batman
+```
+
+> The `pwd` command, that means "print working directory", gives you the absolute path to the directory you're currently in.
+
+---
+### Command : `ls`
+
+Now that you know where you are, you might want to know **what your current directory is containing**.
+
+To do this, use the `ls` command:
+
+```bash
+$> ls
+[lots and lots of files]
+```
+> The `ls` command, that means "local storage", lists the files and directories that the current directory contains.
+
+By default, `ls` doesn't list **hidden elements**.
+
+If you want it to do that, you need to pass the argument `--all` (or `-a`):
+
+```bash
+$> ls -a
+[lots and lots of files, including the hidden ones]
+```
+
+---
+### Command : `cd`
+
+It's time to go out a little and move to another directory.
+
+Suppose you have a _"Documents"_ directory in your personnal directory, that contains another directory, _"TopSecret"_, to which you want to go.
+
+To do this, use the `cd` command, passing it as argument **the path to the directory** you want to go to.
+
+```bash
+# You can use relative path...
+$> pwd
+/Users/Batman
+$> cd Documents/TopSecret
+
+# ...or use absolute path
+$> cd /Users/Batman/Documents/TopSecret
+```
+> While you type the name of directories or files, hit the `Tab` key after having entered some letters and your CLI can try and autocomplete the name.
+
+???
+
+```bash
+$> cd /Us
+# Hit the Tab key and the CLI completes the name
+$> cd /Users
+```
+If there is more than one possible name with this letters, the CLI will do nothing. Hitting the `Tab` key a second time will list all the possibilities matching the letters you typed.
+
+```bash
+$> pwd
+/Users/Batman
+
+$> cd Do
+# Hitting the Tab key will fail
+
+$> cd Do
+# Hitting it again list the possibilites
+Documents/ Downloads/
+```
+---
+#### `cd` shortcuts
+
+At anytime and from anywhere, you can return to your **personnal directory** with the `cd` command, using the `~` shortcut as argument:
+
+> To type the `~` character, use this combination:
+> * `AltGr + ^` on **Windows**
+> * `Alt + n` on **Mac**
+
+```bash
+$> cd ~
+$> pwd
+/Users/Batman
+```
+You can also drag and drop a directory from your Explorer or your Finder to the CLI to see its absolute path automaticaly written.
+
+```bash
+$> cd
+# Drag'n'drop a directory from your Explorer/Finder, and...
+$> cd /Users/Batman/Pictures/
+```
+
+---
+### Command : `mkdir`
+
+You can create directories with the CLI.
+
+To do this, you need to use the `mkdir` command, passing it either...
+* the **name** of the directory to create, if you want to create it in the current directory
+* 
+```bash
+$> mkdir BatmobileSchematics
+```
+* the **path** to the directory, if you want to create it elsewhere
+* 
+```bash
+$> mkdir /Users/Batman/BatmobileSchematics
+```
+> All directories but the last should be already existing.
+
+???
+
+If you want to create a directory that should be inside another directory that doesn't exist, `mkdir` will raise an error by default.
+
+But if you pass it the `-p` argument, `mkdir` will create all the non-existing directories
+
+```bash
+$> ls
+Project/ Documents/ Files/
+
+$> mkdir Pictures/Vacation/Gotham/
+mkdir: Pictures: No such file or directory
+
+$> mkdir -p Pictures/Vacation/Gotham
+```
+
+---
+## Naming things when using CLI
+
+You should avoid using (in directories et files name):
+
+* **spaces** _(they're used to separate arguments in command)_
+* **accentuated characters** 
+
+They can cause **errors** in some scripts or tools, and will inevitably complicate using the CLI.
+
+```bash
+# Will not work
+$> cd ./My Wonderful Directory/
+```
+> This command will be interpreted as a call to the `cd` command with three arguments : `./My`, `Wonderful` and `Directory/`.
+
+You **can** use names with space, but you have to **escape** them first, using **quotation marks** around:
+
+```bash
+# This will work
+$> cd ./"My Wonderful Directory"/
+```
+---
+## For Windows Users
+
+**Reference to drives**
+
+To reference or use your drives (`C:`, `D:`, etc), you must use the following notation:
+
+```bash
+$> cd /c
+```
+----
+**Copy/Paste**
+
+Since the `Ctrl + c` key ise used to stop the current process, it can't be used as a shortcut for copy things from the CLI.
+
+Instead, Git Bash has two shortcuts custom shortcuts:
+* `Ctrl + Insert` to **copy** things from the CLI
+* `Shift + Insert` to **paste** things to the CLI
+
+> You can still use the **Right-clik > Paste** manipulation if you don't have the `Insert` key.
+
+---
+## The `PATH` variable
+
+When you type a command in the CLI, it will try to see **if it knows this command**, by looking in some directories to see if there is an **executable file that matchs the requested name**.
+
+```bash
+$> rubbish
+bash: rubbish: command not found
+```
+> This means that the CLI failed to found the executable named `rubbish` in any of the directories where it looked.
+
+The list of the directories (and their paths) in which the CLI searches is stored in the `PATH` variable, each of them being separated with a `:`.
+
+You can print the content of your `PATH` variable to see this list:
+
+```bash
+$> echo $PATH
+/usr/local/bin:/bin:/usr/bin:Users/Batman/BatRadar/bin
+```
+---
+### Adding a new path 
+
+---
 ## TODO
 
-* command-line interface (cli)
-* commands and arguments
-* navigating the filesystem
-* spaces and non-ascii characters
-* environment variables
-* PATH
-* getting help
-* interactive help in commands (q, ctrl-c)
+* PATH, (export PATH="/path/to/bin:$PATH")
+* vim basics (some tools automatically open vim: do not panic, command vs insert mode, esc, i, :wq, :q!) 
 
+[gitbash]: https://git-for-windows.github.io/
     </textarea>
     <script src='https://remarkjs.com/downloads/remark-latest.min.js'></script>
     <script>
