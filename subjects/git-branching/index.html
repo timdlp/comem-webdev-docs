@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Git Branching (COMEM+ Web Dev)</title>
+    <title>Git Branching (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -110,6 +110,27 @@
       #logo img {
         height: 60px;
       }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -123,6 +144,8 @@
 
 ---
 ## What is branching?
+
+.breadcrumbs[<a href="#1">Git Branching</a>]
 
 > Branching means you diverge from the main line of development and continue to do work without messing with that main line.
 
@@ -140,6 +163,8 @@ Git encourages workflows that branch and merge often.
 
 ---
 ### Example repository
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
 
 We will use a prepared repository to illustrate branching.
 
@@ -160,6 +185,8 @@ Open the project with your favorite editor and open its `index.html` page in a b
 ---
 ### What is a branch?
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
+
 Remember that Git stores data as a series of snapshots.
 
 <img src='images/snapshots.png' width='45%' />
@@ -171,6 +198,8 @@ and also a pointer to the previous commit.
 
 ---
 ### Branches point to commits
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
 
 A branch is simply a lightweight, movable pointer to a commit.
 
@@ -185,6 +214,8 @@ As you start making commits, the current branch pointer **automatically moves** 
 
 ---
 ### Showing branches on the command line
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
 
 The `git log` command can show you a representation of the commit graph and its branches:
 
@@ -218,6 +249,8 @@ $> git branch
 ---
 ### Why use branches?
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
+
 Many teams using Git create a **separate branch** to develop **each feature**.
 This has many advantages:
 
@@ -231,12 +264,16 @@ This has many advantages:
 class: center, middle
 ## Working with branches
 
+.breadcrumbs[<a href="#1">Git Branching</a>]
+
 
 
 
 
 ---
 ### Create a new branch
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
 
 > **Exercise:** our JavaScript calculator is missing some code.
 > Let's create a branch to implement subtraction.
@@ -257,6 +294,8 @@ Note that **HEAD** didn't move – we are still on the **master** branch.
 ---
 ### Switch branches
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+
 Now let's switch branches:
 
 ```bash
@@ -272,6 +311,8 @@ This moves `HEAD` to point to the `feature-sub` branch.
 
 ---
 ### Commit on a branch
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
 
 > **Exercise:** implement subtraction in `subtraction.js` and commit your changes.
 
@@ -289,6 +330,8 @@ $> git commit -m "Implement subtraction"
 ---
 ### Switch back to master
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+
 > **Exercise:** oops, you just noticed that addition is not working correctly.
 > You need to make a bugfix, but you don't want to mix that code with the new subtraction feature.
 > Let's **go back to master**.
@@ -300,6 +343,8 @@ Switched to branch 'master'
 
 ---
 #### Checkout behavior
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a> > <a href="#12">Switch back to master</a>]
 
 Two things happened:
 
@@ -314,6 +359,8 @@ You have essentially **rewinded** the work you've done in `feature-sub`, and are
 
 ---
 ### Create another branch
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
 
 > **Exercise:** let's a create a new branch to fix the bug.
 
@@ -333,6 +380,8 @@ Nothing has changed yet because fix-add still points to the same commit as maste
 ---
 ### Work on a separate branch
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+
 > **Exercise:** fix addition in `addition.js` and commit your changes.
 
 ```bash
@@ -345,6 +394,8 @@ $> git commit -m "Fix addition"
 ---
 #### Divergent history
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a> > <a href="#15">Work on a separate branch</a>]
+
 Now your project history has **diverged**.
 
 The changes in feature-sub and fix-add are **isolated**.
@@ -356,6 +407,8 @@ You can **switch back and forth** between the branches with `git checkout`.
 
 ---
 ### Merging
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
 
 > **Exercise:** once you've tested your fix and made sure it works,
   you want to bring those changes back into the master branch.
@@ -380,6 +433,8 @@ This is what is called a fast-forward.
 ---
 ### Delete a branch
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+
 > **Exercise:** now that we've brought our fix back into master, we don't need the fix-add branch anymore.
   Let's delete it.
 
@@ -394,6 +449,8 @@ Deleted branch fix-add (was 2817bc).
 
 ---
 ### Continue working on a feature branch
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
 
 > **Exercise:** let's switch back to our feature-sub branch and finish our work.
   Write a comment for the subtract function and commit your changes.
@@ -412,6 +469,8 @@ $> git commit -m "Comment subtract function"
 ---
 ### Merge a divergent history
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+
 > **Exercise:** now that we're happy with our new subtraction feature, we want to merge it into master as well.
 
 <img src='images/merge-divergent-history.png' width='75%' />
@@ -423,6 +482,8 @@ A new commit will be created representing that state.
 
 ---
 #### Merge commit message
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a> > <a href="#20">Merge a divergent history</a>]
 
 > **Exercise:** switch back to the master branch and merge feature-sub into it.
 
@@ -452,6 +513,8 @@ Type `:wq` (**w**rite and **q**uit) to save and exit.
 ---
 #### Merge commit
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a> > <a href="#20">Merge a divergent history</a>]
+
 You can see the new **merge commit** that Git has created.
 It is a special commit in that it has more than one parent:
 
@@ -468,6 +531,8 @@ $> git branch -d feature-sub
 ---
 ## Merge conflicts
 
+.breadcrumbs[<a href="#1">Git Branching</a>]
+
 Occasionally, the merge process doesn't go smoothly:
 if the **same line(s)** was modified in two diverging branches and you merge them together,
 Git can't know which is the correct version.
@@ -478,6 +543,8 @@ Let's pretend that a colleague of yours also implemented the subtraction functio
 
 ---
 ### Find the common ancestor
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
 
 We want to make it look as if your colleague did his work **at the same time** as you.
 Let's find the original starting point (the common ancestor where feature-sub and fix-add diverged) and start a new branch from there:
@@ -501,6 +568,8 @@ Make a copy of that commit hash.
 
 ---
 ### Create a branch "in the past"
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
 
 You can create a branch at any point in the project's history by passing an additional commit reference to `git checkout`:
 
@@ -529,6 +598,8 @@ git commit -m "Implemented a better subtract"
 ---
 ### Merge the conflicting branch
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
+
 Go back to master and merge better-sub:
 
 ```bash
@@ -546,6 +617,8 @@ Git tells you that a **content conflict** occurred in `subtraction.js`.
 
 ---
 ### Check the status of the conflict
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
 
 Let's see what `git status` tells us:
 
@@ -576,6 +649,8 @@ Git tells you several things:
 ---
 ### Inspect the conflicted file
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
+
 Let's see what's in `subtraction.js`:
 
 ```js
@@ -604,6 +679,8 @@ Notice two things here:
 ---
 ### Conflict markers
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
+
 Take a closer look at the conflict markers:
 
 ```txt
@@ -630,6 +707,8 @@ return -b + a;
 
 ---
 ### Mark the conflict as resolved
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
 
 Now that you have fixed the conflict, do as instructed by Git and add the file to the staging area:
 
@@ -659,6 +738,8 @@ Type `:wq` to exit from vim and make the commit.
 ---
 ## Merge file conflicts
 
+.breadcrumbs[<a href="#1">Git Branching</a>]
+
 Sometimes it's not just the contents of the file that are in conflict:
 you could have **modified the file** in your branch, and a colleague could have **deleted it** in another branch.
 
@@ -676,6 +757,8 @@ $> git commit -m "Remove incomplete implementations"
 
 ---
 ### Merge the conflicting branch
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#31">Merge file conflicts</a>]
 
 Let's try to merge that branch into master:
 
@@ -697,6 +780,8 @@ Git tells you immediately that there is a conflict and that:
 
 ---
 ### Check the status of the file conflict
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#31">Merge file conflicts</a>]
 
 Let's see what `git status` tells us:
 
@@ -726,6 +811,8 @@ Again, Git gives us some information:
 ---
 ### Resolving the file conflict
 
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#31">Merge file conflicts</a>]
+
 You have to choose whether you want to:
 
 * Keep the modified file (use `git add`)
@@ -751,6 +838,8 @@ $> git commit -m "Merge cleanup (kept implemented subtraction.js)"
 
 ---
 ## Resources
+
+.breadcrumbs[<a href="#1">Git Branching</a>]
 
 * [Git branching][branching]
 * [Advanced merging][advanced-merging]

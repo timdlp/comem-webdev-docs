@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MongoDB (COMEM+ Web Dev)</title>
+    <title>MongoDB (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -110,6 +110,27 @@
       #logo img {
         height: 60px;
       }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -125,6 +146,8 @@
 class: center, middle
 ## What is MongoDB?
 
+.breadcrumbs[<a href="#1">MongoDB</a>]
+
 
 
 > "MongoDB is a free and open-source cross-platform **document-oriented database** program."
@@ -135,6 +158,8 @@ class: center, middle
 
 ---
 ### Key features
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#2">What is MongoDB?</a>]
 
 * High performance
   * Atomic operations
@@ -153,6 +178,8 @@ class: center, middle
 
 ---
 ### Document-oriented database
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#2">What is MongoDB?</a>]
 
 Instead SQL rows, you store [**JSON-like**][bson] documents in MongoDB:
 
@@ -182,6 +209,8 @@ Instead SQL rows, you store [**JSON-like**][bson] documents in MongoDB:
 
 ---
 ### Schema-less collections
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#2">What is MongoDB?</a>]
 
 Documents are stored in **collections**.
 Unlike SQL tables, collections are **schema-less**.
@@ -215,6 +244,8 @@ In MongoDB, documents stored in a collection must have a unique `_id` field that
 class: center, middle
 ## Query language
 
+.breadcrumbs[<a href="#1">MongoDB</a>]
+
 
 
 Inserting, querying, updating and removing documents.
@@ -223,6 +254,8 @@ Inserting, querying, updating and removing documents.
 
 ---
 ### Connecting
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a>]
 
 Connect to the MongoDB shell.
 
@@ -247,6 +280,8 @@ It is **automatically created** as you first access it.
 
 ---
 ### Inserting documents
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a>]
 
 Insert a couple of documents into a collection named **people** (again, it is automtically created if it doesn't exist):
 
@@ -279,6 +314,8 @@ WriteResult({ "nInserted" : 1  })
 ---
 ### Finding documents
 
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a>]
+
 Here are a few simple queries you can run with MongoDB's [find][find] method:
 
 ```js
@@ -303,6 +340,8 @@ db.people.find({ "name": "John Smith", "address.city": "Livingston" })
 
 ---
 #### Query operators
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#9">Finding documents</a>]
 
 You can write more complex queries with query operators:
 
@@ -330,6 +369,8 @@ Read the documention on [query operators][query-operators] to learn more about t
 ---
 #### Projection
 
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#9">Finding documents</a>]
+
 You can give a second parameter to `find` to specify which fields to return:
 
 
@@ -346,6 +387,8 @@ You can specify fields to include or fields to exclude, **not both**.
 
 ---
 #### Sort, skip & limit
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#9">Finding documents</a>]
 
 The `sort` method orders the documents in the result set:
 
@@ -372,6 +415,8 @@ db.people.find({}).sort({ "name": 1 }).skip(1).limit(1)
 ---
 ### Updating documents
 
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a>]
+
 Here's an update example:
 
 ```js
@@ -396,6 +441,8 @@ Read the documention on [update operators][update-operators] to learn more about
 ---
 #### Updating multiple documents
 
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#13">Updating documents</a>]
+
 To update multiple documents, you must set the `multi` option to `true`.
 Otherwise, only the first matching document will be updated.
 
@@ -414,6 +461,8 @@ db.people.update(
 
 ---
 #### Upserts
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#13">Updating documents</a>]
 
 The `upsert` option allows you to **automatically insert** a new document when you try to make an **update** but **no matching document is found**:
 
@@ -435,6 +484,8 @@ db.people.update(
 
 ---
 #### Upsert behavior
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#13">Updating documents</a>]
 
 MongoDB will tell you that an upsert has taken place:
 
@@ -462,6 +513,8 @@ Note that the query was merged with the update (the new person also has the `nam
 ---
 #### Atomic operations
 
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#13">Updating documents</a>]
+
 Some operators are **atomic operations**:
 
 ```js
@@ -484,6 +537,8 @@ This means that:
 ---
 #### Replacing documents
 
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#13">Updating documents</a>]
+
 **Be careful:** if you do not use update operators, MongoDB will replace the entire document with the second parameter passed to `update`:
 
 ```js
@@ -502,6 +557,8 @@ As you can see, there is no longer a person named Ned Stark in the collection, b
 
 ---
 ### Removing documents
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a>]
 
 You can use [remove][remove] to remove documents from a collection:
 
@@ -527,6 +584,8 @@ db.people.remove({ "interests": "Chocolate" }, { "justOne": true })
 class: center, middle
 ## Indexes
 
+.breadcrumbs[<a href="#1">MongoDB</a>]
+
 
 
 Indexes can support the efficient execution of queries and enforce constraints.
@@ -535,6 +594,8 @@ Indexes can support the efficient execution of queries and enforce constraints.
 
 ---
 ### Query performance
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
 
 Without indexes, MongoDB must perform a **full collection scan** to find the matching documents.
 Use `explain` to find out how a query will be executed:
@@ -565,6 +626,8 @@ Use `explain` to find out how a query will be executed:
 ---
 ### Creating indexes
 
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
+
 If an appropriate index exists for a query, MongoDB can use the index to **limit the number of documents it must inspect**.
 
 Use [createIndex][create-index] to add an index:
@@ -582,6 +645,8 @@ Use [createIndex][create-index] to add an index:
 
 ---
 ### Index scan
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
 
 Run `explain` again to confirm that your index will be applied:
 
@@ -615,6 +680,8 @@ Run `explain` again to confirm that your index will be applied:
 ---
 ### Compound indexes
 
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
+
 You can create an index on **multiple fields**:
 
 ```js
@@ -643,6 +710,8 @@ db.people.find({}).sort({ "birthDate": 1, "name": 1 })
 ---
 ### Unique indexes
 
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
+
 A unique index enforces uniqueness for the indexed fields
 
 ```js
@@ -665,6 +734,8 @@ Read the [documentation on indexes][indexes] to find out more about other types 
 
 ---
 ## Resources
+
+.breadcrumbs[<a href="#1">MongoDB</a>]
 
 * [Getting started with MongoDB][getting-started]
 * [db.collection.find][find] & [query operators][query-operators]

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JavaScript Prototypes (COMEM+ Web Dev)</title>
+    <title>JavaScript Prototypes (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -110,6 +110,27 @@
       #logo img {
         height: 60px;
       }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -125,12 +146,16 @@
 class: center, middle
 ## JavaScript has **prototypal inheritance**
 
+.breadcrumbs[<a href="#1">JavaScript Prototypes</a>]
+
 
 
 
 
 ---
 ### ES5 has no support for **classes**
+
+.breadcrumbs[<a href="#1">JavaScript Prototypes</a> > <a href="#2">JavaScript has **prototypal inheritance**</a>]
 
 TODO: ES6 classes
 
@@ -159,6 +184,8 @@ var child = new Person("olivier", "liechti");
 ---
 ### Every object **inherits** from a **prototype** object
 
+.breadcrumbs[<a href="#1">JavaScript Prototypes</a> > <a href="#2">JavaScript has **prototypal inheritance**</a>]
+
 TODO: add graph
 
 ```js
@@ -174,6 +201,8 @@ console.log(child.lastName);
 
 ---
 ## TODO
+
+.breadcrumbs[<a href="#1">JavaScript Prototypes</a>]
 
 * [Symbols][js-symbol]
 

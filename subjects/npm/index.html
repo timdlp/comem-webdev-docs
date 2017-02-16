@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>npm (COMEM+ Web Dev)</title>
+    <title>npm (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -110,6 +110,27 @@
       #logo img {
         height: 60px;
       }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -125,6 +146,8 @@
 class: center, middle
 ## What is npm?
 
+.breadcrumbs[<a href="#1">npm</a>]
+
 
 
 > "npm is the **package manager** for JavaScript. Find, share, and reuse packages of code from hundreds of thousands of developers — and assemble them in powerful new ways."
@@ -133,6 +156,8 @@ class: center, middle
 
 ---
 ### Why use a package manager?
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#2">What is npm?</a>]
 
 * Use code or applications that **other developers** have written to solve particular problems
 * Regularly check if there are any **upgrades** and download them
@@ -144,6 +169,8 @@ class: center, middle
 
 ---
 ### There are many package managers
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#2">What is npm?</a>]
 
 For programming languages:
 
@@ -168,6 +195,8 @@ For operating systems:
 ---
 ### The npm registry
 
+.breadcrumbs[<a href="#1">npm</a> > <a href="#2">What is npm?</a>]
+
 > "The [npm registry][npm] hosts over a quarter million packages of reusable code — the largest code registry in the world."
 
 <img src='images/popular-packages.png' width='100%' />
@@ -176,6 +205,8 @@ For operating systems:
 
 ---
 ### npm packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#2">What is npm?</a>]
 
 An npm **package** or **module** is a basically:
 
@@ -207,6 +238,8 @@ An npm **package** or **module** is a basically:
 class: center, middle
 ## The npm command
 
+.breadcrumbs[<a href="#1">npm</a>]
+
 
 
 npm is also a set of command line tools that work together with the registry.
@@ -215,6 +248,8 @@ npm is also a set of command line tools that work together with the registry.
 
 ---
 ### How do I use it?
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#7">The npm command</a>]
 
 ```bash
 $> npm help
@@ -243,6 +278,8 @@ npm help npm     involved overview
 class: center, middle
 ## npm init
 
+.breadcrumbs[<a href="#1">npm</a>]
+
 
 
 Create a new package
@@ -251,6 +288,8 @@ Create a new package
 
 ---
 ### Interactively create a package.json file
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm init</a>]
 
 Create and move into a new project directory:
 
@@ -286,6 +325,8 @@ license: (ISC)
 ---
 ### What it looks like
 
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm init</a>]
+
 ```json
 {
   "name": "npm-demo",
@@ -309,6 +350,8 @@ Read the [documentation][package.json] to find out everything you can configure 
 class: center, middle
 ## npm install
 
+.breadcrumbs[<a href="#1">npm</a>]
+
 
 
 Install a package
@@ -317,6 +360,8 @@ Install a package
 
 ---
 ### Installing packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
 
 When you install a package, npm creates a `node_modules` directory where it saves the downloaded packages.
 
@@ -336,6 +381,8 @@ lodash
 
 ---
 ### Using installed packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
 
 Any script under the directory where `package.json` and  `node_modules` are can `require` the installed packages:
 
@@ -363,6 +410,8 @@ which returns an array with its duplicate elements removed.
 ---
 ### Tracking installed packages
 
+.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
+
 Now remove the `node_modules` directory:
 
 ```bash
@@ -384,6 +433,8 @@ Error: Cannot find module 'lodash'
 
 ---
 ### The --save option
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
 
 Adding the `--save` option will make npm track the dependency:
 
@@ -410,6 +461,8 @@ A new `dependencies` section should have appeared in your `package.json` file:
 ---
 ### npm install with a package.json
 
+.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
+
 If you delete the `node_modules` directory again and run `npm install`:
 
 ```bash
@@ -431,6 +484,8 @@ That way, other members of the team will just have to run `npm install`.
 
 ---
 ### The --save-dev and --production option
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
 
 You often use two kinds of packages:
 
@@ -460,6 +515,8 @@ A `devDependencies` section will be added to your `package.json`:
 ---
 ### The --global option
 
+.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
+
 Some packages can be installed **globally**.
 Use the `--global` or `-g` option:
 
@@ -484,6 +541,8 @@ Hit CTRL-C to stop the server
 ---
 #### Where are global packages installed?
 
+.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a> > <a href="#19">The --global option</a>]
+
 Packages installed globally are **not** in a `node_modules` directory in your project.
 They are local to your machine, and **are not saved as dependencies**.
 
@@ -503,6 +562,8 @@ http-server
 class: center, middle
 ## npm publish
 
+.breadcrumbs[<a href="#1">npm</a>]
+
 
 
 Publish a package
@@ -511,6 +572,8 @@ Publish a package
 
 ---
 ### What do I need to publish?
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#21">npm publish</a>]
 
 You need a valid `package.json` file.
 
@@ -532,6 +595,8 @@ they will get the same result as if they had required that file.
 ---
 ### Publishing
 
+.breadcrumbs[<a href="#1">npm</a> > <a href="#21">npm publish</a>]
+
 Publishing is as simple as running the `npm publish` command in the directory where your `package.json` file is located:
 
 ```js
@@ -547,6 +612,8 @@ Names are registered on a **first-come, first-serve** basis.
 
 ---
 ### Avoiding publication
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#21">npm publish</a>]
 
 Sometimes you write code that should not be published:
 
@@ -571,6 +638,8 @@ In these cases, you can set the `private` property of the `package.json` file:
 class: center, middle
 ## npm scripts
 
+.breadcrumbs[<a href="#1">npm</a>]
+
 
 
 Running scripts with npm
@@ -579,6 +648,8 @@ Running scripts with npm
 
 ---
 ### The scripts property
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a>]
 
 The `scripts` section of the `package.json` file defines scripts that can be run on the command line:
 
@@ -608,6 +679,8 @@ $> npm start
 ---
 ### Lifecycle scripts
 
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a>]
+
 The following scripts are "standard" scripts:
 
 | Script  | Purpose                              | Triggered by
@@ -623,6 +696,8 @@ Read the [documentation][npm-scripts] to see all the available lifecycle scripts
 
 ---
 ### Custom scripts
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a>]
 
 You can also define your own custom scripts:
 
@@ -652,6 +727,8 @@ Hello World!
 ---
 ### Scripts and the PATH
 
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a>]
+
 Package scripts (both lifecycle and custom scripts) have an interesting property:
 
 * If you add packages that provide **command-line tools** as dependencies,
@@ -661,6 +738,8 @@ Package scripts (both lifecycle and custom scripts) have an interesting property
 
 ---
 #### Installing a "global" module as a dependency
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a> > <a href="#29">Scripts and the PATH</a>]
 
 Uninstall the global version of the static HTTP server we used earlier,
 and install it as a development dependency instead:
@@ -681,6 +760,8 @@ Since it was not installed globally, its binary is **not in the PATH**.
 
 ---
 #### Running a "global" module with a run script
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a> > <a href="#29">Scripts and the PATH</a>]
 
 However, if you put it in a custom package script:
 
@@ -714,6 +795,8 @@ Hit CTRL-C to stop the server
 ---
 ## Resources
 
+.breadcrumbs[<a href="#1">npm</a>]
+
 * Command line usage
   https://docs.npmjs.com/cli/npm
 * package.json format
@@ -723,6 +806,8 @@ Hit CTRL-C to stop the server
 
 ---
 ## TODO
+
+.breadcrumbs[<a href="#1">npm</a>]
 
 * https://docs.npmjs.com/getting-started/fixing-npm-permissions
 

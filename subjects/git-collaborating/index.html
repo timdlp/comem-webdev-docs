@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Collaborating with Git (COMEM+ Web Dev)</title>
+    <title>Collaborating with Git (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -110,6 +110,27 @@
       #logo img {
         height: 60px;
       }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -128,6 +149,8 @@ Requirements:
 ---
 ## Group work
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a>]
+
 This tutorial is meant to be performed by a group of two.
 Throughout the rest of the document, the members of the group will be referred to as **Person A** and **Person B**.
 
@@ -139,6 +162,8 @@ The tutorial assumes that you have followed the [previous Git tutorial][git-tuto
 class: center, middle
 ## Distributed version control system
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a>]
+
 
 
 Working with remote repositories
@@ -147,6 +172,8 @@ Working with remote repositories
 
 ---
 ### What is a remote?
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a>]
 
 A **remote repository** is a version of your project that is hosted on the Internet or network somewhere.
 You can have **several of them**.
@@ -159,6 +186,8 @@ TODO: multiple remotes diagram (local network, internet, etc)
 
 ---
 ### Centralized workflow
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a>]
 
 There are [many ways][distributed-workflows] to work with Git as a team.
 Here we will use a simple **centralized workflow**:
@@ -176,6 +205,8 @@ In this workflow:
 ---
 ### Working with GitHub
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a>]
+
 > "[GitHub][github] is a web-based Git repository and Internet hosting service.
   It offers all of the **distributed version control** and **source code management (SCM)** functionality of **Git**
   as well other features like access control, bug tracking, feature requests, task management, and wikis for every project."
@@ -184,6 +215,8 @@ In this workflow:
 
 ---
 #### Create a free GitHub account
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a> > <a href="#6">Working with GitHub</a>]
 
 Both group members should register on GitHub:
 
@@ -197,6 +230,8 @@ TODO: add ssh key to account
 class: center, middle
 ## Sharing changes
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a>]
+
 
 
 Clone repositories, push and pull commits
@@ -205,6 +240,8 @@ Clone repositories, push and pull commits
 
 ---
 ### A: create a repository on GitHub
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
 
 **Person A** should create a repository from the GitHub menu:
 
@@ -225,12 +262,16 @@ Clone repositories, push and pull commits
 ---
 ### A: add B as a collaborator
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+
 TODO: add B as a collaborator
 
 
 
 ---
 ### A: add a remote to your local repository
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
 
 **Person A** should copy the SSH URL of the GitHub repository:
 
@@ -259,6 +300,8 @@ origin  git@github.com:PersonA/github-demo.git (push)
 ---
 ### A: push your commits to the shared repository
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+
 It's time for **Person A** to put the code in the shared GitHub repository.
 This is done using the `git push` command:
 
@@ -280,6 +323,8 @@ The command `git push [remote] [branch]` tells Git to push the commit pointed to
 
 ---
 ### A: remote branches
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
 
 .grid-60[
 
@@ -308,6 +353,8 @@ It tells you where the **master** branch points to on the **origin** remote (the
 ---
 ### B: clone the shared repository
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+
 **Person B** can now get a copy of the shared GitHub repository on their machine.
 This is done using the `git clone` command:
 
@@ -329,6 +376,8 @@ The `git clone [url]` command copies the repository to your machine.
 
 ---
 ### B: remote branches
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
 
 .grid-60[
 
@@ -356,6 +405,8 @@ so that you can know what the current state of the remote is.
 ---
 ### B: make local changes
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+
 **Person B** thinks that the project's files are too complicated. Let's simplify:
 
 ```bash
@@ -369,6 +420,8 @@ $> git commit -m "Shorter filenames"
 
 ---
 ### B: check the state of branches
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
 
 .grid-60[
 
@@ -399,6 +452,8 @@ $> git push origin master
 ---
 ### A: check the state of branches
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+
 .grid-60[
 
 <img src='images/demo-4-remote-out-of-sync.png' width='100%' />
@@ -426,6 +481,8 @@ the master branch still points to `4f94ga` in the shared repository.
 ]
 ---
 ### A: fetch changes from the shared repository
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
 
 **Person A** should now get the changes from the shared repository:
 
@@ -458,6 +515,8 @@ However, the local master branch **has not moved** and the working directory has
 ---
 ### A: check the state of branches
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+
 Now you can use `git merge` like in the previous tutorial to bring the changes of origin/master into master:
 
 ```bash
@@ -488,6 +547,8 @@ As expected, master has been fast-forwarded to the commit pointed to by origin/m
 ---
 ### Using git pull
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+
 You can also use `git pull [remote] [branch]` to save time.
 
 The following command:
@@ -509,12 +570,16 @@ $> git merge origin/master
 class: center, middle
 ## Managing conflicting commit histories
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a>]
+
 
 
 
 
 ---
 ### A: fix the bug
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
 
 **Person A** now notices that the last change breaks the calculator.
 This is because the files were renamed, but the `<script>` tags in `index.html` were not updated.
@@ -532,6 +597,8 @@ $> git push origin master
 
 ---
 ### B: make other changes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
 
 **Person B**, not having noticed the bug, proceeds to make 2 changes on `index.html`:
 
@@ -561,6 +628,8 @@ $> git push origin master
 
 ---
 ### Rejected pushes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
 
 ```bash
 To github.com:PersonA/github-demo.git
@@ -592,6 +661,8 @@ This is the state of **Person B**'s repository right now.
 ---
 ### Divergent history
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+
 .grid-60[
 
 <img src='images/demo-8-git-fetch.png' width='100%' />
@@ -611,6 +682,8 @@ If **Person B** did a `git fetch` now, this is what their repository would look 
 ]
 ---
 ### B: pull changes from the shared repository
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
 
 **Person B** wants to fetch and merge the changes made by **Person A**.
 Let's use the `git pull` command:
@@ -635,6 +708,8 @@ The fetch succeeded, but the merge failed because of a **conflict** on `index.ht
 
 ---
 ### B: check the conflict markers
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
 
 **Person B** should take a look at `index.html`:
 
@@ -665,6 +740,8 @@ $> git commit -m "Merge origin/master"
 ---
 ### B: check the state of branches
 
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+
 Now the state of **Person B**'s local repository is consistent with the state of the shared repository:
 the commit pointed to by **master** is ahead of the commit pointed to by **origin/master**.
 
@@ -674,6 +751,8 @@ the commit pointed to by **master** is ahead of the commit pointed to by **origi
 
 ---
 ### B: push the changes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
 
 The push will be accepted now:
 

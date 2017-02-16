@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Express (COMEM+ Web Dev)</title>
+    <title>Express (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -110,6 +110,27 @@
       #logo img {
         height: 60px;
       }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -131,6 +152,8 @@ Requirements:
 class: center, middle
 ## What is express?
 
+.breadcrumbs[<a href="#1">Express</a>]
+
 
 
 A fast, unopinionated, **minimalist** web framework for Node.js
@@ -139,6 +162,8 @@ A fast, unopinionated, **minimalist** web framework for Node.js
 
 ---
 ### Core functionality
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is express?</a>]
 
 .grid-33[
 
@@ -176,6 +201,8 @@ Use the many **middleware** packages at your disposal to build more complex appl
 ---
 ### Install the express generator
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is express?</a>]
+
 You can create an express app from scratch, but we'll use **express-generator** to quickly create an application skeleton:
 
 ```bash
@@ -207,6 +234,8 @@ $> express --help
 
 ---
 ### Generate a skeleton application
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is express?</a>]
 
 ```bash
 $> cd /path/to/projects
@@ -242,6 +271,8 @@ $> express my-app
 ---
 ### Install dependencies and run it
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is express?</a>]
+
 As instructed, let's install the dependencies:
 
 ```bash
@@ -270,6 +301,8 @@ $> DEBUG=my-app:* npm start
 ---
 ### Browse the landing page
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is express?</a>]
+
 Visit [http://localhost:3000](http://localhost:3000) in your browser and you should see the app running:
 
 <p class='center'><img src='images/express-running.png' width='60%' /></p>
@@ -288,12 +321,16 @@ GET /stylesheets/style.css 200 2.457 ms - -
 class: center, middle
 ## Application structure
 
+.breadcrumbs[<a href="#1">Express</a>]
+
 
 
 
 
 ---
 ### The server component
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#8">Application structure</a>]
 
 Let's take a look at the generated files:
 
@@ -320,6 +357,8 @@ or **on the server** when you deploy to a host.
 ---
 ### The client component
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#8">Application structure</a>]
+
 The rest of the files are:
 
 ```txt
@@ -340,6 +379,8 @@ public
 
 ---
 ### The package.json file
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#8">Application structure</a>]
 
 Let's take a look at the generated `package.json`:
 
@@ -372,6 +413,8 @@ Let's take a look at the generated `package.json`:
 class: center, middle
 ## Express middleware
 
+.breadcrumbs[<a href="#1">Express</a>]
+
 
 
 Handling requests and responses
@@ -380,6 +423,8 @@ Handling requests and responses
 
 ---
 ### What is middleware?
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a>]
 
 Middlewares are functions that are called **during the application's request-response cycle**.
 They can:
@@ -393,6 +438,8 @@ They can:
 
 ---
 ### Middleware function signature
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a>]
 
 This is an example of a middleware function:
 
@@ -413,6 +460,8 @@ Whenever a request is made to the Express application, it will receive:
 
 ---
 ### Plug in middleware functions
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a>]
 
 Open `app.js`:
 
@@ -443,6 +492,8 @@ As you can see, several middlewares are already plugged in.
 ---
 ### Add your own
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a>]
+
 Add your new middleware function just below the creation of the Express application:
 
 ```js
@@ -470,6 +521,8 @@ GET /stylesheets/style.css 304 2.356 ms - -
 ---
 ### Limiting middleware by HTTP method or URL path
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a>]
+
 You can use a middleware only for HTTP requests on a specific path:
 
 ```js
@@ -491,6 +544,8 @@ app.post('/ping', function ping(req, res, next) {
 ---
 ### Controlling the middleware stack
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a>]
+
 Remove the call to `next()` in your first middleware function:
 
 ```js
@@ -505,6 +560,8 @@ The page is not loading... Why?
 
 ---
 #### Sending a response
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a> > <a href="#18">Controlling the middleware stack</a>]
 
 By not calling `next()`, you have **interrupted the middleware stack**:
 the next middleware functions are not being executed, so no response is being sent to the client.
@@ -525,6 +582,8 @@ But you're still not calling next, so all you see is the Hello World response.
 
 ---
 #### Calling next again
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a> > <a href="#18">Controlling the middleware stack</a>]
 
 Put the call to `next()` back in:
 
@@ -553,6 +612,8 @@ Error: Can't set headers after they are sent.
 ---
 #### Only one response can be sent
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a> > <a href="#18">Controlling the middleware stack</a>]
+
 This is what happens:
 
 * Your middleware function sends the Hello World response
@@ -572,6 +633,8 @@ Each middleware decides whether to handle the request and stop the chain, or pas
 ---
 #### Serving the index page
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a> > <a href="#18">Controlling the middleware stack</a>]
+
 Let's look at a few examples:
 
 ```http
@@ -584,6 +647,8 @@ Host: localhost:3000
 ---
 #### Serving static files
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a> > <a href="#18">Controlling the middleware stack</a>]
+
 ```http
 GET /style.css HTTP/1.1
 Host: localhost:3000
@@ -593,6 +658,8 @@ Host: localhost:3000
 
 ---
 #### Creating a user with a JSON payload
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a> > <a href="#18">Controlling the middleware stack</a>]
 
 ```http
 POST /users HTTP/1.1
@@ -611,6 +678,8 @@ Host: localhost:3000
 
 ---
 ### Attaching data to the request in a middleware
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a>]
 
 You can attach data to the request object:
 
@@ -639,6 +708,8 @@ and attaches it to the `req.body` property.
 ---
 ### Asynchronous middleware
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a>]
+
 You don't have to call `next()` right away.
 You can do it after some asynchronous calls:
 
@@ -657,6 +728,8 @@ The middleware stack will not proceed until you call `next()`.
 
 ---
 ### How to deal with errors in middlewares
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a>]
 
 Sometimes things go wrong:
 
@@ -681,6 +754,8 @@ app.use(function(req, res, next) {
 ---
 #### Error-handling middleware
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a> > <a href="#27">How to deal with errors in middlewares</a>]
+
 When you pass an error to `next()`, the following "normal" middleware functions are **not called**.
 Only special **error-handling middleware functions** are called.
 
@@ -696,6 +771,8 @@ Simply declaring the function with these 4 arguments tells Express that this is 
 
 ---
 #### Error-handling example
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a> > <a href="#27">How to deal with errors in middlewares</a>]
 
 As you can see in this example, when an error occurs in the first middleware,
 other normal middlewares are **bypassed** until an **error-handling middleware** is found.
@@ -715,6 +792,8 @@ Host: localhost:3000
 
 ---
 #### Error-handling middleware in the generated application
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#12">Express middleware</a> > <a href="#27">How to deal with errors in middlewares</a>]
 
 Take a look at `app.js`.
 One error-handling middleware has already been plugged in for you:
@@ -740,6 +819,8 @@ It will render any error in a "pretty" error page.
 class: center, middle
 ## Routing
 
+.breadcrumbs[<a href="#1">Express</a>]
+
 
 
 Mapping HTTP methods and URLs to handler functions
@@ -748,6 +829,8 @@ Mapping HTTP methods and URLs to handler functions
 
 ---
 ### Basic routing
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#31">Routing</a>]
 
 As we've seen, basic routing can be applied to middleware by using `.get`, `.post`, etc and passing a path:
 
@@ -775,6 +858,8 @@ Getting book 33 by 24
 
 ---
 ### Routers
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#31">Routing</a>]
 
 An Express [router][router] is an **isolated instance of middleware and routes**.
 It's basically a **mini-app**.
@@ -815,6 +900,8 @@ that way you don't have one monolithic file with all your code in it.
 ---
 #### Creating a router
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#31">Routing</a> > <a href="#33">Routers</a>]
+
 ```js
 var express = require('express');
 
@@ -845,6 +932,8 @@ Note that we don't use `/books` and `/books/:id` as the path but `/` and `/:id`.
 ---
 #### Plugging in a router
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#31">Routing</a> > <a href="#33">Routers</a>]
+
 A router behaves like a middleware function, so you can simply plug it into your application with `app.use()`:
 
 ```js
@@ -868,6 +957,8 @@ It will handle HTTP requests to `/books/42`, for example.
 class: center, middle
 ## The request object
 
+.breadcrumbs[<a href="#1">Express</a>]
+
 
 
 Using the `req` object
@@ -876,6 +967,8 @@ Using the `req` object
 
 ---
 ### Request example
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The request object</a>]
 
 How can we extract all the data from this request?
 
@@ -899,6 +992,8 @@ Authorization: Basic Zm9vOmJhcgo=
 ---
 ### Getting the HTTP method, URL path and query parameters
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The request object</a>]
+
 Let's start with the request line:
 
 ```http
@@ -921,6 +1016,8 @@ app.all('/test/:param1/:param2', function(req, res, next) {
 
 ---
 ### Getting HTTP headers
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The request object</a>]
 
 Now let's get the headers:
 
@@ -957,6 +1054,8 @@ app.all('/test/:param1/:param2', function(req, res, next) {
 ---
 ### Getting the HTTP request body
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The request object</a>]
+
 Finally, let's get the request body:
 
 ```json
@@ -990,6 +1089,8 @@ app.all('/test/:param1/:param2', function(req, res, next) {
 class: center, middle
 ## The response object
 
+.breadcrumbs[<a href="#1">Express</a>]
+
 
 
 Using the `res` object
@@ -998,6 +1099,8 @@ Using the `res` object
 
 ---
 ### Sending the response
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">The response object</a>]
 
 Use `res.send()` for most use cases.
 It will automatically determine the type of content your are sending and set the appropriate `Content-Type` header:
@@ -1053,6 +1156,8 @@ Content-Type: application/json
 ---
 ### Setting the HTTP status code
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">The response object</a>]
+
 Use `res.status()` to set the status code:
 
 .grid-50[
@@ -1104,6 +1209,8 @@ HTTP/1.1 204 No Content
 ]
 ---
 ### Sending HTTP response headers
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">The response object</a>]
 
 Use `res.set()` to set headers:
 
@@ -1177,6 +1284,8 @@ Some text
 ---
 ### Chain response methods
 
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">The response object</a>]
+
 You can also chain all the previous methods together:
 
 .grid-50[
@@ -1206,6 +1315,8 @@ Some text
 ]
 ---
 ## Resources
+
+.breadcrumbs[<a href="#1">Express</a>]
 
 * [API reference][api] (documentation for `app`, `req`, `res` and `Router`)
 * [Routing][routing]

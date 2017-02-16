@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Command Line Introduction (COMEM+ Web Dev)</title>
+    <title>Command Line Introduction (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -110,6 +110,27 @@
       #logo img {
         height: 60px;
       }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -125,6 +146,8 @@ class: center, middle
 ---
 ## What is the Command Line Interface (CLI)
 
+.breadcrumbs[<a href="#1">Command Line Introduction</a>]
+
 The CLI is a tool that allows you to use your computer by writing what you want to do (i.e. **commands**), instead of clicking on things.
 
 It's installed on computers (almost) since the beginnings of time, but it has evolved a little since then. It usually looks something like this:
@@ -133,6 +156,8 @@ It's installed on computers (almost) since the beginnings of time, but it has ev
 
 ---
 ### Why use it
+
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#2">What is the Command Line Interface (CLI)</a>]
 
 CLI is not very user-friendly or visually appealing but it has several advantages:
 
@@ -146,6 +171,8 @@ For these reasons, a lot of tools _(especially development tools)_ don't have an
 
 ---
 ### Open a CLI
+
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#2">What is the Command Line Interface (CLI)</a>]
 
 **CLI are available in every actual OS.**
 
@@ -169,6 +196,8 @@ But it does not use the same syntax than UNIX-like CLI _(plus, it's bad)_.
 ]
 ---
 ### Install Git Bash (Windows users only)
+
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#2">What is the Command Line Interface (CLI)</a>]
 
 You're going to install **Git Bash**, an alternative CLI that emulates a UNIX-like terminal on Windows.
 
@@ -197,6 +226,8 @@ Then, search and open the **Git Bash** software.
 ---
 ## How to use the CLI
 
+.breadcrumbs[<a href="#1">Command Line Introduction</a>]
+
 When you open the CLI you should find a blank screen with something like this:
 
 ```bash
@@ -217,6 +248,8 @@ When the computer's working, the prompt disappear and you won't have the lead un
 ---
 ### Writing commands
 
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a>]
+
 A command is a word that you have to type on the CLI, that will tell the computer what it have to do.
 
 The syntax for using command could be resumed like this:
@@ -231,6 +264,8 @@ $> name [argument ...]
 
 ---
 ### Command : `help`
+
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a>]
 
 The first command you'd like to type is the `help` command.
 
@@ -254,6 +289,8 @@ $> [command-name] --help
 ---
 #### Interactive helps
 
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a> > <a href="#8">Command : `help`</a>]
+
 Some helps or commands will print their result all over the screen, effectively hidding the prompt or previous interactions.
 
 Usually, it means that these helps or commands have content that takes more than one screen to be shown.
@@ -264,6 +301,8 @@ To quit these helps or commands, use the `q` key.
 
 ---
 ### Command : `pwd`
+
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a>]
 
 When the CLI starts, it places you in your **personnal directory**.
 
@@ -282,6 +321,8 @@ $> pwd
 
 ---
 ### Command : `ls`
+
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a>]
 
 Now that you know where you are, you might want to know **what your current directory is containing**.
 
@@ -304,6 +345,8 @@ $> ls -a
 
 ---
 ### Command : `cd`
+
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a>]
 
 It's time to go out a little and move to another directory.
 
@@ -345,6 +388,8 @@ Documents/ Downloads/
 ---
 #### `cd` shortcuts
 
+.breadcrumbs[<a href="#17">Hitting it again list the possibilites</a>]
+
 * To go back one directory at a time, use the `..` shortcut (**don't forget the space!**):
 ```bash
 $> pwd
@@ -374,6 +419,8 @@ $> pwd
 
 ---
 ### Command : `mkdir`
+
+.breadcrumbs[<a href="#19">Drag'n'drop a directory from your Explorer/Finder, and...</a>]
 
 You can create directories with the CLI.
 
@@ -409,6 +456,8 @@ $> mkdir -p Pictures/Vacation/Gotham
 ---
 ## Naming things when using CLI
 
+.breadcrumbs[<a href="#19">Drag'n'drop a directory from your Explorer/Finder, and...</a>]
+
 You should avoid using (in directories et files name):
 
 * **spaces** _(they're used to separate arguments in command)_
@@ -430,6 +479,8 @@ $> cd ./"Why So Serious"/
 ```
 ---
 ## For Windows Users
+
+.breadcrumbs[<a href="#23">This will work</a>]
 
 **Reference to drives**
 
@@ -454,6 +505,8 @@ Instead, Git Bash has two shortcuts custom shortcuts:
 class: center, middle
 ## VIM
 
+.breadcrumbs[<a href="#23">This will work</a>]
+
 
 
 Some tools or command could open the infamous **VIM**, which is a text-based text editor bundled into your CLI.
@@ -464,6 +517,8 @@ If this happens (_and it will_), there's **one** imperative rule to follow:
 
 ---
 ### Generalities
+
+.breadcrumbs[<a href="#23">This will work</a> > <a href="#25">VIM</a>]
 
 VIM can be unsetteling at first, until you know how it works.
 
@@ -483,6 +538,8 @@ To go into each mode use this keys :
 ---
 ### Normal mode
 
+.breadcrumbs[<a href="#23">This will work</a> > <a href="#25">VIM</a>]
+
 The **Normal** mode of VIM is the one you'r in when VIM starts. In this mode, you can move the cursor around with the arrow keys.
 
 You can also use some commands to interact with the text:
@@ -501,6 +558,8 @@ You can also use some commands to interact with the text:
 ---
 ### Command mode
 
+.breadcrumbs[<a href="#23">This will work</a> > <a href="#25">VIM</a>]
+
 The **Command** mode, which you can only access from the **Normal** mode, is the one you'll use to manipulate the file you're in.
 
 To enter **Command** mode, hit the `:` key.
@@ -516,6 +575,8 @@ From there, you can use some commands:
 
 ---
 ## The `PATH` variable
+
+.breadcrumbs[<a href="#23">This will work</a>]
 
 When you type a command in the CLI, it will try to see **if it knows this command**, by looking in some directories to see if there is an **executable file that matches the requested name**.
 
@@ -536,6 +597,8 @@ $> echo $PATH
 ---
 ### Using non-system command
 
+.breadcrumbs[<a href="#23">This will work</a> > <a href="#29">The `PATH` variable</a>]
+
 New installed tools usually come with at least one new command that you can execute from the CLI.
 
 But, if you'd want to execute this command, you would have to **manually go to the directory** containing the executable and **run the command there**.
@@ -555,6 +618,8 @@ For this, you need to **change the value** of your `PATH` variable.
 
 ---
 ### Updating the `PATH` variable
+
+.breadcrumbs[<a href="#23">This will work</a> > <a href="#29">The `PATH` variable</a>]
 
 To add a new path in your `PATH` variable, you have to edit a special file, used by your CLI. This file depends upon the CLI you are using:
 

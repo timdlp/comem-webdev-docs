@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>REST APIs Introduction (COMEM+ Web Dev)</title>
+    <title>REST APIs Introduction (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -110,6 +110,27 @@
       #logo img {
         height: 60px;
       }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -129,6 +150,8 @@ Requirements:
 ---
 ## What is a Web Service?
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a>]
+
 <p class='center'><img src='images/network.jpg' width='70%' /></p>
 
 **Clients** need access to **data** and **logic**.
@@ -140,12 +163,16 @@ How can they find each other, know what logic can be invoked, and talk to each o
 class: center, middle
 ## Big web services
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a>]
+
 
 
 
 
 ---
 ### Remote procedure call (RPC) or remote method invocation (RMI)
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#3">Big web services</a>]
 
 TODO: Java RMI diagram
 
@@ -154,12 +181,16 @@ TODO: Java RMI diagram
 ---
 ### Web services standards
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#3">Big web services</a>]
+
 <p class='center'><img src='images/web-services-standards-overview.gif' width='90%' /></p>
 
 
 
 ---
 ### Pros & cons
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#3">Big web services</a>]
 
 Many standards:
 
@@ -195,12 +226,16 @@ Many standards:
 class: center, middle
 ## RESTful web services
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a>]
+
 
 
 
 
 ---
 ### What is a REST API?
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#7">RESTful web services</a>]
 
 * API means [Application Programming Interface][api].
 
@@ -221,6 +256,8 @@ class: center, middle
 ---
 ### Principles of a REST architecture
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#7">RESTful web services</a>]
+
 * The state of the application is captured in a set of **resources**
   * Users, photos, comments, tags, albums, etc.
 * Resources are identified with a standard format (e.g. **URLs**)
@@ -231,6 +268,8 @@ class: center, middle
 
 ---
 ### What is a web resource?
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#7">RESTful web services</a>]
 
 Something that can be uniquely identified on the web:
 
@@ -277,6 +316,8 @@ Something that can be uniquely identified on the web:
 ---
 ### [Uniform Resource Locator (URL)][url]
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#7">RESTful web services</a>]
+
 > "A reference to a **web resource** that specifies its **location** on a computer network and a **mechanism** for retrieving it."
 
 * http://www.24heures.ch/vaud/2008/08/04/trente-etudiants-manifestent
@@ -294,6 +335,8 @@ scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]
 ---
 ### Resource vs. representation
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#7">RESTful web services</a>]
+
 * In REST, we use the HTTP protocol to support the exchange of data between a **client** and a **server**.
 * What is exchanged is not the actual resource: it is a **representation** of the resource.
 * The **same resource** could have:
@@ -308,6 +351,8 @@ scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]
 class: center, middle
 ## [HyperText Transfer Protocol (HTTP)][http]
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a>]
+
 
 
 > "An [application protocol][osi-application] for distributed, collaborative,
@@ -318,6 +363,8 @@ class: center, middle
 
 ---
 ### HTTP is a request-response protocol
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a>]
 
 When you visit the following page:
 
@@ -355,6 +402,8 @@ Content-Type: text/html; charset=UTF-8
 ---
 ### Anatomy of an HTTP request
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a>]
+
 Get the third page of a movies list:
 
 ```http
@@ -379,6 +428,8 @@ Host: www.example.com
 ---
 #### Request method
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a> > <a href="#15">Anatomy of an HTTP request</a>]
+
 The first line of an HTTP request is the **request line**:
 
 ```
@@ -400,6 +451,8 @@ There are [more methods][http-methods].
 ---
 #### Resource path
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a> > <a href="#15">Anatomy of an HTTP request</a>]
+
 The second part of the request line is the **resource path**:
 
 ```
@@ -410,6 +463,8 @@ It tells the server where to find the resource to perform the action on.
 
 ---
 #### Query string
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a> > <a href="#15">Anatomy of an HTTP request</a>]
 
 The **query string** is the third part of the request line:
 
@@ -426,6 +481,8 @@ In this case:
 
 ---
 #### Headers
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a> > <a href="#15">Anatomy of an HTTP request</a>]
 
 After the request line, an HTTP request has one or more **headers**:
 
@@ -444,6 +501,8 @@ There are many [headers][headers] that can be used in requests.
 
 ---
 #### Request (or message) body
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a> > <a href="#15">Anatomy of an HTTP request</a>]
 
 The **body** is data that the client can ask the server to do something with:
 
@@ -467,6 +526,8 @@ In this case:
 
 ---
 ### Anatomy of an HTTP response
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a>]
 
 An HTML page:
 
@@ -500,6 +561,8 @@ Content-Type: application/json
 ---
 #### Status code and reason phrase
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a> > <a href="#21">Anatomy of an HTTP response</a>]
+
 The first line of an HTTP response is the **status line**:
 
 ```
@@ -519,6 +582,8 @@ There are many [status codes][http-status-codes] a server can use to help the cl
 
 ---
 #### Headers
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a> > <a href="#21">Anatomy of an HTTP response</a>]
 
 Like requests, an HTTP response has one or more **headers** after the status line:
 
@@ -545,6 +610,8 @@ There are many [headers][headers] that can be used in responses.
 
 ---
 #### Response (or message) body
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a> > <a href="#21">Anatomy of an HTTP response</a>]
 
 The response body is the (optional) data sent by the server.
 Its nature depends on what the request was and what the response status code indicates.
@@ -578,6 +645,8 @@ Content-Type: application/json
 
 ---
 ### HTTP provides the [content negotiation][http-content-negotiation] mechanisms
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a>]
 
 Different **representations** of a resource can be exchanged at the **same URL**:
 
@@ -639,6 +708,8 @@ Content-Type: text/html
 ---
 ## [Create, read, update, delete (CRUD)][crud]
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a>]
+
 Since REST deals primarily with **resources**, in a REST API you will (mostly):
 
 * **C**reate new resources
@@ -650,6 +721,8 @@ Since REST deals primarily with **resources**, in a REST API you will (mostly):
 
 ---
 ### Create
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
 
 TODO: adapt (content copied from previous course's slides)
 
@@ -689,6 +762,8 @@ HTTP 201 Created: The request has been fulfilled and resulted in a new resource 
 ---
 ### Read
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
+
 TODO: adapt (content copied from previous course's slides)
 
 ```http
@@ -711,6 +786,8 @@ HTTP 200 OK: Standard response for successful HTTP requests. In a GET request, t
 
 ---
 #### Collection resource vs. single resource
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#28">Read</a>]
 
 TODO: adapt (content copied from previous course's slides)
 
@@ -736,6 +813,8 @@ Content-type: application/json
 
 ---
 ### Update
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
 
 TODO: adapt (content copied from previous course's slides)
 
@@ -773,12 +852,16 @@ HTTP 200 OK: In a PUT request, the response will contain an entity describing or
 ---
 #### Partial updates with PATCH
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#30">Update</a>]
+
 TODO: partial update with PATCH example
 
 
 
 ---
 ### Delete
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
 
 TODO: adapt (content copied from previous course's slides)
 
@@ -800,12 +883,16 @@ HTTP 204 No Content: The server successfully processed the request, but is not r
 ---
 ### CRUD summary
 
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
+
 TODO: table of HTTP method vs. operation on resource/collection
 
 
 
 ---
 ## Resources
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a>]
 
 TODO: HTTP request methods link
 

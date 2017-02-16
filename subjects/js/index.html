@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JavaScript (COMEM+ Web Dev)</title>
+    <title>JavaScript (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -110,6 +110,27 @@
       #logo img {
         height: 60px;
       }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -125,6 +146,8 @@
 class: center, middle
 ## What is JavaScript?
 
+.breadcrumbs[<a href="#1">JavaScript</a>]
+
 
 
 > JavaScript is a high-level, **dynamic**, **untyped**, and interpreted programming language.
@@ -136,6 +159,8 @@ class: center, middle
 
 ---
 ### JavaScript is still evolving
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#2">What is JavaScript?</a>]
 
 It has been standardized in the [ECMAScript][es] language specification.
 
@@ -150,6 +175,8 @@ It has been standardized in the [ECMAScript][es] language specification.
 ---
 ### JavaScript ES6 support
 
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#2">What is JavaScript?</a>]
+
 There are features from ES6 that are **not yet fully supported** on all browsers.
 
 In client-side code running in the **browser**, you should stick with **ES5** or use a JavaScript compiler like [Babel][babel] to turn your ES6+ code into compatible ES5 code before releasing it.
@@ -162,12 +189,16 @@ In server-side code running with the latest **Node.js** versions, all **ES6** fe
 class: center, middle
 ## JavaScript types
 
+.breadcrumbs[<a href="#1">JavaScript</a>]
+
 
 
 
 
 ---
 ### JavaScript has 6 primitive data types
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#5">JavaScript types</a>]
 
 .grid-70[
 
@@ -222,6 +253,8 @@ The types are:
 ---
 ### JavaScript has **dynamic** objects
 
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#5">JavaScript types</a>]
+
 .grid-60[
 
 ```js
@@ -267,6 +300,8 @@ Every object has a **different list of properties**.
 ---
 ### Array are **objects**
 
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#5">JavaScript types</a>]
+
 They are list-like objects with numeric keys.
 
 ```js
@@ -290,6 +325,8 @@ We'll learn more about arrays later.
 
 ---
 ### JavaScript is **untyped**
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#5">JavaScript types</a>]
 
 Values have a type, but **variables don't**.
 When you declare a variable, you don't specify a type.
@@ -321,6 +358,8 @@ The type can **change** over time.
 class: center, middle
 ## JavaScript supports [first-class functions][first-class-functions]
 
+.breadcrumbs[<a href="#1">JavaScript</a>]
+
 
 
 > "A programming language is said to have first-class functions if it treats functions as first-class citizens.
@@ -331,6 +370,8 @@ class: center, middle
 
 ---
 ### Storing functions in variables or data structures
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#10">JavaScript supports [first-class functions][first-class-functions]</a>]
 
 A JavaScript function isn't a special construct linked to a class like in Java.
 It can be stored in variables like any other value.
@@ -366,6 +407,8 @@ console.log(value); // 42
 ---
 ### Returning functions from a function
 
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#10">JavaScript supports [first-class functions][first-class-functions]</a>]
+
 ```js
 // Let's define a function that returns a function
 function makeSquareFunction() {
@@ -395,6 +438,8 @@ return function(n) {
 
 ---
 ### Passing functions as arguments
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#10">JavaScript supports [first-class functions][first-class-functions]</a>]
 
 A function can take another function as an argument.
 
@@ -430,6 +475,8 @@ console.log(value); // 8
 ---
 ### Functional programming
 
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#10">JavaScript supports [first-class functions][first-class-functions]</a>]
+
 These properties of functions enable powerful functional programming patterns:
 
 ```js
@@ -460,12 +507,16 @@ console.log(lastNames); // [ "Doe", "Smith", "Smith" ]
 class: center, middle
 ## Variables
 
+.breadcrumbs[<a href="#1">JavaScript</a>]
+
 
 
 
 
 ---
 ### Defining variables
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a>]
 
 There are three ways to define a variable in JavaScript:
 
@@ -484,6 +535,8 @@ Note that `var` always works, but `let` and `const` are only available in **ES6*
 
 ---
 ### Dynamic or constant variables
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a>]
 
 Variables declared with `var` or `let` are dynamic.
 Their value can **change** over time.
@@ -515,6 +568,8 @@ theMeaningOfLife = 43; // TypeError: Assignment to constant variable.
 
 ---
 ### The function scope
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a>]
 
 Variables declared with `var` in a function are visible **everywhere in that function**.
 Note that they are **NOT block-scoped** like in most languages.
@@ -549,6 +604,8 @@ logThings([ 'apple', 'banana', 'pear' ]);
 ---
 ### The block scope
 
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a>]
+
 The `let` and `const` keywords introduced in **ES6** create **block-scoped** variables,
 only visible in the block, statement or expression on which they is used.
 
@@ -580,6 +637,8 @@ It is recommended to use them instead of `var` in **ES6-compatible** environment
 ---
 ### The (evil) global scope
 
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a>]
+
 Variables declared with `var` outside of any function are **global variables**, accessible anywhere.
 
 ```js
@@ -608,6 +667,8 @@ You should **almost never use them**.
 ---
 #### When it's okay to use the global scope
 
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a> > <a href="#20">The (evil) global scope</a>]
+
 In an **HTML page**, all loaded scripts share the same global scope.
 
 In that context, ES5 libraries expose global variables so that your code can use them.
@@ -621,6 +682,8 @@ If you're not writing either one of those, just **don't use global variables**.
 
 ---
 #### Oops, global scope
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a> > <a href="#20">The (evil) global scope</a>]
 
 If you forget the `var`, `let` or `const` keyword, JavaScript will not complain.
 It will simply consider the variable global.
@@ -651,6 +714,8 @@ Just **don't do it**.
 ---
 ## TODO
 
+.breadcrumbs[<a href="#1">JavaScript</a>]
+
 * Strings: single quotes, double quotes, template literals
 * JSON: relationship to JavaScript objects, parsing and serializing
 * Array operations
@@ -659,6 +724,8 @@ Just **don't do it**.
 
 ---
 ## Resources
+
+.breadcrumbs[<a href="#1">JavaScript</a>]
 
 * A re-introduction to JavaScript
   https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>REST conventions (COMEM+ Web Dev)</title>
+    <title>REST conventions (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -110,6 +110,27 @@
       #logo img {
         height: 60px;
       }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -124,6 +145,8 @@
 ---
 ## URL structure
 
+.breadcrumbs[<a href="#1">REST conventions</a>]
+
 Resources often have relationships:
 
 * **Blog** authors create **posts** that can have **comments**.
@@ -135,6 +158,8 @@ How should we define the URLs to retrieve those resources?
 
 ---
 ### Nested (or hierarchical) URLs
+
+.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#2">URL structure</a>]
 
 Suppose I want to get the comments on post 892 of the Comem+ blog.
 
@@ -160,6 +185,8 @@ In this case, the **nested** or **hierarchical** version probably makes more sen
 ---
 ### Flat URLs
 
+.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#2">URL structure</a>]
+
 Suppose I want to retrieve the courses given by professor Arnold.
 
 Again, the URL could be nested:
@@ -184,6 +211,8 @@ In this case, the **flat** version probably makes more sense because:
 ---
 ### Nested vs. flat URLs
 
+.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#2">URL structure</a>]
+
 There is no *right or wrong* answer.
 You will find both styles in popular REST APIs.
 
@@ -198,6 +227,8 @@ In this case, it makes sense to use nested or hierarchical URLs.
 ---
 ## Linked resources
 
+.breadcrumbs[<a href="#1">REST conventions</a>]
+
 Suppose that our REST API handles **companies** and **employees**,
 and that it provides the following endpoint:
 
@@ -211,6 +242,8 @@ What company data do you expect to retrieve?
 
 ---
 ### Embedded resources
+
+.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#6">Linked resources</a>]
 
 ```json
 {
@@ -238,6 +271,8 @@ Reduces "chattiness", often good if there are "few" linked resources; company-em
 ---
 ### Resource references via IDs
 
+.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#6">Linked resources</a>]
+
 ```json
 {
   "name": "Apple",
@@ -252,6 +287,8 @@ The client must know the URL structure to retrieve an an employee.
 
 ---
 ### Resource references via URLs
+
+.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#6">Linked resources</a>]
 
 ```json
 {
@@ -273,6 +310,8 @@ Good: decouples client and server implementation.
 ---
 ## Resources & actions
 
+.breadcrumbs[<a href="#1">REST conventions</a>]
+
 Resources like articles, movies or students (i.e. **objects**) are easy to identify and handle with the standard HTTP methods:
 
 | Request               | Purpose                           |
@@ -292,6 +331,8 @@ What HTTP method and URL would you use?
 ---
 ### Action URLs
 
+.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#10">Resources & actions</a>]
+
 You could do it like this:
 
 ```http
@@ -307,6 +348,8 @@ This is considered a **bad practice**:
 
 ---
 ### Actions as a resource
+
+.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#10">Resources & actions</a>]
 
 You could consider the "exclusion" to be a resource in itself:
 
@@ -333,6 +376,8 @@ This is more RESTful:
 ---
 ## Pagination
 
+.breadcrumbs[<a href="#1">REST conventions</a>]
+
 What's the problem with this HTTP request?
 
 ```http
@@ -344,6 +389,8 @@ Host: world-phonebook.com
 
 ---
 ## Huge collections
+
+.breadcrumbs[<a href="#1">REST conventions</a>]
 
 Some collections can grow to a point where it is not possible to get all of its elements in a single HTTP request:
 
