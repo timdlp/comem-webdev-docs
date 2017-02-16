@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Git Branching (COMEM+ Web Dev)</title>
+    <title>Git Branching (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/unsemantic/1.1.3/unsemantic-grid-responsive.min.css'>
     <style>
@@ -100,9 +100,20 @@
         padding-right: 35px;
         border-right: 5px solid khaki;
       }
+
+      #logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #logo img {
+        height: 60px;
+      }
     </style>
   </head>
   <body>
+    <span id='logo' style='display:none;'><img src='../heig.png' /></span>
     <textarea id='source'>
 # Git Branching
 
@@ -751,6 +762,7 @@ $> git commit -m "Merge cleanup (kept implemented subtraction.js)"
 
     </textarea>
     <script src='https://remarkjs.com/downloads/remark-latest.min.js'></script>
+    <script src='https://code.jquery.com/jquery-3.1.1.slim.min.js' integrity='sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=' crossorigin='anonymous'></script>
     <script>
       var slideshow = remark.create({
         navigation: {
@@ -760,6 +772,8 @@ $> git commit -m "Merge cleanup (kept implemented subtraction.js)"
         highlightSpans: true,
         countIncrementalSlides: false
       });
+
+      $('#logo').remove().prependTo($('.remark-slide-content')).show();
     </script>
   </body>
 </html>
