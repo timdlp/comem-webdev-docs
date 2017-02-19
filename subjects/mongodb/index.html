@@ -140,7 +140,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/8f1141b2839e958795aeabca7128249428ca5090/subjects/mongodb/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/1f09fbc4d7f7816dc3b1da22f2ee77ff0c2b9838/subjects/mongodb/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -790,7 +790,7 @@ Read the [documentation on indexes][indexes] to find out more about other types 
           return;
         }
 
-        if (queryParams.home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+\/?$/i)) {
+        if (queryParams.home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
           $a.attr('href', 'https://github.com/' + queryParams.home);
         } else {
           $a.attr('href', queryParams.home);
