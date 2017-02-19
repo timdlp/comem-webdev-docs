@@ -54,6 +54,10 @@
         border: thin solid #dddddd;
       }
 
+      .remark-slide-content p:first-child {
+        margin-top: 0;
+      }
+
       .container {
         clear: both;
       }
@@ -135,12 +139,12 @@
   <body>
 
     <!-- Slides top-left logo -->
-    <span id='slide-logo' style='display:none;'><img src='../heig.png' /></span>
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
 
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/1f09fbc4d7f7816dc3b1da22f2ee77ff0c2b9838/subjects/npm/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/3eaf93d85bb898cc8dd1c5a10959c4b23b7e68c2/subjects/npm/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -148,6 +152,9 @@
     <!-- Remark slides -->
     <textarea id='source'>
 # npm
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
 
 
 
@@ -219,9 +226,10 @@ For operating systems:
 
 .breadcrumbs[<a href="#1">npm</a> > <a href="#2">What is npm?</a>]
 
-An npm **package** or **module** is a basically:
+An npm **package** or **module** is basically a **reusable piece of code** that you can install and use.
+It's composed of:
 
-* A directory with some files in it
+* A directory with some files in it (what will be installed)
 * A [package.json][package.json] file with some metadata about the package:
 
 ```json
@@ -287,6 +295,312 @@ npm help npm     involved overview
 
 ---
 class: center, middle
+## npm install
+
+.breadcrumbs[<a href="#1">npm</a>]
+
+
+
+Install a package
+
+
+
+---
+### Installing packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+When you install a package with the `npm install` command, npm creates a `node_modules` directory in the current working directory.
+It then saves the downloaded packages in that directory:
+
+```bash
+$> npm install lodash
+npm-demo@1.0.0 /path/to/projects/npm-demo
+└── lodash@4.17.4
+
+$> ls
+node_modules package.json
+
+$> ls node_modules
+lodash
+```
+
+
+
+---
+### Using installed packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+Any script under the directory where `package.json` and  `node_modules` are can `require` the installed packages:
+
+Create a `script.js` file next to `package.json`:
+
+```js
+const lodash = require('lodash');
+
+let numbers = [ 1, 1, 2, 3, 2 ];
+console.log(lodash.uniq(numbers));
+```
+
+Now run it:
+
+```bash
+$> node script.js
+[ 1, 2, 3 ]
+```
+
+You have used the `uniq` function from the `lodash` package,
+which returns an array with its duplicate elements removed.
+
+
+
+---
+### Tracking installed packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+Now remove the `node_modules` directory:
+
+```bash
+rm -fr node_modules
+```
+
+Your script should no longer work since the `lodash` package is no longer available:
+
+```bash
+$> node script.js
+module.js:471
+    throw err;
+    ^
+
+Error: Cannot find module 'lodash'
+```
+
+You could reinstall it manually, but image that you have **dozens** of dependencies.
+Do you want each team member to **re-type** the same `npm install` commands all the time (or forget them)?
+
+
+
+---
+### The --save option
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+Adding the `--save` option will make npm track the dependency:
+
+```bash
+$> npm install --save lodash
+npm-demo@1.0.0 /path/to/projects/npm-demo
+└── lodash@4.17.4
+```
+
+A new `dependencies` section should have appeared in your `package.json` file:
+
+```json
+{
+  "name": "npm-demo",
+* "dependencies": {
+*   "lodash": "^4.7.14"
+* },
+  ...
+}
+```
+
+
+
+---
+### npm install with a package.json
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+If you delete the `node_modules` directory again and run `npm install`:
+
+```bash
+$> rm -fr node_modules
+$> npm install
+npm-demo@1.0.0 /path/to/projects/npm-demo
+└── lodash@4.17.4
+```
+
+npm has installed the `lodash` package again.
+
+If you don't specify a package to install,
+the install command will read the `package.json` and install the dependencies listed there.
+
+Don't forget the `--save` option when adding dependencies to your project.
+That way, other members of the team will just have to run `npm install`.
+
+
+
+---
+### The --save-dev and --production option
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+You often use two kinds of packages:
+
+* Dependencies that your program or application needs to run (e.g. a database client)
+* Development dependencies that you use during development but do not need to run the application (e.g. a live-reload server)
+
+```bash
+npm install --save-dev gulp
+```
+
+A `devDependencies` section will be added to your `package.json`:
+
+```json
+{
+* "devDependencies": {
+*   "gulp": "^0.9.0"
+* }
+  ...
+}
+```
+
+* `npm install` - Install all dependencies (use when developing)
+* `npm install --production` - Install only normal dependencies (use it to install on a server where you do not need your development tools)
+
+
+
+---
+### The --global option
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+Some packages can be installed **globally**.
+Use the `--global` or `-g` option:
+
+```bash
+$> npm install --global http-server
+```
+
+If you get an `EACCES` error, you need to run `sudo npm install ...` or follow [this procedure][npm-fix-permissions].
+
+Global packages usually provide a **command-line tool**.
+In this case, the `http-server` package is a simple command-line HTTP server:
+
+```bash
+$> http-server
+Starting up http-server, serving ./
+Available on:
+  http://127.0.0.1:8080
+  http://10.178.123.132:8080
+Hit CTRL-C to stop the server
+```
+
+---
+#### Where are global packages installed?
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a> > <a href="#16">The --global option</a>]
+
+Packages installed globally are **not** in a `node_modules` directory in your project.
+They are local to your machine, and **are not saved as dependencies**.
+
+Use `npm config` if you want to see where they are installed:
+
+```bash
+$> npm config get prefix
+/usr/local
+
+$> ls /usr/local/lib/node_modules
+http-server
+```
+
+
+
+---
+class: center, middle
+## npm scripts
+
+.breadcrumbs[<a href="#1">npm</a>]
+
+
+
+Running scripts with npm
+
+
+
+---
+### The scripts property
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#18">npm scripts</a>]
+
+The `scripts` section of the `package.json` file defines scripts that can be run on the command line:
+
+```json
+{
+  "name": "npm-demo",
+* "scripts": {
+*   "start": "node script.js"
+* },
+  ...
+}
+```
+
+Here we define that running `npm start` should execute our script with Node.js:
+
+```bash
+$> npm start
+
+> npm-demo@1.0.0 start /path/to/projects/npm-demo
+> node script.js
+
+[ 1, 2, 3 ]
+```
+
+
+
+---
+### Lifecycle scripts
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#18">npm scripts</a>]
+
+The following scripts are "standard" scripts:
+
+| Script  | Purpose                              | Triggered by
+| :---    | :---                                 | :---
+| start   | Run your program                     | `npm start`
+| stop    | Stop your program                    | `npm stop`
+| restart | Restart your program                 | `npm restart`
+| test    | Run automated tests for your program | `npm test`
+
+Read the [documentation][npm-scripts] to see all the available lifecycle scripts.
+
+
+
+---
+### Custom scripts
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#18">npm scripts</a>]
+
+You can also define your own custom scripts:
+
+```json
+{
+  "name": "npm-demo",
+* "scripts": {
+*   "hello": "echo Hello World!"
+* },
+  ...
+}
+```
+
+These scripts are run with `npm run <script>`:
+
+```bash
+$> npm run hello
+
+> npm-demo@1.0.0 serve-static /path/to/projects/npm-demo
+> echo Hello World!
+
+Hello World!
+```
+
+
+
+---
+class: center, middle
 ## npm init
 
 .breadcrumbs[<a href="#1">npm</a>]
@@ -300,7 +614,7 @@ Create a new package
 ---
 ### Interactively create a package.json file
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm init</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#22">npm init</a>]
 
 Create and move into a new project directory:
 
@@ -336,7 +650,7 @@ license: (ISC)
 ---
 ### What it looks like
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm init</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#22">npm init</a>]
 
 ```json
 {
@@ -359,218 +673,6 @@ Read the [documentation][package.json] to find out everything you can configure 
 
 ---
 class: center, middle
-## npm install
-
-.breadcrumbs[<a href="#1">npm</a>]
-
-
-
-Install a package
-
-
-
----
-### Installing packages
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
-
-When you install a package, npm creates a `node_modules` directory where it saves the downloaded packages.
-
-```bash
-$> npm install lodash
-npm-demo@1.0.0 /path/to/projects/npm-demo
-└── lodash@4.17.4
-
-$> ls
-node_modules package.json
-
-$> ls node_modules
-lodash
-```
-
-
-
----
-### Using installed packages
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
-
-Any script under the directory where `package.json` and  `node_modules` are can `require` the installed packages:
-
-Create a `script.js` file next to `package.json`:
-
-```js
-const lodash = require('lodash');
-
-let numbers = [ 1, 1, 2, 3, 2 ];
-console.log(lodash.uniq(numbers));
-```
-
-Now run it:
-
-```bash
-$> node script.js
-[ 1, 2, 3 ]
-```
-
-You have used the `uniq` function from the `lodash` package,
-which returns an array with its duplicate elements removed.
-
-
-
----
-### Tracking installed packages
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
-
-Now remove the `node_modules` directory:
-
-```bash
-rm -fr node_modules
-```
-
-Your script should no longer work since the `lodash` package is no longer available:
-
-```bash
-$> node script.js
-module.js:471
-    throw err;
-    ^
-
-Error: Cannot find module 'lodash'
-```
-
-
-
----
-### The --save option
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
-
-Adding the `--save` option will make npm track the dependency:
-
-```bash
-$> npm install --save lodash
-npm-demo@1.0.0 /path/to/projects/npm-demo
-└── lodash@4.17.4
-```
-
-A new `dependencies` section should have appeared in your `package.json` file:
-
-```json
-{
-  "name": "npm-demo",
-* "dependencies": {
-*   "lodash": "^4.7.14"
-* },
-  ...
-}
-```
-
-
-
----
-### npm install with a package.json
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
-
-If you delete the `node_modules` directory again and run `npm install`:
-
-```bash
-$> rm -fr node_modules
-$> npm install
-npm-demo@1.0.0 /path/to/projects/npm-demo
-└── lodash@4.17.4
-```
-
-npm has installed the `lodash` package again.
-
-If you don't specify a package to install,
-the install command will read the `package.json` and install the dependencies listed there.
-
-Don't forget the `--save` option when adding dependencies to your project.
-That way, other members of the team will just have to run `npm install`.
-
-
-
----
-### The --save-dev and --production option
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
-
-You often use two kinds of packages:
-
-* Dependencies that your program or application needs to run (e.g. a database client)
-* Development dependencies that you use during development but do not need to run the application (e.g. a live-reload server)
-
-```bash
-npm install --save-dev gulp
-```
-
-A `devDependencies` section will be added to your `package.json`:
-
-```json
-{
-* "devDependencies": {
-*   "gulp": "^0.9.0"
-* }
-  ...
-}
-```
-
-* `npm install` - Install all dependencies (use when developing)
-* `npm install --production` - Install only normal dependencies (use it to install on a server where you do not need your development tools)
-
-
-
----
-### The --global option
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
-
-Some packages can be installed **globally**.
-Use the `--global` or `-g` option:
-
-```bash
-$> npm install --global http-server
-```
-
-If you get an `EACCES` error, you need to run `sudo npm install ...` or follow [this procedure][npm-fix-permissions].
-
-Global packages usually provide a **command-line tool**.
-In this case, the `http-server` package is a simple command-line HTTP server:
-
-```bash
-$> http-server
-Starting up http-server, serving ./
-Available on:
-  http://127.0.0.1:8080
-  http://10.178.123.132:8080
-Hit CTRL-C to stop the server
-```
-
----
-#### Where are global packages installed?
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a> > <a href="#19">The --global option</a>]
-
-Packages installed globally are **not** in a `node_modules` directory in your project.
-They are local to your machine, and **are not saved as dependencies**.
-
-Use `npm config` if you want to see where they are installed:
-
-```bash
-$> npm config get prefix
-/usr/local
-
-$> ls /usr/local/lib/node_modules
-http-server
-```
-
-
-
----
-class: center, middle
 ## npm publish
 
 .breadcrumbs[<a href="#1">npm</a>]
@@ -584,7 +686,7 @@ Publish a package
 ---
 ### What do I need to publish?
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#21">npm publish</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm publish</a>]
 
 You need a valid `package.json` file.
 
@@ -606,7 +708,7 @@ they will get the same result as if they had required that file.
 ---
 ### Publishing
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#21">npm publish</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm publish</a>]
 
 Publishing is as simple as running the `npm publish` command in the directory where your `package.json` file is located:
 
@@ -624,7 +726,7 @@ Names are registered on a **first-come, first-serve** basis.
 ---
 ### Avoiding publication
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#21">npm publish</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm publish</a>]
 
 Sometimes you write code that should not be published:
 
@@ -646,164 +748,6 @@ In these cases, you can set the `private` property of the `package.json` file:
 
 
 ---
-class: center, middle
-## npm scripts
-
-.breadcrumbs[<a href="#1">npm</a>]
-
-
-
-Running scripts with npm
-
-
-
----
-### The scripts property
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a>]
-
-The `scripts` section of the `package.json` file defines scripts that can be run on the command line:
-
-```json
-{
-  "name": "npm-demo",
-* "scripts": {
-*   "start": "node script.js"
-* },
-  ...
-}
-```
-
-Here we define that running `npm start` should execute our script with Node.js:
-
-```bash
-$> npm start
-
-> npm-demo@1.0.0 start /path/to/projects/npm-demo
-> node script.js
-
-[ 1, 2, 3 ]
-```
-
-
-
----
-### Lifecycle scripts
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a>]
-
-The following scripts are "standard" scripts:
-
-| Script  | Purpose                              | Triggered by
-| :---    | :---                                 | :---
-| start   | Run your program                     | `npm start`
-| stop    | Stop your program                    | `npm stop`
-| restart | Restart your program                 | `npm restart`
-| test    | Run automated tests for your program | `npm test`
-
-Read the [documentation][npm-scripts] to see all the available lifecycle scripts.
-
-
-
----
-### Custom scripts
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a>]
-
-You can also define your own custom scripts:
-
-```json
-{
-  "name": "npm-demo",
-* "scripts": {
-*   "hello": "echo Hello World!"
-* },
-  ...
-}
-```
-
-These scripts are run with `npm run <script>`:
-
-```bash
-$> npm run serve-static
-
-> npm-demo@1.0.0 serve-static /path/to/projects/npm-demo
-> echo Hello World!
-
-Hello World!
-```
-
-
-
----
-### Scripts and the PATH
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a>]
-
-Package scripts (both lifecycle and custom scripts) have an interesting property:
-
-* If you add packages that provide **command-line tools** as dependencies,
-  their binaries will be **added to the PATH**.
-* It's a way to add package dependencies that are normally installed globally,
-  so that your team doesn't have to reinstall them on every machine.
-
----
-#### Installing a "global" module as a dependency
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a> > <a href="#29">Scripts and the PATH</a>]
-
-Uninstall the global version of the static HTTP server we used earlier,
-and install it as a development dependency instead:
-
-```bash
-$> npm uninstall --global http-server
-$> npm install --save-dev http-server
-```
-
-You should no longer be able to run it:
-
-```bash
-$> http-server
-http-server: command not found
-```
-
-Since it was not installed globally, its binary is **not in the PATH**.
-
----
-#### Running a "global" module with a run script
-
-.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm scripts</a> > <a href="#29">Scripts and the PATH</a>]
-
-However, if you put it in a custom package script:
-
-```json
-{
-  "name": "npm-demo",
-* "scripts": {
-*   "serve-static": "http-server"
-* },
-  ...
-}
-```
-
-It works because npm puts it in the PATH for you.
-
-```bash
-$> npm run serve-static
-
-> npm-demo@1.0.0 serve-static /path/to/projects/npm-demo
-> http-server
-
-Starting up http-server, serving ./
-Available on:
-  http://127.0.0.1:8080
-  http://10.192.112.121:8080
-Hit CTRL-C to stop the server
-```
-
-
-
----
 ## Resources
 
 .breadcrumbs[<a href="#1">npm</a>]
@@ -821,6 +765,7 @@ Hit CTRL-C to stop the server
 .breadcrumbs[<a href="#1">npm</a>]
 
 * https://docs.npmjs.com/getting-started/fixing-npm-permissions
+* show more complex install example with Express
 
 
 
@@ -845,15 +790,15 @@ Hit CTRL-C to stop the server
       $('#slide-links .home-link').each(function() {
         var $a = $(this);
 
-        var queryParams = URI(window.location.href).search(true);
-        if (!queryParams.home || typeof(queryParams.home) != 'string') {
-          return;
-        }
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
 
-        if (queryParams.home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
-          $a.attr('href', 'https://github.com/' + queryParams.home);
-        } else {
-          $a.attr('href', queryParams.home);
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
         }
       });
 
@@ -866,7 +811,7 @@ Hit CTRL-C to stop the server
       $('#slide-links').remove().prependTo(slides).show();
 
       // Make all external links open a new window
-      $('a[href]').not('[href^="#"]').attr('target', '_blank');
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
     </script>
   </body>
 </html>

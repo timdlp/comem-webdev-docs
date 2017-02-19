@@ -54,6 +54,10 @@
         border: thin solid #dddddd;
       }
 
+      .remark-slide-content p:first-child {
+        margin-top: 0;
+      }
+
       .container {
         clear: both;
       }
@@ -135,12 +139,12 @@
   <body>
 
     <!-- Slides top-left logo -->
-    <span id='slide-logo' style='display:none;'><img src='../heig.png' /></span>
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
 
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/1f09fbc4d7f7816dc3b1da22f2ee77ff0c2b9838/subjects/git-collaborating/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/3eaf93d85bb898cc8dd1c5a10959c4b23b7e68c2/subjects/git-collaborating/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -148,6 +152,9 @@
     <!-- Remark slides -->
     <textarea id='source'>
 # Collaborating with Git
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
 
 Requirements:
 
@@ -275,7 +282,7 @@ Clone repositories, push and pull commits
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
 
-TODO: add B as a collaborator
+TODO: add B as a collaborator (do not forget to accept the invitation in the e-mail)
 
 
 
@@ -317,7 +324,7 @@ It's time for **Person A** to put the code in the shared GitHub repository.
 This is done using the `git push` command:
 
 ```bash
-$> git push origin master
+$> git push -u origin master
 Counting objects: 35, done.
 Delta compression using up to 8 threads.
 Compressing objects: 100% (33/33), done.
@@ -329,6 +336,8 @@ To github.com:PersonA/github-demo.git
 ```
 
 The command `git push [remote] [branch]` tells Git to push the commit pointed to by `[branch]` to the remote named `[remote]`.
+
+The `-u` option (or `--set-upstream`) tells Git to remember that you have linked this branch to that remote.
 
 
 
@@ -381,7 +390,7 @@ Resolving deltas: 100% (14/14), done.
 $> cd github-demo
 ```
 
-The `git clone [url]` command copies the repository to your machine.
+The `git clone [url]` command copies the **remote** repository to your machine.
 
 
 
@@ -418,7 +427,7 @@ so that you can know what the current state of the remote is.
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
 
-**Person B** thinks that the project's files are too complicated. Let's simplify:
+**Person B** thinks that the project's filenames are too long. Let's fix that:
 
 ```bash
 $> mv addition.js add.js
@@ -775,6 +784,21 @@ $> git push origin master
 
 
 
+---
+### A: pull the changes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+
+**Person A** can now pull those latest changes to keep up-to-date:
+
+```bash
+$> git pull origin master
+```
+
+<img src='images/demo-11-git-pull.png' width='80%' />
+
+
+
 [distributed-workflows]: https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows
 [git]: https://git-scm.com
 [git-tutorial]: ../git/
@@ -796,15 +820,15 @@ $> git push origin master
       $('#slide-links .home-link').each(function() {
         var $a = $(this);
 
-        var queryParams = URI(window.location.href).search(true);
-        if (!queryParams.home || typeof(queryParams.home) != 'string') {
-          return;
-        }
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
 
-        if (queryParams.home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
-          $a.attr('href', 'https://github.com/' + queryParams.home);
-        } else {
-          $a.attr('href', queryParams.home);
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
         }
       });
 
@@ -817,7 +841,7 @@ $> git push origin master
       $('#slide-links').remove().prependTo(slides).show();
 
       // Make all external links open a new window
-      $('a[href]').not('[href^="#"]').attr('target', '_blank');
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
     </script>
   </body>
 </html>

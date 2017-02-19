@@ -54,6 +54,10 @@
         border: thin solid #dddddd;
       }
 
+      .remark-slide-content p:first-child {
+        margin-top: 0;
+      }
+
       .container {
         clear: both;
       }
@@ -135,12 +139,12 @@
   <body>
 
     <!-- Slides top-left logo -->
-    <span id='slide-logo' style='display:none;'><img src='../heig.png' /></span>
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
 
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/1f09fbc4d7f7816dc3b1da22f2ee77ff0c2b9838/subjects/git-branching/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/3eaf93d85bb898cc8dd1c5a10959c4b23b7e68c2/subjects/git-branching/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -149,26 +153,68 @@
     <textarea id='source'>
 # Git Branching
 
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
+
 
 
 
 
 ---
+class: center, middle
 ## What is branching?
 
 .breadcrumbs[<a href="#1">Git Branching</a>]
 
-> Branching means you diverge from the main line of development and continue to do work without messing with that main line.
+
 
 <p class='center'><img src='images/commits.png' width='45%' /></p>
 
-Git has a very powerful branching model:
+> Branching means you diverge from the main line of development and continue to do work without messing with that main line.
 
-* Git branches are incredibly **lightweight**.
-* Branching operations are nearly **instantaneous**.
-* Switching between branches is generally just as **fast**.
 
-Git encourages workflows that branch and merge often.
+
+---
+### Why use branches?
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
+
+Git has a very powerful branching model that is very **lightweight and fast**: it encourages workflows that branch and merge often.
+
+Many teams using Git create a **separate branch** to develop **each feature**.
+This has many advantages:
+
+* Each developer can work on his own feature, **isolated** from changes going on elsewhere
+* They can pull in changes from the mainline **at their own pace**
+* The team can choose **which features to release** and when
+
+
+
+---
+### What is a branch?
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
+
+Remember that Git stores data as a series of snapshots.
+
+<img src='images/snapshots.png' width='45%' />
+
+Each **commit** contains a pointer to the snapshot of the content you staged, the author's user name and e-mail,
+and also a pointer to the previous commit.
+
+---
+#### Branches point to commits
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a> > <a href="#4">What is a branch?</a>]
+
+A branch is simply a lightweight, movable pointer to a commit.
+
+<img src='images/branch.png' width='45%' />
+
+The default branch is **master**.
+The special **HEAD** pointer indicates the current branch.
+
+As you start making commits, the current branch pointer **automatically moves** forward to your latest commit.
 
 
 
@@ -194,84 +240,6 @@ Open the project with your favorite editor and open its `index.html` page in a b
 
 
 ---
-### What is a branch?
-
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
-
-Remember that Git stores data as a series of snapshots.
-
-<img src='images/snapshots.png' width='45%' />
-
-Each **commit** contains a pointer to the snapshot of the content you staged, the author's user name and e-mail,
-and also a pointer to the previous commit.
-
-
-
----
-### Branches point to commits
-
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
-
-A branch is simply a lightweight, movable pointer to a commit.
-
-<img src='images/branch.png' width='45%' />
-
-The default branch is **master**.
-The special **HEAD** pointer indicates the current branch.
-
-As you start making commits, the current branch pointer **automatically moves** forward to your latest commit.
-
-
-
----
-### Showing branches on the command line
-
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
-
-The `git log` command can show you a representation of the commit graph and its branches:
-
-```bash
-$> git log --oneline --decorate --graph --all
- * 4f94ga (HEAD -> master) Improve layout
- * 9ab3gd Fix addition
- * 387f12 First version
-```
-
-In fact, this command is so useful you should make an alias:
-
-```bash
-$> git config --global alias.graph "log --oneline --graph --decorate --all"
-
-$> git graph
- * 4f94ga (HEAD -> master) Improve layout
- * 9ab3gd Fix addition
- * 387f12 First version
-```
-
-You can also use `git branch` to simply see the list of branches and which one you are currently on:
-
-```bash
-$> git branch
- * master
-```
-
-
-
----
-### Why use branches?
-
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#2">What is branching?</a>]
-
-Many teams using Git create a **separate branch** to develop **each feature**.
-This has many advantages:
-
-* Each developer can work on his own feature, **isolated** from changes going on elsewhere.
-* They can pull in changes from the mainline **at their own pace**.
-* The team can choose **which features to release** and when.
-
-
-
----
 class: center, middle
 ## Working with branches
 
@@ -282,9 +250,36 @@ class: center, middle
 
 
 ---
+### Showing branches on the command line
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
+
+The `git log` command can show you a representation of the commit graph and its branches:
+
+```bash
+$> git log --oneline --decorate --graph --all
+ * 4f94ga (HEAD -> master) Improve layout
+ * 9ab3gd Fix addition
+ * 387f12 First version
+```
+
+In fact, this command is so useful you should make an **alias**, as we will use it a lot in this tutorial:
+
+```bash
+$> git config --global alias.graph "log --oneline --graph --decorate --all"
+
+$> git graph
+ * 4f94ga (HEAD -> master) Improve layout
+ * 9ab3gd Fix addition
+ * 387f12 First version
+```
+
+
+
+---
 ### Create a new branch
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
 
 > **Exercise:** our JavaScript calculator is missing some code.
 > Let's create a branch to implement subtraction.
@@ -300,12 +295,25 @@ $> git branch feature-sub
 There is now a new pointer to the current commit.
 Note that **HEAD** didn't move – we are still on the **master** branch.
 
+---
+#### Showing the current branch
+
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a> > <a href="#9">Create a new branch</a>]
+
+You can use `git branch` without arguments to simply see the list of branches and which one you are currently on:
+
+```bash
+$> git branch
+ * master
+   feature-sub
+```
+
 
 
 ---
 ### Switch branches
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
 
 Now let's switch branches:
 
@@ -323,7 +331,7 @@ This moves `HEAD` to point to the `feature-sub` branch.
 ---
 ### Commit on a branch
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
 
 > **Exercise:** implement subtraction in `subtraction.js` and commit your changes.
 
@@ -341,7 +349,7 @@ $> git commit -m "Implement subtraction"
 ---
 ### Switch back to master
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
 
 > **Exercise:** oops, you just noticed that addition is not working correctly.
 > You need to make a bugfix, but you don't want to mix that code with the new subtraction feature.
@@ -355,7 +363,7 @@ Switched to branch 'master'
 ---
 #### Checkout behavior
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a> > <a href="#12">Switch back to master</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a> > <a href="#13">Switch back to master</a>]
 
 Two things happened:
 
@@ -371,7 +379,7 @@ You have essentially **rewinded** the work you've done in `feature-sub`, and are
 ---
 ### Create another branch
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
 
 > **Exercise:** let's a create a new branch to fix the bug.
 
@@ -391,7 +399,7 @@ Nothing has changed yet because fix-add still points to the same commit as maste
 ---
 ### Work on a separate branch
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
 
 > **Exercise:** fix addition in `addition.js` and commit your changes.
 
@@ -405,7 +413,7 @@ $> git commit -m "Fix addition"
 ---
 #### Divergent history
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a> > <a href="#15">Work on a separate branch</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a> > <a href="#16">Work on a separate branch</a>]
 
 Now your project history has **diverged**.
 
@@ -419,7 +427,7 @@ You can **switch back and forth** between the branches with `git checkout`.
 ---
 ### Merging
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
 
 > **Exercise:** once you've tested your fix and made sure it works,
   you want to bring those changes back into the master branch.
@@ -444,7 +452,7 @@ This is what is called a fast-forward.
 ---
 ### Delete a branch
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
 
 > **Exercise:** now that we've brought our fix back into master, we don't need the fix-add branch anymore.
   Let's delete it.
@@ -461,7 +469,7 @@ Deleted branch fix-add (was 2817bc).
 ---
 ### Continue working on a feature branch
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
 
 > **Exercise:** let's switch back to our feature-sub branch and finish our work.
   Write a comment for the subtract function and commit your changes.
@@ -480,7 +488,7 @@ $> git commit -m "Comment subtract function"
 ---
 ### Merge a divergent history
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a>]
 
 > **Exercise:** now that we're happy with our new subtraction feature, we want to merge it into master as well.
 
@@ -494,7 +502,7 @@ A new commit will be created representing that state.
 ---
 #### Merge commit message
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a> > <a href="#20">Merge a divergent history</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a> > <a href="#21">Merge a divergent history</a>]
 
 > **Exercise:** switch back to the master branch and merge feature-sub into it.
 
@@ -524,7 +532,7 @@ Type `:wq` (**w**rite and **q**uit) to save and exit.
 ---
 #### Merge commit
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#8">Working with branches</a> > <a href="#20">Merge a divergent history</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#7">Working with branches</a> > <a href="#21">Merge a divergent history</a>]
 
 You can see the new **merge commit** that Git has created.
 It is a special commit in that it has more than one parent:
@@ -555,7 +563,7 @@ Let's pretend that a colleague of yours also implemented the subtraction functio
 ---
 ### Find the common ancestor
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#24">Merge conflicts</a>]
 
 We want to make it look as if your colleague did his work **at the same time** as you.
 Let's find the original starting point (the common ancestor where feature-sub and fix-add diverged) and start a new branch from there:
@@ -580,7 +588,7 @@ Make a copy of that commit hash.
 ---
 ### Create a branch "in the past"
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#24">Merge conflicts</a>]
 
 You can create a branch at any point in the project's history by passing an additional commit reference to `git checkout`:
 
@@ -609,7 +617,7 @@ git commit -m "Implemented a better subtract"
 ---
 ### Merge the conflicting branch
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#24">Merge conflicts</a>]
 
 Go back to master and merge better-sub:
 
@@ -629,7 +637,7 @@ Git tells you that a **content conflict** occurred in `subtraction.js`.
 ---
 ### Check the status of the conflict
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#24">Merge conflicts</a>]
 
 Let's see what `git status` tells us:
 
@@ -660,7 +668,7 @@ Git tells you several things:
 ---
 ### Inspect the conflicted file
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#24">Merge conflicts</a>]
 
 Let's see what's in `subtraction.js`:
 
@@ -690,7 +698,7 @@ Notice two things here:
 ---
 ### Conflict markers
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#24">Merge conflicts</a>]
 
 Take a closer look at the conflict markers:
 
@@ -719,7 +727,7 @@ return -b + a;
 ---
 ### Mark the conflict as resolved
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#23">Merge conflicts</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#24">Merge conflicts</a>]
 
 Now that you have fixed the conflict, do as instructed by Git and add the file to the staging area:
 
@@ -769,7 +777,7 @@ $> git commit -m "Remove incomplete implementations"
 ---
 ### Merge the conflicting branch
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#31">Merge file conflicts</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#32">Merge file conflicts</a>]
 
 Let's try to merge that branch into master:
 
@@ -792,7 +800,7 @@ Git tells you immediately that there is a conflict and that:
 ---
 ### Check the status of the file conflict
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#31">Merge file conflicts</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#32">Merge file conflicts</a>]
 
 Let's see what `git status` tells us:
 
@@ -822,7 +830,7 @@ Again, Git gives us some information:
 ---
 ### Resolving the file conflict
 
-.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#31">Merge file conflicts</a>]
+.breadcrumbs[<a href="#1">Git Branching</a> > <a href="#32">Merge file conflicts</a>]
 
 You have to choose whether you want to:
 
@@ -876,15 +884,15 @@ $> git commit -m "Merge cleanup (kept implemented subtraction.js)"
       $('#slide-links .home-link').each(function() {
         var $a = $(this);
 
-        var queryParams = URI(window.location.href).search(true);
-        if (!queryParams.home || typeof(queryParams.home) != 'string') {
-          return;
-        }
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
 
-        if (queryParams.home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
-          $a.attr('href', 'https://github.com/' + queryParams.home);
-        } else {
-          $a.attr('href', queryParams.home);
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
         }
       });
 
@@ -897,7 +905,7 @@ $> git commit -m "Merge cleanup (kept implemented subtraction.js)"
       $('#slide-links').remove().prependTo(slides).show();
 
       // Make all external links open a new window
-      $('a[href]').not('[href^="#"]').attr('target', '_blank');
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
     </script>
   </body>
 </html>

@@ -54,6 +54,10 @@
         border: thin solid #dddddd;
       }
 
+      .remark-slide-content p:first-child {
+        margin-top: 0;
+      }
+
       .container {
         clear: both;
       }
@@ -135,12 +139,12 @@
   <body>
 
     <!-- Slides top-left logo -->
-    <span id='slide-logo' style='display:none;'><img src='../heig.png' /></span>
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
 
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/1f09fbc4d7f7816dc3b1da22f2ee77ff0c2b9838/subjects/mongodb/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/3eaf93d85bb898cc8dd1c5a10959c4b23b7e68c2/subjects/mongodb/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -148,6 +152,9 @@
     <!-- Remark slides -->
     <textarea id='source'>
 # MongoDB
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
 
 
 
@@ -604,12 +611,34 @@ Indexes can support the efficient execution of queries and enforce constraints.
 
 
 ---
+### Unique indexes
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
+
+A unique index enforces uniqueness for the indexed fields:
+
+```js
+// Ensure that there are no two people born on the same day
+db.people.createIndex({ "birthDate": 1 }, { "unique": true })
+
+// Ensure that there are no two people with the same name in the same city
+db.people.createIndex({ "name": 1, "address.city": 1 }, { "unique": true })
+```
+
+By default, MongoDB creates a unique index on the `_id` field during the creation of a collection.
+
+Read the [documentation on indexes][indexes] to find out more about other types of indexes.
+
+
+
+---
 ### Query performance
 
 .breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
 
 Without indexes, MongoDB must perform a **full collection scan** to find the matching documents.
-Use `explain` to find out how a query will be executed:
+Use `explain` to find out how a query will be executed.
+The `COLLSCAN` value in the `winningPlan` object tells us that a collection scan will be performed when executing that query:
 
 ```bash
 > db.people.find({ name: "John A. Smith" }).explain()
@@ -635,7 +664,7 @@ Use `explain` to find out how a query will be executed:
 ```
 
 ---
-### Creating indexes
+### Improving performance with indexes
 
 .breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
 
@@ -659,7 +688,7 @@ Use [createIndex][create-index] to add an index:
 
 .breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
 
-Run `explain` again to confirm that your index will be applied:
+Run `explain` again to confirm that your index will be applied (you should see `IXSCAN` in the `winningPlan` object):
 
 ```bash
 > db.people.find({ name: "John A. Smith" }).explain()
@@ -689,7 +718,7 @@ Run `explain` again to confirm that your index will be applied:
 
 
 ---
-### Compound indexes
+### Performance of compound indexes
 
 .breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
 
@@ -715,27 +744,6 @@ db.people.find({}).sort({ "birthDate": 1, "name": -1 })
 // The index will NOT be used, and MongoDB will revert to a collection scan
 db.people.find({}).sort({ "birthDate": 1, "name": 1 })
 ```
-
-
-
----
-### Unique indexes
-
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
-
-A unique index enforces uniqueness for the indexed fields
-
-```js
-// Ensure that there are no two people born on the same day
-db.people.createIndex({ "birthDate": 1 }, { "unique": true })
-
-// Ensure that there are no two people with the same name in the same city
-db.people.createIndex({ "name": 1, "address.city": 1 }, { "unique": true })
-```
-
-By default, MongoDB creates a unique index on the `_id` field during the creation of a collection.
-
-Read the [documentation on indexes][indexes] to find out more about other types of indexes.
 
 
 
@@ -785,15 +793,15 @@ Read the [documentation on indexes][indexes] to find out more about other types 
       $('#slide-links .home-link').each(function() {
         var $a = $(this);
 
-        var queryParams = URI(window.location.href).search(true);
-        if (!queryParams.home || typeof(queryParams.home) != 'string') {
-          return;
-        }
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
 
-        if (queryParams.home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
-          $a.attr('href', 'https://github.com/' + queryParams.home);
-        } else {
-          $a.attr('href', queryParams.home);
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
         }
       });
 
@@ -806,7 +814,7 @@ Read the [documentation on indexes][indexes] to find out more about other types 
       $('#slide-links').remove().prependTo(slides).show();
 
       // Make all external links open a new window
-      $('a[href]').not('[href^="#"]').attr('target', '_blank');
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
     </script>
   </body>
 </html>

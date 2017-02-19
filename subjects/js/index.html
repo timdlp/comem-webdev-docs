@@ -54,6 +54,10 @@
         border: thin solid #dddddd;
       }
 
+      .remark-slide-content p:first-child {
+        margin-top: 0;
+      }
+
       .container {
         clear: both;
       }
@@ -135,12 +139,12 @@
   <body>
 
     <!-- Slides top-left logo -->
-    <span id='slide-logo' style='display:none;'><img src='../heig.png' /></span>
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
 
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/1f09fbc4d7f7816dc3b1da22f2ee77ff0c2b9838/subjects/js/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/3eaf93d85bb898cc8dd1c5a10959c4b23b7e68c2/subjects/js/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -148,6 +152,9 @@
     <!-- Remark slides -->
     <textarea id='source'>
 # JavaScript
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
 
 
 
@@ -353,7 +360,7 @@ aVariable = true;
 console.log(typeof aVariable); // "boolean"
 
 aVariable = [ 1, 2, 3 ];
-console.log(typeof aVariable); // "array"
+console.log(typeof aVariable); // "object"
 
 aVariable = {
   aProperty: "aValue"
@@ -455,36 +462,54 @@ return function(n) {
 A function can take another function as an argument.
 
 ```js
+function hello(name) {
+  console.log('Hello ' + name + '!');
+}
+
+function callIt(func) {
+  func('World');
+}
+
+callIt(hello); // "Hello World!"
+```
+
+---
+#### Function as argument exercise
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#10">JavaScript supports [first-class functions][first-class-functions]</a> > <a href="#13">Passing functions as arguments</a>]
+
+```js
 // Let's define a couple of arithmetic function
 function add(a, b) {
   return a + b;
 }
-
 function multiply(a, b) {
   return a * b;
 }
 
-// Define a function that takes two numbers and a 
+// Define a function that takes two numbers
 // and a function to apply to those numbers
-function compute(a, b, operation) {
-  // Call the operation function with the two numbers
-  var result = operation(a, b);
-  // Return the result
-  return result;
+function compute() {
+  // Give me some arguments and implement me!
 }
 
-// We can pass "add" to the "compute" function
+// Call compute with "add"
 var value = compute(2, 4, add);
 console.log(value); // 6
 
+// Call compute with "multiply"
 value = compute(2, 4, multiply);
 console.log(value); // 8
 ```
 
+Try to [implement it!][ex-function-as-argument]
+
+Use the console in your browser's developer tools to see what the `console.log` calls print.
+
 
 
 ---
-### Functional programming
+### Transforming data with functions
 
 .breadcrumbs[<a href="#1">JavaScript</a> > <a href="#10">JavaScript supports [first-class functions][first-class-functions]</a>]
 
@@ -527,7 +552,7 @@ class: center, middle
 ---
 ### Defining variables
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#16">Variables</a>]
 
 There are three ways to define a variable in JavaScript:
 
@@ -547,7 +572,7 @@ Note that `var` always works, but `let` and `const` are only available in **ES6*
 ---
 ### Dynamic or constant variables
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#16">Variables</a>]
 
 Variables declared with `var` or `let` are dynamic.
 Their value can **change** over time.
@@ -580,7 +605,7 @@ theMeaningOfLife = 43; // TypeError: Assignment to constant variable.
 ---
 ### The function scope
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#16">Variables</a>]
 
 Variables declared with `var` in a function are visible **everywhere in that function**.
 Note that they are **NOT block-scoped** like in most languages.
@@ -615,10 +640,10 @@ logThings([ 'apple', 'banana', 'pear' ]);
 ---
 ### The block scope
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#16">Variables</a>]
 
 The `let` and `const` keywords introduced in **ES6** create **block-scoped** variables,
-only visible in the block, statement or expression on which they is used.
+only visible in the block, statement or expression on which they are used.
 
 ```js
 function logThings(things) {
@@ -648,7 +673,7 @@ It is recommended to use them instead of `var` in **ES6-compatible** environment
 ---
 ### The (evil) global scope
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#16">Variables</a>]
 
 Variables declared with `var` outside of any function are **global variables**, accessible anywhere.
 
@@ -678,7 +703,7 @@ You should **almost never use them**.
 ---
 #### When it's okay to use the global scope
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a> > <a href="#20">The (evil) global scope</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#16">Variables</a> > <a href="#21">The (evil) global scope</a>]
 
 In an **HTML page**, all loaded scripts share the same global scope.
 
@@ -694,7 +719,7 @@ If you're not writing either one of those, just **don't use global variables**.
 ---
 #### Oops, global scope
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#15">Variables</a> > <a href="#20">The (evil) global scope</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#16">Variables</a> > <a href="#21">The (evil) global scope</a>]
 
 If you forget the `var`, `let` or `const` keyword, JavaScript will not complain.
 It will simply consider the variable global.
@@ -729,6 +754,7 @@ Just **don't do it**.
 
 * Strings: single quotes, double quotes, template literals
 * JSON: relationship to JavaScript objects, parsing and serializing
+* Constructor functions
 * Array operations
 
 
@@ -751,6 +777,7 @@ Just **don't do it**.
 
 [babel]: http://babeljs.io
 [es]: https://en.wikipedia.org/wiki/ECMAScript
+[ex-function-as-argument]: http://codepen.io/AlphaHydrae/pen/dNBpPv?editors=0010
 [first-class-functions]: https://en.wikipedia.org/wiki/First-class_function
 [js-arrow-functions]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
 [js-async]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
@@ -778,15 +805,15 @@ Just **don't do it**.
       $('#slide-links .home-link').each(function() {
         var $a = $(this);
 
-        var queryParams = URI(window.location.href).search(true);
-        if (!queryParams.home || typeof(queryParams.home) != 'string') {
-          return;
-        }
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
 
-        if (queryParams.home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
-          $a.attr('href', 'https://github.com/' + queryParams.home);
-        } else {
-          $a.attr('href', queryParams.home);
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
         }
       });
 
@@ -799,7 +826,7 @@ Just **don't do it**.
       $('#slide-links').remove().prependTo(slides).show();
 
       // Make all external links open a new window
-      $('a[href]').not('[href^="#"]').attr('target', '_blank');
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
     </script>
   </body>
 </html>

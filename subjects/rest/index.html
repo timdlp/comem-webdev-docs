@@ -54,6 +54,10 @@
         border: thin solid #dddddd;
       }
 
+      .remark-slide-content p:first-child {
+        margin-top: 0;
+      }
+
       .container {
         clear: both;
       }
@@ -135,12 +139,12 @@
   <body>
 
     <!-- Slides top-left logo -->
-    <span id='slide-logo' style='display:none;'><img src='../heig.png' /></span>
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
 
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/1f09fbc4d7f7816dc3b1da22f2ee77ff0c2b9838/subjects/rest/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/3eaf93d85bb898cc8dd1c5a10959c4b23b7e68c2/subjects/rest/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -148,6 +152,9 @@
     <!-- Remark slides -->
     <textarea id='source'>
 # REST APIs Introduction
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
 
 Requirements:
 
@@ -248,11 +255,11 @@ class: center, middle
 
 .breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#7">RESTful web services</a>]
 
-* API means [Application Programming Interface][api].
+* API means [Application Programming Interface][api]
 
   > A clearly defined method of communication to interact with your program/service.
 
-* REST means [REpresentational State Transfer][rest].
+* REST means [REpresentational State Transfer][rest]
 
   > An architectural style for building distributed computer systems on the Internet (i.e. it's a type of [Web Service][web-service]).
 
@@ -260,7 +267,7 @@ class: center, middle
 
 ???
 
-* REST has been introduced in Roy Fielding’s Ph.D. thesis (Roy Fielding has been a contributor to the HTTP specification, to the apache server, to the apache community).
+REST has been introduced in Roy Fielding’s Ph.D. thesis (Roy Fielding has been a contributor to the HTTP specification, to the apache server, to the apache community).
 
 
 
@@ -348,8 +355,8 @@ scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]
 
 .breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#7">RESTful web services</a>]
 
-* In REST, we use the HTTP protocol to support the exchange of data between a **client** and a **server**.
-* What is exchanged is not the actual resource: it is a **representation** of the resource.
+* In REST, we use the HTTP protocol to support the exchange of data between a **client** and a **server**
+* What is exchanged is not the actual resource: it is a **representation** of the resource
 * The **same resource** could have:
   * An HTML representation
   * An XML representation
@@ -486,9 +493,9 @@ The **query string** is the third part of the request line:
 These are parameters given to the server, usually to *filter* the resource.
 In this case:
 
-* `page=3` - we want the third page.
-* `pageSize=50` - we want pages of 50 movies.
-* `orderBy=title` - we want the movies ordered by title.
+* `page=3` - we want the third page
+* `pageSize=50` - we want pages of 50 movies
+* `orderBy=title` - we want the movies ordered by title
 
 ---
 #### Headers
@@ -505,8 +512,8 @@ GET /movies/best?page=3&pageSize=50&orderBy=title HTTP/1.1
 
 This allows the client to tell the server how to serve the request:
 
-* `Accept: application/html,*/*` - I prefer HTML, but otherwise give me any format you have.
-* `Host: www.example.com` - This is the domain I want the resource from.
+* `Accept: application/html,*/*` - I prefer HTML, but otherwise give me any format you have
+* `Host: www.example.com` - This is the domain I want the resource from
 
 There are many [headers][headers] that can be used in requests.
 
@@ -530,8 +537,9 @@ Host: www.example.com
 
 In this case:
 
-* It's a `POST` request, so the server should create a new resource.
-* The `Content-Type` header is `application/json`, so the server should interepret the body as a JSON payload.
+* It's a `POST` request, so the server should create a new resource
+* The `Content-Type` header is `application/json`, so the server should interepret the body as a JSON payload
+  and use that data to create the resource
 
 
 
@@ -613,9 +621,9 @@ HTTP/1.1 200 OK
 
 It allows the server to give the client additional metadata about the response:
 
-* `Content-Language: en` - The response contains information in English.
-* `Content-Type: application/json` - The response body is a JSON payload.
-* `Last-Modified: Tue, 07 Feb 2017 02:12:22 GMT` - The resource was last modified on February 7th.
+* `Content-Language: en` - The response contains information in English
+* `Content-Type: application/json` - The response body is a JSON payload
+* `Last-Modified: Tue, 07 Feb 2017 02:12:22 GMT` - The resource was last modified on February 7th
 
 There are many [headers][headers] that can be used in responses.
 
@@ -947,15 +955,15 @@ TODO: HTTP status codes link
       $('#slide-links .home-link').each(function() {
         var $a = $(this);
 
-        var queryParams = URI(window.location.href).search(true);
-        if (!queryParams.home || typeof(queryParams.home) != 'string') {
-          return;
-        }
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
 
-        if (queryParams.home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
-          $a.attr('href', 'https://github.com/' + queryParams.home);
-        } else {
-          $a.attr('href', queryParams.home);
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
         }
       });
 
@@ -968,7 +976,7 @@ TODO: HTTP status codes link
       $('#slide-links').remove().prependTo(slides).show();
 
       // Make all external links open a new window
-      $('a[href]').not('[href^="#"]').attr('target', '_blank');
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
     </script>
   </body>
 </html>
