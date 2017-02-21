@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Collaborating with Git (COMEM+ Web Dev)</title>
+    <title>Collaborating with Git (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -151,7 +151,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/148df251a845a367abf5db0e7445652eb714118a/subjects/git-collaborating/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/6c088db2e868a2fd627ad5883351df4fc0f81ab2/subjects/git-collaborating/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -205,7 +205,7 @@ You can have **several of them**.
 
 Collaborating with others involves **pushing** and **pulling** data to and from these remote repositories when you need to share work.
 
-TODO: multiple remotes diagram (local network, internet, etc)
+<p class='center'><img src='images/remotes.png' width='70%' /></p>
 
 
 
@@ -247,10 +247,77 @@ Both group members should register on GitHub:
 
 <p class='center'><img src='images/github-account.jpg' width='100%'></p>
 
-TODO: add ssh key to account
+---
+#### Create an SSH key
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a> > <a href="#6">Working with GitHub</a>]
+
+To push code to GitHub, you will need to **authenticate** yourself.
+There are two methods of authentication: HTTPS username/password or SSH keys.
+We will use an **SSH key** for this tutorial.
+You can check if you have one already with this command:
+
+```bash
+$> ls ~/.ssh
+id_rsa  id_rsa.pub
+```
+
+If you see these files, then you already have an SSH key pair (`id_rsa` is the **private** key, `id_rsa.pub` is the **public** key).
+
+If you don't (or see a *"No such file or directory"* error), use this command to generate a new key pair (press Enter at every prompt to keep the defaults):
+
+```bash
+$> ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/.ssh/id_rsa.
+Your public key has been saved in /home/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:ULmjUQDN4Snkh0s9u093mcva4cI94cDk name@host
+```
+
+---
+#### Copy the SSH key
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a> > <a href="#6">Working with GitHub</a>]
+
+To authenticate using your SSH key on GitHub, you will need to copy your **public key**.
+You can display it on the terminal with this command:
+
+```bash
+$> cat ~/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAEAQC+OMYWxBCiKa1lZuUc8sLcSBW17h
+l4VTy9DaarFC98KxS3NQao/7+eMkOS3o1II4QL7pn7WMYITWpWP9UdJKNef/KQlTpS
+1QVbhb6iJ2z2+GGt8+b0GvBRAZgab9TeOIrzN1QyknO4 name@host
+```
+
+---
+#### Add the SSH key to your GitHub account
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a> > <a href="#6">Working with GitHub</a>]
+
+.grid-20[
+
+<img src='images/github-settings.png' width='100%' />
+
+<img src='images/github-settings-ssh.png' width='100%' />
+
+
+]
+.grid-80[
+
+On GitHub, find the **SSH and GPG keys** section of your account settings and paste your **public SSH key** there:
+
+<img src='images/github-settings-ssh-key.png' width='100%' />
+
+(The title of the key is not important. It's useful when you have multiple keys, to remember which is which.)
 
 
 
+
+]
 ---
 class: center, middle
 ## Sharing changes
@@ -266,7 +333,7 @@ Clone repositories, push and pull commits
 ---
 ### A: create a repository on GitHub
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 **Person A** should create a repository from the GitHub menu:
 
@@ -287,22 +354,35 @@ Clone repositories, push and pull commits
 ---
 ### A: add B as a collaborator
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
-TODO: add B as a collaborator (do not forget to accept the invitation in the e-mail)
+For this tutorial, both team members will need push access to the repository.
+**Person A** should go to the repository's **collaborator settings**,
+and add the GitHub username of **Person B** as a collaborator:
+
+<img src='images/github-collaborators.png' width='100%' />
+
+**Person B** must then **_accept the invitation sent by e-mail_** for the change to be effective.
 
 
 
 ---
-### A: add a remote to your local repository
+### A: copy the remote SSH URL
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 **Person A** should copy the SSH URL of the GitHub repository:
 
 <img src='images/github-ssh-url.png' width='100%' />
 
-Then move into their local repository and add it as a remote:
+
+
+---
+### A: add the remote to your local repository
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+**Person A** should move into their local repository and add the GitHub repository as a remote:
 
 ```bash
 $> cd /path/to/projects/comem-webdev-git-branching-ex
@@ -325,7 +405,7 @@ origin  git@github.com:PersonA/github-demo.git (push)
 ---
 ### A: push your commits to the shared repository
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 It's time for **Person A** to put the code in the shared GitHub repository.
 This is done using the `git push` command:
@@ -351,7 +431,7 @@ The `-u` option (or `--set-upstream`) tells Git to remember that you have linked
 ---
 ### A: remote branches
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 .grid-60[
 
@@ -378,9 +458,20 @@ It tells you where the **master** branch points to on the **origin** remote (the
 
 ]
 ---
+### B: get the remote repository's SSH URL
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+**Person B** can now go to the repository's page on GitHub (under **Person A**'s account) and copy the SSH URL:
+
+<img src='images/github-clone-url.png' width='100%' />
+
+
+
+---
 ### B: clone the shared repository
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 **Person B** can now get a copy of the shared GitHub repository on their machine.
 This is done using the `git clone` command:
@@ -404,7 +495,7 @@ The `git clone [url]` command copies the **remote** repository to your machine.
 ---
 ### B: remote branches
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 .grid-60[
 
@@ -432,7 +523,7 @@ so that you can know what the current state of the remote is.
 ---
 ### B: make local changes
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 **Person B** thinks that the project's filenames are too long. Let's fix that:
 
@@ -448,7 +539,7 @@ $> git commit -m "Shorter filenames"
 ---
 ### B: check the state of branches
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 .grid-60[
 
@@ -479,7 +570,7 @@ $> git push origin master
 ---
 ### A: check the state of branches
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 .grid-60[
 
@@ -509,7 +600,7 @@ the master branch still points to `4f94ga` in the shared repository.
 ---
 ### A: fetch changes from the shared repository
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 **Person A** should now get the changes from the shared repository:
 
@@ -542,7 +633,7 @@ However, the local master branch **has not moved** and the working directory has
 ---
 ### A: check the state of branches
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 Now you can use `git merge` like in the previous tutorial to bring the changes of origin/master into master:
 
@@ -574,7 +665,7 @@ As expected, master has been fast-forwarded to the commit pointed to by origin/m
 ---
 ### Using git pull
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#8">Sharing changes</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 You can also use `git pull [remote] [branch]` to save time.
 
@@ -606,7 +697,7 @@ class: center, middle
 ---
 ### A: fix the bug
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
 
 **Person A** now notices that the last change breaks the calculator.
 This is because the files were renamed, but the `<script>` tags in `index.html` were not updated.
@@ -625,7 +716,7 @@ $> git push origin master
 ---
 ### B: make other changes
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
 
 **Person B**, not having noticed the bug, proceeds to make 2 changes on `index.html`:
 
@@ -656,7 +747,7 @@ $> git push origin master
 ---
 ### Rejected pushes
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
 
 ```bash
 To github.com:PersonA/github-demo.git
@@ -688,7 +779,7 @@ This is the state of **Person B**'s repository right now.
 ---
 ### Divergent history
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
 
 .grid-60[
 
@@ -710,7 +801,7 @@ If **Person B** did a `git fetch` now, this is what their repository would look 
 ---
 ### B: pull changes from the shared repository
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
 
 **Person B** wants to fetch and merge the changes made by **Person A**.
 Let's use the `git pull` command:
@@ -736,7 +827,7 @@ The fetch succeeded, but the merge failed because of a **conflict** on `index.ht
 ---
 ### B: check the conflict markers
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
 
 **Person B** should take a look at `index.html`:
 
@@ -767,7 +858,7 @@ $> git commit -m "Merge origin/master"
 ---
 ### B: check the state of branches
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
 
 Now the state of **Person B**'s local repository is consistent with the state of the shared repository:
 the commit pointed to by **master** is ahead of the commit pointed to by **origin/master**.
@@ -779,7 +870,7 @@ the commit pointed to by **master** is ahead of the commit pointed to by **origi
 ---
 ### B: push the changes
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
 
 The push will be accepted now:
 
@@ -794,7 +885,7 @@ $> git push origin master
 ---
 ### A: pull the changes
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#22">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
 
 **Person A** can now pull those latest changes to keep up-to-date:
 
