@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Git Introduction (COMEM+ Web Dev)</title>
+    <title>Git Introduction (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -134,6 +134,13 @@
         font-size: 15px;
         text-align: right;
       }
+	  
+	  .gitbash {
+		text-align: center;
+	  }
+	  .gitbash > img {
+		width: 80%;
+	  }
     </style>
   </head>
   <body>
@@ -144,7 +151,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/3eaf93d85bb898cc8dd1c5a10959c4b23b7e68c2/subjects/git/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/a6dfda317fc740872665f87b900083f33e05eaee/subjects/git/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -157,8 +164,6 @@ This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development 
 
 
 This is a condensed version of the first chapters of the [Git Book](https://git-scm.com/book/en/v2), which you should read if you want more detailed information on the subject.
-
-
 
 
 
@@ -182,8 +187,6 @@ Its goals are:
 
 
 
-
-
 ---
 ## What is version control?
 
@@ -203,15 +206,11 @@ What can I do with it?
 
 
 
-
-
 ---
 class: center, middle
 ## A short history
 
 .breadcrumbs[<a href="#1">Git Introduction</a>]
-
-
 
 
 
@@ -242,8 +241,6 @@ Systems such as [RCS][rcs] automate this process.
 
 * It's easy to accidentally edit the wrong files
 * It's hard to **collaborate** on different versions with other people
-
-
 
 
 
@@ -279,8 +276,6 @@ Administrators have **fine-grained control** over who can do what.
 
 
 
-
-
 ]
 ---
 ### **Distributed** version control systems
@@ -304,16 +299,12 @@ Clients **fully mirror** the repository, not just the latest snapshot.
 
 
 
-
-
 ]
 ---
 class: center, middle
 ## Git basics
 
 .breadcrumbs[<a href="#1">Git Introduction</a>]
-
-
 
 
 
@@ -358,8 +349,6 @@ Git thinks about its data more like a stream of snapshots.
 
 
 
-
-
 ---
 ### Git has integrity
 
@@ -380,8 +369,6 @@ Often you will only see a prefix (the first 6-7 characters):
 
 Because all content is hashed, it's impossible for files to be lost or corrupted without Git knowing about it.
 This functionality is built into Git at the lowest levels and is integral to its philosophy.
-
-
 
 
 
@@ -492,8 +479,6 @@ my-project:
 
 
 
-
-
 ---
 ### The basic Git workflow
 
@@ -519,8 +504,6 @@ New snapshots of files **MUST go through the staging area** to be **committed** 
 
 
 
-
-
 ---
 ## Getting started
 
@@ -535,8 +518,6 @@ The rest of this documentation is a tutorial where you will learn how to:
 * Stage and commit modified files
 * Move and remove files
 * Ignore files
-
-
 
 
 
@@ -560,8 +541,6 @@ git version 2.11.0
 ```
 
 If you don't have it, follow these [installation instructions][install-git] to install Git on your machine.
-
-
 
 
 
@@ -594,8 +573,6 @@ You can also change them at any time by running the commands again.
 
 
 
-
-
 ---
 ### Creating a new repository
 
@@ -621,8 +598,6 @@ At this point, nothing in your project is tracked yet.
 
 
 
-
-
 ---
 ### Checking the status of your files
 
@@ -643,8 +618,6 @@ nothing to commit (create/copy files and use "git add" to track)
 This means you have an empty repo with no commits, and a clean *working directory* – there is nothing there.
 
 As you can see, Git often helps you by telling you what you can do next: you need to start adding some files.
-
-
 
 
 
@@ -738,8 +711,6 @@ It shows you each staged file and the changes in those files.
 
 
 
-
-
 ---
 ### Committing your changes
 
@@ -762,8 +733,6 @@ $> git status
 On branch master
 nothing to commit, working tree clean
 ```
-
-
 
 
 
@@ -945,8 +914,6 @@ $> git commit -m "New lines in hello.txt and hi.txt"
 
 
 
-
-
 ---
 ### Moving and removing files
 
@@ -996,8 +963,6 @@ Many developers simply modify and manipulate files in their favorite editor or I
 
 
 
-
-
 ---
 ## Viewing the commit history
 
@@ -1025,8 +990,6 @@ Date:   Mon Jan 23 11:01:06 2017 +0100
 
     Add hello and hi files
 ```
-
-
 
 
 
@@ -1064,8 +1027,6 @@ index e5db1d9..f74a87a 100644
 
 
 
-
-
 ---
 ### Other log options
 
@@ -1089,6 +1050,55 @@ Use `git help log` or read [the documentation][git-log] to learn more.
 
 
 
+---
+## Ignoring files
+
+.breadcrumbs[<a href="#1">Git Introduction</a>]
+
+Sometimes there are files you don't want to commit in your repository:
+
+* Log files
+* Dependencies
+* Build artifacts
+
+You can tell Git not to track them by adding a `.gitignore` file to your repository:
+
+```txt
+ *.log
+ node_modules
+```
+
+
+
+---
+### Status of ignored files
+
+.breadcrumbs[<a href="#1">Git Introduction</a> > <a href="#37">Ignoring files</a>]
+
+Ignored files are no longer shown when using `git status`:
+
+```bash
+$> echo data > app.log
+
+$> git status
+On branch master
+nothing to commit, working tree clean
+```
+
+
+
+---
+### Committing the ignore file
+
+.breadcrumbs[<a href="#1">Git Introduction</a> > <a href="#37">Ignoring files</a>]
+
+Do not forget to add and commit the `.gitignore` file:
+
+```bash
+$> git add .gitignore
+$> git commit -m "Ignore file"
+```
+
 
 
 ---
@@ -1103,12 +1113,10 @@ We'll review a few of the tools available.
 
 
 
-
-
 ---
 ### Unmodifying a modified file
 
-.breadcrumbs[<a href="#1">Git Introduction</a> > <a href="#37">Undoing things</a>]
+.breadcrumbs[<a href="#1">Git Introduction</a> > <a href="#40">Undoing things</a>]
 
 Sometimes you make a change and you realize it was wrong or you don't need it anymore.
 Git actually tells you what to do to discard that change:
@@ -1140,12 +1148,10 @@ Note that in this case, **the change is forever lost** as it was never committed
 
 
 
-
-
 ---
 ### Unstaging a staged file
 
-.breadcrumbs[<a href="#1">Git Introduction</a> > <a href="#37">Undoing things</a>]
+.breadcrumbs[<a href="#1">Git Introduction</a> > <a href="#40">Undoing things</a>]
 
 If you have staged a file but realize you don't want it in the next commit anymore, Git also tells you what to do:
 
@@ -1173,12 +1179,10 @@ If you want to completely get rid of them, you can use `git checkout` as shown b
 
 
 
-
-
 ---
 ### Changing the commit message
 
-.breadcrumbs[<a href="#1">Git Introduction</a> > <a href="#37">Undoing things</a>]
+.breadcrumbs[<a href="#1">Git Introduction</a> > <a href="#40">Undoing things</a>]
 
 Oops, you've used the wrong commit message and want to change it?
 
@@ -1203,20 +1207,6 @@ You should not do this if you have already shared this commit with others.
 
 
 
-
----
-## TODO
-
-.breadcrumbs[<a href="#1">Git Introduction</a>]
-
-* Aliases
-* Ignoring files
-
-
-
-
-
-
 [rcs]: https://en.wikipedia.org/wiki/Revision_Control_System
 [cvs]: https://en.wikipedia.org/wiki/Concurrent_Versions_System
 [svn]: https://subversion.apache.org/
@@ -1231,7 +1221,7 @@ You should not do this if you have already shared this commit with others.
     </textarea>
 
     <script src='../../assets/remark.min.js'></script>
-    <script src='../../assets/jquery-3.1.1.slim.min.js' integrity='sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=' crossorigin='anonymous'></script>
+    <script src='../../assets/jquery-3.1.1.slim.min.js'></script>
     <script src='../../assets/uri-1.18.7.js'></script>
 
     <script>

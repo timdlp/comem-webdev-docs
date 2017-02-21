@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Command Line Introduction (COMEM+ Web Dev)</title>
+    <title>Command Line Introduction (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -134,6 +134,13 @@
         font-size: 15px;
         text-align: right;
       }
+	  
+	  .gitbash {
+		text-align: center;
+	  }
+	  .gitbash > img {
+		width: 80%;
+	  }
     </style>
   </head>
   <body>
@@ -144,7 +151,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/3eaf93d85bb898cc8dd1c5a10959c4b23b7e68c2/subjects/cli/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/a6dfda317fc740872665f87b900083f33e05eaee/subjects/cli/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -218,7 +225,7 @@ You're going to install **Git Bash**, an alternative CLI that emulates a UNIX-li
 
 .grid-30[
 
-<p class='center'><img src='images/gitbashlogo.png' width='80%' /></p>
+<p class='gitbash'><img src='images/gitbashlogo.png' /></p>
 
 
 ]
@@ -234,7 +241,7 @@ Then, search and open the **Git Bash** software.
 ]
 .container[
 
-> Installing **Git Bash** will also install **Git** and **Git GUI** _(see the slide-deck about Git for more information)_.
+> Installing **Git Bash** will also install **Git** and **Git GUI** _(see [the slide-deck about Git][slide-git] for more information)_.
 
 
 ]
@@ -270,12 +277,56 @@ A command is a word that you have to type on the CLI, that will tell the compute
 The syntax for using command could be resumed like this:
 
 ```bash
-$> name [argument ...]
+$> name arg1 arg2 arg3 ...
 ```
 **Note the use of space to separate the differents elements of a command.**
 
 * `name` represents the name of the command you want to execute
-* `[argument ...]` represents additionnal information has to how the command must be executed, **each of them separeted by a space**.
+* `arg1 arg2 arg3 ...` represent additionnal information about the command, **each of them separeted by a space**.
+
+---
+### How and what
+
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a>]
+
+There are two types of arguments to use with a command (if needed):
+
+.grid-50[
+
+**Options** specify **how** the command will behave.
+
+They are identifiable by the `-` or `--` that precedes them.
+
+```bash
+$> ls -l --all
+```
+
+We use the `ls` command to list the content of the current directory. The options tell `ls` **how** it should do so:
+* `--all` tells it to print all elements
+* `-l` tells it to print elements in a list format, rather than on one line.
+
+
+]
+.grid-50[
+
+**Arguments** specify **what** will be used by or is the subject of the command.
+
+They are preceded by nothing.
+
+```bash
+$> cd /Users/Batman
+```
+Here, we use the `cd` command to move to another directory.
+
+And the argument `/Users/Batman` tells the command **what** directory we want to move to.
+
+
+]
+???
+
+In the **first example**, we use the `ls` command to list elements in the current directory. We also use options to tell `ls` how it should print elements:
+* `--all` tells it to print all elements
+* `-l` tells it to print elements in a list format, rather than on one line.
 
 ---
 ### Command : `help`
@@ -304,7 +355,7 @@ $> [command-name] --help
 ---
 #### Interactive helps
 
-.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a> > <a href="#8">Command : `help`</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a> > <a href="#9">Command : `help`</a>]
 
 Some helps or commands will print their result all over the screen, effectively hidding the prompt or previous interactions.
 
@@ -313,6 +364,28 @@ Usually, it means that these helps or commands have content that takes more than
 You can "scroll" down  line-by-line using the `Enter` key, each stroke printing one more line at the bottom of the screen.
 
 To quit these helps or commands, use the `q` key.
+
+---
+#### Unix Command Syntax
+
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a> > <a href="#9">Command : `help`</a>]
+
+When calling the `help` function or looking up some documentation, you could eventually found some strange lines that apparently makes no sense, like:
+
+```bash
+cd [-L|[-P [-e]] [-@]] [dir]
+```
+
+Here are some explanations:
+
+* `[]`: Whatever's inside is **optionnal** (ex: `[-e]`).
+* `|`: You have to **chose between** options (ex: `-L|-P`).
+* `...`: Whatever's before can be **repeated** (ex: `[options ...]`).
+
+> Depending on the documentation, you could also found symbols like this:
+> 
+> * `<value>` = **Don't write that**. Replace it by a value that you should provide.
+
 
 ---
 ### Command : `pwd`
@@ -345,7 +418,7 @@ To do this, use the `ls` command:
 
 ```bash
 $> ls
-[lots and lots of files]
+(lots and lots of files)
 ```
 > The `ls` command, that means "local storage", lists the files and directories that the current directory contains.
 
@@ -355,7 +428,7 @@ If you want it to do that, you need to pass the argument `--all` (or `-a`):
 
 ```bash
 $> ls -a
-[lots and lots of files, including the hidden ones]
+(lots and lots of files, including the hidden ones)
 ```
 
 ---
@@ -370,12 +443,12 @@ Suppose you have a _"Documents"_ directory in your personnal directory, that con
 To do this, use the `cd` command, passing it as argument **the path to the directory** you want to go to.
 
 ```bash
-# You can use relative path...
+(You can use relative path...)
 $> pwd
 /Users/Batman
 $> cd Documents/TopSecret
 
-# ...or use absolute path
+(...or use absolute path)
 $> cd /Users/Batman/Documents/TopSecret
 ```
 > While you type the name of directories or files, hit the `Tab` key after having entered some letters and your CLI can try and autocomplete the name.
@@ -384,7 +457,7 @@ $> cd /Users/Batman/Documents/TopSecret
 
 ```bash
 $> cd /Us
-# Hit the Tab key and the CLI completes the name
+(Hit the Tab key and the CLI completes the name)
 $> cd /Users
 ```
 If there is more than one possible name with this letters, the CLI will do nothing. Hitting the `Tab` key a second time will list all the possibilities matching the letters you typed.
@@ -394,16 +467,16 @@ $> pwd
 /Users/Batman
 
 $> cd Do
-# Hitting the Tab key will fail
+(Hitting the Tab key will fail)
 
 $> cd Do
-# Hitting it again list the possibilites
+(Hitting it again list the possibilites)
 Documents/ Downloads/
 ```
 ---
 #### `cd` shortcuts
 
-.breadcrumbs[<a href="#17">Hitting it again list the possibilites</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a> > <a href="#14">Command : `cd`</a>]
 
 * To go back one directory at a time, use the `..` shortcut (**don't forget the space!**):
 ```bash
@@ -417,25 +490,43 @@ $> pwd
 * You can also drag and drop a directory from your Explorer or your Finder to the CLI to see its absolute path automaticaly written.
 ```bash
 $> cd
-# Drag'n'drop a directory from your Explorer/Finder, and...
+(Drag and drop a directory from your Explorer/Finder, and...)
 $> cd /Users/Batman/Pictures/
 ```
 
-* At anytime and from anywhere, you can return to your **personnal directory** with the `cd` command, using the `~` shortcut as argument:
+* At anytime and from anywhere, you can return to your **personnal directory** with the `cd` command, without any argument (or with the `~`):
 ```bash
-$> cd ~
+$> cd
 $> pwd
 /Users/Batman
 ```
+
 ???
 > To type the `~` character, use this combination:
 > * `AltGr + ^` on **Windows**
 > * `Alt + n` on **Mac**
 
 ---
+#### Special note
+
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a> > <a href="#14">Command : `cd`</a>]
+
+Throughout this course, you will often found the following line of information (_or something resembling it_):
+
+```bash
+$> cd path/to/folder
+```
+
+This means that you should use **the path that leads to the directory in which you store your projects**.
+
+> You shouldn't **actually write** `path/to/folder`.
+> 
+> It will obviously fail, unless you happen to have a `path` directory that contains a `to` directory that contains a `folder` directory...
+
+---
 ### Command : `mkdir`
 
-.breadcrumbs[<a href="#19">Drag'n'drop a directory from your Explorer/Finder, and...</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#6">How to use the CLI</a>]
 
 You can create directories with the CLI.
 
@@ -471,7 +562,7 @@ $> mkdir -p Pictures/Vacation/Gotham
 ---
 ## Naming things when using CLI
 
-.breadcrumbs[<a href="#19">Drag'n'drop a directory from your Explorer/Finder, and...</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a>]
 
 You should avoid using (in directories et files name):
 
@@ -481,7 +572,7 @@ You should avoid using (in directories et files name):
 They can cause **errors** in some scripts or tools, and will inevitably complicate using the CLI.
 
 ```bash
-# Will not work
+(Will not work)
 $> cd ./Why So Serious/
 ```
 > This command will be interpreted as a call to the `cd` command with three arguments : `./Why`, `So` and `Serious/`.
@@ -489,13 +580,13 @@ $> cd ./Why So Serious/
 You **can** use names with space, but you have to **escape** them first, using **quotation marks** around:
 
 ```bash
-# This will work
+(This will work)
 $> cd ./"Why So Serious"/
 ```
 ---
 ## For Windows Users
 
-.breadcrumbs[<a href="#23">This will work</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a>]
 
 **Reference to drives**
 
@@ -520,7 +611,7 @@ Instead, Git Bash has two shortcuts custom shortcuts:
 class: center, middle
 ## VIM
 
-.breadcrumbs[<a href="#23">This will work</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a>]
 
 
 
@@ -533,7 +624,7 @@ If this happens (_and it will_), there's **one** imperative rule to follow:
 ---
 ### Generalities
 
-.breadcrumbs[<a href="#23">This will work</a> > <a href="#25">VIM</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#20">VIM</a>]
 
 VIM can be unsetteling at first, until you know how it works.
 
@@ -553,7 +644,7 @@ To go into each mode use this keys :
 ---
 ### Normal mode
 
-.breadcrumbs[<a href="#23">This will work</a> > <a href="#25">VIM</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#20">VIM</a>]
 
 The **Normal** mode of VIM is the one you'r in when VIM starts. In this mode, you can move the cursor around with the arrow keys.
 
@@ -573,7 +664,7 @@ You can also use some commands to interact with the text:
 ---
 ### Command mode
 
-.breadcrumbs[<a href="#23">This will work</a> > <a href="#25">VIM</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#20">VIM</a>]
 
 The **Command** mode, which you can only access from the **Normal** mode, is the one you'll use to manipulate the file you're in.
 
@@ -591,7 +682,7 @@ From there, you can use some commands:
 ---
 ## The `PATH` variable
 
-.breadcrumbs[<a href="#23">This will work</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a>]
 
 When you type a command in the CLI, it will try to see **if it knows this command**, by looking in some directories to see if there is an **executable file that matches the requested name**.
 
@@ -612,7 +703,7 @@ $> echo $PATH
 ---
 ### Using non-system command
 
-.breadcrumbs[<a href="#23">This will work</a> > <a href="#29">The `PATH` variable</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#24">The `PATH` variable</a>]
 
 New installed tools usually come with at least one new command that you can execute from the CLI.
 
@@ -634,7 +725,7 @@ For this, you need to **change the value** of your `PATH` variable.
 ---
 ### Updating the `PATH` variable
 
-.breadcrumbs[<a href="#23">This will work</a> > <a href="#29">The `PATH` variable</a>]
+.breadcrumbs[<a href="#1">Command Line Introduction</a> > <a href="#24">The `PATH` variable</a>]
 
 To add a new path in your `PATH` variable, you have to edit a special file, used by your CLI. This file depends upon the CLI you are using:
 
@@ -659,11 +750,12 @@ Save the file (`Esc` then `:wq`) and restart your CLI.
 
 [gitbash]: https://git-for-windows.github.io/
 [zsh-site]: http://zsh.sourceforge.net/
+[slide-git]: ../git
 
     </textarea>
 
     <script src='../../assets/remark.min.js'></script>
-    <script src='../../assets/jquery-3.1.1.slim.min.js' integrity='sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=' crossorigin='anonymous'></script>
+    <script src='../../assets/jquery-3.1.1.slim.min.js'></script>
     <script src='../../assets/uri-1.18.7.js'></script>
 
     <script>
