@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>npm (COMEM+ Web Dev)</title>
+    <meta charset='utf-8'>
+
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-desktop.css'>
+
+    <link rel='stylesheet' href='../../assets/fonts/YanoneKaffeesatz/YanoneKaffeesatz.css'>
+    <link rel='stylesheet' href='../../assets/fonts/DroidSerif/DroidSerif.css'>
+    <link rel='stylesheet' href='../../assets/fonts/UbuntuMono/UbuntuMono.css'>
+
+    <style>
+      body {
+        font-family: 'Droid Serif';
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      .image-header h2, .image-header h3, .image-header h4, .image-header h5 .image-header h6 {
+        display: none;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
+        margin: 1em 0;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        padding: 0 2px;
+        background-color: #eee;
+        color: indianred;
+        border-radius: 3px;
+        border: thin solid #dddddd;
+      }
+
+      .remark-slide-content p:first-child, .remark-slide-content ul:first-child {
+        margin-top: 0;
+      }
+
+      .container {
+        clear: both;
+      }
+
+      ul li {
+        margin-top: 0.4em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th, td {
+        padding: 0.2em 0.4em;
+      }
+
+      table tbody th, td {
+        border-top: 1px solid #c0c0c0;
+      }
+
+      pre:first-child {
+        margin-top: 0;
+      }
+
+      blockquote {
+        font-style: italic;
+        border-left: 5px solid khaki;
+        margin-left: 0;
+        padding-left: 35px;
+      }
+
+      .center blockquote {
+        margin-right: 0;
+        padding-right: 35px;
+        border-right: 5px solid khaki;
+      }
+
+      #slide-logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #slide-logo img {
+        height: 60px;
+      }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
+
+      #slide-links {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 15px;
+        text-align: right;
+      }
+
+      .gitbash {
+        text-align: center;
+      }
+      .gitbash > img {
+        width: 80%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Slides top-left logo -->
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
+
+    <!-- Slides top-right links -->
+    <div id='slide-links' style='display:none;'>
+      <!-- GitHub link -->
+      <a href='https://github.com/MediaComem/comem-webdev/tree/9295a9a43f24f66326cfe84e599ad037842ce9f0/subjects/npm/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <!-- Home link -->
+      <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
+    </div>
+
+    <!-- Remark slides -->
+    <textarea id='source'>
+# npm
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
+
+
+
+
+
+---
+class: center, middle
+## What is npm?
+
+.breadcrumbs[<a href="#1">npm</a>]
+
+
+
+> "npm is the **package manager** for JavaScript. Find, share, and reuse packages of code from hundreds of thousands of developers — and assemble them in powerful new ways."
+
+
+
+---
+### Why use a package manager?
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#2">What is npm?</a>]
+
+* Use code or applications that **other developers** have written to solve particular problems
+* Regularly check if there are any **upgrades** and download them
+* **Share** your own code with the community or **reuse** code across projects
+
+<p class='center'><img src='images/shoulders-of-giants.jpg' width='100%' /></p>
+
+
+
+---
+### There are many package managers
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#2">What is npm?</a>]
+
+For programming languages:
+
+| Package manager | Language |
+| :---            | :---     |
+| Composer        | PHP      |
+| Maven           | Java     |
+| npm             | Node.js  |
+| RubyGems        | Ruby     |
+| pip             | Python   |
+
+For operating systems:
+
+| Package manager                   | OS                   |
+| :---                              | :---                 |
+| Advanced Package Tool (apt)       | Debian, Ubuntu       |
+| Homebrew                          | Mac OS X             |
+| Yellowdog Updater, Modified (yum) | RHEL, Fedora, CentOS |
+
+
+
+---
+### The npm registry
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#2">What is npm?</a>]
+
+> "The [npm registry][npm] hosts over a quarter million packages of reusable code — the largest code registry in the world."
+
+<img src='images/popular-packages.png' width='100%' />
+
+
+
+---
+### npm packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#2">What is npm?</a>]
+
+An npm **package** or **module** is basically a **reusable piece of code** that you can install and use.
+It's composed of:
+
+* A directory with some files in it (what will be installed)
+* A [package.json][package.json] file with some metadata about the package:
+
+```json
+{
+  "name": "my-project",
+  "version": "1.3.2",
+  "description": "It's great",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "lodash": "~3.1.0"
+  },
+  "keywords": [ "awesome", "project" ],
+  "author": "John Doe <john.doe@example.com>",
+  "license": "MIT"
+}
+```
+
+
+
+---
+class: center, middle
+## The npm command
+
+.breadcrumbs[<a href="#1">npm</a>]
+
+
+
+npm is also a set of command line tools that work together with the registry.
+
+
+
+---
+### How do I use it?
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#7">The npm command</a>]
+
+```bash
+$> npm help
+
+Usage: npm <command>
+
+where <command> is one of:
+    access, adduser, bin, bugs, c, cache, completion, config,
+    ddp, dedupe, deprecate, dist-tag, docs, edit, explore, get,
+    `help`, help-search, i, `init`, `install`, install-test, it, link,
+    list, ln, login, logout, ls, `outdated`, owner, pack, ping,
+    prefix, prune, `publish`, rb, rebuild, repo, restart, root,
+    `run`, run-script, s, se, search, set, shrinkwrap, star,
+    stars, `start`, stop, t, tag, team, test, tst, un, uninstall,
+    unpublish, unstar, up, update, v, version, view, whoami
+
+npm <cmd> -h     quick help on <cmd>
+npm -l           display full usage info
+npm help <term>  search for help on <term>
+npm help npm     involved overview
+```
+
+
+
+---
+class: center, middle
+## npm install
+
+.breadcrumbs[<a href="#1">npm</a>]
+
+
+
+Install a package
+
+
+
+---
+### Installing packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+When you install a package with the `npm install` command, npm creates a `node_modules` directory in the current working directory.
+It then saves the downloaded packages in that directory:
+
+```bash
+$> npm install lodash
+npm-demo@1.0.0 /path/to/projects/npm-demo
+└── lodash@4.17.4
+
+$> ls
+node_modules package.json
+
+$> ls node_modules
+lodash
+```
+
+
+
+---
+### Using installed packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+Any script under the directory where `package.json` and  `node_modules` are can `require` the installed packages:
+
+Create a `script.js` file next to `package.json`:
+
+```js
+const lodash = require('lodash');
+
+let numbers = [ 1, 1, 2, 3, 2 ];
+console.log(lodash.uniq(numbers));
+```
+
+Now run it:
+
+```bash
+$> node script.js
+[ 1, 2, 3 ]
+```
+
+You have used the `uniq` function from the `lodash` package,
+which returns an array with its duplicate elements removed.
+
+
+
+---
+### Tracking installed packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+Now remove the `node_modules` directory:
+
+```bash
+rm -fr node_modules
+```
+
+Your script should no longer work since the `lodash` package is no longer available:
+
+```bash
+$> node script.js
+module.js:471
+    throw err;
+    ^
+
+Error: Cannot find module 'lodash'
+```
+
+You could reinstall it manually, but image that you have **dozens** of dependencies.
+Do you want each team member to **re-type** the same `npm install` commands all the time (or forget them)?
+
+
+
+---
+### The --save option
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+Adding the `--save` option will make npm track the dependency:
+
+```bash
+$> npm install --save lodash
+npm-demo@1.0.0 /path/to/projects/npm-demo
+└── lodash@4.17.4
+```
+
+A new `dependencies` section should have appeared in your `package.json` file:
+
+```json
+{
+  "name": "npm-demo",
+* "dependencies": {
+*   "lodash": "^4.7.14"
+* },
+  ...
+}
+```
+
+
+
+---
+### npm install with a package.json
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+If you delete the `node_modules` directory again and run `npm install`:
+
+```bash
+$> rm -fr node_modules
+$> npm install
+npm-demo@1.0.0 /path/to/projects/npm-demo
+└── lodash@4.17.4
+```
+
+npm has installed the `lodash` package again.
+
+If you don't specify a package to install,
+the install command will read the `package.json` and install the dependencies listed there.
+
+Don't forget the `--save` option when adding dependencies to your project.
+That way, other members of the team will just have to run `npm install`.
+
+
+
+---
+### The --save-dev and --production option
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+You often use two kinds of packages:
+
+* Dependencies that your program or application needs to run (e.g. a database client)
+* Development dependencies that you use during development but do not need to run the application (e.g. a live-reload server)
+
+```bash
+npm install --save-dev gulp
+```
+
+A `devDependencies` section will be added to your `package.json`:
+
+```json
+{
+* "devDependencies": {
+*   "gulp": "^0.9.0"
+* }
+  ...
+}
+```
+
+* `npm install` - Install all dependencies (use when developing)
+* `npm install --production` - Install only normal dependencies (use it to install on a server where you do not need your development tools)
+
+
+
+---
+### The --global option
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+Some packages can be installed **globally**.
+Use the `--global` or `-g` option:
+
+```bash
+$> npm install --global http-server
+```
+
+**If you get an `EACCES` error**, execute the following commands:
+
+```bash
+$> mkdir ~/.npm-global
+$> npm config set prefix '~/.npm-global'
+```
+
+And add this line to your CLI configuration file (e.g. `~/.bash_profile`):
+
+```bash
+export PATH=~/.npm-global/bin:$PATH
+```
+
+Then retry the installation, which should work this time:
+
+```bash
+$> npm install --global http-server
+```
+
+---
+#### Global packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a> > <a href="#16">The --global option</a>]
+
+Global packages usually provide a **command-line tool**.
+In this case, the `http-server` package is a simple command-line HTTP server:
+
+```bash
+$> http-server
+Starting up http-server, serving ./
+Available on:
+  http://127.0.0.1:8080
+  http://10.178.123.132:8080
+Hit CTRL-C to stop the server
+```
+
+---
+#### Where are global packages installed?
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a> > <a href="#16">The --global option</a>]
+
+Packages installed globally are **not** in a `node_modules` directory in your project.
+They are local to your machine, and **are not saved as dependencies**.
+
+Use `npm config` if you want to see where they are installed:
+
+```bash
+$> npm config get prefix
+/usr/local
+
+$> ls /usr/local/lib/node_modules
+http-server
+```
+
+
+
+---
+### More complex packages
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a>]
+
+The npm registry has many packages, some small, some big.
+Let's install [express][express], a web application framework:
+
+```js
+$> npm install --save express
+```
+
+Create a `server.js` file with the following content:
+
+```js
+const express = require('express');
+const app = express();
+
+app.get('/', function(req, res) {
+  res.send('Hello World!');
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
+```
+
+---
+#### Run a web app
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#9">npm install</a> > <a href="#19">More complex packages</a>]
+
+Run the file:
+
+```bash
+$> node server.js
+Example app listening on port 3000!
+```
+
+Visit [http://localhost:3000/](http://localhost:3000) in your browser.
+
+You have a running web application server!
+
+
+
+---
+class: center, middle
+## npm scripts
+
+.breadcrumbs[<a href="#1">npm</a>]
+
+
+
+Running scripts with npm
+
+
+
+---
+### The scripts property
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#21">npm scripts</a>]
+
+The `scripts` section of the `package.json` file defines scripts that can be run on the command line:
+
+```json
+{
+  "name": "npm-demo",
+* "scripts": {
+*   "start": "node server.js"
+* },
+  ...
+}
+```
+
+Here we define that running `npm start` should launch our server with Node.js:
+
+```bash
+$> npm start
+
+> npm-demo@1.0.0 start /path/to/projects/npm-demo
+> node server.js
+
+Example app listening on port 3000!
+```
+
+
+
+---
+### Lifecycle scripts
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#21">npm scripts</a>]
+
+The following scripts are "standard" scripts:
+
+| Script  | Purpose                              | Triggered by
+| :---    | :---                                 | :---
+| start   | Run your program                     | `npm start`
+| stop    | Stop your program                    | `npm stop`
+| restart | Restart your program                 | `npm restart`
+| test    | Run automated tests for your program | `npm test`
+
+Read the [documentation][npm-scripts] to learn about all the available lifecycle scripts.
+
+
+
+---
+### Custom scripts
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#21">npm scripts</a>]
+
+You can also define your own custom scripts:
+
+```json
+{
+  "name": "npm-demo",
+* "scripts": {
+*   "hello": "echo Hello World!"
+* },
+  ...
+}
+```
+
+These scripts are run with `npm run <script>`:
+
+```bash
+$> npm run hello
+
+> npm-demo@1.0.0 serve-static /path/to/projects/npm-demo
+> echo Hello World!
+
+Hello World!
+```
+
+
+
+---
+class: center, middle
+## npm init
+
+.breadcrumbs[<a href="#1">npm</a>]
+
+
+
+Create a new package
+
+
+
+---
+### Interactively create a package.json file
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm init</a>]
+
+Create and move into a new project directory:
+
+```bash
+$> cd /path/to/projects
+$> mkdir npm-demo
+$> cd npm-demo
+```
+
+Run `npm init`:
+
+```bash
+$> npm init
+This utility will walk you through creating a package.json file.
+It only covers the most common items, and tries to guess sensible defaults.
+
+...
+
+Press ^C at any time to quit.
+name: (npm-demo)
+version: (1.0.0)
+description: npm demo
+entry point: (index.js)
+test command:
+git repository:
+keywords: npm, demo
+author: John Doe <john.doe@example.com>
+license: (ISC)
+```
+
+
+
+---
+### What it looks like
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#25">npm init</a>]
+
+```json
+{
+  "name": "npm-demo",
+  "version": "1.0.0",
+  "description": "npm demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [ "npm", "demo" ],
+  "author": "John Doe <john.doe@example.com>",
+  "license": "ISC"
+}
+```
+
+Read the [documentation][package.json] to find out everything you can configure in this file.
+
+
+
+---
+class: center, middle
+## npm publish
+
+.breadcrumbs[<a href="#1">npm</a>]
+
+
+
+Publish a package
+
+
+
+---
+### What do I need to publish?
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#28">npm publish</a>]
+
+You need a valid `package.json` file.
+
+You should also set the `main` property:
+
+```json
+{
+  "name": "npm-demo",
+* "main": "./script.js",
+  ...
+}
+```
+
+When people `require` your module after installing it,
+they will get the same result as if they had required that file.
+
+
+
+---
+### Publishing
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#28">npm publish</a>]
+
+Publishing is as simple as running the `npm publish` command in the directory where your `package.json` file is located:
+
+```js
+npm publish
+```
+
+You of course need an **npm account**.
+
+You can only publish a new package if the package name is not already used.
+Names are registered on a **first-come, first-serve** basis.
+
+
+
+---
+### Avoiding publication
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#28">npm publish</a>]
+
+Sometimes you write code that should not be published:
+
+* A website (something where using `require` makes no sense)
+* A private package with confidential information
+
+In these cases, you can set the `private` property of the `package.json` file:
+
+```json
+{
+  "name": "npm-demo",
+* "private": true,
+  ...
+}
+```
+
+`npm publish` will then refuse to publish the package.
+
+
+
+---
+## Resources
+
+.breadcrumbs[<a href="#1">npm</a>]
+
+**Documentation**
+
+* [Command line usage][npm-cli]
+* [package.json][package.json]
+
+
+
+[express]: https://expressjs.com
+[npm]: https://www.npmjs.com
+[npm-cli]: https://docs.npmjs.com/cli/npm
+[npm-fix-permissions]: https://docs.npmjs.com/getting-started/fixing-npm-permissions
+[npm-scripts]: https://docs.npmjs.com/misc/scripts
+[package.json]: https://docs.npmjs.com/files/package.json
+
+    </textarea>
+
+    <script src='../../assets/remark.min.js'></script>
+    <script src='../../assets/jquery-3.1.1.slim.min.js'></script>
+    <script src='../../assets/uri-1.18.7.js'></script>
+
+    <script>
+      var remarkOptions = {"highlightLines":true,"highlightSpans":true,"countIncrementalSlides":false};
+      var slideshow = remark.create(remarkOptions);
+
+      $('#slide-links .home-link').each(function() {
+        var $a = $(this);
+
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
+
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
+        }
+      });
+
+      var slides = $('.remark-slide-content');
+
+      // Remove logo from body and add it to each slide
+      $('#slide-logo').remove().prependTo(slides).show();
+
+      // Remove links from body and add them to each slide
+      $('#slide-links').remove().prependTo(slides).show();
+
+      // Make all external links open a new window
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
+    </script>
+  </body>
+</html>

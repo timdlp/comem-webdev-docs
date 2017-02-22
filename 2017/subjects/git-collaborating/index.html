@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Collaborating with Git (COMEM+ Web Dev)</title>
+    <meta charset='utf-8'>
+
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-desktop.css'>
+
+    <link rel='stylesheet' href='../../assets/fonts/YanoneKaffeesatz/YanoneKaffeesatz.css'>
+    <link rel='stylesheet' href='../../assets/fonts/DroidSerif/DroidSerif.css'>
+    <link rel='stylesheet' href='../../assets/fonts/UbuntuMono/UbuntuMono.css'>
+
+    <style>
+      body {
+        font-family: 'Droid Serif';
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      .image-header h2, .image-header h3, .image-header h4, .image-header h5 .image-header h6 {
+        display: none;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
+        margin: 1em 0;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        padding: 0 2px;
+        background-color: #eee;
+        color: indianred;
+        border-radius: 3px;
+        border: thin solid #dddddd;
+      }
+
+      .remark-slide-content p:first-child, .remark-slide-content ul:first-child {
+        margin-top: 0;
+      }
+
+      .container {
+        clear: both;
+      }
+
+      ul li {
+        margin-top: 0.4em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th, td {
+        padding: 0.2em 0.4em;
+      }
+
+      table tbody th, td {
+        border-top: 1px solid #c0c0c0;
+      }
+
+      pre:first-child {
+        margin-top: 0;
+      }
+
+      blockquote {
+        font-style: italic;
+        border-left: 5px solid khaki;
+        margin-left: 0;
+        padding-left: 35px;
+      }
+
+      .center blockquote {
+        margin-right: 0;
+        padding-right: 35px;
+        border-right: 5px solid khaki;
+      }
+
+      #slide-logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #slide-logo img {
+        height: 60px;
+      }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
+
+      #slide-links {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 15px;
+        text-align: right;
+      }
+
+      .gitbash {
+        text-align: center;
+      }
+      .gitbash > img {
+        width: 80%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Slides top-left logo -->
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
+
+    <!-- Slides top-right links -->
+    <div id='slide-links' style='display:none;'>
+      <!-- GitHub link -->
+      <a href='https://github.com/MediaComem/comem-webdev/tree/9295a9a43f24f66326cfe84e599ad037842ce9f0/subjects/git-collaborating/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <!-- Home link -->
+      <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
+    </div>
+
+    <!-- Remark slides -->
+    <textarea id='source'>
+# Collaborating with Git
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
+
+Requirements:
+
+* [Git][git]
+* A [GitHub][github] account
+* A Unix shell (Git Bash is installed with Git on Windows)
+
+
+
+---
+## Group work
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a>]
+
+This tutorial is meant to be performed by a group of two.
+Throughout the rest of the document, the members of the group will be referred to as **Person A** and **Person B**.
+
+The tutorial assumes that you have followed the [previous Git tutorial][git-tutorial] and have kept your calculator repository.
+
+
+
+---
+class: center, middle
+## Distributed version control system
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a>]
+
+
+
+Working with remote repositories
+
+
+
+---
+### What is a remote?
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a>]
+
+A **remote repository** is a version of your project that is hosted on the Internet or network somewhere.
+You can have **several of them**.
+
+Collaborating with others involves **pushing** and **pulling** data to and from these remote repositories when you need to share work.
+
+<p class='center'><img src='images/remotes.png' width='70%' /></p>
+
+
+
+---
+### Centralized workflow
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a>]
+
+There are [many ways][distributed-workflows] to work with Git as a team.
+Here we will use a simple **centralized workflow**:
+
+<p class='center'><img src='images/centralized-workflow.png' width='60%' /></p>
+
+In this workflow:
+
+* A "shared" central repository hosted on GitHub
+* Each developer has a repository on their local machine
+  * Each developer will add the shared repository as a **remote**
+
+
+
+---
+### Working with GitHub
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a>]
+
+> "[GitHub][github] is a web-based Git repository and Internet hosting service.
+  It offers all of the **distributed version control** and **source code management (SCM)** functionality of **Git**
+  as well other features like access control, bug tracking, feature requests, task management, and wikis for every project."
+
+<p class='center'><img src='images/github.png' width='70%'></p>
+
+---
+#### Create a free GitHub account
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a> > <a href="#6">Working with GitHub</a>]
+
+Both group members should register on GitHub:
+
+<p class='center'><img src='images/github-account.jpg' width='100%'></p>
+
+---
+#### Create an SSH key
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a> > <a href="#6">Working with GitHub</a>]
+
+To push code to GitHub, you will need to **authenticate** yourself.
+There are two methods of authentication: HTTPS username/password or SSH keys.
+We will use an **SSH key** for this tutorial.
+You can check if you have one already with this command:
+
+```bash
+$> ls ~/.ssh
+id_rsa  id_rsa.pub
+```
+
+If you see these files, then you already have an SSH key pair (`id_rsa` is the **private** key, `id_rsa.pub` is the **public** key).
+
+If you don't (or see a *"No such file or directory"* error), use this command to generate a new key pair (press Enter at every prompt to keep the defaults):
+
+```bash
+$> ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/.ssh/id_rsa.
+Your public key has been saved in /home/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:ULmjUQDN4Snkh0s9u093mcva4cI94cDk name@host
+```
+
+---
+#### Copy the SSH key
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a> > <a href="#6">Working with GitHub</a>]
+
+To authenticate using your SSH key on GitHub, you will need to copy your **public key**.
+You can display it on the terminal with this command:
+
+```bash
+$> cat ~/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAEAQC+OMYWxBCiKa1lZuUc8sLcSBW17h
+l4VTy9DaarFC98KxS3NQao/7+eMkOS3o1II4QL7pn7WMYITWpWP9UdJKNef/KQlTpS
+1QVbhb6iJ2z2+GGt8+b0GvBRAZgab9TeOIrzN1QyknO4 name@host
+```
+
+---
+#### Add the SSH key to your GitHub account
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#3">Distributed version control system</a> > <a href="#6">Working with GitHub</a>]
+
+.grid-20[
+
+<img src='images/github-settings.png' width='100%' />
+
+<img src='images/github-settings-ssh.png' width='100%' />
+
+
+]
+.grid-80[
+
+On GitHub, find the **SSH and GPG keys** section of your account settings and paste your **public SSH key** there:
+
+<img src='images/github-settings-ssh-key.png' width='100%' />
+
+(The title of the key is not important. It's useful when you have multiple keys, to remember which is which.)
+
+
+
+
+]
+---
+class: center, middle
+## Sharing changes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a>]
+
+
+
+Clone repositories, push and pull commits
+
+
+
+---
+### A: create a repository on GitHub
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+**Person A** should create a repository from the GitHub menu:
+
+.grid-20[
+
+<img src='images/github-new-repo-menu.png' width='100%' />
+
+
+]
+.grid-80[
+
+<img src='images/github-new-repo.jpg' width='90%' />
+
+
+
+
+]
+---
+### A: add B as a collaborator
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+For this tutorial, both team members will need push access to the repository.
+**Person A** should go to the repository's **collaborator settings**,
+and add the GitHub username of **Person B** as a collaborator:
+
+<img src='images/github-collaborators.png' width='100%' />
+
+**Person B** must then **_accept the invitation sent by e-mail_** for the change to be effective.
+
+
+
+---
+### A: copy the remote SSH URL
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+**Person A** should copy the SSH URL of the GitHub repository:
+
+<img src='images/github-ssh-url.png' width='100%' />
+
+
+
+---
+### A: add the remote to your local repository
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+**Person A** should move into their local repository and add the GitHub repository as a remote:
+
+```bash
+$> cd /path/to/projects/comem-webdev-git-branching-ex
+
+$> git remote add origin git@github.com:PersonA/github-demo.git
+```
+
+It's a convention to name the default remote **origin**.
+
+You can check what remotes are available with `git remote`:
+
+```bash
+$> git remote -v
+origin  git@github.com:PersonA/github-demo.git (fetch)
+origin  git@github.com:PersonA/github-demo.git (push)
+```
+
+
+
+---
+### A: push your commits to the shared repository
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+It's time for **Person A** to put the code in the shared GitHub repository.
+This is done using the `git push` command:
+
+```bash
+$> git push -u origin master
+Counting objects: 35, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (33/33), done.
+Writing objects: 100% (35/35), 4.16 KiB | 0 bytes/s, done.
+Total 35 (delta 14), reused 11 (delta 2)
+remote: Resolving deltas: 100% (14/14), done.
+To github.com:PersonA/github-demo.git
+ * [new branch]      master -> master
+```
+
+The command `git push [remote] [branch]` tells Git to push the commit pointed to by `[branch]` to the remote named `[remote]`.
+
+The `-u` option (or `--set-upstream`) tells Git to remember that you have linked this branch to that remote.
+
+
+
+---
+### A: remote branches
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+.grid-60[
+
+<img src='images/demo-1-git-push.png' width='100%' />
+
+
+]
+.grid-40[
+
+The commit objects and file snapshots have been **pushed** (or uploaded) to the GitHub repository.
+
+This includes not only the commit pointed to by master, but also the **entire history** of the repository up to that commit.
+
+
+]
+.container[
+
+Note the **origin/master** branch that has appeared in your local repository.
+This is a **remote-tracking branch**.
+It tells you where the **master** branch points to on the **origin** remote (the GitHub repository in this case).
+
+
+
+
+]
+---
+### B: get the remote repository's SSH URL
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+**Person B** can now go to the repository's page on GitHub (under **Person A**'s account) and copy the SSH URL:
+
+<img src='images/github-clone-url.png' width='100%' />
+
+
+
+---
+### B: clone the shared repository
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+**Person B** can now get a copy of the shared GitHub repository on their machine.
+This is done using the `git clone` command:
+
+```bash
+$> git clone git@github.com:PersonA/github-demo.git
+Cloning into 'github-demo'...
+remote: Counting objects: 35, done.
+remote: Compressing objects: 100% (21/21), done.
+remote: Total 35 (delta 14), reused 35 (delta 14), pack-reused 0
+Receiving objects: 100% (35/35), 4.16 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (14/14), done.
+
+$> cd github-demo
+```
+
+The `git clone [url]` command copies the **remote** repository to your machine.
+
+
+
+---
+### B: remote branches
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+.grid-60[
+
+<img src='images/demo-2-git-clone.png' width='100%' />
+
+
+]
+.grid-40[
+
+The entire history of the project is **pulled** (or downloaded) from the GitHub repository.
+
+Git will also automatically checkout the **master** branch in the working directory so you have something to work from.
+
+
+]
+.container[
+
+Again, Git has created a **remote-tracking branch** in Person B's repository,
+so that you can know what the current state of the remote is.
+
+
+
+
+]
+---
+### B: make local changes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+**Person B** thinks that the project's filenames are too long. Let's fix that:
+
+```bash
+$> mv addition.js add.js
+$> mv subtraction.js sub.js
+$> git add --all
+$> git commit -m "Shorter filenames"
+```
+
+
+
+---
+### B: check the state of branches
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+.grid-60[
+
+<img src='images/demo-3-local-commit.png' width='100%' />
+
+
+]
+.grid-40[
+
+This is now the state of the shared repository and **Person B**'s local repository.
+
+There is a new commit in **Person B**'s repository that is not in the shared GitHub repository.
+
+
+]
+.container[
+
+Push it to update the shared repository:
+
+```bash
+$> git push origin master
+```
+
+
+
+
+]
+---
+### A: check the state of branches
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+.grid-60[
+
+<img src='images/demo-4-remote-out-of-sync.png' width='100%' />
+
+
+]
+.grid-40[
+
+This is now the state from **Person A**'s perspective.
+
+Notice that the new commit is in the shared repository (on GitHub)
+but that the remote-tracking branch origin/master **is not up-to-date** in **Person A**'s repository.
+
+
+]
+.container[
+
+Git does not automatically sync repositories.
+**As far as Person A knows** looking at information from their local repository,
+the master branch still points to `4f94ga` in the shared repository.
+
+
+
+
+]
+---
+### A: fetch changes from the shared repository
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+**Person A** should now get the changes from the shared repository:
+
+```bash
+$> git fetch origin
+remote: Counting objects: 2, done.
+remote: Compressing objects: 100% (1/1), done.
+remote: Total 2 (delta 1), reused 2 (delta 1), pack-reused 0
+Unpacking objects: 100% (2/2), done.
+From github.com:PersonA/github-demo
+   4f94ga..92fb8c  master     -> origin/master
+```
+
+.grid-60[
+
+<img src='images/demo-5-git-fetch.png' width='100%' />
+
+
+]
+.grid-40[
+
+The new commit is now here and the remote-tracking branch has been updated.
+
+However, the local master branch **has not moved** and the working directory has **not been updated**.
+
+
+
+
+]
+---
+### A: check the state of branches
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+Now you can use `git merge` like in the previous tutorial to bring the changes of origin/master into master:
+
+```bash
+$> git merge origin/master
+Updating 4f94ga..92fb8c
+Fast-forward
+ addition.js => add.js | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename addition.js => add.js (100%)
+```
+
+.grid-60[
+
+<img src='images/demo-6-git-merge.png' width='100%' />
+
+
+]
+.grid-40[
+
+As expected, master has been fast-forwarded to the commit pointed to by origin/master and the working directory has been updated.
+
+**Person A**'s repository is now up-to-date.
+
+
+
+
+]
+---
+### Using git pull
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+You can also use `git pull [remote] [branch]` to save time.
+
+The following command:
+
+```bash
+$> git pull origin master
+```
+
+Is equivalent to running the two commands we just used:
+
+```bash
+$> git fetch origin
+$> git merge origin/master
+```
+
+
+
+---
+class: center, middle
+## Managing conflicting commit histories
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a>]
+
+
+
+
+
+---
+### A: fix the bug
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+
+**Person A** now notices that the last change breaks the calculator.
+This is because the files were renamed, but the `<script>` tags in `index.html` were not updated.
+
+Fix that bug, then commit and push the change:
+
+```bash
+(Make the fix...)
+$> git add index.html
+$> git commit -m "Fix bad <script> tags"
+$> git push origin master
+```
+
+
+
+---
+### B: make other changes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+
+**Person B**, not having noticed the bug, proceeds to make 2 changes on `index.html`:
+
+* Add an `<h2>` title before each computation
+* Put the two last `<script>` tags on one line
+
+```html
+<h2>Addition</h2>
+<p id="addition">...</p>
+
+<h2>Subtraction</h2>
+<p id="subtraction">...</p>
+
+<script src="calculations.js"></script>
+<script src="addition.js"></script><script src="subtraction.js"></script>
+```
+
+Commit and push the changes:
+
+```bash
+$> git add index.html
+$> git commit -m "Improve layout"
+$> git push origin master
+```
+
+
+
+---
+### Rejected pushes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+
+```bash
+To github.com:PersonA/github-demo.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'git@github.com:PersonA/github-demo.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+.grid-60[
+
+<img src='images/demo-7-b-state.png' width='100%' />
+
+
+]
+.grid-40[
+
+The push was **rejected** by the remote repository. Why?
+
+This is the state of **Person B**'s repository right now.
+
+
+
+
+]
+---
+### Divergent history
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+
+.grid-60[
+
+<img src='images/demo-8-git-fetch.png' width='100%' />
+
+
+]
+.grid-40[
+
+It's for the same reason as in the previous tutorial:
+**Person A** and **Person B**'s work have diverged from a common ancestor.
+
+If **Person B** did a `git fetch` now, this is what their repository would look like.
+
+
+
+
+]
+---
+### B: pull changes from the shared repository
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+
+**Person B** wants to fetch and merge the changes made by **Person A**.
+Let's use the `git pull` command:
+
+```bash
+$> git pull origin master
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From github.com:PersonA/github-demo
+ * branch            master     -> FETCH_HEAD
+   92fb8c..3ff531    master     -> origin/master
+Auto-merging index.html
+CONFLICT (content): Merge conflict in index.html
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+The fetch succeeded, but the merge failed because of a **conflict** on `index.html`.
+
+
+
+---
+### B: check the conflict markers
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+
+**Person B** should take a look at `index.html`:
+
+```txt
+<<<<<<< HEAD
+    <script src="addition.js"></script><script src="subtraction.js"></script>
+=======
+    <script src="add.js"></script>
+    <script src="sub.js"></script>
+>>>>>>> 3ff5311406e73c7d2cc1691f9535214c2543937f
+```
+
+Let's make sure we keep it on one line while still renaming the files, and remove the conflict markers::
+
+```txt
+    <script src="add.js"></script><script src="sub.js"></script>
+```
+
+Mark the conflict as resolved and finish the merge:
+
+```bash
+$> git add index.html
+$> git commit -m "Merge origin/master"
+```
+
+
+
+---
+### B: check the state of branches
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+
+Now the state of **Person B**'s local repository is consistent with the state of the shared repository:
+the commit pointed to by **master** is ahead of the commit pointed to by **origin/master**.
+
+<img src='images/demo-9-b-state.png' width='80%' />
+
+
+
+---
+### B: push the changes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+
+The push will be accepted now:
+
+```bash
+$> git push origin master
+```
+
+<img src='images/demo-10-git-push.png' width='80%' />
+
+
+
+---
+### A: pull the changes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+
+**Person A** can now pull those latest changes to keep up-to-date:
+
+```bash
+$> git pull origin master
+```
+
+<img src='images/demo-11-git-pull.png' width='80%' />
+
+
+
+[distributed-workflows]: https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows
+[git]: https://git-scm.com
+[git-tutorial]: ../git/
+[github]: https://github.com
+
+    </textarea>
+
+    <script src='../../assets/remark.min.js'></script>
+    <script src='../../assets/jquery-3.1.1.slim.min.js'></script>
+    <script src='../../assets/uri-1.18.7.js'></script>
+
+    <script>
+      var remarkOptions = {"highlightLines":true,"highlightSpans":true,"countIncrementalSlides":false};
+      var slideshow = remark.create(remarkOptions);
+
+      $('#slide-links .home-link').each(function() {
+        var $a = $(this);
+
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
+
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
+        }
+      });
+
+      var slides = $('.remark-slide-content');
+
+      // Remove logo from body and add it to each slide
+      $('#slide-logo').remove().prependTo(slides).show();
+
+      // Remove links from body and add them to each slide
+      $('#slide-links').remove().prependTo(slides).show();
+
+      // Make all external links open a new window
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
+    </script>
+  </body>
+</html>

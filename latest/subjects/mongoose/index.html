@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mongoose (COMEM+ Web Dev)</title>
+    <meta charset='utf-8'>
+
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-desktop.css'>
+
+    <link rel='stylesheet' href='../../assets/fonts/YanoneKaffeesatz/YanoneKaffeesatz.css'>
+    <link rel='stylesheet' href='../../assets/fonts/DroidSerif/DroidSerif.css'>
+    <link rel='stylesheet' href='../../assets/fonts/UbuntuMono/UbuntuMono.css'>
+
+    <style>
+      body {
+        font-family: 'Droid Serif';
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      .image-header h2, .image-header h3, .image-header h4, .image-header h5 .image-header h6 {
+        display: none;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
+        margin: 1em 0;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        padding: 0 2px;
+        background-color: #eee;
+        color: indianred;
+        border-radius: 3px;
+        border: thin solid #dddddd;
+      }
+
+      .remark-slide-content p:first-child, .remark-slide-content ul:first-child {
+        margin-top: 0;
+      }
+
+      .container {
+        clear: both;
+      }
+
+      ul li {
+        margin-top: 0.4em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th, td {
+        padding: 0.2em 0.4em;
+      }
+
+      table tbody th, td {
+        border-top: 1px solid #c0c0c0;
+      }
+
+      pre:first-child {
+        margin-top: 0;
+      }
+
+      blockquote {
+        font-style: italic;
+        border-left: 5px solid khaki;
+        margin-left: 0;
+        padding-left: 35px;
+      }
+
+      .center blockquote {
+        margin-right: 0;
+        padding-right: 35px;
+        border-right: 5px solid khaki;
+      }
+
+      #slide-logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #slide-logo img {
+        height: 60px;
+      }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
+
+      #slide-links {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 15px;
+        text-align: right;
+      }
+
+      .gitbash {
+        text-align: center;
+      }
+      .gitbash > img {
+        width: 80%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Slides top-left logo -->
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
+
+    <!-- Slides top-right links -->
+    <div id='slide-links' style='display:none;'>
+      <!-- GitHub link -->
+      <a href='https://github.com/MediaComem/comem-webdev/tree/9295a9a43f24f66326cfe84e599ad037842ce9f0/subjects/mongoose/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <!-- Home link -->
+      <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
+    </div>
+
+    <!-- Remark slides -->
+    <textarea id='source'>
+# Mongoose
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
+
+
+
+
+
+---
+class: center, middle
+## MongoDB Node.js driver
+
+.breadcrumbs[<a href="#1">Mongoose</a>]
+
+
+
+The official MongoDB driver for Node.js
+
+
+
+---
+### Usage
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#2">MongoDB Node.js driver</a>]
+
+The native Node.js client is an npm package:
+
+```bash
+$> npm install mongodb --save
+```
+
+You can then connect to your MongoDB database:
+
+```js
+var MongoClient = require('mongodb').MongoClient;
+
+// Connection URL
+var url = 'mongodb://localhost:27017/myproject';
+
+// Use connect method to connect to the Server
+MongoClient.connect(url, function(err, db) {
+  if (err) {
+    console.warn('Could not connect to database because: ' + err.message);
+  } else {
+    console.log('Connected to MongoDB');
+
+    // Do something with "db"...
+
+    db.close();
+  }
+});
+```
+
+
+
+---
+### MongoDB client API
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#2">MongoDB Node.js driver</a>]
+
+This client provides a [similar API][collection-api] to the MongoDB shell:
+
+```js
+collection.insertOne(document, options, callback)
+collection.find(query)
+collection.updateMany(query, update, options, callback)
+collection.deleteOne(query, options, callback)
+collection.createIndex(fields, options, callback)
+```
+
+For example, to insert a document:
+
+```js
+var person = {
+  name: 'John Doe',
+  age: 42
+};
+
+db.collection('people').insertOne(person, function(err, commandResult) {
+  if (err) {
+    console.warn('Could not insert person: ' + err.message);
+  } else {
+    console.log('Inserted ' + commandResult.insertedCount + ' person');
+    db.close();
+  }
+});
+```
+
+---
+#### Finding documents
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#2">MongoDB Node.js driver</a> > <a href="#4">MongoDB client API</a>]
+
+To find documents:
+
+```js
+db.collection('people')
+  .find({ 'age': { '$gt': 18 },  'phone.type': 'professional' })
+  .skip(40)
+  .limit(20)
+  .project({ 'name': 1 })
+  .toArray(function(err, people) {
+    if (err) {
+      console.warn('Could not fetch people because: ' + err.message);
+    } else {
+      console.log('Found ' + people.length + ' people');
+      db.close();
+    }
+  })
+```
+
+
+
+---
+### Should I use it?
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#2">MongoDB Node.js driver</a>]
+
+.grid-50[
+
+**Advantages**
+
+* Similar API to MongoDB (the names are almost the same, e.g. `insert` vs `insertOne/insertMany`)
+* You use the MongoDB query language directly
+
+
+]
+.grid-50[
+
+**Disadvantages**
+
+* Very low level
+  * No serialization and deserialization of objects
+  * No validation
+* No connection abstraction (you must manage the connections yourself; no pool)
+
+
+]
+.container[
+
+**Alternatives**
+
+* [Camo][alt-camo]: a class-based ES6 ODM for Mongo-like databases
+* [Mongoose][mongoose]: elegant MongoDB object modeling for Node.js
+* [Waterline][alt-waterline]: an adapter-based ORM for Node.js with support for MySQL, MongoDB, Postgres, Redis, and more
+
+
+
+
+]
+---
+class: center, middle, image-header
+## What is Mongoose?
+
+.breadcrumbs[<a href="#1">Mongoose</a>]
+
+
+
+<p class='center'><img src='images/mongoose.png' width='60%' /></p>
+
+> "Mongoose provides a straight-forward, **schema-based** solution to **model** your application data. It includes built-in **type casting, validation, query building**, business logic hooks and more, out of the box."
+
+
+
+---
+### Object-Document Mapper (ODM)
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a>]
+
+Mongoose **maps JavaScript objects to MongoDB documents**, much like an Object-Relational Mapper (ORM) maps objects to relational database tables.
+
+<p class='center'><img src='images/schema-model-document.png' width='60%' /></p>
+
+* Everything in Mongoose starts with a [Schema][mongoose-guide].
+  Each schema maps to a MongoDB collection and defines the **shape of the documents** within that collection.
+* [Models][mongoose-model] are fancy **constructors** compiled from our Schema definitions.
+* Mongoose [Documents][mongoose-document] represent a one-to-one mapping to documents as stored in MongoDB.
+  Each document is an instance of its Model.
+
+???
+
+ORM examples: Hibernate (Java), Active Record (Ruby), SQLAlchemy (Python).
+
+---
+#### Connect to the database
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a> > <a href="#8">Object-Document Mapper (ODM)</a>]
+
+Simply call `mongoose.connect()`:
+
+```js
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/myproject');
+```
+
+Notice that you don't have to specify a callback.
+Mongoose will start connecting and delay your first requests until it is done.
+It will also automatically create and manage a **connection pool** for you.
+
+---
+#### Create a schema
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a> > <a href="#8">Object-Document Mapper (ODM)</a>]
+
+The schema defines the shape of the documents you want to save:
+
+```js
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+// Define a schema
+*var blogSchema = new Schema({
+  title: String,
+  body: String,
+  date: { type: Date, default: Date.now  }, // Default value
+  comments: [ // Nested array of documents
+    {
+      body: String,
+      date: Date
+    }
+  ],
+  meta: { // Nested document
+    votes: Number,
+    favs: Number
+  }
+});
+```
+
+---
+#### Create a model
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a> > <a href="#8">Object-Document Mapper (ODM)</a>]
+
+Once you have your schema, you can create a model to link that schema to a MongoDB collection:
+
+```js
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+// Define a schema
+var blogSchema = new Schema({
+  // ...
+});
+
+// Create a model
+*mongoose.model('Blog', blogSchema);
+```
+
+`mongoose.model()` takes a **singular** name, but will then look for a collection with the **lowercase, plural version** of that name in the MongoDB database.
+In this case, the model will store documents in the `blogs` collection (not `Blog`).
+
+You can also choose your own collection name if you prefer:
+
+```js
+mongoose.model('Blog', blogSchema, 'awesome-blog-collection');
+```
+
+---
+#### Create a document
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a> > <a href="#8">Object-Document Mapper (ODM)</a>]
+
+The model is a **constructor** that you can use to create documents:
+
+```js
+// Retrieve the model from another file
+var Blog = mongoose.model('Blog');
+
+// Create a document with it
+*var blog = new Blog({
+  title: 'Teaching Mongoose',
+  body: 'So cool',
+  comments: [
+    { body: 'orly?', date: new Date(2015, 10, 20, 15, 14) },
+    { body: 'yarly', date: new Date(2015, 10, 20, 15, 17) }
+  ],
+  meta: {
+    votes: 0,
+    favs: 3
+  }
+});
+```
+
+---
+#### Saving documents
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a> > <a href="#8">Object-Document Mapper (ODM)</a>]
+
+Once you have your document, you can insert or update it with `save()`:
+
+```js
+var blog = new Blog({
+  // ...
+});
+
+`blog.save`(function(err) {
+  if (err) {
+    return console.warn('Could not save blog because: ' + err.message);
+  }
+
+  console.log('Saved blog');
+
+  blog.meta.votes = 5;
+  `blog.save`(function(err, updatedBlog) {
+    if (err) {
+      return console.warn('Could not save blog because: ' + err.message);
+    }
+
+    console.log('Updated blog');
+  });
+});
+```
+
+The first time, your blog document has no `_id` so Mongoose will **insert** it.
+The second time, Mongoose has added the `_id` to the document object, so it
+knows that it exists and should be **updated** instead.
+
+
+
+---
+### Mongoose validations
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a>]
+
+Mongoose schemas have build-in validations:
+
+```js
+var personSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: [ 3, 'Name is too short' ],
+    maxlength: 20
+  },
+  honorific: {
+    type: String,
+    enum: [ 'Mr', 'Mrs', 'Ms', 'Dr' ]
+  },
+  age: {
+    type: Number,
+    min: 0,
+    max: 122
+  }
+});
+```
+
+---
+#### Handling validations
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a> > <a href="#14">Mongoose validations</a>]
+
+The callback passed to `save()` will receive an error if validations fail:
+
+```js
+var person = new Person({
+  name: 'Bo',
+  age: -4,
+  honorific: 'Great'
+});
+
+person.save(function(err) {
+  if (err) {
+*   if (err.name == 'ValidationError') {
+*     console.log(err.errors);
+*     // {
+*     //   "honorific": { "message": "'Great' is not a valid enum value" },
+*     //   "age": { "message": "Path 'age' (-4) is less than minimum" },
+*     //   "name": { "message": "Name is too short" }
+*     // }
+*     return console.warn('Person is invalid');
+    } else {
+      return console.warn('Could not save person because: ' + err.message);
+    }
+  }
+
+  console.log('Person is valid');
+});
+```
+
+---
+#### Custom validations
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a> > <a href="#14">Mongoose validations</a>]
+
+You can also write your own validators.
+
+For example, this validates that the `name` property of users is in lower case:
+
+```js
+var userSchema = new Schema({
+  name: {
+    type: String,
+*   validate: {
+*     // Returns true if the name is valid (in lower case)
+*     validator: function(value) {
+*       return value.toLowerCase() == value;
+*     },
+*     // Custom error message
+*     message: '{VALUE} is not in lower case'
+*   }
+  }
+});
+```
+
+
+
+---
+### Unique constraints
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a>]
+
+Simply add the `unique: true` property to the schema property you want to be unique:
+
+```js
+var personSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: [ 3, 'Name is too short' ],
+    maxlength: 20,
+    `unique`: true
+  },
+  // ...
+});
+```
+
+To create a unique index on **multiple fields**, use `index()` on the schema:
+
+```js
+`personSchema.index`({ name: 1, age: 1  }, { unique: true });
+```
+
+
+
+---
+### Mongoose queries
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a>]
+
+You can make MongoDB queries with the `find()` or `findOne()` methods of Mongoose models:
+
+```js
+Person
+* .find({
+*   occupation: /host/,
+*   'name.last': 'Ghost',
+*   age: { $gt: 17, $lt: 66 },
+*   likes: { $in: ['vaporizing', 'talking'] }
+* })
+  .limit(10)
+  .sort({ occupation: -1 })
+  .select({ name: 1, occupation: 1 })
+  .exec(function(err, people) {
+    if (err) {
+      return console.warn('Could not find people because: ' + err.message);
+    }
+
+    console.log('Found ' + people.length + ' people');
+  });
+```
+
+---
+#### Query builder
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a> > <a href="#18">Mongoose queries</a>]
+
+You can also use chainable query methods:
+
+```js
+Person
+  .find({ occupation: /host/ })
+* .where('name.last').equals('Ghost')
+* .where('age').gt(17).lt(66)
+* .where('likes').in(['vaporizing', 'talking'])
+  .limit(10)
+  .sort('-occupation')
+  .select('name occupation')
+  .exec(function(err, people) {
+    if (err) {
+      return console.warn('Could not find people because: ' + err.message);
+    }
+
+    console.log('Found ' + people.length + ' people');
+  });
+```
+
+
+
+---
+### Debugging
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a>]
+
+Sometimes you want to see the queries Mongoose is sending to the database:
+
+```js
+mongoose.set('debug', true);
+```
+
+You will them in your log:
+
+```txt
+Mongoose: people.find({
+  occupation: /host/,
+  'name.last': 'Ghost',
+  age: { '$gt': 17, '$lt': 66 },
+  likes: { '$in': [ 'vaporizing', 'talking' ] }
+}, {
+  limit: 10,
+  sort: { occupation: -1 },
+  fields: { name: 1, occupation: 1 }
+})
+```
+
+
+
+---
+### Should I use it?
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a>]
+
+.grid-50[
+
+**Advantages**
+
+* Schemas
+* Validations
+* Complex query building
+* Connection pooling
+
+
+]
+.grid-50[
+
+**Disadvantages**
+
+* Additional abstraction layer between you and the database
+
+
+]
+.container[
+
+Mongoose uses the **native Node.js client** under the hood, and you can even access it **directly** if need be:
+
+```js
+var Blog = mongoose.model('Blog');
+
+Blog.collection.insertOne({ foo: 'bar' }, function(err, commandResult) {
+  if (err) {
+    return console.warn('Could not insert blog because: ' + err.message);
+  }
+
+  console.log(commandResult.insertedCount + ' documents inserted');
+});
+```
+
+
+
+
+]
+---
+## Resources
+
+.breadcrumbs[<a href="#1">Mongoose</a>]
+
+* MongoDB Node.js client
+  * [Collection API][collection-api]
+
+* Mongoose
+  * [Getting started][mongoose-getting-started]
+  * [Guide][mongoose-guide]
+  * [API documentation][mongoose-api]
+
+
+
+[alt-camo]: https://www.npmjs.com/package/camo
+[alt-waterline]: https://github.com/balderdashy/waterline
+[collection-api]: http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html
+[mongoose]: http://mongoosejs.com
+[mongoose-api]: http://mongoosejs.com/docs/api.html
+[mongoose-document]: http://mongoosejs.com/docs/documents.html
+[mongoose-getting-started]: http://mongoosejs.com/docs/index.html
+[mongoose-guide]: http://mongoosejs.com/docs/guide.html
+[mongoose-model]: http://mongoosejs.com/docs/models.html
+
+    </textarea>
+
+    <script src='../../assets/remark.min.js'></script>
+    <script src='../../assets/jquery-3.1.1.slim.min.js'></script>
+    <script src='../../assets/uri-1.18.7.js'></script>
+
+    <script>
+      var remarkOptions = {"highlightLines":true,"highlightSpans":true,"countIncrementalSlides":false};
+      var slideshow = remark.create(remarkOptions);
+
+      $('#slide-links .home-link').each(function() {
+        var $a = $(this);
+
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
+
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
+        }
+      });
+
+      var slides = $('.remark-slide-content');
+
+      // Remove logo from body and add it to each slide
+      $('#slide-logo').remove().prependTo(slides).show();
+
+      // Remove links from body and add them to each slide
+      $('#slide-links').remove().prependTo(slides).show();
+
+      // Make all external links open a new window
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
+    </script>
+  </body>
+</html>
