@@ -135,12 +135,25 @@
         text-align: right;
       }
 
-      .gitbash {
-        text-align: center;
-      }
-      .gitbash > img {
-        width: 80%;
-      }
+      .w5 { width: 5%; }
+      .w10 { width: 10%; }
+      .w15 { width: 15%; }
+      .w20 { width: 20%; }
+      .w30 { width: 30%; }
+      .w35 { width: 35%; }
+      .w40 { width: 40%; }
+      .w45 { width: 45%; }
+      .w50 { width: 50%; }
+      .w55 { width: 55%; }
+      .w60 { width: 60%; }
+      .w65 { width: 65%; }
+      .w70 { width: 70%; }
+      .w75 { width: 75%; }
+      .w80 { width: 80%; }
+      .w85 { width: 85%; }
+      .w90 { width: 90%; }
+      .w95 { width: 95%; }
+      .w100 { width: 100%; }
 
       .compact-table table td {
         font-size: 0.9em;
@@ -155,7 +168,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/f93a0ef1e0fd61490d5631a980b37cd3f70d55c3/subjects/rest/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/352136b451b201b36dde00a9b292a98526089f30/subjects/rest/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -688,12 +701,12 @@ A JSON representation:
 
 ```http
 GET /shows/game-of-thrones HTTP/1.1
-Accept: application/json
+*Accept: application/json
 ```
 
 ```http
 HTTP/1.1 200 OK
-Content-Type: application/json
+*Content-Type: application/json
 
 {
   "title": "Game of Thrones",
@@ -711,12 +724,12 @@ An HTML representation:
 
 ```http
 GET /shows/game-of-thrones HTTP/1.1
-Accept: text/html,*/*
+*Accept: text/html,*/*
 ```
 
 ```http
 HTTP/1.1 200 OK
-Content-Type: text/html
+*Content-Type: text/html
 
 <html>
   <head>
@@ -738,6 +751,27 @@ Content-Type: text/html
 
 ]
 ---
+class: compact-table
+### Common request headers
+
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#13">[HyperText Transfer Protocol (HTTP)][http]</a>]
+
+
+
+Example                              | Meaning
+:---                                 | :---
+`Accept: text/plain`                 | I want you to send me a response in **plain text**. If you **can't**, I expect you to respond with `406 Not Acceptable`.
+`Authorization: Basic 98aw=`         | Use the base64-encoded `user:password` string I am giving you as proof of my identity.
+`Authorization: Bearer 1y09`         | Use the [bearer token][auth0-tokens] I am giving you as proof of my identity.
+`Content-Type: application/json`     | I am sending you a request with JSON text in the body.
+`If-Modified-Since: Sun, 3 Jan 2017` | If the resource I am retrieving has not changed since January 3rd 2017, I expect you to respond with `304 Not Modified` and no response body (to save bandwidth).
+`If-Unmodified-Since: ...`           | If the resource I am updating has **changed** since ..., I expect you to **not update it** and respond with `412 Precondition Failed`.
+`Referer: google.com`                | I am coming to you from `google.com`.
+`User-Agent: Mobile Safari/534.30`   | I am sending you a request from a **mobile device**.
+
+
+
+---
 ## [Create, read, update, delete (CRUD)][crud]
 
 .breadcrumbs[<a href="#1">REST APIs Introduction</a>]
@@ -758,7 +792,7 @@ https://evening-meadow-25867.herokuapp.com
 ---
 ### Postman
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a>]
 
 To make requests to the API, we will use [Postman][postman], an HTTP client with a GUI.
 **Download and launch** the application now.
@@ -770,7 +804,7 @@ You don't have to sign up when it prompts you to, you can skip it:
 ---
 #### Postman interface
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#27">Postman</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#28">Postman</a>]
 
 Postman allows you to make any HTTP **request/response** (e.g. `POST`, `PUT`, custom headers, etc).
 It also remembers your **previous requests**..
@@ -782,7 +816,7 @@ It also remembers your **previous requests**..
 ---
 ### Create
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a>]
 
 The API allows us to **create a person** by making a `POST` request with a **JSON representation** of the person.
 This is the request we want to make:
@@ -803,7 +837,7 @@ Let's make that request with Postman:
 ---
 #### Create request headers
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#29">Create</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#30">Create</a>]
 
 You can see and modify the request headers in the **Headers** tab:
 
@@ -816,7 +850,7 @@ Press the **Send** button to send the request.
 ---
 #### Create response
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#29">Create</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#30">Create</a>]
 
 You should see the response below the request configuration:
 
@@ -831,7 +865,7 @@ In other words: the server tells us that **a new person has been created** by re
 ---
 #### Create response headers
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#29">Create</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#30">Create</a>]
 
 You can also see the response headers in the **Headers** tab:
 
@@ -846,7 +880,7 @@ The server tells us where to find the new resource in the **Location** header.
 ---
 ### Read
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a>]
 
 Let's make a request to **read** (or **retrieve**) the person we created.
 This time we need a simple `GET` request to the path given to us in the **Location** header of the previous response:
@@ -862,7 +896,7 @@ Configure that request in Postman:
 ---
 #### Read response
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#33">Read</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#34">Read</a>]
 
 Press **Send** and you should retrieve the person in the response:
 
@@ -876,7 +910,7 @@ The `200 OK` status code indicates that the request was **successful**.
 ---
 #### Read a resource that does not exist
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#33">Read</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#34">Read</a>]
 
 Configure the same request but change the last character of the URL path:
 
@@ -891,7 +925,7 @@ By sending a response with the `404 Not Found` status code, the server tells us 
 ---
 #### Read a collection
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#33">Read</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#34">Read</a>]
 
 The API also has a resource that represents the **collection of people** that have been created.
 Let's make a `GET` request to **read** that.
@@ -908,7 +942,7 @@ Configure that request in Postman:
 ---
 #### Read collection response
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#33">Read</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#34">Read</a>]
 
 Press **Send** and you should receive a response with several people in it:
 
@@ -922,7 +956,7 @@ Since that represents multiple people, we receive a **JSON array**, where each e
 ---
 ### Update
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a>]
 
 The API also allows us to **update** a person by making a `PUT` request to the person's resource with a **JSON representation** of the updated person.
 Let's make a request to add your birthdate:
@@ -941,7 +975,7 @@ Configure that request with Postman:
 ---
 #### Update response
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#38">Update</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#39">Update</a>]
 
 Press **Send** and you should receive the updated person in the response:
 
@@ -957,7 +991,7 @@ Since no new resource was created, the server simply responds with `200 OK`.
 ---
 #### Partial update with PUT
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#38">Update</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#39">Update</a>]
 
 Now, configure the same request but **without the gender**, and press **Send**:
 
@@ -966,7 +1000,7 @@ Now, configure the same request but **without the gender**, and press **Send**:
 ---
 #### Partial update response with PUT
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#38">Update</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#39">Update</a>]
 
 The server is responding with the status code `422 Unprocessable Entity`, meaning that the request was refused because the person representation you sent is invalid (it is missing the gender property):
 
@@ -978,7 +1012,7 @@ which it cannot do in this case because it is **invalid**. API operations using 
 ---
 #### Partial updates with PATCH
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#38">Update</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#39">Update</a>]
 
 The `PATCH` method was later added to the HTTP specification to support **partial updates**.
 The API also supports it, so let's make a PATCH request to update your birthdate:
@@ -997,7 +1031,7 @@ Configure that request with Postman:
 ---
 #### Partial update response with PATCH
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#38">Update</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#39">Update</a>]
 
 This time the request was accepted:
 
@@ -1015,7 +1049,7 @@ Like with `PUT`, no new resource was created, so the server responds with `200 O
 ---
 ### Delete
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a>]
 
 Finally, let's **delete** the person.
 We simply need to make a `DELETE` request with no request body:
@@ -1031,7 +1065,7 @@ Configure that request with Postman:
 ---
 #### Delete response
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#44">Delete</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#45">Delete</a>]
 
 Press **Send** and you should get a response from the server with no response body:
 
@@ -1052,7 +1086,7 @@ but `204 No Content` was chosen for this API implementation.
 class: compact-table
 ### CRUD summary
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a>]
 
 
 
@@ -1068,14 +1102,14 @@ Collection (`people` - plural name)                                             
 class: compact-table
 #### CRUD errors summary
 
-.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#26">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#46">CRUD summary</a>]
+.breadcrumbs[<a href="#1">REST APIs Introduction</a> > <a href="#27">[Create, read, update, delete (CRUD)][crud]</a> > <a href="#47">CRUD summary</a>]
 
 
 
 Collection errors                                                                                                                  | Resource errors
 :---                                                                                                                               | :---
 `POST /api/people`<br/>`400 Bad Request` (JSON malformed), `404 Not Found`, `422 Unprocessable Entity` (Data semantically invalid) | -
-`POST /api/people`<br/>`400 Bad Request` (Query parameters invalid)                                                                | `GET /api/people/:id`<br/>`404 Not Found`
+`GET /api/people`<br/>`400 Bad Request` (Query parameters invalid)                                                                | `GET /api/people/:id`<br/>`404 Not Found`
 -                                                                                                                                  | `PUT /api/people/:id`<br/>`400 Bad Request` (JSON malformed), `404 Not Found`, `422 Unprocessable Entity` (Data semantically invalid)
 -                                                                                                                                  | `PATCH /api/people/:id`<br/>`400 Bad Request` (JSON malformed), `404 Not Found`, `422 Unprocessable Entity` (Data semantically invalid)
 -                                                                                                                                  | `DELETE /api/people/:id`<br/>`404 Not Found`, `409 Conflict` (Cannot be deleted)
@@ -1102,6 +1136,7 @@ Collection errors                                                               
 
 
 [api]: https://en.wikipedia.org/wiki/Application_programming_interface
+[auth0-tokens]: https://auth0.com/blog/ten-things-you-should-know-about-tokens-and-cookies/
 [chrome]: https://www.google.com/chrome/
 [crud]: https://en.wikipedia.org/wiki/Create,_read,_update_and_delete
 [http]: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
