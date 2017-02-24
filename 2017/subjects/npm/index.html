@@ -168,7 +168,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/352136b451b201b36dde00a9b292a98526089f30/subjects/npm/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/6bb369acd56a5893e3673ee7e392c00872d5c3e3/subjects/npm/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -229,7 +229,7 @@ For operating systems:
 | Package manager                   | OS                   |
 | :---                              | :---                 |
 | Advanced Package Tool (apt)       | Debian, Ubuntu       |
-| Homebrew                          | Mac OS X             |
+| Homebrew (brew)                   | Mac OS X             |
 | Yellowdog Updater, Modified (yum) | RHEL, Fedora, CentOS |
 
 
@@ -668,8 +668,14 @@ They are installed in a **system directory** and are **global to your machine**
 
 <p class='center'><img src='images/npm-install-global.png' class='w70' /></p>
 
+.grid-50[
+
 Global packages provide **new commands** that you can use in your CLI.
 In this case, the `http-server` package is a simple command-line HTTP server:
+
+
+]
+.grid-50[
 
 ```bash
 $> http-server
@@ -680,6 +686,8 @@ Available on:
 Hit CTRL-C to stop the server
 ```
 
+
+]
 ---
 #### Where are global packages installed?
 
@@ -695,12 +703,28 @@ $> ls /usr/local/lib/node_modules
 http-server
 ```
 
+You *cannot* use `--save` with global packages.
+You **do not need to** since they are global to your machine and available anywhere in the CLI.
+However, if you **reset** your machine or Node.js installation, you will have to **reinstall** manually.
+
 
 
 ---
-### Common pitfall
+class: center, middle
+## Common mistakes
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
+.breadcrumbs[<a href="#1">npm</a>]
+
+
+
+It happens.
+
+
+
+---
+### Missing `package.json` file
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#24">Common mistakes</a>]
 
 If you **forgot to add a `package.json` file** to your project,
 npm will still install your dependencies and log a warning that is **easy to miss**:
@@ -713,12 +737,111 @@ npm WARN `saveError` ENOENT: no such file or directory,
 └── lodash@4.17.4
 ```
 
+<p class='center'><img src='images/npm-missing-package.png' class='w80'></p>
+
 
 
 ---
-### More complex packages
+### Wrong directory
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#24">Common mistakes</a>]
+
+Npm will not know if you are in the **wrong directory**.
+It will simply **install packages there**.
+Of course, you will **NOT** be able to `require()` them from your project:
+
+<p class='center'><img src='images/npm-install-wrong-dir.png' class='w80'></p>
+
+
+
+---
+class: center, middle
+## The behavior of `require()`
+
+.breadcrumbs[<a href="#1">npm</a>]
+
+
+
+
+
+---
+### Requiring your own modules
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#27">The behavior of `require()`</a>]
+
+You can require your own Node.js scripts with **relative file paths**:
+
+.grid-50[
+
+<p class='center'><img src='images/require-relative-module.png' class='w100' /></p>
+
+
+]
+.grid-50[
+
+<p class='center'><img src='images/require-parent-module.png' class='w100' /></p>
+
+
+]
+.container[
+
+Beware of **circular dependencies**.
+In this example, you should do one or the other, **not both**.
+
+
+
+
+]
+---
+### Requiring packages installed with npm
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#27">The behavior of `require()`</a>]
+
+You can require packages you installed with npm **by their name**:
+
+<p class='center'><img src='images/require-local-package.png' class='w60' /></p>
+
+---
+#### Global packages installed with npm
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#27">The behavior of `require()`</a> > <a href="#29">Requiring packages installed with npm</a>]
+
+You **CANNOT** require packages you installed **globally** with npm.
+They provide **new commands** but cannot be used in code:
+
+<p class='center'><img src='images/require-global-package.png' class='w80' /></p>
+
+
+
+---
+### Requiring core Node.js modules
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#27">The behavior of `require()`</a>]
+
+When you give **a name** to `require()`, it will also look for a **core Node.js modules** with that name:
+
+<p class='center'><img src='images/require-core-module.png' class='w70' /></p>
+
+
+
+---
+### Require summary
+
+.breadcrumbs[<a href="#1">npm</a> > <a href="#27">The behavior of `require()`</a>]
+
+Statement                 | What is required
+:---                      | :---
+`require('./script')`     | The `script.js` file in the current directory (relative to the file using `require()`)
+`require('./dir/script')` | The `script.js` file in the `dir` directory (relative to the file using `require()`)
+`require('../script')`    | The `script.js` file in the parent directory (relative to the file using `require()`)
+`require('my-module')`    | The `my-module` npm package (if found in `node_modules` in the same directory *or any parent directory*)<br/>**OR**<br/>The core Node.js module with that name (if there is one)
+
+
+
+---
+## More complex packages
+
+.breadcrumbs[<a href="#1">npm</a>]
 
 The npm registry has many packages, some small, some big.
 Let's install [express][express], a web application framework:
@@ -745,7 +868,7 @@ app.listen(3000, function () {
 ---
 #### Run a web app
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#12">npm install</a> > <a href="#25">More complex packages</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#33">More complex packages</a>]
 
 Run the file:
 
@@ -775,7 +898,7 @@ npm is not only a package *installer*, it's also a package **manager**
 ---
 ### Lifecycle scripts
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#27">npm scripts</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#35">npm scripts</a>]
 
 For programs that can be **long-lived**, such as **web servers**,
 npm defines **standard lifecycle scripts** that you should use to control your program.
@@ -795,7 +918,7 @@ Read the [documentation][npm-scripts] to learn about all the available lifecycle
 ---
 ### The scripts property
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#27">npm scripts</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#35">npm scripts</a>]
 
 .grid-40[
 
@@ -830,7 +953,7 @@ Example app listening on port 3000!
 ---
 ### Custom scripts
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#27">npm scripts</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#35">npm scripts</a>]
 
 You can also define your own custom scripts:
 
@@ -872,7 +995,7 @@ Publish a package
 ---
 ### What do I need to publish?
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#31">npm publish</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#39">npm publish</a>]
 
 You need a valid `package.json` file.
 
@@ -894,7 +1017,7 @@ they will get the same result as if they had required that file.
 ---
 ### Publishing
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#31">npm publish</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#39">npm publish</a>]
 
 Publishing is as simple as running the `npm publish` command in the directory where your `package.json` file is located:
 
@@ -912,7 +1035,7 @@ Names are registered on a **first-come, first-serve** basis.
 ---
 ### Avoiding publication
 
-.breadcrumbs[<a href="#1">npm</a> > <a href="#31">npm publish</a>]
+.breadcrumbs[<a href="#1">npm</a> > <a href="#39">npm publish</a>]
 
 Sometimes you write code that should not be published:
 
