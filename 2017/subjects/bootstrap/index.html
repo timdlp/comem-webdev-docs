@@ -6,6 +6,8 @@
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
     <link rel='stylesheet' href='../../assets/unsemantic-grid-desktop.css'>
+    <link rel='stylesheet' href='../../assets/bootstrap-btn.css'>
+
 
     <link rel='stylesheet' href='../../assets/fonts/YanoneKaffeesatz/YanoneKaffeesatz.css'>
     <link rel='stylesheet' href='../../assets/fonts/DroidSerif/DroidSerif.css'>
@@ -52,6 +54,10 @@
         color: indianred;
         border-radius: 3px;
         border: thin solid #dddddd;
+      }
+
+      .remark-slide-content img {
+        max-width: 100%;
       }
 
       .remark-slide-content p:first-child, .remark-slide-content ul:first-child {
@@ -168,7 +174,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/e12c37441b767af1cb8187d8b52aea051970c5ef/subjects/bootstrap/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/25406f00c789905794e60a6bdefdb0db015a3d77/subjects/bootstrap/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -187,8 +193,7 @@ Requirements:
 * [Google Chrome][chrome] (recommended, any browser with developer tools will do)
 * [Sublime Text][sublime] (recommended, any text editor will do... **except Notepad**)
 
-<!-- START doctoc -->
-<!-- END doctoc-->
+
 
 ---
 class: center, middle, image-header
@@ -237,10 +242,13 @@ CDN, that stands for **C**ontent **D**elivering **N**etwork, allows you **to ref
 
 This way, each time a page with a CDN URL is requested by a user, the file is **retrieved through Internet** and stored in the user's computer memory.
 
-To include Bootstrap with a CDN, add this line at the bottom of your `<head>` tag in your `index.html` file:
+To include Bootstrap with a CDN, add this `<link>` tag at the bottom of your `<head>` tag in your `index.html` file:
 
 ```html
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<head>
+  ...
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
 ```
 > This will include in your site the 3.3.7 version of the minified CSS file
 
@@ -265,7 +273,7 @@ bootstrap-3.3.7-dist/
       └─ [some files]
 ```
 
-Copy the complete `css` directory and place it at the root of your project directory, then add this line at the bottom of your `<head>` tag in your `index.html` file
+Copy the complete `css` directory and place it at the root of your project directory, then add this `<link>` tag at the bottom of your `<head>` tag in your `index.html` file
 
 ```html
 <head>
@@ -282,7 +290,7 @@ To be sure that Bootstrap is correctly included in your project, just open your 
 
 With a simple "Hello World" example, your page **without Bootstrap** could look like this:
 
-<p class='center'><img src='images/without-bootstrap.jpg' width='100%' /></p>
+<p class='center'><img src='images/without-bootstrap-css.jpg' width='100%' /></p>
 
 The same page, but **with Bootstrap correctly included** should look like this:
 
@@ -297,25 +305,347 @@ The same page, but **with Bootstrap correctly included** should look like this:
 
 We already said that Bootstrap is a bunch of CSS styles already written for you.
 
-Thos styles could be devided in three categories:
+Those styles could be divided in three categories:
 
 * **Tag styles**: overwrite the default style for some HTML tags
-* **New classes**: new CSS classes (obivously) that can be used in a s
+* **New classes**: new CSS classes (obivously) that can be used when needed
+* **Component**: a set of classes that needs to be used with a **strictly defined** HTML structure.
+
+Let's see some illustrations of these types...
+
+---
+## Tag styles
+
+.breadcrumbs[<a href="#1">Bootstrap</a>]
+
+Bootstrap comes with CSS styles that are applied to **HTML tags**, without **adding classes** to said tags.
+
+Some of the tags that are impacted are:
+
+* `<h1>` to `<h6>`
+* `<small>` (a tag that display smaller text)
+* `<mark>` (a tag that highlights its content)
+* `<abbr>` (a tag to explain an abbreviation)
+* `<code>` (a tag that define its content as code)
+
+> More information in the [Bootstrap documentation][bootstrap-css]
+
+---
+### Examples
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#8">Tag styles</a>]
+
+To see for yourself how Bootstrap stylizes those tags, let's **add some of them** in your project.
+
+Open the `index.html` file and **replace** the content between the `body` tags with this:
+
+```html
+<h1>This is a h1 Title <small>with small text inside</small></h1>
+<h2>This is a h2 Title</h2>
+<p>This is a paragraph <small>with small text inside</small></p>
+<p><mark>Some highlight text.</mark></p>
+<p>Here is an <abbr title="abbreviation">abbr</abbr> tag.</p>
+<p>Do you want to write some <code>function()</code>?</p>
+```
+
+To **compare** the same tags without Bootstrap, create a new file called `compare.html`, and **copy-paste all the content** of `index.html` inside it.
+
+Now, in the `compare.html` file, **remove** the line with the `<link>` that **includes** Bootstrap, and save it.
+
+Finally, open both `index.html` and `compare.html` in your browser.
+
+> What differences do you see?
+
+---
+### Why put styles on tag?
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#8">Tag styles</a>]
+
+As you can see, HTML tags already **have** default styles, even without CSS.
+
+But these styles are **browser dependant**, i.e. your page could be rendered differently on **Chrome**, **Firefox**, **Edge** and/or **Safari**.
+
+See, for example, the rendering of an `<abbr>` tag on **Chrome** VS **Firefox**...
+
+<p class='center'><img src='images/abbr-comparison.jpg' width='100%' /></p>
+
+...or that of a `<code>` tag on **Chrome** VS **Edge**
+
+<p class='center'><img src='images/code-comparison.jpg' width='100%' /></p>
+
+---
+### Normalization
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#8">Tag styles</a>]
+
+To avoid this rendering problem, developers use a technique called **CSS Normalization**.
+
+Normalizing the CSS means creating styles for **HTML tag** to **cancel** default styles that are **not consistent among browsers**.
+
+Bootstrap uses the [Normalize.css][normalize] library, that do just that.
+
+By using a normalizer and adding its own style for basic HTML tags, Bootstrap ensures that your page will be **consistently rendered** on each browser.
+
+---
+## New classes
+
+.breadcrumbs[<a href="#1">Bootstrap</a>]
+
+Bootstrap also comes with a **ton of new classes** that can be applied to HTML tags.
+
+Some of these classes need to be applied to **specific tags**, while others can be applied to **almost any tag**.
+
+To try this, let's start anew with our `index.html` file.
+
+Delete everything that's between your `<body>` tag and add:
+
+```html
+<div>
+    <h1>Bootstrap Initiation</h1>
+    <div>Here will go the content.</div>
+</div>
+```
+
+---
+### Container
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a>]
+
+Containers represents the `<div>`s that **structure** your content.
+
+Right now, this content is **fully aligned to the left** of the screen, almost touching the edge. It's ugly and not very readable.
+
+You can change that by adding a `.container-fluid` class to a `<div>`.
+
+```html
+<div `class='container-fluid'`>
+    <h1>Bootstrap Initiation</h1>
+    <div>Here will go the content.</div>
+</div>
+```
+> The content will have a padding of `15px` from both edges, and your container will be as wide as possible.
+
+---
+#### `.container`
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#13">Container</a>]
+
+If you want your container to be more centered, use the `.container` instead.
+
+```html
+<div `class='container'`>
+    <h1>Bootstrap Initiation</h1>
+    <div>Here will go the content.</div>
+</div>
+```
+> Your container is now more centered on the screen.
+
+???
+
+The `.container` class is designed so that your `<div>` will always be, at maximum, the width of a **1024x768** screen resolution, but with a padding of `15px`.
+
+---
+#### Illustration
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#13">Container</a>]
+
+<p class='center'><img src='images/without-container.jpg' width='100%' /></p>
+
+<p class='center'><img src='images/with-container-fluid.jpg' width='100%' /></p>
+
+<p class='center'><img src='images/with-container.jpg' width='100%' /></p>
+
+---
+### Tables
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a>]
+
+.grid-50[
+
+Manually styling tables in CSS can be quite painful and time consuming.
+
+Bootstrap provides you with the `.table` class, that must be added to a `<table>` tag.
+
+Replace this line...
+
+```html
+<div>Here will go the content.</div>
+```
+...by the following snippet:
+
+
+]
+.grid-50[
+
+```html
+<table `class="table"`>
+    <thead>
+        <th>#</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Starship</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Jean-Luc</td>
+            <td>Picard</td>
+            <td>Enterprise D</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Benjamin</td>
+            <td>Sisko</td>
+            <td>Defiant</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Kathryn</td>
+            <td>Janeway</td>
+            <td>Voyager</td>
+        </tr>
+    </tbody>
+</table>
+```
+
+]
+---
+#### More table classes
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#16">Tables</a>]
+
+> These classes **must be** used in addition of the `.table` class.
+
+To add **stripes**, add the `.table-striped` class to your `<table>`:
+
+```html
+<table `class`="table `table-striped`">
+```
+To add **border**, add the `.table-bordered` class to your `<table>`:
+
+```html
+<table `class`="table `table-bordered`">
+```
+To add a **hover effect** to table rows, add the `.table-hover` class:
+
+```html
+<table `class`="table `table-hover`">
+```
+> You can use more than one additional class to your `<table>`.
+
+For example, if you'd want to have a table that has **all the preceding styles** at the same time, you could use:
+
+```html
+<table `class="table table-bordered table-striped table-hover"`>
+```
+
+---
+### Buttons
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a>]
+
+Bootstrap adds many new classes regarding buttons, that allows you to create a wide variety of possible usage.
+
+Let's add some buttons to the `index.html` page. Add the following snippet after the `</table>` tag:
+
+```html
+<h2>Buttons</h2>
+<div>
+  <a href="#">Link</a>
+  <button>Button</button>
+  <input type="submit" value="Input Submit">
+  <input type="button" value="Input Button">
+</div>
+```
+> Right now, this should give you this:
+
+<p><img src='images/new-buttons-btn.jpg' width='40%' /></p>
+
+> It's doesn't look like much. Let's remedy that.
+
+---
+#### The `.btn` class
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#18">Buttons</a>]
+
+To properly use any of the button styles, you **must** add the special class `.btn` to the tag you want to sylize.
+
+> You can add a button style to any `<a>`, `<button>` or `<input>` tags.
+
+```html
+<a href="#" `class='btn'`>Link</a>
+<button `class='btn'`>Button</button>
+<input type="submit" value="Input Submit" `class='btn'`>
+<input type="button" value="Input Button" `class='btn'`>
+```
+The result should be:
+
+<p><img src='images/buttons-btn.jpg' width='40%' /></p>
+
+As you can see, the `.btn` class doesn't add much; this is by design: the `.btn` class is used to *initialize* the tag as a button and, as such, is **mandatory**.
+
+> It only defines the **skeleton** that additionnal classes will customize.
+
+---
+#### Additionnal classes
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#18">Buttons</a>]
+
+Bootstrap defines **seven button styles**, each with its own class to add to an element **that already have** the `.btn` class:
+
+| Style   | CSS class      | Result |
+| :------ | :------------- | :----- |
+| Default | `.btn-default` | <button class="btn btn-default">Click me!</button> |
+| Primary | `.btn-primary` | <button class="btn btn-primary">Click me!</button> |
+| Success | `.btn-success` | <button class="btn btn-success">Click me!</button> |
+| Info    | `.btn-info`    | <button class="btn btn-info">Click me!</button> |
+| Warning | `.btn-warning` | <button class="btn btn-warning">Click me!</button> |
+| Danger  | `.btn-danger`  | <button class="btn btn-danger">Click me!</button> |
+| Link    | `.btn-link`    | <button class="btn btn-link">Click me!</button> |
+
+---
+##### Try it!
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#18">Buttons</a> > <a href="#20">Additionnal classes</a>]
+
+Add a:
+
+* `.btn-default` class to the `<a>` tag
+* `.btn-info` class to the `<button>` tag
+* `.btn-success` class to the `<input type="submit">` tag
+* `.btn-link` class to the `<input type="button">` tag
+
+----
+
+The result should look like this:
+
+<div>
+    <a href="#" class="btn btn-default">Link</a>
+    <button class="btn btn-info">Button</button>
+    <input type="submit" value='Input Submit' class="btn btn-success">
+    <input type="button" value='Input Button' class="btn btn-link">
+</div>
+
+---
+#### Sizes management
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#18">Buttons</a>]
 
 ---
 ## Resources
 
 .breadcrumbs[<a href="#1">Bootstrap</a>]
 
-* [Coffee][coffee]
-* [RTFM][rtfm]
+* [Bootstrap CSS Documentation][bootstrap-css]
+* [Normalize CSS][normalize]
 
 [sublime]: https://en.wikipedia.org/wiki/Coffee
-[git]: ../git/
+[bootstrap-css]: http://getbootstrap.com/css/
 [chrome]: https://www.google.com/chrome/
 [rtfm]: https://en.wikipedia.org/wiki/RTFM
 [bootstrap]: http://getbootstrap.com/
 [dl-bootstrap]: https://github.com/twbs/bootstrap/releases/download/v3.3.7/bootstrap-3.3.7-dist.zip
+[normalize]: https://necolas.github.io/normalize.css/
 
     </textarea>
 

@@ -6,6 +6,8 @@
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
     <link rel='stylesheet' href='../../assets/unsemantic-grid-desktop.css'>
+    <link rel='stylesheet' href='../../assets/bootstrap-btn.css'>
+
 
     <link rel='stylesheet' href='../../assets/fonts/YanoneKaffeesatz/YanoneKaffeesatz.css'>
     <link rel='stylesheet' href='../../assets/fonts/DroidSerif/DroidSerif.css'>
@@ -52,6 +54,10 @@
         color: indianred;
         border-radius: 3px;
         border: thin solid #dddddd;
+      }
+
+      .remark-slide-content img {
+        max-width: 100%;
       }
 
       .remark-slide-content p:first-child, .remark-slide-content ul:first-child {
@@ -168,7 +174,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/e12c37441b767af1cb8187d8b52aea051970c5ef/subjects/express/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/25406f00c789905794e60a6bdefdb0db015a3d77/subjects/express/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -192,7 +198,7 @@ Requirements:
 
 ---
 class: center, middle
-## What is express?
+## What is Express?
 
 .breadcrumbs[<a href="#1">Express</a>]
 
@@ -205,7 +211,7 @@ A fast, unopinionated, **minimalist** web framework for Node.js
 ---
 ### Core functionality
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is express?</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is Express?</a>]
 
 .grid-33[
 
@@ -241,11 +247,11 @@ Use the many **middleware** packages at your disposal to build more complex appl
 
 ]
 ---
-### Install the express generator
+### Install the Express generator
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is express?</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is Express?</a>]
 
-You can create an express app from scratch, but we'll use **express-generator** to quickly create an application skeleton:
+You can create an Express app from scratch, but we'll use **express-generator** to quickly create an application skeleton:
 
 ```bash
 $> npm install -g express-generator
@@ -277,7 +283,7 @@ $> express --help
 ---
 ### Generate a skeleton application
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is express?</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is Express?</a>]
 
 ```bash
 $> cd /path/to/projects
@@ -313,7 +319,7 @@ $> express my-app
 ---
 ### Install dependencies and run it
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is express?</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is Express?</a>]
 
 As instructed, let's install the dependencies:
 
@@ -343,7 +349,7 @@ $> DEBUG=my-app:* npm start
 ---
 ### Browse the landing page
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is express?</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is Express?</a>]
 
 Visit [http://localhost:3000](http://localhost:3000) in your browser and you should see the app running:
 
@@ -387,7 +393,7 @@ bin
 ```
 
 * `package.json` is used to track **dependencies** with npm
-* `app.js` is the **main script** that will create and configure the express app
+* `app.js` is the **main script** that will create and configure the Express app
 * `routes` contains files that define the app's **routes and controllers**
 * `bin/www` is the **entrypoint** (the script you execute to launch the app)
 
