@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>REST conventions (COMEM+ Web Dev)</title>
+    <title>RESTful API Conventions (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -164,6 +164,11 @@
       .compact-table table td {
         font-size: 0.9em;
       }
+
+      .shadow {
+        width: 100%;
+        box-shadow: lightgrey 0 0 3px;
+      }
     </style>
   </head>
   <body>
@@ -174,17 +179,23 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/25406f00c789905794e60a6bdefdb0db015a3d77/subjects/rest-conventions/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/568e79366741ceb13d91faa87a2f6b92a99463a7/subjects/rest-conventions/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
 
     <!-- Remark slides -->
     <textarea id='source'>
-# REST conventions
+# RESTful API Conventions
+
+Learn common ways to structure RESTful API operations.
 
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
+
+**Recommended reading**
+
+* [RESTful APIs](../rest/)
 
 
 
@@ -193,11 +204,11 @@ This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development 
 ---
 ## URL structure
 
-.breadcrumbs[<a href="#1">REST conventions</a>]
+.breadcrumbs[<a href="#1">RESTful API Conventions</a>]
 
 Resources often have relationships:
 
-* **Blog** authors create **posts** that can have **comments**.
+* Blog **posts** have **comments**.
 * **Courses** are taught by **professors**.
 
 How should we define the URLs to retrieve those resources?
@@ -207,96 +218,284 @@ How should we define the URLs to retrieve those resources?
 ---
 ### Nested (or hierarchical) URLs
 
-.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#2">URL structure</a>]
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#2">URL structure</a>]
 
-Suppose I want to get the comments on post 892 of the Comem+ blog.
+Suppose I want to get the comments on post 892 of a blog.
 
-The URL could represent the hierarchical structure of the resources like this:
-
-```
-  http://blog.io/comem-blog/posts/892/comments
-```
-
-Or it could be "flat" and have parameters like this:
+The URL can be **nested** and mirror the **hierarchical structure** between the resources:
 
 ```
-  http://blog.io/comments?blog=comem-blog&postId=892
+  http://blog.example.com`/posts`/892`/comments`
+```
+
+Or it can be **flat** (only one path level) and have *query parameters* like this:
+
+```
+  http://blog.example.com`/comments`?postId=892
 ```
 
 In this case, the **nested** or **hierarchical** version probably makes more sense if you assume that:
 
-* A comment cannot exist outside of a post.
-* A post cannot exist outside of a blog.
+* A post comment **cannot exist** outside of a post
+* You'll probably **never want to display all comments** across posts,
+  only the comments of a specific post
 
 
 
 ---
 ### Flat URLs
 
-.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#2">URL structure</a>]
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#2">URL structure</a>]
 
 Suppose I want to retrieve the courses given by professor Arnold.
 
-Again, the URL could be nested:
+Again, the URL could be **nested**:
 
 ```
-http://heig-vd.ch/professors/arnold/courses
+  http://heig-vd.ch`/professors`/arnold`/courses`
 ```
 
-Or it could be flat:
+Or it could be **flat**:
 
 ```
-http://heig-vd.ch/courses?professor=arnold
+  http://heig-vd.ch`/courses`?professor=arnold
 ```
 
 In this case, the **flat** version probably makes more sense because:
 
-* The existence of the course does not depend on the existence of the professor.
-* If Arnold is murdered, someone else will take over the course.
+* The existence of the course **does not depend** on the existence of the professor
+  (if Arnold is murdered, someone else will take over the course)
+* You'll probably want to be able to **list all courses** on a page somewhere
 
 
 
 ---
 ### Nested vs. flat URLs
 
-.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#2">URL structure</a>]
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#2">URL structure</a>]
 
 There is no *right or wrong* answer.
 You will find both styles in popular REST APIs.
+When defining your API's URLs, you should ask yourself:
 
-When defining URL structures, you should ask yourself:
+> Is there an **ownership** or **composition** relationship between these resources?
 
-> Is there an **aggregation** or **composition** relationship between resources?
+In this case, it makes sense to use **nested** or hierarchical URLs.
 
-In this case, it makes sense to use nested or hierarchical URLs.
+> Will I need to **display all the resources** of this type on a page somewhere?
+
+In that case, it makes sense to use **flat** URLs.
+
+
+
+---
+### Using both nested & flat URLs
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#2">URL structure</a>]
+
+It's also possible to define **multiple collections** for the same resource at **different paths**:
+
+```
+  GET /courses
+  GET /professors/arnold/courses
+```
+
+* The first collection (`/courses`) can be used to list **all courses**
+* The second collection (`/professors/arnold/courses`) can be used to list **the courses taught by professor arnold**
+
+These two collections both produce a list of resources of the same type (courses), but **they are different collections**.
+Their contents will vary over time, and most of the time the two collections will not produce the same result (there are courses taught by other professors).
 
 
 
 ---
 ## Linked resources
 
-.breadcrumbs[<a href="#1">REST conventions</a>]
+.breadcrumbs[<a href="#1">RESTful API Conventions</a>]
 
-Suppose that our REST API handles **companies** and **employees**,
-and that it provides the following endpoint:
+This section will discuss different ways to represent links between resources as well as their pros and cons.
 
-```http
-GET /companies/{id}
+Suppose that your RESTful API handles **movies** and **directors** where one movie has **one** director,
+and that it provides the following operation:
+
+```
+  GET /movies/:id
 ```
 
-What company data do you expect to retrieve?
+You will retrieve the movie's data, of course, but what do you expect to see concerning the movie's **director**?
 
 
 
 ---
-### Embedded resources
+### Embedded resource
 
-.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#6">Linked resources</a>]
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#7">Linked resources</a>]
+
+The director can be **embedded** into the movie's data:
+
+```json
+{
+  "id": "oa9ufne",
+  "title": "The Fellowship of the Ring",
+  "rating": 8.9,
+* "director": {
+*   "id": "la09sld",
+*   "name": "Peter Jackson",
+*   "gender": "male"
+* }
+}
+```
+
+* *Advantage:* it **reduces chattiness**:
+  fewer requests have to be made to the server to retrieve both the movie's and the director's data
+* *Disadvantage:* **more data** is exchanged between client and server **that the client might not always need**
+
+
+
+---
+### Resource reference via ID
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#7">Linked resources</a>]
+
+To save bandwidth, only a unique identifier for the director could be included:
+
+```json
+{
+  "title": "The Fellowship of the Ring",
+  "rating": 8.9,
+* "directorId": "la09sld"
+}
+```
+
+* *Advantages:*
+  * **Smaller JSON payloads**
+* *Disadvantages:*
+  * It **increases chattiness**: the client has to make two requests to retrieve both the movie's and the director's data
+  * The client **must know how to build the URL** to the director resource,
+    which is not always obvious (e.g. you could think it's `/directors/la09sld` but it could be `/people/la09sld`)
+
+
+
+---
+### Resource reference via URL or hyperlink
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#7">Linked resources</a>]
+
+Instead of just the ID, you could include a hyperlink reference (`href`) or URL pointing to the director's resource:
+
+```json
+{
+  "title": "The Two Towers",
+  "rating": 7.1,
+* "directorHref": "/api/people/la09sld",
+* "directorUrl": "http://example.com/api/people/la09sld"
+}
+```
+
+*(**Note**: you would use either `directorHref` or `directorUrl`, **not both**.)*
+
+* *Advantage:* **decouples** the client from your API through **hypermedia**:
+  the client can perform many operations without knowing how to build your URLs
+  (this is a REST principle called [HATEOAS][hateoas])
+* *Disadvantages:* it not only **increases chattiness**,
+  but also means somewhat **more data** exchanged between client and server compared to IDs,
+  especially if using full URLs and you have multiple links
+
+
+
+---
+### Optional resource embedding
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#7">Linked resources</a>]
+
+Again, there's no *right or wrong* answer: it depends on your use case.
+
+By spending a little more time on your server's implementation,
+it's also possible to **combine** some of these patterns:
+
+.grid-50[
+
+```http
+GET /api/movies/312
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "title": "The Two Towers",
+  "rating": 7.1,
+  "directorHref": "/api/people/la0"
+}
+```
+
+
+]
+.grid-50[
+
+```http
+GET /api/movies/312?`include=director`
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "title": "The Two Towers",
+  "rating": 7.1,
+  "directorHref": "/api/people/la0",
+* "director": {
+*   "id": "la09sld",
+*   "name": "Peter Jackson",
+*   "gender": "male"
+* }
+}
+```
+
+
+]
+.container[
+
+This **lets the client decide** what's most appropriate **for each request** (depending on the view it is rendering).
+
+
+
+
+]
+---
+### Embedding a collection
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#7">Linked resources</a>]
+
+You can ask yourself the same questions for **one-to-many** or **many-to-many** relationships:
+
+.grid-55[
+
+```json
+{
+  "name": "John Doe",
+  "addresses" : [
+    {
+      "street" : "8785 Windfall St.",
+      "city" : "Whitehall, PA 18052"
+    },
+    {
+      "street" : "1 N. Cactus Ave.",
+      "city" : "Green Bay, WI 54302"
+    }
+  ]
+}
+```
+
+
+]
+.grid-45[
 
 ```json
 {
   "name": "Apple",
-  "address" : {},
   "employees" : [
     {
       "firstName" : "Tim",
@@ -312,119 +511,57 @@ What company data do you expect to retrieve?
 }
 ```
 
-Reduces "chattiness", often good if there are "few" linked resources; company-employee is not a good example.
+
+]
+.container[
+
+When embedding collections, be mindful of the **amount of data**.
+Embedding a person's addresses is probably reasonable, as few people will have many different addresses,
+but embedding a company's employees is probably a really bad idea.
 
 
 
+
+]
 ---
-### Resource references via IDs
+### Multiple resource references
 
-.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#6">Linked resources</a>]
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#7">Linked resources</a>]
+
+You can also use identifiers, hyperlinks or URLs for links to multiple resources:
+
+.grid-45[
 
 ```json
 {
-  "name": "Apple",
-  "address" : {},
-  "employeeIds" : [134, 892, 918, 9928]
+  "name": "John Doe",
+  "addresses" : [ 412, 633 ]
 }
 ```
 
-The client must know the URL structure to retrieve an an employee.
 
-
-
----
-### Resource references via URLs
-
-.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#6">Linked resources</a>]
+]
+.grid-55[
 
 ```json
 {
-  "name": "Apple",
-  "address" : {},
-  "employeeURLs" : [
-    "/companies/89/employees/134",
-    "/companies/89/employees/892",
-    "/companies/89/employees/918",
-    "/contractors/255/employees/9928"
+  "title": "Die Hard With a Vengance",
+  "actorHrefs" : [
+    "/api/people/0a9duvx",
+    "/api/people/acsl9w2",
+    "/api/people/7dis92k"
   ]
 }
 ```
 
-Good: decouples client and server implementation.
 
 
 
----
-## Resources & actions
-
-.breadcrumbs[<a href="#1">REST conventions</a>]
-
-Resources like articles, movies or students (i.e. **objects**) are easy to identify and handle with the standard HTTP methods:
-
-| Request               | Purpose                           |
-| :---                  | :---                              |
-| `GET /students`       | List all students                 |
-| `GET /students/42`    | Retrieve student 42's information |
-| `POST /students`      | Register a new student            |
-| `PUT /students/42`    | Update student 42's information   |
-| `DELETE /students/42` | Delete student 42                 |
-
-What if you want to *exclude* a student (i.e. an **action**) from a course because they have cheated?
-
-What HTTP method and URL would you use?
-
-
-
----
-### Action URLs
-
-.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#10">Resources & actions</a>]
-
-You could do it like this:
-
-```http
-POST /students/42/exclude HTTP/1.1
-```
-
-This is considered a **bad practice**:
-
-* "Exclude" is a **verb**, not a **noun**, so it's not a "resource" in the REST sense.
-* There is no request body so it's hard to provide additional **data about the action**.
-
-
-
----
-### Actions as a resource
-
-.breadcrumbs[<a href="#1">REST conventions</a> > <a href="#10">Resources & actions</a>]
-
-You could consider the "exclusion" to be a resource in itself:
-
-```http
-POST /students/42/exclusions HTTP/1.1
-Content-Type: application/json
-
-{
-  "course": "comem-webdev",
-  "date": "2015-10-24",
-  "reason": "I don't like you"
-}
-```
-
-This is more RESTful:
-
-* We have introduced a new resource: an exclusion request.
-
-  > Think about it like the equivalent of a paper form that the professor has to fill out and file.
-* This resource can have extra data (e.g. the reason for the exclusion).
-
-
-
+]
 ---
 ## Pagination
 
-.breadcrumbs[<a href="#1">REST conventions</a>]
+.breadcrumbs[<a href="#1">RESTful API Conventions</a>]
 
 What's the problem with this HTTP request?
 
@@ -436,18 +573,244 @@ Host: world-phonebook.com
 
 
 ---
-## Huge collections
+### Huge collections
 
-.breadcrumbs[<a href="#1">REST conventions</a>]
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a>]
 
 Some collections can grow to a point where it is not possible to get all of its elements in a single HTTP request:
 
-* It would be **too slow**.
-* In some cases, the server might not have enough CPU or memory **capacity**.
+* It would be **too slow**
+* In some cases, the server might not even have enough CPU or memory **capacity** to retrieve the data
 
-You want to be able to **successively retrieve chunks** of the collection.
+You want to be able to **successively retrieve pages** of the collection:
 
 <p class='center'><img src='images/google-pagination.png' /></p>
+
+
+
+---
+### What you need for pagination
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a>]
+
+There are two main requirements to be able to implement pagination:
+
+* The client must be able to tell the server **which elements** of the collection it wants
+* The server must give the client enough information to be able to **access the other elements**
+
+The most common way for clients to ask for a page is to add **URL query parameters** which the server can use to select only part of the collection:
+
+```http
+  GET /api/movies?`page=2`&`pageSize=50`
+```
+
+---
+#### Telling the client how to get more
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a> > <a href="#16">What you need for pagination</a>]
+
+There are many different ways popular APIs tell the client how to get more elements.
+Here are a few:
+
+* The `Link` header
+* Custom headers
+* Using a JSON *envelope* or *wrapper*
+
+
+
+---
+### The `Link` header (solution 1)
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a>]
+
+There have been many ways developers have implemented pagination over the years.
+It's only recently that a [standard header][link-header-rfc] has been defined and started becoming popular.
+
+The `Link` header allows the server to **tell the client where to find other pages** of the collection,
+**without the client having to build new URLs** (also part of [HATEOAS][hateoas]).
+
+The server can indicate where to find:
+
+* The first page
+* The previous page
+* The next page
+* The last page
+* *(Other variants if necessary)*
+
+---
+#### What's in the header?
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a> > <a href="#18">The `Link` header (solution 1)</a>]
+
+Consider the following request where the client requests the second page of 50 elements in a collection:
+
+```http
+GET /api/movies?`page=2`&`pageSize=50` HTTP/1.1
+```
+
+In the response, in addition to the 50 movies on that page,
+the server can send a `Link` header with references to **the URLs of other pages** of the collection:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Link: <https://example.com/api/movies?`page=1`&pageSize=50>; rel="`first prev`",
+      <https://example.com/api/movies?`page=3`&pageSize=50>; rel="`next`",
+      <https://example.com/api/movies?`page=5`&pageSize=50>; rel="`last`"
+
+[
+  ...
+]
+```
+
+*(**Note**: the `Link` header is shown on 3 lines here for readability, but it would be on 1 line in the actual HTTP response.)*
+
+---
+#### What's the link format?
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a> > <a href="#18">The `Link` header (solution 1)</a>]
+
+Multiple links in the `Link` header are comma-separated.
+Each link looks like this:
+
+```
+  <https://example.com/api/movies?page=1&pageSize=50>; rel="first prev"
+```
+
+It contains:
+
+* The **target URL** between `<>`
+* One or more **parameters** preceded by `;`:
+
+The `rel` (or "relation") parameter is mandatory, as it indicates **what kind of link it is**.
+There is a [registry of official relation types][link-header-rels] (such as `first`, `prev`, `next` and `last`).
+
+You can use your own custom relation types but instead of single words, they should be URIs:
+
+```
+  <http://example.com/manual>; rel="http://example.com/my-rels/rtfm"
+```
+
+
+
+---
+### Custom headers (solution 2)
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a>]
+
+The `Link` header has the advantage of being a standard,
+but it's hard to build a **pager** from it:
+
+<p class='center'><img src='images/pagination.png' /></p>
+
+The server would need to send pre-built **links for each page**, which is not very flexible and consumes bandwidth.
+
+HTTP does not forbid you from using non-standard headers,
+so you could decide to use these **custom headers** (for example) to send the client the additional information it needs:
+
+* A `Pagination-Page` header to tell the client which page is being served
+* A `Pagination-PageSize` header to tell the client what is the current page size
+* A `Pagination-Total` header to tell the client how many elements there are in the collection
+
+---
+#### Custom headers in the response
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a> > <a href="#21">Custom headers (solution 2)</a>]
+
+Consider the following request where the client requests the second page of 50 elements in a collection:
+
+```http
+GET /api/movies?`page=2`&`pageSize=50` HTTP/1.1
+```
+
+In the response, in addition to the 50 movies on that page, the server can send the custom pagination headers:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+*Pagination-Page: 2
+*Pagination-PageSize: 50
+*Pagination-Total: 231
+
+[
+  ...
+]
+```
+
+
+
+---
+### JSON envelope (solution 3)
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a>]
+
+In some rare circumstances, there is a proxy between client and server that **strips some headers** from requests.
+In this case, you would have to send the pagination information in the **response body** instead of headers.
+
+Instead of using a **JSON array** as the response body,
+you can use a **JSON object** that contains additional metadata as well as the array of elements:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+  `"page": 2`,
+  `"pageSize": 50`,
+  `"total": 231`,
+  `"data": [`
+    ...
+  `]`
+}
+```
+
+---
+#### Links in the JSON envelope
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a> > <a href="#23">JSON envelope (solution 3)</a>]
+
+You can also use **link relations** in a JSON envelope (like with the `Link` header) if you prefer that solution:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+  `"data": [`
+    ...
+  `]`,
+* "links": [
+*   "first": "https://example.com/api/movies?page=1&pageSize=50",
+*   "prev": "https://example.com/api/movies?page=1&pageSize=50",
+*   "next": "https://example.com/api/movies?page=3&pageSize=50",
+*   "last": "https://example.com/api/movies?page=5&pageSize=50"
+* ]
+}
+```
+
+
+
+---
+## Resources
+
+.breadcrumbs[<a href="#1">RESTful API Conventions</a>]
+
+**Documentation**
+
+* [`Link` header][link-header-rfc] ([official relation types](link-header-rels))
+
+**Further reading**
+
+* [Understanding HATEOAS][understanding-hateoas]
+* [Haters gonna HATEOAS][haters-gonna-hateoas]
+
+
+
+[hateoas]: https://en.wikipedia.org/wiki/HATEOAS
+[haters-gonna-hateoas]: http://timelessrepo.com/haters-gonna-hateoas
+[link-header-rels]: http://www.iana.org/assignments/link-relations/link-relations.xhtml
+[link-header-rfc]: https://tools.ietf.org/html/rfc5988
+[understanding-hateoas]: https://spring.io/understanding/HATEOAS
 
     </textarea>
 

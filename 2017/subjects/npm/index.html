@@ -164,6 +164,11 @@
       .compact-table table td {
         font-size: 0.9em;
       }
+
+      .shadow {
+        width: 100%;
+        box-shadow: lightgrey 0 0 3px;
+      }
     </style>
   </head>
   <body>
@@ -174,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/25406f00c789905794e60a6bdefdb0db015a3d77/subjects/npm/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/568e79366741ceb13d91faa87a2f6b92a99463a7/subjects/npm/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -183,8 +188,19 @@
     <textarea id='source'>
 # npm
 
+Learn how to use [npm][npm], the most popular [Node.js][node] package manager, and the largest code registry in the world with over a quarter million packages.
+
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
+
+**You will need**
+
+* A Unix CLI
+
+**Recommended reading**
+
+* [Command line](../cli/)
+* [Node.js](../node/)
 
 
 
@@ -1075,6 +1091,7 @@ In these cases, you can set the `private` property of the `package.json` file:
 
 
 [express]: https://expressjs.com
+[node]: https://nodejs.org
 [npm]: https://www.npmjs.com
 [npm-cli]: https://docs.npmjs.com/cli/npm
 [npm-fix-permissions]: https://docs.npmjs.com/getting-started/fixing-npm-permissions

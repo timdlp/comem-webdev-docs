@@ -164,6 +164,11 @@
       .compact-table table td {
         font-size: 0.9em;
       }
+
+      .shadow {
+        width: 100%;
+        box-shadow: lightgrey 0 0 3px;
+      }
     </style>
   </head>
   <body>
@@ -174,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/25406f00c789905794e60a6bdefdb0db015a3d77/subjects/express/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/568e79366741ceb13d91faa87a2f6b92a99463a7/subjects/express/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -183,14 +188,21 @@
     <textarea id='source'>
 # Express
 
+Learn the basics of [Express][express], a fast, unopinionated, minimalistic web framework for [Node.js][node].
+
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
 
-Requirements:
+**You will need**
 
-* [Node.js][node] 4+
+* [Node.js][node] 6+
 * [Google Chrome][chrome] (recommended, any browser with developer tools will do)
 * [Postman][postman] (recommended, any tool that makes raw HTTP requests will do)
+
+**Recommended reading**
+
+* [npm](../npm/)
+* [RESTful APIs](../rest/)
 
 
 
@@ -251,7 +263,7 @@ Use the many **middleware** packages at your disposal to build more complex appl
 
 .breadcrumbs[<a href="#1">Express</a> > <a href="#2">What is Express?</a>]
 
-You can create an Express app from scratch, but we'll use **express-generator** to quickly create an application skeleton:
+You can create an Express app from scratch, but we'll use [express-generator][express-generator] to quickly create an application skeleton:
 
 ```bash
 $> npm install -g express-generator
@@ -873,147 +885,6 @@ It will render any error in a "pretty" error page.
 
 ---
 class: center, middle
-## Routing
-
-.breadcrumbs[<a href="#1">Express</a>]
-
-
-
-Mapping HTTP methods and URLs to handler functions
-
-
-
----
-### Basic routing
-
-.breadcrumbs[<a href="#1">Express</a> > <a href="#31">Routing</a>]
-
-As we've seen, basic routing can be applied to middleware by using `.get`, `.post`, etc and passing a path:
-
-```js
-app.get('/hello', function() {
-  res.send('World');
-});
-```
-
-You can also have dynamic parameters in your URLs:
-
-```js
-app.get('/authors/`:authorId`/books/`:bookId`', function(req, res, next) {
-  res.send('Getting book ' + `req.params.bookId` + ' by ' + `req.params.authorId`);
-});
-```
-
-Calling `http://localhost:3000/authors/24/books/33` will produce the following response:
-
-```txt
-Getting book 33 by 24
-```
-
-
-
----
-### Routers
-
-.breadcrumbs[<a href="#1">Express</a> > <a href="#31">Routing</a>]
-
-An Express [router][router] is an **isolated instance of middleware and routes**.
-It's basically a **mini-app**.
-
-Imagine that you have the following API routes:
-
-.grid-50[
-
-```
-GET /authors
-POST /authors
-GET /authors/:id
-PATCH /authors/:id
-DELETE /authors/:id
-```
-
-
-]
-.grid-50[
-
-```
-GET /books
-POST /books
-GET /books/:id
-PATCH /books/:id
-DELETE /books/:id
-```
-
-
-]
-.container[
-
-You can define a **router** in a separate file for each of the two sets of routes,
-that way you don't have one monolithic file with all your code in it.
-
-
-]
----
-#### Creating a router
-
-.breadcrumbs[<a href="#1">Express</a> > <a href="#31">Routing</a> > <a href="#33">Routers</a>]
-
-```js
-var express = require('express');
-
-var booksRouter = express.Router();
-
-booksRouter.post('/', /*...*/);
-
-booksRouter.get('/', function(req, res, next) {
-  var books = [ 'Catch-22', 'Fahrenheit 451' ];
-  res.send(books);
-});
-
-booksRouter.get('/:id', function(req, res, next) {
-  var book = { title: 'Fahrenheit 451', year: 1953, author: 'Ray Bradburry' };
-  res.send(book);
-});
-
-booksRouter.put('/:id', /*...*/);
-booksRouter.delete('/:id', /*...*/);
-
-module.exports = booksRouter;
-```
-
-Note that we don't use `/books` and `/books/:id` as paths but `/` and `/:id`.
-
----
-#### Plugging in a router
-
-.breadcrumbs[<a href="#1">Express</a> > <a href="#31">Routing</a> > <a href="#33">Routers</a>]
-
-A router behaves like a middleware function, so you can simply plug it into your application with `app.use()`:
-
-```js
-var app = express();
-
-// Require the books router from the routes directory
-var booksRouter = require('./routes/books');
-
-app.use('/books', booksRouter);
-```
-
-Any request where the path starts with `/books` will be handled by that router,
-with that path as a **prefix**:
-
-<p class='center'><img src='images/routers.png' class='w80' /></p>
-
-???
-
-The path passed to `app.use()` is **prepended to your router's paths**,
-so your router's `/:id` route becomes `/books/:id` when plugged in like this.
-It will handle HTTP requests to `/books/42`, for example.
-
-
-
----
-class: center, middle
 ## The request object
 
 .breadcrumbs[<a href="#1">Express</a>]
@@ -1027,7 +898,7 @@ Using the `req` object
 ---
 ### Request example
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The request object</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#31">The request object</a>]
 
 How can we extract all the data from this request?
 
@@ -1051,7 +922,7 @@ Authorization: Basic Zm9vOmJhcgo=
 ---
 ### Getting the HTTP method, URL path and query parameters
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The request object</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#31">The request object</a>]
 
 Let's start with the request line:
 
@@ -1076,7 +947,7 @@ app.all('/test/:param1/:param2', function(req, res, next) {
 ---
 ### Getting HTTP headers
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The request object</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#31">The request object</a>]
 
 Now let's get the headers:
 
@@ -1113,7 +984,7 @@ app.all('/test/:param1/:param2', function(req, res, next) {
 ---
 ### Getting the HTTP request body
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The request object</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#31">The request object</a>]
 
 Finally, let's get the request body:
 
@@ -1159,7 +1030,7 @@ Using the `res` object
 ---
 ### Sending the response
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#41">The response object</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The response object</a>]
 
 Use `res.send()` for most use cases.
 It will automatically determine the type of content your are sending and set the appropriate `Content-Type` header:
@@ -1215,7 +1086,7 @@ Content-Type: application/json
 ---
 ### Setting the HTTP status code
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#41">The response object</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The response object</a>]
 
 Use `res.status()` to set the status code:
 
@@ -1269,7 +1140,7 @@ HTTP/1.1 204 No Content
 ---
 ### Sending HTTP response headers
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#41">The response object</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The response object</a>]
 
 Use `res.set()` to set headers:
 
@@ -1343,7 +1214,7 @@ Some text
 ---
 ### Chain response methods
 
-.breadcrumbs[<a href="#1">Express</a> > <a href="#41">The response object</a>]
+.breadcrumbs[<a href="#1">Express</a> > <a href="#36">The response object</a>]
 
 You can also chain all the previous methods together:
 
@@ -1379,6 +1250,340 @@ Express's `res` object is an application of the [builder][design-pattern-builder
 
 ]
 ---
+class: center, middle
+## Routing
+
+.breadcrumbs[<a href="#1">Express</a>]
+
+
+
+Mapping HTTP methods and URLs to handler functions
+
+
+
+---
+### Basic routing
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">Routing</a>]
+
+As we've seen, basic routing can be applied to middleware by using `.get`, `.post`, etc and passing a path:
+
+```js
+app.get('/hello', function() {
+  res.send('World');
+});
+```
+
+You can also have dynamic parameters in your URLs:
+
+```js
+app.get('/authors/`:authorId`/books/`:bookId`', function(req, res, next) {
+  res.send('Getting book ' + `req.params.bookId` + ' by ' + `req.params.authorId`);
+});
+```
+
+Calling `http://localhost:3000/authors/24/books/33` will produce the following response:
+
+```txt
+Getting book 33 by 24
+```
+
+
+
+---
+### Routing middlewares
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">Routing</a>]
+
+A route can also contain **its own chain of successive middlewares**:
+
+```js
+function `getNameFromQuery`(req, res, next) {
+  req.nameToSalute = req.query.name;
+  next();
+}
+
+function `prepareSalutation`(req, res, next) {
+  req.salutation = 'Hello ' + req.nameToSalute;
+  next();
+}
+
+app.get('/hello', `getNameFromQuery`, `prepareSalutation`, function(req, res, next) {
+  res.send(req.salutation);
+});
+```
+
+These middleware functions are **only executed for that route** (`GET /hello` in this case).
+
+
+
+---
+### Routers
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">Routing</a>]
+
+An Express [router][router] is an **isolated instance of middleware and routes**.
+It's basically a **mini-app**.
+
+Imagine that you have the following API routes:
+
+.grid-50[
+
+```
+GET /authors
+POST /authors
+GET /authors/:id
+PATCH /authors/:id
+DELETE /authors/:id
+```
+
+
+]
+.grid-50[
+
+```
+GET /books
+POST /books
+GET /books/:id
+PATCH /books/:id
+DELETE /books/:id
+```
+
+
+]
+.container[
+
+You can define a **router** in a separate file for each of the two sets of routes,
+that way you don't have one monolithic file with all your code in it.
+
+
+]
+---
+#### Creating a router
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">Routing</a> > <a href="#44">Routers</a>]
+
+```js
+var express = require('express');
+
+var booksRouter = express.Router();
+
+booksRouter.`post('/'`, /*...*/);
+
+booksRouter.`get('/'`, function(req, res, next) {
+  var books = [ 'Catch-22', 'Fahrenheit 451' ];
+  res.send(books);
+});
+
+booksRouter.`get('/:id'`, function(req, res, next) {
+  var book = { title: 'Fahrenheit 451', year: 1953, author: 'Ray Bradburry' };
+  res.send(book);
+});
+
+booksRouter.`put('/:id'`, /*...*/);
+booksRouter.`delete('/:id'`, /*...*/);
+
+module.exports = booksRouter;
+```
+
+Note that we don't use `/books` and `/books/:id` as paths but `/` and `/:id`.
+
+---
+#### Plugging in a router
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">Routing</a> > <a href="#44">Routers</a>]
+
+A router behaves like a middleware function, so you can simply plug it into your application with `app.use()`:
+
+```js
+var app = express();
+
+// Require the books router from the routes directory
+var booksRouter = require('./routes/books');
+
+app.use('/books', booksRouter);
+```
+
+Any request where the path starts with `/books` will be handled by that router,
+with that path as a **prefix**:
+
+<p class='center'><img src='images/routers.png' class='w80' /></p>
+
+???
+
+The path passed to `app.use()` is **prepended to your router's paths**,
+so your router's `/:id` route becomes `/books/:id` when plugged in like this.
+It will handle HTTP requests to `/books/42`, for example.
+
+---
+#### What's it for?
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">Routing</a> > <a href="#44">Routers</a>]
+
+Imagine a more complex API where **comments** can be attached to **multiple other resources**:
+
+.grid-50[
+
+**Comments on books**
+
+```
+POST /books/:id`/comments`
+GET /books/:id`/comments`
+PATCH /books/:id`/comments/:cid`
+DELETE /books/:id`/comments/:cid`
+```
+
+
+]
+.grid-50[
+
+**Comments on movies**
+
+```
+POST /movies/:id`/comments`
+GET /movies/:id`/comments`
+PATCH /movies/:id`/comments/:cid`
+DELETE /movies/:id`/comments/:cid`
+```
+
+
+]
+.container[
+
+If you didn't have routers, you would have to define these 4 routes in **both** the **books' and movies' routers**:
+
+```js
+// In routes/books.js
+booksRouter.`post('/:id/comments'`, /*...*/);
+booksRouter.`get('/:id/comments'`, /*...*/);
+booksRouter.`patch('/:id/comments/:cid'`, /*...*/);
+booksRouter.`delete('/:id/comments/:cid'`, /*...*/);
+
+// In routes/movies.js
+moviesRouter.`post('/:id/comments'`, /*...*/);
+moviesRouter.`get('/:id/comments'`, /*...*/);
+moviesRouter.`patch('/:id/comments/:cid'`, /*...*/);
+moviesRouter.`delete('/:id/comments/:cid'`, /*...*/);
+```
+
+
+]
+---
+#### Plugging routers on routers
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#41">Routing</a> > <a href="#44">Routers</a>]
+
+With a router, you could **define these sub-paths once**:
+
+```js
+// Create a comments router to attach comments to
+// the parent found by the specified middleware
+module.exports = function `makeCommentsRouter`(findParentMiddleware) {
+  const commentsRouter = express.Router();
+  commentsRouter.`post('/'`, findParentMiddleware, /*...*/);
+  commentsRouter.`get('/'`, findParentMiddleware, /*...*/);
+  commentsRouter.`patch('/:cid'`, findParentMiddleware, /*...*/);
+  commentsRouter.`delete('/:cid'`, findParentMiddleware, /*...*/);
+  return commentsRouter;
+};
+```
+
+Then plug the whole URL sub-structure onto both the **books' and movies' routers**:
+
+```js
+// In routes/books.js
+const makeCommentsRouter = require('./comments');
+booksRouter.`use('/books/:id/comments', makeCommentsRouter(findBook))`;
+
+// In routes/movies.js
+const makeCommentsRouter = require('./comments');
+moviesRouter.`use('/movies/:id/comments', makeCommentsRouter(findMovie)`);
+```
+
+
+
+---
+## Not having to restart manually
+
+.breadcrumbs[<a href="#1">Express</a>]
+
+[Nodemon][nodemon] is a **monitoring script** that can launch any Node.js app for you,
+and **automatically restart it** when you make changes.
+
+It's an npm package you can install globally:
+
+```bash
+$> npm install -g nodemon
+$> cd /path/to/projects/my-app
+$> DEBUG=my-app:* nodemon
+[nodemon] 1.11.0
+[nodemon] to restart at any time, enter rs
+[nodemon] `watching: *.*`
+[nodemon] `starting node ./bin/www`
+  express-demo:server Listening on port 3000 +0ms
+```
+
+It will execute the `npm start` script defined in your `package.json` by default,
+and restart the app if **any file changes**.
+
+
+
+---
+### Configuring nodemon properly
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#49">Not having to restart manually</a>]
+
+Instead of installing it globally, it's good practice to install nodemon as a **development dependency** so that your whole team can use it without having to re-install it globally on their machine:
+
+```bash
+$> cd /path/to/projects/my-app
+$> npm install --save-dev nodemon
+```
+
+Add an npm run script called `dev`:
+
+```json
+{
+  "name": "my-app",
+  "scripts": {
+*   "dev": "DEBUG=my-app:* nodemon",
+    "start": "node ./bin/www"
+  },
+  ...
+}
+```
+
+If you commit this change, anyone cloning your repository can run nodemon (after running `npm install`):
+
+```bash
+$> npm run dev
+```
+
+
+
+---
+### Making nodemon faster
+
+.breadcrumbs[<a href="#1">Express</a> > <a href="#49">Not having to restart manually</a>]
+
+Nodemon watches **all file changes** by default; this consumes extra CPU time and memory.
+You can make it watch only **relevant files** by adding a `nodemon.json` configuration file in your project's directory:
+
+```json
+{
+  "watch": [
+    "app.js",
+    "bin/www",
+    "routes/**/*.js"
+  ]
+}
+```
+
+If you add **new directories** to your project, **do not forget** to add them to this configuration file for nodemon to watch them as well.
+
+
+
+---
 ## Resources
 
 .breadcrumbs[<a href="#1">Express</a>]
@@ -1389,24 +1594,16 @@ Express's `res` object is an application of the [builder][design-pattern-builder
 
 
 
----
-## TODO
-
-.breadcrumbs[<a href="#1">Express</a>]
-
-* Always send a response (e.g. 500 when error occurs)
-* Better explain routers (in separate files)
-* Slide 34 (creating a router): explain hardcoded vs database call
-
-
-
 [api]: http://expressjs.com/en/4x/api.html
 [chrome]: https://www.google.com/chrome/
 [design-pattern-builder]: https://sourcemaking.com/design_patterns/builder
 [design-pattern-cor]: https://sourcemaking.com/design_patterns/chain_of_responsibility
+[express]: https://expressjs.com
+[express-generator]: https://www.npmjs.com/package/express-generator
 [jade]: https://www.npmjs.com/package/jade
 [using-middleware]: http://expressjs.com/en/guide/using-middleware.html
 [node]: https://nodejs.org/en/
+[nodemon]: https://www.npmjs.com/package/nodemon
 [router]: http://expressjs.com/en/4x/api.html#router
 [routing]: http://expressjs.com/en/guide/routing.html
 [postman]: https://www.getpostman.com

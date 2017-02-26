@@ -164,6 +164,11 @@
       .compact-table table td {
         font-size: 0.9em;
       }
+
+      .shadow {
+        width: 100%;
+        box-shadow: lightgrey 0 0 3px;
+      }
     </style>
   </head>
   <body>
@@ -174,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/25406f00c789905794e60a6bdefdb0db015a3d77/subjects/express-mongoose/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/568e79366741ceb13d91faa87a2f6b92a99463a7/subjects/express-mongoose/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -196,8 +201,11 @@ This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development 
 **Recommended reading**
 
 * [RESTful APIs](../rest/)
+* [RESTful API Conventions](../rest-conventions/)
 * [Express](../express/)
 * [Mongoose](../mongoose/)
+
+
 
 
 
@@ -250,7 +258,7 @@ For example, you might want to display:
 
 .breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#3">Filtering</a>]
 
-Express gives you access to URL query parameters in `req.query`,
+Express gives you access to **URL query parameters** in `req.query`,
 and Mongoose offers a chainable **query builder**; they're very easy to plug together:
 
 ```js
@@ -263,8 +271,8 @@ router.get('/', function(req, res, next) {
     `query = query.where('director').equals(req.query.director)`;
   }
   // Limit movies to only those with a good enough rating
-  if (!isNaN(req.query.ratingOver)) {
-    `query = query.where('rating').gte(req.query.ratingOver)`;
+  if (!isNaN(req.query.ratedAtLeast)) {
+    `query = query.where('rating').gte(req.query.ratedAtLeast)`;
   }
 
   // Execute the query
@@ -294,7 +302,7 @@ router.get('/', function(req, res, next) {
   let `query` = Movie.find();
 
   // Filter movies by director
-  if (Array.isArray(req.query.director)) {
+  if (`Array.isArray(req.query.director)`) {
     // Find all movies directed by any of the specified directors
     const directors = req.query.director.filter(ObjectId.isValid);
     `query = query.where('director').in(directors)`;
@@ -329,13 +337,372 @@ How do I get a reasonable amount of stuff?
 .breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#7">Pagination</a>]
 
 Some collections are just **too large to send** to the client in their entirety.
-The following example will demonstrate how to implement **traditional pagination**
-(e.g. like you get at the bottom of the page when doing a search on Google).
+The following examples will demonstrate two ways implement **pagination**
+to retrieve only one "page" of a collection at a time.
 
-To implement pagination:
+The following examples assume that you have read [RESTful API Conventions](../rest-conventions/) which explains different ways to expose pagination in a RESTful API.
 
-* The client must tell the server **which elements** of the collection it wants
-* The server must give the client enough information to find the **other elements** of the collection
+
+
+---
+### Using query parameters to select a page
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#7">Pagination</a>]
+
+In principle, pagination is a **specialized filter**. The client uses **URL query parameters** to tell the server which chunk of the collection it wants.
+Implementing a `page` and `pageSize` parameters with Express and Mongoose is quite straightforward:
+
+```js
+router.get('/', function(req, res, next) {
+  let query = Movie.find();
+
+  // Parse the "page" param (default to 1 if invalid)
+  let page = parseInt(`req.query.page`, 10);
+  if (isNaN(page) || page < 1) {
+    page = 1;
+  }
+
+  // Parse the "pageSize" param (default to 100 if invalid)
+  let pageSize = parseInt(`req.query.pageSize`, 10);
+  if (isNaN(pageSize) || pageSize < 0 || pageSize > 100) {
+    pageSize = 100;
+  }
+
+  // Apply skip and limit to select the correct page of elements
+  query = query`.skip((page - 1) * pageSize).limit(pageSize)`;
+
+  // ...
+});
+```
+
+
+
+---
+### Telling the client how to get more elements
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#7">Pagination</a>]
+
+To include information about getting more elements in the response,
+you will need to know **how many elements there are in total**,
+either to give that information directly to the client or to build hyperlinks.
+
+You can do that easily using a Mongoose model's `count()` function:
+
+```js
+router.get('/', function(req, res, next) {
+  `Movie.find().count(function(err, total) {`
+    if (err) {
+      return next(err);
+    }
+
+    let query = Movie.find();
+
+    // Apply pagination here (code from previous example)...
+
+    // Send response (including total/links) here...
+  `})`;
+});
+```
+
+
+
+---
+### Using the `Link` header (solution 1)
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#7">Pagination</a>]
+
+The format is a bit convoluted, but other developers have already gone through the trouble for you.
+Use the [format-link-header][format-link-header] npm package:
+
+```js
+const formatLinkHeader = require('format-link-headers');
+`const links = {};`
+
+function buildLinkUrl(url, page, pageSize) {
+  return url + '?page=' + page + '&pageSize=' + pageSize;
+}
+
+// Add "first" and "prev" links unless it's the first page
+if (page > 1) {
+  `links.first` = { rel: 'first', url: buildLinkUrl(url, 1, pageSize) };
+  `links.prev` = { rel: 'prev', url: buildLinkUrl(url, page - 1, pageSize) };
+}
+
+// Add "next" and "last" links unless it's the last page
+if (page < maxPage) {
+  `links.next` = { rel: 'next', url: buildLinkUrl(url, page + 1, pageSize) };
+  `links.last` = { rel: 'last', url: buildLinkUrl(url, maxPage, pageSize) };
+}
+
+if (Object.keys(links).length >= 1) {
+  `res.set('Link', formatLinkHeader(links));`
+}
+```
+
+
+
+---
+### Using custom pagination headers (solution 2)
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#7">Pagination</a>]
+
+To implement this solution, you simply have to set the headers before sending the response:
+
+```js
+router.get('/', function(req, res, next) {
+  Movie.find().count(function(err, `total`) {
+    if (err) { return next(err); };
+    let query = Movie.find();
+
+    // Parse the "page" param (default to 1 if invalid)
+    let `page` = parseInt(req.query.page, 10);
+    if (isNaN(page) || page < 1) { /* ... */ }
+
+    // Parse the "pageSize" param (default to 100 if invalid)
+    let `pageSize` = parseInt(req.query.pageSize, 10);
+    if (isNaN(pageSize) || pageSize < 0 || pageSize > 100) { /* ... */ }
+
+    // Apply skip and limit to select the correct page of elements
+    query = query.skip((page - 1) * pageSize).limit(pageSize);
+
+    `res.set('Pagination-Page', page);`
+    `res.set('Pagination-PageSize', pageSize);`
+    `res.set('Pagination-Total', total);`
+
+    // ...
+  });
+});
+```
+
+
+
+---
+### Using a JSON envelope (solution 3)
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#7">Pagination</a>]
+
+Instead of setting headers, you simply have to build and pass your envelope to `res.send()`:
+
+```js
+router.get('/', function(req, res, next) {
+  Movie.find().count(function(err, `total`) {
+    if (err) { return next(err); };
+
+    let query = Movie.find();
+
+    // Parse query parameters and apply pagination here...
+
+    query.exec(function(err, `movies`) {
+      if (err) { return next(err); }
+
+      // Send JSON envelope with data
+*     res.send({
+*       page: page,
+*       pageSize: pageSize,
+*       total: total,
+*       data: movies
+*     });
+    });
+  });
+});
+```
+
+
+
+---
+class: center, middle
+## Aggregation
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a>]
+
+
+
+<p class='center'><img src='images/aggregation.png' class='w60' /></p>
+
+
+
+---
+### Aggregation example
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#14">Aggregation</a>]
+
+Let's say that when we retrieve **People** from the API, we also want to know **how many movies they have directed**.
+
+In SQL, assuming People and Movies are in **different tables**, you would use a **JOIN** and a **GROUP BY** to get that information:
+
+```sql
+SELECT people.*, SUM(movies.id) AS directed_movies_count
+  FROM `people INNER JOIN movies` ON (people.id = movies.director_id)
+  `GROUP BY` people.id;
+```
+
+---
+#### No join in MongoDB
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#14">Aggregation</a> > <a href="#15">Aggregation example</a>]
+
+However, there is **no JOIN** in MongoDB.
+
+If your related documents (People and Movies) are stored in two **separate collections** (as is the case in the demonstration RESTful API),
+there is **no way to retrieve that information in ONE query**.
+
+<p class='center'><img src='images/domain-model.png' class='w70' /></p>
+
+But what you can do is:
+
+* Find the People you need (using `Person.find()`)
+* Count how many movies they have directed in one query using [MongoDB aggregations][mongodb-aggregation]
+
+
+
+---
+### Aggregation pipeline
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#14">Aggregation</a>]
+
+The preferred MongoDB aggregation method is the [aggregation pipeline][mongodb-aggregation-pipeline]:
+documents go through a multi-stage pipeline where **each stage transforms the collection of documents** into **aggregated results**.
+
+Mongoose models have an `aggregate()` function you can call with an **array of stages** to apply:
+
+```js
+Movie.`aggregate`([ stage1, stage2, stage3 ]);
+```
+
+Each **stage** is an object with an [aggregation pipeline operator][mongodb-aggregation-pipeline-operators]:
+
+```js
+{
+  `$match`: {
+    director: { $in: [ 'abc', 'def', 'ghi' ] }
+  }
+}
+```
+
+---
+### Aggregation pipeline example
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#14">Aggregation</a>]
+
+Let's say you have retrieved a list of Person documents from the database,
+and you want to know how many Movies they have directed:
+
+```js
+const people = [ /* List of Person documents from the database */ ];
+
+// Get the documents' IDs
+const personIds = people.map(person => person._id);
+
+Movie.`aggregate`([
+  {
+    `$match`: { // Select movies directed by the people we are interested in
+      director: { $in: personIds }
+    }
+  },
+  {
+    `$group`: { // Group the documents by director ID
+      _id: '$director',
+      moviesCount: { // Count the number of movies for that ID
+        $sum: 1
+      }
+    }
+  }
+], function(err, results) {
+  // Use the results...
+});
+```
+
+---
+#### How does it work?
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#14">Aggregation</a> > <a href="#18">Aggregation pipeline example</a>]
+
+<p class='center'><img src='images/aggregation-pipeline.png' class='w90' /></p>
+
+---
+#### Adding the aggregation results to the response
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#14">Aggregation</a> > <a href="#18">Aggregation pipeline example</a>]
+
+That's all well and good, but you still have two separate sets of data:
+
+* The People you have retrieved with the **first query**
+* The aggregated number of Movies you have retrieved with the **aggregation query**
+
+If you just do `res.send(people)`, you will get this:
+
+```json
+[
+  { "name": "Renny Harlin" },
+  { "name": "Peter Jackson" }
+]
+```
+
+What you want is this:
+
+```json
+[
+  { "name": "Renny Harlin", "moviesCount": 1 },
+  { "name": "Peter Jackson", "moviesCount": 3 }
+]
+```
+
+---
+#### Combining the results
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#14">Aggregation</a> > <a href="#18">Aggregation pipeline example</a>]
+
+Here's how you can **combine** the array of People documents and the array of aggregated Movie counts:
+
+```js
+const people = [ /* List of Person documents from the database */ ];
+const results = [ /* Aggregation results */ ];
+
+// Convert the Person documents to JSON
+const peopleJson = people.map(person => person.toJSON());
+
+// For each result...
+results.forEach(function(result) {
+  // Get the director ID (that was used to $group)...
+  const resultId = result._id.toString();
+  // Find the corresponding person...
+  const correspondingPerson = peopleJson.find(person => person.id == resultId);
+  // And attach the new property
+  personJson.directedMoviesCount = result.moviesCount;
+});
+
+// Send the enriched response
+res.send(peopleJson);
+```
+
+---
+### Aggregation pipeline operators
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a> > <a href="#14">Aggregation</a>]
+
+There are many operators you can use in pipeline aggregation stages.
+They are all described in [the documentation][mongodb-aggregation-pipeline-operators].
+Here are some of the most useful:
+
+Operator   | Description
+:---       | :---
+`$group`   | Groups documents by a specified identifier expression and applies the accumulator expression(s), if specified, to each group
+`$limit`   | Passes the first *n* documents unmodified to the pipeline
+`$match`   | Filters documents to allow only matching documents to pass unmodified into the next pipeline stage
+`$project` | Reshapes each document, such as by adding new fields or removing existing fields
+`$skip`    | Skips the first *n* documents
+`$sort`    | Reorders the documents by a specified sort key
+
+
+
+---
+## Resources
+
+.breadcrumbs[<a href="#1">Using Mongoose with Express</a>]
+
+**Documentation**
+
+* [MongoDB aggregation][mongodb-aggregation]
 
 
 
@@ -343,8 +710,14 @@ To implement pagination:
 [demo-doc]: https://mediacomem.github.io/comem-webdev-express-rest-demo/
 [demo-res]: https://github.com/MediaComem/comem-webdev-express-rest-demo#resources
 [express]: https://expressjs.com
+[format-link-header]: https://www.npmjs.com/package/format-link-header
 [heroku]: https://www.heroku.com
+[link-header-rels]: http://www.iana.org/assignments/link-relations/link-relations.xhtml
+[link-header-rfc]: https://tools.ietf.org/html/rfc5988
 [mongodb]: https://www.mongodb.com
+[mongodb-aggregation]: https://docs.mongodb.com/manual/aggregation/
+[mongodb-aggregation-pipeline]: https://docs.mongodb.com/manual/core/aggregation-pipeline/
+[mongodb-aggregation-pipeline-operators]: https://docs.mongodb.com/manual/reference/operator/aggregation/
 [mongoose]: http://mongoosejs.com
 
     </textarea>

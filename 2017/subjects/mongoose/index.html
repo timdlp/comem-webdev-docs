@@ -164,6 +164,11 @@
       .compact-table table td {
         font-size: 0.9em;
       }
+
+      .shadow {
+        width: 100%;
+        box-shadow: lightgrey 0 0 3px;
+      }
     </style>
   </head>
   <body>
@@ -174,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/25406f00c789905794e60a6bdefdb0db015a3d77/subjects/mongoose/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/568e79366741ceb13d91faa87a2f6b92a99463a7/subjects/mongoose/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -183,8 +188,20 @@
     <textarea id='source'>
 # Mongoose
 
+Learn how to use [Mongoose][mongoose], a Document-Object Mapper for [MongoDB][mongodb],
+and how it differs from the [official Node.js MongoDB driver][mongodb-node-driver].
+
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
+
+**You will need**
+
+* A running [MongoDB][mongodb] database
+
+**Recommended reading**
+
+* [MongoDB](../mongodb/)
+* [npm](../npm/) and [Express](../express/) (for the integration example)
 
 
 
@@ -198,7 +215,7 @@ class: center, middle
 
 
 
-The official MongoDB driver for Node.js
+The [official MongoDB driver][mongodb-node-driver] for Node.js
 
 
 
@@ -216,10 +233,10 @@ $> npm install mongodb --save
 You can then connect to your MongoDB database:
 
 ```js
-var MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
-var url = 'mongodb://localhost:27017/myproject';
+const url = 'mongodb://localhost:27017/myproject';
 
 // Use connect method to connect to the Server
 MongoClient.connect(url, function(err, db) {
@@ -255,7 +272,7 @@ collection.createIndex(fields, options, callback)
 For example, to insert a document:
 
 ```js
-var person = {
+const person = {
   name: 'John Doe',
   age: 42
 };
@@ -355,11 +372,11 @@ Mongoose **maps JavaScript objects to MongoDB documents**, much like an Object-R
 
 <p class='center'><img src='images/schema-model-document.png' width='60%' /></p>
 
-* Everything in Mongoose starts with a [Schema][mongoose-guide].
-  Each schema maps to a MongoDB collection and defines the **shape of the documents** within that collection.
-* [Models][mongoose-model] are fancy **constructors** compiled from our Schema definitions.
-* Mongoose [Documents][mongoose-document] represent a one-to-one mapping to documents as stored in MongoDB.
-  Each document is an instance of its Model.
+* Everything in Mongoose starts with a [Schema][mongoose-guide]:
+  each schema maps to a MongoDB collection and defines the **shape of the documents** within that collection
+* [Models][mongoose-model] are fancy **constructors** compiled from our Schema definitions
+* Mongoose [Documents][mongoose-document] represent a one-to-one mapping to **documents** as stored in MongoDB:
+  each document is an instance of its Model
 
 ???
 
@@ -373,7 +390,7 @@ ORM examples: Hibernate (Java), Active Record (Ruby), SQLAlchemy (Python).
 Simply call `mongoose.connect()`:
 
 ```js
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/myproject');
 ```
 
@@ -389,11 +406,11 @@ It will also automatically create and manage a **connection pool** for you.
 The schema defines the shape of the documents you want to save:
 
 ```js
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const `Schema` = mongoose.Schema;
 
 // Define a schema
-*var blogSchema = new Schema({
+const blogSchema = `new Schema`({
   title: String,
   body: String,
   date: { type: Date, default: Date.now  }, // Default value
@@ -418,11 +435,11 @@ var Schema = mongoose.Schema;
 Once you have your schema, you can create a model to link that schema to a MongoDB collection:
 
 ```js
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // Define a schema
-var blogSchema = new Schema({
+const blogSchema = new Schema({
   // ...
 });
 
@@ -448,10 +465,10 @@ The model is a **constructor** that you can use to create documents:
 
 ```js
 // Retrieve the model from another file
-var Blog = mongoose.model('Blog');
+const `Blog` = mongoose.model('Blog');
 
 // Create a document with it
-*var blog = new Blog({
+let blog = `new Blog`({
   title: 'Teaching Mongoose',
   body: 'So cool',
   comments: [
@@ -473,19 +490,19 @@ var Blog = mongoose.model('Blog');
 Once you have your document, you can insert or update it with `save()`:
 
 ```js
-var blog = new Blog({
+let blog = new Blog({
   // ...
 });
 
-`blog.save`(function(err) {
+`blog.save`(function(err) { // This will insert a new document
   if (err) {
     return console.warn('Could not save blog because: ' + err.message);
   }
-
   console.log('Saved blog');
 
-  blog.meta.votes = 5;
-  `blog.save`(function(err, updatedBlog) {
+  blog.meta.votes = 5; // Update something
+
+  `blog.save`(function(err, updatedBlog) { // This will update the document
     if (err) {
       return console.warn('Could not save blog because: ' + err.message);
     }
@@ -509,22 +526,29 @@ knows that it exists and should be **updated** instead.
 Mongoose schemas have build-in validations:
 
 ```js
-var personSchema = new Schema({
+const personSchema = new Schema({
   name: {
-    type: String,
-    required: true,
-    minlength: [ 3, 'Name is too short' ],
-    maxlength: 20
+    type: String, // Type validation
+    required: true, // Mandatory
+    minlength: [ 3, 'Name is too short' ], // Minimum length
+    maxlength: 20 // Maximum length
+  },
+  address {
+    city: {
+      type: String,
+      required: true
+    }
   },
   honorific: {
     type: String,
-    enum: [ 'Mr', 'Mrs', 'Ms', 'Dr' ]
+    enum: [ 'Mr', 'Mrs', 'Ms', 'Dr' ] // Limit valid values
   },
   age: {
     type: Number,
-    min: 0,
-    max: 122
-  }
+    min: 0, // Minimum value
+    max: 122 // Maximum value
+  },
+  interests: [{ type: String, maxlength: 10 }]
 });
 ```
 
@@ -536,7 +560,7 @@ var personSchema = new Schema({
 The callback passed to `save()` will receive an error if validations fail:
 
 ```js
-var person = new Person({
+let person = new Person({
   name: 'Bo',
   age: -4,
   honorific: 'Great'
@@ -571,7 +595,7 @@ You can also write your own validators.
 For example, this validates that the `name` property of users is in lower case:
 
 ```js
-var userSchema = new Schema({
+const userSchema = new Schema({
   name: {
     type: String,
 *   validate: {
@@ -596,7 +620,7 @@ var userSchema = new Schema({
 Simply add the `unique: true` property to the schema property you want to be unique:
 
 ```js
-var personSchema = new Schema({
+const personSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -626,14 +650,14 @@ You can make MongoDB queries with the `find()` or `findOne()` methods of Mongoos
 ```js
 Person
 * .find({
-*   occupation: /host/,
-*   'name.last': 'Ghost',
-*   age: { $gt: 17, $lt: 66 },
-*   likes: { $in: ['vaporizing', 'talking'] }
+*   name: /arnold/i,
+*   'address.city': 'Los Angeles',
+*   age: { $gt: 17, $lt: 80 },
+*   interests: { $in: ['shooting', 'talking'] }
 * })
   .limit(10)
-  .sort({ occupation: -1 })
-  .select({ name: 1, occupation: 1 })
+  .sort({ name: -1 })
+  .select({ name: 1, address: 1 })
   .exec(function(err, people) {
     if (err) {
       return console.warn('Could not find people because: ' + err.message);
@@ -652,19 +676,43 @@ You can also use chainable query methods:
 
 ```js
 Person
-  .find({ occupation: /host/ })
-* .where('name.last').equals('Ghost')
-* .where('age').gt(17).lt(66)
-* .where('likes').in(['vaporizing', 'talking'])
+  .find()
+* .where('name', /arnold/i)
+* .where('address.city').equals('Los Angeles')
+* .where('age').gt(17).lt(80)
+* .where('interests').in(['shooting', 'talking'])
   .limit(10)
-  .sort('-occupation')
-  .select('name occupation')
+  .sort('-name')
+  .select('name address')
   .exec(function(err, people) {
     if (err) {
       return console.warn('Could not find people because: ' + err.message);
     }
 
     console.log('Found ' + people.length + ' people');
+  });
+```
+
+---
+#### Counting documents
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#7">What is Mongoose?</a> > <a href="#18">Mongoose queries</a>]
+
+Use `count()` instead of `exec()` at the end of your query builder to count the matching documents:
+
+```js
+Person
+  .find()
+  .where('name', /arnold/i)
+  .where('address.city').equals('Los Angeles')
+  .where('age').gt(17).lt(80)
+  .where('interests').in(['shooting', 'talking'])
+  .count(function(err, total) {
+    if (err) {
+      return console.warn('Could not count people because: ' + err.message);
+    }
+
+    console.log('There are ' + total + ' people matching the criteria');
   });
 ```
 
@@ -681,14 +729,14 @@ Sometimes you want to see the queries Mongoose is sending to the database:
 mongoose.set('debug', true);
 ```
 
-You will them in your log:
+You will then see them in your CLI log:
 
 ```txt
 Mongoose: people.find({
-  occupation: /host/,
-  'name.last': 'Ghost',
+  name: /arnold/,
+  'city.address': 'Los Angeles',
   age: { '$gt': 17, '$lt': 66 },
-  likes: { '$in': [ 'vaporizing', 'talking' ] }
+  interests: { '$in': [ 'shooting', 'talking' ] }
 }, {
   limit: 10,
   sort: { occupation: -1 },
@@ -727,7 +775,7 @@ Mongoose: people.find({
 Mongoose uses the **native Node.js client** under the hood, and you can even access it **directly** if need be:
 
 ```js
-var Blog = mongoose.model('Blog');
+const Blog = mongoose.model('Blog');
 
 Blog.collection.insertOne({ foo: 'bar' }, function(err, commandResult) {
   if (err) {
@@ -743,14 +791,222 @@ Blog.collection.insertOne({ foo: 'bar' }, function(err, commandResult) {
 
 ]
 ---
+class: center, middle
+## Integrating Mongoose into Express
+
+.breadcrumbs[<a href="#1">Mongoose</a>]
+
+
+
+A typical Mongoose usage example with Express,
+one of the most popular Node.js web framework.
+
+
+
+---
+### Install and connect Mongoose
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#23">Integrating Mongoose into Express</a>]
+
+Assuming you have generated an Express application with [express-generator][express-generator],
+go into its directory and install Mongoose:
+
+```bash
+$> cd /path/to/projects/express-demo
+
+$> npm install --save mongoose
+express-demo@0.0.0 /path/to/projects/express-demo
+└─┬ mongoose@4.8.5
+...
+```
+
+Open `app.js` and add these three lines below the first calls to `require()`:
+
+```js
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
+mongoose.connect('mongodb://localhost/express-demo');
+```
+
+Your Express application is now connected to MongoDB (to the `express-demo` database)!
+
+The default generated application includes a `GET /users` resource that is not implemented in `routes/users.js`.
+Let's do that!
+
+
+
+---
+### Create a schema and model
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#23">Integrating Mongoose into Express</a>]
+
+We'll need a Mongoose model for users.
+Create a new `models` directory with a `user.js` file inside it:
+
+```js
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+// Define the schema for users
+const userSchema = new Schema({
+  name: String
+});
+
+// Create the model from the schema and export it
+module.exports = mongoose.model('User', userSchema);
+```
+
+
+
+---
+### Implement the `GET /users` route
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#23">Integrating Mongoose into Express</a>]
+
+Add the following code to `routes/users.js`:
+
+```js
+var express = require('express');
+var router = express.Router();
+*const User = require('../models/user');
+
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+* User.find().sort('name').exec(function(err, users) {
+*   if (err) {
+*     return next(err);
+*   }
+*
+*   res.send(users);
+* });
+});
+
+module.exports = router;
+```
+
+---
+#### Retrieve users
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#23">Integrating Mongoose into Express</a> > <a href="#26">Implement the `GET /users` route</a>]
+
+**Start or restart** your app (if need be) and try your new implementation of the route
+by making a `GET` request on `http://localhost:3000/users`:
+
+```http
+GET /users HTTP/1.1
+Host: localhost:3000
+```
+
+You should get a response with no users:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[]
+```
+
+Great!
+Now how about we create some users?
+
+
+
+---
+### Implement the `POST /users` route
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#23">Integrating Mongoose into Express</a>]
+
+Add this route to `routes/users.js` (above or below the existing route):
+
+```js
+/* POST new user */
+router.post('/', function(req, res, next) {
+
+  // Create a new document from the JSON in the request body
+  const newUser = new User(req.body);
+
+  // Save that document
+  newUser.save(function(err, savedUser) {
+    if (err) {
+      return next(err);
+    }
+
+    // Send the saved document in the response
+    res.send(savedUser);
+  });
+});
+```
+
+---
+#### Create a user
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#23">Integrating Mongoose into Express</a> > <a href="#28">Implement the `POST /users` route</a>]
+
+**Restart** your app (if need be) and try your new route
+by making a `POST` request on `http://localhost:3000/users` with some JSON:
+
+```http
+POST /users HTTP/1.1
+Content-Type: application/json
+Host: localhost:3000
+
+{
+  "name": "John Doe"
+}
+```
+
+You should get your new user with additional data from MongoDB:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "__v": 0,
+  "_id": "58b2ff04e4fbe52b3a2feb0b",
+  "name": "John Doe"
+}
+```
+
+---
+#### Retrieve users again
+
+.breadcrumbs[<a href="#1">Mongoose</a> > <a href="#23">Integrating Mongoose into Express</a> > <a href="#28">Implement the `POST /users` route</a>]
+
+Try making another `GET` request:
+
+```http
+GET /users HTTP/1.1
+Host: localhost:3000
+```
+
+You should retrieve the user(s) you created:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "__v": 0,
+    "_id": "58b2ff04e4fbe52b3a2feb0b",
+    "name": "John Doe"
+  }
+]
+```
+
+
+
+---
 ## Resources
 
 .breadcrumbs[<a href="#1">Mongoose</a>]
 
-* MongoDB Node.js client
-  * [Collection API][collection-api]
+**Documentation**
 
-* Mongoose
+* [Official MongoDB Node.js driver][mongodb-node-driver]
+  * [Collection API][collection-api]
+* [Mongoose][mongoose]
   * [Getting started][mongoose-getting-started]
   * [Guide][mongoose-guide]
   * [API documentation][mongoose-api]
@@ -760,6 +1016,9 @@ Blog.collection.insertOne({ foo: 'bar' }, function(err, commandResult) {
 [alt-camo]: https://www.npmjs.com/package/camo
 [alt-waterline]: https://github.com/balderdashy/waterline
 [collection-api]: http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html
+[express-generator]: https://www.npmjs.com/package/express-generator
+[mongodb]: https://www.mongodb.com
+[mongodb-node-driver]: http://mongodb.github.io/node-mongodb-native/
 [mongoose]: http://mongoosejs.com
 [mongoose-api]: http://mongoosejs.com/docs/api.html
 [mongoose-document]: http://mongoosejs.com/docs/documents.html

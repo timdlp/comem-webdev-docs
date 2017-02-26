@@ -164,6 +164,11 @@
       .compact-table table td {
         font-size: 0.9em;
       }
+
+      .shadow {
+        width: 100%;
+        box-shadow: lightgrey 0 0 3px;
+      }
     </style>
   </head>
   <body>
@@ -174,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/25406f00c789905794e60a6bdefdb0db015a3d77/subjects/mongodb/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/568e79366741ceb13d91faa87a2f6b92a99463a7/subjects/mongodb/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -183,24 +188,34 @@
     <textarea id='source'>
 # MongoDB
 
+Learn the basics of [MongoDB][mongodb], one of the most populars document-oriented databases.
+
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
+
+**You will need**
+
+* A Unix CLI
+
+**Recommended reading**
+
+* [Command line](../cli/)
 
 
 
 
 
 ---
-class: center, middle
+class: center, middle, image-header
 ## What is MongoDB?
 
 .breadcrumbs[<a href="#1">MongoDB</a>]
 
 
 
-> "MongoDB is a free and open-source cross-platform **document-oriented database** program."
-
 <p class='center'><img src='images/mongodb.png' width='60%' /></p>
+
+> "MongoDB is a free and open-source cross-platform **document-oriented database** program."
 
 
 
@@ -215,7 +230,7 @@ class: center, middle
 * **Rich query language**
   * **Data aggregation**
   * Full text search
-  * **Geospatial queries**
+  * Geospatial queries
 * High availability
   * Replica sets with automatic failover and data redundancy
 * Horizontal scalability
@@ -305,13 +320,14 @@ Inserting, querying, updating and removing documents.
 
 .breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a>]
 
-Connect to the MongoDB shell.
+Connect to the MongoDB shell from your CLI and you should have a **new prompt**, indicating that you can now type MongoDB commands and queries:
 
 ```bash
 $> mongo
 MongoDB shell version v3.4.1
 connecting to: mongodb://127.0.0.1:27017
 MongoDB server version: 3.4.1
+*>
 ```
 
 You can switch databases with `use <name>`. Let's do that now:
@@ -342,7 +358,6 @@ Insert a couple of documents into a collection named **people** (again, it is au
   "interests": [ "Pastry", "Kung fu" ],
   "phones": []
 })
-WriteResult({ "nInserted" : 1  })
 
 > db.people.insert({
   "name": "John Smith",
@@ -354,8 +369,9 @@ WriteResult({ "nInserted" : 1  })
     { "type": "home", "number": "+1-202-555-0186" }
   ]
 })
-WriteResult({ "nInserted" : 1  })
 ```
+
+After each query, MongoDB should tell you that it has inserted a new document (`WriteResult({ "nInserted" : 1  })`).
 
 
 
@@ -461,6 +477,40 @@ db.people.find({}).sort({ "name": 1 }).skip(1).limit(1)
 
 
 ---
+### Counting documents
+
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a>]
+
+Counting documents works basically the same way as finding them:
+
+```js
+// Count all people
+db.people.count({})
+
+// Count all people named John Doe
+db.people.count({ "name": "John Doe" })
+
+// Count all people that have a home phone number
+db.people.count({ "phones.type": "home" })
+
+// Count all people named John Smith AND living in Livingston
+db.people.count({ "name": "John Smith", "address.city": "Livingston" })
+
+// Count all people born after 1980
+db.people.count({ "birthDate": { "$gt": ISODate("1980-01-01")  }  })
+
+// Count all people named John Smith OR living in Livingston
+db.people.count({
+  $or: [
+    { "name": "John Smith" },
+    { "address.city": "Livingston" }
+  ]
+})
+```
+
+
+
+---
 ### Updating documents
 
 .breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a>]
@@ -489,7 +539,7 @@ Read the documention on [update operators][update-operators] to learn more about
 ---
 #### Updating multiple documents
 
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#13">Updating documents</a>]
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#14">Updating documents</a>]
 
 To update multiple documents, you must set the `multi` option to `true`.
 Otherwise, only the first matching document will be updated.
@@ -510,7 +560,7 @@ db.people.update(
 ---
 #### Upserts
 
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#13">Updating documents</a>]
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#14">Updating documents</a>]
 
 The `upsert` option allows you to **automatically insert** a new document when you try to make an **update** but **no matching document is found**:
 
@@ -533,7 +583,7 @@ db.people.update(
 ---
 #### Upsert behavior
 
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#13">Updating documents</a>]
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#14">Updating documents</a>]
 
 MongoDB will tell you that an upsert has taken place:
 
@@ -561,7 +611,7 @@ Note that the query was merged with the update (the new person also has the `nam
 ---
 #### Atomic operations
 
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#13">Updating documents</a>]
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#14">Updating documents</a>]
 
 Some operators are **atomic operations**:
 
@@ -585,7 +635,7 @@ This means that:
 ---
 #### Replacing documents
 
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#13">Updating documents</a>]
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#6">Query language</a> > <a href="#14">Updating documents</a>]
 
 **Be careful:** if you do not use update operators, MongoDB will replace the entire document with the second parameter passed to `update`:
 
@@ -643,7 +693,7 @@ Indexes can support the efficient execution of queries and enforce constraints.
 ---
 ### Unique indexes
 
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#21">Indexes</a>]
 
 A unique index enforces uniqueness for the indexed fields:
 
@@ -664,7 +714,7 @@ Read the [documentation on indexes][indexes] to find out more about other types 
 ---
 ### Query performance
 
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#21">Indexes</a>]
 
 Without indexes, MongoDB must perform a **full collection scan** to find the matching documents.
 Use `explain` to find out how a query will be executed.
@@ -696,7 +746,7 @@ The `COLLSCAN` value in the `winningPlan` object tells us that a collection scan
 ---
 ### Improving performance with indexes
 
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#21">Indexes</a>]
 
 If an appropriate index exists for a query, MongoDB can use the index to **limit the number of documents it must inspect**.
 
@@ -716,7 +766,7 @@ Use [createIndex][create-index] to add an index:
 ---
 ### Index scan
 
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#21">Indexes</a>]
 
 Run `explain` again to confirm that your index will be applied (you should see `IXSCAN` in the `winningPlan` object):
 
@@ -750,7 +800,7 @@ Run `explain` again to confirm that your index will be applied (you should see `
 ---
 ### Performance of compound indexes
 
-.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#20">Indexes</a>]
+.breadcrumbs[<a href="#1">MongoDB</a> > <a href="#21">Indexes</a>]
 
 You can create an index on **multiple fields**:
 
@@ -802,6 +852,7 @@ db.people.find({}).sort({ "birthDate": 1, "name": 1 })
 [getting-started]: https://docs.mongodb.com/getting-started/shell/
 [indexes]: https://docs.mongodb.com/manual/indexes/
 [query-operators]: https://docs.mongodb.com/manual/reference/operator/query/
+[mongodb]: https://www.mongodb.com
 [remove]: https://docs.mongodb.com/manual/reference/method/db.collection.remove/
 [sql-comparison]: https://docs.mongodb.com/manual/reference/sql-comparison/
 [update]: https://docs.mongodb.com/manual/reference/method/db.collection.update/

@@ -164,6 +164,11 @@
       .compact-table table td {
         font-size: 0.9em;
       }
+
+      .shadow {
+        width: 100%;
+        box-shadow: lightgrey 0 0 3px;
+      }
     </style>
   </head>
   <body>
@@ -174,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/25406f00c789905794e60a6bdefdb0db015a3d77/subjects/git-branching/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/568e79366741ceb13d91faa87a2f6b92a99463a7/subjects/git-branching/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -183,8 +188,19 @@
     <textarea id='source'>
 # Git Branching
 
+Learn how to work on isolated, parallel lines of development with [Git][git] branches.
+
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
+
+**You will need**
+
+* A Unix CLI
+* [Git][git]
+
+**Recommended reading**
+
+* [Git introduction](../git/)
 
 
 
@@ -957,6 +973,7 @@ $> git commit -m "Merge cleanup (kept implemented subtraction.js)"
 
 [advanced-merging]: https://git-scm.com/book/en/v2/Git-Tools-Advanced-Merging
 [branching]: https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
+[git]: https://git-scm.com
 
     </textarea>
 

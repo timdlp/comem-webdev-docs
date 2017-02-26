@@ -164,6 +164,11 @@
       .compact-table table td {
         font-size: 0.9em;
       }
+
+      .shadow {
+        width: 100%;
+        box-shadow: lightgrey 0 0 3px;
+      }
     </style>
   </head>
   <body>
@@ -174,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/25406f00c789905794e60a6bdefdb0db015a3d77/subjects/js-prototypes/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/568e79366741ceb13d91faa87a2f6b92a99463a7/subjects/js-prototypes/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -183,8 +188,18 @@
     <textarea id='source'>
 # JavaScript Prototypes
 
+Learn how JavaScript prototypal inheritance works, how to make class-like structures from it, and the basics of the new classes added in ES6.
+
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
+
+**You will need**
+
+* [Google Chrome][chrome] (recommended, any browser with developer tools will do)
+
+**Recommended reading**
+
+* [JavaScript](../js/)
 
 
 
@@ -256,6 +271,10 @@ console.log(child.lastName);
 
   The data type "symbol" is a primitive data type having the quality that values of this type can be used to make object properties that are anonymous.
   Every symbol value returned from Symbol() is unique.  A symbol value may be used as an identifier for object properties; this is the data type's only purpose.
+
+
+
+[chrome]: https://www.google.com/chrome/
 
     </textarea>
 
