@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap (COMEM+ Web Dev)</title>
+    <title>Bootstrap (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -179,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/8a0b062c97b119720e9d448db018c0391166e38e/subjects/bootstrap/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/8072c9c4f7ccce300c59a17e0a0b8a813275fc5f/subjects/bootstrap/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -229,7 +229,7 @@ Thus, using Bootstrap (or any other HTML/CSS framework) gives you:
   * All your pages will look the same
 * **Responsivness**:
   * Bootstrap behave well on desktop, tablet or smartphone
-* **Customizable**:
+* **Customizability**:
   * Every components can be modified to suit your needs
 * **Support**:
   * Bootstrap is heavily used, tested and documented
@@ -314,14 +314,55 @@ Those styles could be divided in three categories:
 
 * **Element styles**: overwrite the default style for some HTML elements
 * **New classes**: new CSS classes (obivously) that can be used when needed
-* **Component**: a set of classes that needs to be used with a **strictly defined** HTML structure.
+* **Components**: a set of classes that needs to be used with a **strictly defined** HTML structure.
 
-Let's see some illustrations of these types...
+This slide-deck will present you this three categories, and how to use some interesting styles in each one.
 
 ---
+class: center, middle
+## Bootstrap documentation
+
+.breadcrumbs[<a href="#1">Bootstrap</a>]
+
+Everything that is presented in this slide-deck can also be found in **the very well done Bootstrap documentation**, along with lot of **examples** and **information**.
+
+We highly recommend that you check it out.
+
+[Bootstrap Documentation][bootstrap-css]
+
+
+
+---
+### The `aria` attribute
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#8">Bootstrap documentation</a>]
+
+When browswing the Bootstrap documentation, you'll inevitably found some examples with that:
+
+```html
+<button type="button" class="close" `aria-label`="Close">
+  <span `aria-hidden`="true">&times;</span>
+</button>
+```
+
+All these `aria-` attribute are used only for **accessibility**: they are interpreted by screen-reader or software that help disabled people browsing the Web.
+
+**They don't alter in any ways neither the design of the page nor the behavior of its elements.**
+
+> You can delete them **without any hesitation**, if you don't want to use them.
+
+---
+class: center, middle
 ## Element styles
 
 .breadcrumbs[<a href="#1">Bootstrap</a>]
+
+
+
+---
+### Which elements?
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#10">Element styles</a>]
 
 Bootstrap comes with CSS styles that are applied to **HTML elements**, without **adding classes** to said elements.
 
@@ -338,7 +379,7 @@ Some of the elements that are impacted are:
 ---
 ### Examples
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#8">Element styles</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#10">Element styles</a>]
 
 To see for yourself how Bootstrap stylizes those elements, let's **add some of them** in your project.
 
@@ -364,7 +405,7 @@ Finally, open both `index.html` and `compare.html` in your browser.
 ---
 ### Why put styles on element?
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#8">Element styles</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#10">Element styles</a>]
 
 As you can see, HTML elements already **have** default styles, even without CSS.
 
@@ -381,7 +422,7 @@ See, for example, the rendering of an `<abbr>` tag on **Chrome** VS **Firefox**.
 ---
 ### Normalization
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#8">Element styles</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#10">Element styles</a>]
 
 To avoid this rendering problem, developers use a technique called **CSS Normalization**.
 
@@ -392,9 +433,17 @@ Bootstrap uses the [Normalize.css][normalize] library, that do just that.
 By using a normalizer and adding its own style for basic HTML elements, Bootstrap ensures that your page will be **consistently rendered** on each browser.
 
 ---
+class: center, middle
 ## New classes
 
 .breadcrumbs[<a href="#1">Bootstrap</a>]
+
+
+
+---
+### Start again
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a>]
 
 Bootstrap also comes with a **ton of new classes** that can be applied to HTML elements.
 
@@ -414,7 +463,7 @@ Delete everything that's between your `<body>` tag and add:
 ---
 ### Container
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a>]
 
 Containers represents the `<div>`s that **structure** your content.
 
@@ -433,7 +482,7 @@ You can change that by adding a `.container-fluid` class to a `<div>`.
 ---
 #### `.container`
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#13">Container</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a> > <a href="#17">Container</a>]
 
 If you want your container to be more centered, use the `.container` instead.
 
@@ -452,7 +501,7 @@ The `.container` class is designed so that your `<div>` will always be, at maxim
 ---
 #### Illustration
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#13">Container</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a> > <a href="#17">Container</a>]
 
 <p class='center'><img src='images/without-container.jpg' width='100%' /></p>
 
@@ -463,7 +512,7 @@ The `.container` class is designed so that your `<div>` will always be, at maxim
 ---
 ### Tables
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a>]
 
 .grid-50[
 
@@ -517,7 +566,7 @@ Replace this line...
 ---
 #### More table classes
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#16">Tables</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a> > <a href="#20">Tables</a>]
 
 > These classes **must be** used in addition of the `.table` class.
 
@@ -547,7 +596,7 @@ For example, if you'd want to have a table that has **all the preceding styles**
 ---
 ### Buttons
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a>]
 
 Bootstrap adds many new classes regarding buttons, that allows you to create a wide variety of possible usage.
 
@@ -571,7 +620,7 @@ Let's add some buttons to the `index.html` page. Add the following snippet after
 ---
 #### The `.btn` class
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#18">Buttons</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a> > <a href="#22">Buttons</a>]
 
 To properly use any of the button styles, you **must** add the special class `.btn` to the element you want to sylize.
 
@@ -596,7 +645,7 @@ In fact, the `.btn` class is used to add to the element all the styles that are 
 ---
 #### Additionnal classes
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#18">Buttons</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a> > <a href="#22">Buttons</a>]
 
 Bootstrap defines **seven button styles**, each with its own class to add to an element **that already have** the `.btn` class:
 
@@ -611,9 +660,9 @@ Bootstrap defines **seven button styles**, each with its own class to add to an 
 | Link    | `.btn-link`    | <button class="btn btn-link">Click me!</button> |
 
 ---
-##### Try it!
+#### Try it!
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#18">Buttons</a> > <a href="#20">Additionnal classes</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a> > <a href="#22">Buttons</a>]
 
 Add a:
 
@@ -631,7 +680,7 @@ The result should look like this:
 ---
 #### Size control
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#18">Buttons</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a> > <a href="#22">Buttons</a>]
 
 You can also change the overall size of your button, using three additionnal classes.
 
@@ -655,9 +704,9 @@ Add the `.btn-xs` class to the `<input type="button">` element to see it **extra
 ---
 ### Icons
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a>]
 
-Bootstrap comes along a special font called Glyphicons, that provides you with over 250 icons to use in your design.
+Bootstrap uses the Glyphicons font, that provides you with over 250 icons to use in your design.
 
 The list of available icons can be found here: [Bootstrap Glyphicons][bootstrap-glyphicons]
 
@@ -685,7 +734,7 @@ For example, to add three buttons for alignement control, write:
 ---
 ### Forms
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a>]
 
 Creating forms in HTML is a big part of constructing website or webapplication, and this is yet another subject that Bootstrap can handle for you.
 
@@ -702,7 +751,7 @@ Add these lines at the end of your `index.html` page, right before the closing `
 ---
 #### `.form-control`
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#24">Forms</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a> > <a href="#28">Forms</a>]
 
 Add the `.form-control` class to an `<input>` element to make it **full-width and stlyized**.
 
@@ -721,7 +770,7 @@ Add these lines at the beginning of the `<form>` element:
 ---
 #### `.form-group`
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#24">Forms</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a> > <a href="#28">Forms</a>]
 
 To resolve any spacing problem that could be present in your form, be sure to wrap your form element in a `<div>` with the `.form-group` class.
 
@@ -741,7 +790,7 @@ Add these lines before the `<input type="submit">`:
 ---
 #### `.form-inline`
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a> > <a href="#24">Forms</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a> > <a href="#28">Forms</a>]
 
 By default, all elements with a `.form-control` class will be as wide as possible, and will be presented in a stack, that is on element in top of another.
 
@@ -770,7 +819,7 @@ If you'd rather prefer to have you form displayed inline, juste add the `.form-i
 ---
 ### Color classes
 
-.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#12">New classes</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#15">New classes</a>]
 
 Remember the button styles (*Primary*, *Success*, *Info*, *Warning* and *Danger*)?
 
@@ -790,14 +839,31 @@ You can use these same color style to almost any element in your page, wether it
 <p class='shadow'><img src='images/color-schemes.jpg' width='60%' /></p>
 
 ---
+class: center, middle
+## Components
+
+.breadcrumbs[<a href="#1">Bootstrap</a>]
+
+
+
+---
+### What are those?
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#33">Components</a>]
+
+
+
+---
 ## Resources
 
 .breadcrumbs[<a href="#1">Bootstrap</a>]
 
+**Documentation**
+
 * [Bootstrap CSS Documentation][bootstrap-css]
 * [Normalize CSS][normalize]
 
-[sublime]: https://en.wikipedia.org/wiki/Coffee
+[sublime]: https://www.sublimetext.com/
 [bootstrap-css]: http://getbootstrap.com/css/
 [chrome]: https://www.google.com/chrome/
 [rtfm]: https://en.wikipedia.org/wiki/RTFM
