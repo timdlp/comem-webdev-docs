@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mongoose (COMEM+ Web Dev)</title>
+    <title>Mongoose (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -179,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/8072c9c4f7ccce300c59a17e0a0b8a813275fc5f/subjects/mongoose/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/00e35cd208880a6c61b0ef59ecfe0b121a723f06/subjects/mongoose/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -812,10 +812,10 @@ Assuming you have generated an Express application with [express-generator][expr
 go into its directory and install Mongoose:
 
 ```bash
-$> cd /path/to/projects/express-demo
+$> cd /path/to/projects/my-app
 
 $> npm install --save mongoose
-express-demo@0.0.0 /path/to/projects/express-demo
+my-app@0.0.0 /path/to/projects/my-app
 └─┬ mongoose@4.8.5
 ...
 ```
@@ -825,10 +825,10 @@ Open `app.js` and add these three lines below the first calls to `require()`:
 ```js
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/express-demo');
+mongoose.connect('mongodb://localhost/my-database-name');
 ```
 
-Your Express application is now connected to MongoDB (to the `express-demo` database)!
+Your Express application is now connected to MongoDB (to the `my-database-name` database)!
 
 The default generated application includes a `GET /users` resource that is not implemented in `routes/users.js`.
 Let's do that!

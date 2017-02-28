@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap (COMEM+ Web Dev)</title>
+    <title>Bootstrap (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -179,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/8072c9c4f7ccce300c59a17e0a0b8a813275fc5f/subjects/bootstrap/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/00e35cd208880a6c61b0ef59ecfe0b121a723f06/subjects/bootstrap/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -525,7 +525,12 @@ Replace this line...
 ```html
 <div>Here will go the content.</div>
 ```
-...by the following snippet:
+...by this line...
+
+```html
+<h2>Tables</h2>
+```
+... then add the following snippet:
 
 
 ]
@@ -844,19 +849,209 @@ class: center, middle
 
 .breadcrumbs[<a href="#1">Bootstrap</a>]
 
+Components are specific HTML structure used on combination with specific classes.
+
+This allows more advances behavior and design.
+
 
 
 ---
-### What are those?
+### Navbar
 
 .breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#33">Components</a>]
 
+To create a navigation bar in your WebSite, you can use the **navbar** component.
 
+Add these lines right after your opening `<body>` tag:
+
+```html
+<nav class="navbar navbar-default">
+</nav>
+```
+> The `.navbar-default` class has an effect on the style of the navbar. You could replace it by the `.navbar-inverse` class for a dark navbar.
+
+This code adds a blank navbar, that takes up all the screen space available.
+
+> If you'd prefer a navbar that is as wide as the main content, simply move the code inside the `<div>`.
 
 ---
+#### Navbar content
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+
+Let's move our main title from the content of the page to the content of the navbar.
+
+Delete the `<h1>` from your code, and add the text inside the `<nav>` tag:
+
+```html
+<nav class="navbar navbar-default">
+  Bootstrap Initiation
+</nav>
+```
+> See how the text is stuck on the upper-left corner?
+> 
+> The **navbar** component needs a container to properly space its content.
+
+Wrap your inner navbar text with a `<div>` with the `.container` or `.container-fluid` class, as you see fit:
+
+```html
+<nav class="navbar navbar-default">
+  <div class='container'>
+    Bootstrap Initiation
+  </div>
+</nav>
+```
+
+---
+#### Navbar Brand
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+
+Usually, the navbar is where the logo or the brand of the WebSite is placed.
+
+For us, "Bootstrap Initiation" could be seen as the brand of our page.
+
+To tell the navbar what element is the brand, use the `.navbar-brand` class on an `<a>` element:
+
+```html
+<div class='container'>
+  <a class="navbar-brand" href="#">Bootstrap Initiation</a>
+</div>
+```
+> Making the brand element a link to the homepage is a good practice, hence the use of an `<a>` element here.
+
+This will make our title fit nicely inside the Navbar.
+
+---
+#### Fixed navbar
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+
+If you scroll in your `index.html` page, you'll see that the navbar **scrolls with it**.
+
+You could want a navbar that's **constantly fixed** to the top of the screen.
+
+To do this, add the `.navbar-fixed-top` class to your `<navbar>` element.
+
+```html
+<nav class="navbar navbar-default `navbar-fixed-top`">
+  <!-- navbar content -->
+</nav>
+```
+But, damn!, now our navbar **overlaps** our content...
+
+> Since the navbar is now a fixed element, it **doesn't take space** anymore in the page flow. So all other content are **moved back up**.
+
+To fix this, we need to **add some padding** to the element that encloses our content.
+
+---
+#### Fix the fixed navbar
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+
+To do this, let's change our content element from a `<div>` to a `<main>`:
+
+```html
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <!-- navbar content -->
+  </nav>
+* <main class="container">
+    <!-- main content -->
+* </main>
+</body>
+```
+To add it padding, we need to define a custom style.
+
+1. In your project directory, create a `css` directory if it doesn't exist yet;
+2. In this `css` directory, create a new `style.css`, and open it;
+3. Add this line, and save the file:
+```css
+main { padding: 70px; }
+```
+
+1. Include the new CSS file in your `index.html`:
+```html
+<link rel="stylesheet" type="text/css" href="css/style.css">
+```
+
+---
+#### Navbar links
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+
+As its name implies, the navbar is usually ideal for navigation.
+
+To add links inside your navbar, you need to use an `<ul>` element with the `.nav` and `.navbar-nav` classes.
+
+> The `<li>`s inside this `<ul>` doesn't need any particulier class.
+
+In our case, the navigation could be going the `compare.html` page (*assuming you still have it*).
+
+Let's add this right after our `<a class="navbar-brand">` element:
+
+```html
+<ul class="nav navbar-nav">
+  <li><a href="compare.html">Compare</a></li>
+</ul>
+```
+
+---
+#### Navbar buttons
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+
+Let's say we'd like a *button* in our navbar that scrolls down to the top of the page.
+
+Simply adding a *button* to the navbar will not do the trick:
+
+```html
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class='container'>
+    <a class="navbar-brand">Bootstrap Initiation</a>
+    <ul class="nav navbar-nav">
+      <li><a href="compare.html">Compare</a></li>
+    </ul>
+*   <a class="btn btn-link" href="#">Go to top</a>   
+  </div>
+</nav>
+```
+> This button will be stuck to the top of the navbar.
+
+To add proper spacing, you need to add the `.navbar-btn` class:
+
+```html
+...
+    <a class="btn btn-link `navbar-btn`" href="#">Go to top</a>   
+...
+```
+
+---
+#### Navbar alignment
+
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+
+Finally, we would like this *button* to be aligned to the far right of the bar.
+
+There's two classes to use when you want to align things in your navbar:
+
+* `.navbar-left` will align elements to the left of the navbar
+* `.navbar-right` will align elements to the right of the navbar
+
+Add the proper class to the *Go to top* button:
+
+```html
+...
+    <a class="btn btn-link navbar-btn `navbar-right`" href="#">Go to top</a>   
+...
+```
+
+---
+### 
+
 ## Resources
 
-.breadcrumbs[<a href="#1">Bootstrap</a>]
+.breadcrumbs[<a href="#1">Bootstrap</a> > <a href="#33">Components</a>]
 
 **Documentation**
 
