@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>COMEM+ Web Services Course (COMEM+ Web Dev)</title>
+    <title>Bootstrap - Layout management (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -179,102 +179,84 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/0705c34f25fc48b156a7c0c40e326ce74d0b01e0/subjects/webserv-course/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/0705c34f25fc48b156a7c0c40e326ce74d0b01e0/subjects/bootstrap-structure-management/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
 
     <!-- Remark slides -->
     <textarea id='source'>
-# COMEM+ Web Services Course
+# Bootstrap - Layout management
 
-The goal of this course is to teach the generic concept of **web service**, focusing on **REST**ful APIs as one way to expose such a service.
-You will:
-
-* Learn the **core principles** of the REST architectural style
-* Learn how to **implement** a RESTful API in JavaScript
-* Learn how to **manage** your source code on a collaborative platform
-* Learn how to **deploy** your RESTful API on a cloud application platform
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
 
+Learn how Bootstrap helps you structure your HTML layouts, using both its grid system and all available responsive classes.
 
+**You will need**
 
+* [Google Chrome][chrome] (recommended, any browser with developer tools will do)
+* [Sublime Text][sublime] (recommended, any code editor will do... **except Notepad**)
 
----
-## Theme
+**Recommended reading**
 
-.breadcrumbs[<a href="#1">COMEM+ Web Services Course</a>]
-
-<img src='images/citizen-engagement-1.jpg' width='100%' />
-
----
-### Citizen Engagement
-
-.breadcrumbs[<a href="#1">COMEM+ Web Services Course</a> > <a href="#2">Theme</a>]
-
-<p class='center'><img src='images/citizen-engagement-2.jpg' width='90%' /></p>
+* [Project setup][projset]
+* [Bootstrap - Basics][bootstrap]
 
 
 
 ---
-## This course
+class: center, middle
+## Example file
 
-.breadcrumbs[<a href="#1">COMEM+ Web Services Course</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Layout management</a>]
 
-In this course, you will *develop* and *deploy* a **REST web service backend** for Citizen Engagement.
+This subject will use [this `index.html` file][bsef] as illustration.
 
-<p class='center'><img src='images/course-scope.png' width='80%'></p>
-
-In the following Mobile Applications course, you will develop a hybrid mobile application frontend to a Citizen Engagement web service.
-
----
-### Next course
-
-.breadcrumbs[<a href="#1">COMEM+ Web Services Course</a> > <a href="#4">This course</a>]
-
-<img src='images/citizen-engagement-mobile-app.jpg' width='100%' />
-
----
-### Webcasts
-
-.breadcrumbs[<a href="#1">COMEM+ Web Services Course</a> > <a href="#4">This course</a>]
-
-Take a look at what was done in this course the previous years:
-
-* https://www.youtube.com/watch?v=6s2SCx0db90&feature=youtu.be
-* https://www.youtube.com/watch?v=ycZvdpfq_Qk&feature=youtu.be
-* https://www.youtube.com/watch?v=wki0t178x2k&feature=youtu.be
-* https://www.youtube.com/watch?v=Mu0KJCyIjf0
+Be sure to download it, if you want to try and follow with the examples.
 
 
 
 ---
-### Technologies
+## Default HTML layout
 
-.breadcrumbs[<a href="#1">COMEM+ Web Services Course</a> > <a href="#4">This course</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Layout management</a>]
 
-<img src='images/stack.png' width='100%' />
+The default layout of an HTML page is very simple: it's almost inexistant.
+
+* ![][block] **Block elements** (such as `<div>`, `<p>`, `<table>`) start a new "line" and are stack on one another.
+* ![][inline] **Inline elements** (such as `<span>`, `<a>`, `<button>`) are placed one after another in the same "line".
+
+> You can place inline elements inside block elements.
+> 
+> This is called the **flow of the page**.
+
+<p class="center"><img class="shadow" src="images/default-structure.jpg" /></p>
 
 ---
-class: image-header
-### Architecture
+### Altering the default layout
 
-.breadcrumbs[<a href="#1">COMEM+ Web Services Course</a> > <a href="#4">This course</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Layout management</a> > <a href="#3">Default HTML layout</a>]
 
+CSS offers a bunch of properties to alter this default behavior, allowing for more creative and custom page layouts.
 
+> We won't see these properties in detail in this course.
 
-<img src='images/architecture.png' width='100%' />
+* `display`: you can force an inline component to behave like a block element, and *vice-versa*.
+* `float`: you can force-push an element to either the left-side or the right-side of the page. This pull the element out of the flow.
+* `position`: you can force an element to a special position (*`fixed`, `absolute`, `relative`*), that can pull it out of the flow.
 
----
-class: image-header
-### Source code management
+Using these properties can be quite tedious, if you want something stable and compatible with all browsers.
 
-.breadcrumbs[<a href="#1">COMEM+ Web Services Course</a> > <a href="#4">This course</a>]
+> A new layout paradigm
 
-
-
-<img src='images/source-code-management.png' width='100%' />
-
+[bootstrap]: ../bootstrap
+[projset]: ../masrad-project-setup
+[chrome]: https://www.google.com/chrome/
+[sublime]: https://www.sublimetext.com/
+[bsef]: https://gist.githubusercontent.com/Tazaf/18732ef01164f7b6348443c4c4748f42/raw/9f1dec778546a4d9741f1d17b08212c5606c26ca/index.html
+[block]: ./images/blocks.jpg
+[inline]: ./images/inline.jpg
     </textarea>
 
     <script src='../../assets/remark.min.js'></script>
