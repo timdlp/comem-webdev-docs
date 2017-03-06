@@ -179,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/0705c34f25fc48b156a7c0c40e326ce74d0b01e0/subjects/bootstrap/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/6a393f25634d3692f5d653356ac3f4feea5321e9/subjects/bootstrap-basics/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -870,6 +870,83 @@ This allows more advances behavior and design.
 
 
 ---
+### Forms... again
+
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a>]
+
+There's two components that are related to forms, that we didn't see before:
+* Checkboxes
+* Radio buttons
+
+Both these components need **specific HTML markup** to function correctly in Bootstrap forms. In both case, the markup is **similar**:
+
+.grid-50[
+
+**Checkbox**
+
+```html
+<div class="checkbox">
+  <label>
+    <input type="checkbox">
+    Remember me
+  </label>
+</div>
+``` 
+
+
+]
+.grid-50[
+
+**Radio button**
+
+```html
+<div class="radio">
+  <label>
+    <input type="radio" name="gender">
+    Female
+  </label>
+</div>
+```
+
+
+]
+.container[
+
+> With this markup, checboxes and radio button **spacing is optimal**, and clicking on the label is considered **clicking on the checkbox or radio button**.
+
+
+]
+???
+
+Let's update our first form by adding a checkbox and some radio buttons:
+
+```html
+<h2>Forms</h2>
+<form>
+  <!-- other form elements -->
+* <div class="checkbox">
+    <label>
+      <input type="checkbox" name="remember" id="remember">
+      Remember me!
+    </label>
+  </div>
+* <div class="radio">
+    <label>
+      <input type="radio" name="gender" id="male" value="male">
+      Male
+    </label>
+  </div>
+* <div class="radio">
+    <label>
+      <input type="radio" name="gender" id="female" value="female">
+      Female
+    </label>
+  </div>
+  <input type="submit" name="send" class="btn btn-success">
+</form>
+```
+
+---
 ### Navbar
 
 .breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a>]
@@ -891,7 +968,7 @@ This code adds a blank navbar, that takes up all the screen space available.
 ---
 #### Navbar content
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#35">Navbar</a>]
 
 Let's move our main title from the content of the page to the content of the navbar.
 
@@ -919,7 +996,7 @@ Wrap the text inside the navbar with a `<div>` having the `.container` or `.cont
 ---
 #### Navbar Brand
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#35">Navbar</a>]
 
 Usually, the navbar is where the logo or the brand of the WebSite is placed.
 
@@ -939,7 +1016,7 @@ This will fit our title nicely inside the Navbar.
 ---
 #### Fixed navbar
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#35">Navbar</a>]
 
 If you scroll in your `index.html` page, you'll see that the navbar **scrolls with it**, thus disappearing from the screen at one point.
 
@@ -961,7 +1038,7 @@ To fix this, we need to **add some padding** to the element that encloses our co
 ---
 #### Fix the fixed navbar
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#35">Navbar</a>]
 
 Let's change our content element from a `<div>` to a `<main>`:
 
@@ -992,7 +1069,7 @@ main { padding: 60px; }
 ---
 #### Navbar links
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#35">Navbar</a>]
 
 As its name implies, the navbar is usually ideal for navigation.
 
@@ -1013,7 +1090,7 @@ Let's add this right after our `<a class="navbar-brand">` element:
 ---
 #### Navbar buttons
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#35">Navbar</a>]
 
 Now, let's say we'd like a kind of *button* in our navbar that scrolls up to the top of the page.
 
@@ -1043,7 +1120,7 @@ To add proper spacing, you need to add the `.navbar-btn` class:
 ---
 #### Navbar alignment
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#34">Navbar</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#35">Navbar</a>]
 
 Finally, we would like this *button* to be aligned to the far right of the bar.
 
@@ -1089,7 +1166,7 @@ Add this code right before the `<h2>Color classes<h2>` element:
 ---
 #### Badges
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#42">Lists</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#43">Lists</a>]
 
 If you think about social applications like Whatsapp or ToDo applications like Wunderlist, you probably remember little numbers (called **badges**) at the right-end of a list element:
 
@@ -1110,7 +1187,7 @@ You can add them in your list (or anywhere) by adding a `<span>` element with th
 ---
 #### Link elements
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#42">Lists</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#43">Lists</a>]
 
 If you'd like your list elements to be links, you need to tweek a little your HTML structure:
 * the `<ul>` become a `<div>`
@@ -1137,7 +1214,7 @@ You can now add a `href` attribute to any list item:
 ---
 #### I want more!
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#42">Lists</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#43">Lists</a>]
 
 Just putting a single line of text inside a list item is sometimes not enough.
 
@@ -1161,7 +1238,7 @@ Let's create a second list right below the `<h2>Lists</h2>` element:
 ---
 #### Custom list item
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#42">Lists</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#43">Lists</a>]
 
 You can add some HTML elements within the `<a>` list-items to enrich them.
 
@@ -1189,7 +1266,7 @@ You are free to add almost any kind of custom HTML inside a list item.
 ---
 #### Contextual list item colors
 
-.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#42">Lists</a>]
+.breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#33">Components</a> > <a href="#43">Lists</a>]
 
 Any element within a `.list-group` list can be added one of the [Bootstrap color classes](./#32).
 
