@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Project Setup (COMEM+ Web Dev)</title>
+    <title>Bootstrap Exercise (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -179,222 +179,126 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/bc73dbb3cfbb83be236446e0949702361613fbe3/subjects/masrad-project-setup/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/bc73dbb3cfbb83be236446e0949702361613fbe3/subjects/masrad-bootstrap-exercise/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
 
     <!-- Remark slides -->
     <textarea id='source'>
-# Project Setup
-
-We will see what we need to do to setup our development environment.
+# Bootstrap Exercise
 
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
+
+Hands-on exercise on the use of Bootstrap to create a WebPage.
 
 **You will need**
 
 * [Google Chrome][chrome] (recommended, any browser with developer tools will do)
 * [Sublime Text][sublime] (recommended, any code editor will do... **except Notepad**)
+* [Live-Server][ls] (should already be installed)
 
 **Recommended reading**
 
-* [Command Line][cli]
+* [Project setup][projset]
+* [Bootstrap - Basics][bb]
+* [Bootstrap - Layout management][blm]
 
 
 
 ---
-## Install Node.js
+## What to do?
 
-.breadcrumbs[<a href="#1">Project Setup</a>]
+.breadcrumbs[<a href="#1">Bootstrap Exercise</a>]
 
-Node.js is a tool that allows developping back-end application with JavaScript, which we will not do in this DFA course.
+1. Create a new project directory in your file system (`bootstrap-exercise`)
+2. Download the [basic HTML template][bht] and save it as `index.html`
+3. **Using only Bootstrap classes, recreate the following page:**
 
-> We will need it to install a very useful tool.
+> Click on the image to see it full-screen.
 
-To install Node.js, go to the [download page][node-dl], get the installer for your system and **launch it**.
-
-<p class='shadow center'><img src='images/node-dl.jpg' width='100%' /></p>
-
-> If you want more information about Node.js, see [here][node-js].
+<a class="center" href="images/template.jpg" target="blank"><img src="images/template.jpg" class="shadow" width="70%" /></a>
 
 ---
-### Check
+## How to approach it?
 
-.breadcrumbs[<a href="#1">Project Setup</a> > <a href="#2">Install Node.js</a>]
+.breadcrumbs[<a href="#1">Bootstrap Exercise</a>]
 
-When you completed the installation, you can check that everything ran correctly by launching a **Terminal**.
+The steps could be:
 
-In this terminal, type the following command:
+1. Analyze very thoroughly the screenshot
+2. Try and determine the major "blocks" of the layout
+3. Try and determine how you will use the grid system
+4. Start by the navbar and footer
+5. Follow this by creating the list
+6. End by the "discussion zone"
 
-```bash
-$> node --version
+---
+## Custom CSS
+
+.breadcrumbs[<a href="#1">Bootstrap Exercise</a>]
+
+**You don't have to add any additionnal CSS!**
+
+This exercise was only realised using Bootstrap classes.
+
+Try to do the same.
+
+> The **ONLY** custom CSS needed is the one that adds the margin on the content, due to the navbar being fixed to the top.
+
+```css
+main { margin-top: 60px; }
 ```
-> You should see in return the version number of your node installation (should be `v6.10.0`)
+
+You can add this CSS directly in a `<script>` tag at the end of your `<head>` element, or create a new CSS file; your choice.
 
 ---
-## Install `live-server`
+## References
 
-.breadcrumbs[<a href="#1">Project Setup</a>]
+.breadcrumbs[<a href="#1">Bootstrap Exercise</a>]
 
-Node.js gives you another command that we are going to use: `npm`
+This exercice will require you to use:
 
-`npm` stands for **N**ode **P**ackages **M**anager and is a tool you can use to download other useful tools, that could help you improve your development experience.
+* Navbar
+* List
+* Form
+* Grid System
 
-> If you want more information about `npm`, see [here][npm]
-
-We will download **one of this tool**: `live-server`.
-
-> We'll see later what this tool does.
-
-Open your **Terminal** (if you closed it before), and type the following command:
-
-```bash
-$> npm install -g live-server
-```
-> You should see some activity in your screen, meaning that the package is being installed.
-
----
-### Check
-
-.breadcrumbs[<a href="#1">Project Setup</a> > <a href="#4">Install `live-server`</a>]
-
-When the installation is complete and the screen stand still, you can **check** that the installation went OK by typing:
-
-```bash
-$> live-server
-```
-Your browser should open a page at `127.0.0.1:8080`.
-
-That page should return an error: **that's normal**.
+> To complete this exercise, you'll need to look up in the documentation how to use:
+* [Labels][labels]
+* [Panels][panel]
+* [Alerts][alert]
+* [Button groups][btn-group]
+* [Simple text in navbar][nav-text]
+* [Nested columns][nest]
+* the `active` class on the navbar and the list-group elements
 
 ---
-## Create project directory
+class: center, middle, image-header
+## Disclaimer
 
-.breadcrumbs[<a href="#1">Project Setup</a>]
+.breadcrumbs[<a href="#1">Bootstrap Exercise</a>]
 
-A **project directory** is a simple directory where all the files for a specific WebSite or WebApplication are stored.
 
-You will need a project directory for both **this course** and **the project** you'll have to deliver at the end.
 
-Right now, create an empty directory called `dfa-course` somewhere on your filesystem.
+> **Ask questions before throwing your computer through the window.**
 
-> This `dfa-course` project folder is where we will put most of the examples and exercices that we will see in the course.
-> 
-> Right now, it's completely empty.
-> 
-> **Whenever we refer to** "your project" **in the slides, we are talking about this `dfa-course` directory**.
+> Bootstrap can be quite frustrating some times ;)
 
----
-### Create `index.html`
-
-.breadcrumbs[<a href="#1">Project Setup</a> > <a href="#6">Create project directory</a>]
-
-Most (*if not all*) web project directories have an `index.html` file endpoint:
-
-* In WebSite, this is the **landing page**.
-* In WebApplication, this is the **page that loads the app**.
-
-----
-
-For this `dfa-course`, we **provide** you with the **content** of your `index.html` page.
-
-Go to [this page][index-gist], and **save it** at the root of your project directory, under the name `index.html`.
-
-> Hit `Ctrl + S` while on the page to save it on your file system.
-
----
-## Access your project
-
-.breadcrumbs[<a href="#1">Project Setup</a>]
-
-Now that your project has an `index.html` file, we can see what `live-server` is all about.
-
-Open a terminal, and go to your project directory:
-
-```bash
-$> cd path/to/your/project
-```
-Then, type the command that starts `live-server`:
-
-```bash
-$> live-server
-```
-Identically to the last time, your browser should open at `127.0.0.1:8080`.
-
-But this time, you should see this:
-
-<p class='shadow'><img src='images/without-bootstrap.jpg' width='100%' /></p>
-
----
-### What does `live-server` do
-
-.breadcrumbs[<a href="#1">Project Setup</a> > <a href="#8">Access your project</a>]
-
-`live-server` is two things.
-
-----
-
-**It's a simple Local Web Server.**
-
-That means it can serve the files contained in a directory, here the `index.html` file in your `dfa-course` directory, **as if they were on a distant server**.
-
-> `live-server` expects an `index.html` file at the root of the directory.
-
-----
-
-**It has Live-Reload.**
-
-With Live-Reload, `live-server` is able to activly watch **all the files** in the directory it's serving.
-
-Whenever it detects a **change on one of these files**, it automatically **reloads the webpage** to reflect those changes.
-
-> For `live-server` to detect the changes, you **have to save the file**.
-
----
-#### Let's see...
-
-.breadcrumbs[<a href="#1">Project Setup</a> > <a href="#8">Access your project</a> > <a href="#9">What does `live-server` do</a>]
-
-With `live-server` started and your WebSite open in your broswer...
-
-Open your `index.html` file in your text editor (*if you closed it before*), and change this line...
-
-```html
-...
-  <h1>Hello, world!</h1>
-...
-```
-...with this line:
-
-```html
-...
-  <h1>Hello, Yverdon!</h1>
-...
-```
-**Save** your file and **go to your browser** to see that the changes have been detected and **applied**.
-
-**Revert** the line to its previous state, **save again** and see how magically the web page has changed.
-
----
-## Resources
-
-.breadcrumbs[<a href="#1">Project Setup</a>]
-
-**Documentation**
-
-* [live-server][l-s]
-
-[chrome]: https://www.google.com/chrome/
+[bht]: https://gist.githubusercontent.com/Tazaf/420a368389367a83fcfb96ab3a51bf8a/raw/1c5af02f1dd3248189b8e6869a02c5133232db7b/index.html
+[labels]: http://getbootstrap.com/components/#labels
+[panel]: http://getbootstrap.com/components/#panels
+[alert]: http://getbootstrap.com/components/#alerts
+[btn-group]: http://getbootstrap.com/components/#btn-groups
+[nav-text]: http://getbootstrap.com/components/#navbar-text
+[nest]: http://getbootstrap.com/css/#grid-nesting
+[bb]: ../bootstrap-basics
+[blm]: ../bootstrap-layout-management
+[projset]: ../masrad-project-setup
 [sublime]: https://www.sublimetext.com/
-[node-dl]: https://nodejs.org/en/download/
-[git]: ../git/
-[cli]: ../cli/
-[node-js]: ../node/
-[npm]: ../npm/
-[index-gist]: https://gist.githubusercontent.com/Tazaf/420a368389367a83fcfb96ab3a51bf8a/raw/1c5af02f1dd3248189b8e6869a02c5133232db7b/index.html
-[l-s]: https://www.npmjs.com/package/live-server
+[chrome]: https://www.google.com/chrome/
+[ls]: https://www.npmjs.com/package/live-server
     </textarea>
 
     <script src='../../assets/remark.min.js'></script>
