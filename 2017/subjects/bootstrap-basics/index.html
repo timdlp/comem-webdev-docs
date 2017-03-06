@@ -179,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/6a393f25634d3692f5d653356ac3f4feea5321e9/subjects/bootstrap-basics/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/d2bde0bb0ea369118bbb241beb44a2bb9809a9ff/subjects/bootstrap-basics/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -317,7 +317,7 @@ We already said that Bootstrap is a bunch of CSS styles already written for you.
 Those styles could be divided in three categories:
 
 * **Element styles**: overwrite the default style for some HTML elements
-* **New classes**: new CSS classes (obivously) that can be used when needed
+* **New classes**: new CSS classes (obviously) that can be used when needed
 * **Components**: a set of classes that needs to be used with a **strictly defined** HTML structure.
 
 This slide-deck will present you this three categories, and how to use some interesting styles in each one.
@@ -341,27 +341,25 @@ We highly recommend that you check it out.
 
 .breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#8">Bootstrap documentation</a>]
 
-When browswing the Bootstrap documentation, you'll inevitably found some examples with that:
+When browswing the Bootstrap documentation, you'll inevitably found some examples with `.aria-*` attributes:
 
 ```html
 <button type="button" class="close" `aria-label`="Close">
   <span `aria-hidden`="true">&times;</span>
 </button>
 ```
-
-All these `aria-` attribute are used only for **accessibility**: they are interpreted by screen-reader or software that help disabled people browsing the Web.
-
-**They don't alter in any ways neither the design of the page nor the behavior of its elements.**
-
-> You can delete them **without any hesitation**, if you don't want to use them.
-
 You could also find elements with the `.sr-only` class or the `role` attribute:
 
 ```html
-<span class="sr-only" role="error">Error:</span>
+<span `class="sr-only"` `role="error"`>Error:</span>
 ```
+All these [ARIA][aria] attribute, class or `role` are used only for **accessibility**.
 
-These elements are invisible to human reader and only usefule for assistive technologies. **Remove them without fear for your design.**
+They are invisible to human reader and only interpreted by assistive technologies or software that help disabled people browsing the Web.
+
+> They **don't alter** in any ways neither **the design of the page** nor **the behavior of its elements**.
+> 
+> **Remove them without fear for your design**, if you don't want them polluting your HTML.
 
 ---
 class: center, middle
@@ -766,7 +764,7 @@ Add these lines right before the `<h2>Icons</h2>` element:
 
 .breadcrumbs[<a href="#1">Bootstrap - Basics</a> > <a href="#15">New classes</a> > <a href="#28">Forms</a>]
 
-Add the `.form-control` class to an `<input>` element to make it **full-width and stlyized**.
+Add the `.form-control` class to an `<input>` element to make it **full-width and stylized**.
 
 > This class can be added to any type of input.
 
@@ -912,7 +910,7 @@ Both these components need **specific HTML markup** to function correctly in Boo
 ]
 .container[
 
-> With this markup, checboxes and radio button **spacing is optimal**, and clicking on the label is considered **clicking on the checkbox or radio button**.
+> With this markup, checkboxes and radio button **spacing is optimal**, and clicking on the label is considered **clicking on the checkbox or radio button**.
 
 
 ]
@@ -1103,7 +1101,7 @@ Simply adding a *button* to the navbar will not quite do the trick:
     <ul class="nav navbar-nav">
       <li><a href="compare.html">Compare</a></li>
     </ul>
-*   <a class="btn btn-link" href="#">Go to top</a>   
+*   <a class="btn btn-default" href="#">Go to top</a>   
   </div>
 </nav>
 ```
@@ -1113,7 +1111,7 @@ To add proper spacing, you need to add the `.navbar-btn` class:
 
 ```html
 ...
-    <a class="btn btn-link `navbar-btn`" href="#">Go to top</a>   
+    <a class="btn btn-default `navbar-btn`" href="#">Go to top</a>   
 ...
 ```
 
@@ -1315,7 +1313,7 @@ You will find the final HTML file for this course [here][final-file].
 [final-file]: https://gist.githubusercontent.com/Tazaf/18732ef01164f7b6348443c4c4748f42/raw/9f1dec778546a4d9741f1d17b08212c5606c26ca/index.html
 [bsm]: ../bootstrap-layout-management
 [projset]: ../masrad-project-setup
-
+[aria]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA
     </textarea>
 
     <script src='../../assets/remark.min.js'></script>

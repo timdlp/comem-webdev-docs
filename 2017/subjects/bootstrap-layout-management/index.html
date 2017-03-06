@@ -179,7 +179,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/6a393f25634d3692f5d653356ac3f4feea5321e9/subjects/bootstrap-layout-management/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/d2bde0bb0ea369118bbb241beb44a2bb9809a9ff/subjects/bootstrap-layout-management/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -452,13 +452,39 @@ Add these classes in the `class` attribute of all the `<p>`:
 > Go ahead. Try to resize your browser (using the Developer Tools of Chrome) and see how the content behave.
 
 ---
+#### What if..?
+
+.breadcrumbs[<a href="#1">Bootstrap - Layout management</a> > <a href="#6">Bootstrap Grid System</a> > <a href="#11">Responsivness</a>]
+
+What if you want your `<p>`s to be **3-column-wide** for every screen widht, except on **extra-small ones**, where they should be **6-column-wide**?
+
+Maybe you'd do something like this:
+
+```html
+<p class="... `col-lg-3 col-md-3 col-sm-3 col-xs-6`"><!-- content --></p>
+```
+> You can see that we have a lot of redundancy: `.col-lg-3`, `.col-md-3` and `.col-sm-3` all do basically the same thing.
+
+Good news is: we can get rid of this apparent redundancy.
+
+> Each screen-dependant class is activated when the screen has the correct widht **or is wider** (*unless you defined otherwise*).
+
+In this case, doing this would have the same result:
+
+```html
+<p class="... `col-sm-3 col-xs-6`"><!-- content --></p>
+```
+
+> Since we didn't define any behavior for `lg` and `md` screen, Bootstrap will fallback to the closest one, which is `.col-sm-3`.
+
+---
 #### Flexibility
 
 .breadcrumbs[<a href="#1">Bootstrap - Layout management</a> > <a href="#6">Bootstrap Grid System</a> > <a href="#11">Responsivness</a>]
 
 You don't have to use the 4 classes **each time** you want to define how your element should behave.
 
-* By default, any component **without column class** will be **12-column-wide**.
+* By default, any component **without adequate column class** for the current screen-width will be **12-column-wide**.
 
 * If you define **one class**, say a `.col-sm-5`, the element will be **12-column-wide** for all **narrower screens** and , here, **`5`-column-wide** for all **wider screens**.
 
