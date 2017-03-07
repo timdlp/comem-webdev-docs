@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap Exercise (COMEM+ Web Dev)</title>
+    <title>MAS-RAD -- Advanced Front-end Development (DFA) (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -179,126 +179,61 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/f84a1d3365516fec0878085509fcebaef61218d0/subjects/masrad-bootstrap-exercise/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/f84a1d3365516fec0878085509fcebaef61218d0/subjects/masrad-intro/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
 
     <!-- Remark slides -->
     <textarea id='source'>
-# Bootstrap Exercise
+# MAS-RAD -- Advanced Front-end Development (DFA)
 
-This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+The goal of this course is to discover concepts and tools to organize the front-end side of a web application and enrich the user interface/experience according to current good practices. You will:
 
+* learn how to make good use of a CSS framework to build a responsive HTML user interface
+* learn how to manipulate the DOM API with or without a library
+* learn how the use of a framework does help to organize the front-end code of a single page application
+* learn how to manage asynchronous communications with a Web API on the back-end
 
-Hands-on exercise on the use of Bootstrap to create a WebPage.
-
-**You will need**
-
-* [Google Chrome][chrome] (recommended, any browser with developer tools will do)
-* [Sublime Text][sublime] (recommended, any code editor will do... **except Notepad**)
-* [Live-Server][ls] (should already be installed)
-
-**Recommended reading**
-
-* [Project setup][projset]
-* [Bootstrap - Basics][bb]
-* [Bootstrap - Layout management][blm]
-
-
+Everything starts from here: [https://github.com/MediaComem/comem-masrad-dfa](https://github.com/MediaComem/comem-masrad-dfa) or shorter [http://heig.ch/bozope ](http://heig.ch/bozope)
 
 ---
-## What to do?
+## Citizen engagement
 
-.breadcrumbs[<a href="#1">Bootstrap Exercise</a>]
+.breadcrumbs[<a href="#1">MAS-RAD -- Advanced Front-end Development (DFA)</a>]
 
-1. Create a new project directory in your file system (`bootstrap-exercise`)
-2. Download the [basic HTML template][bht] and save it as `index.html`
-3. **Using only Bootstrap classes, recreate the following page:**
+The final deliverable of this course is a complete web application allowing a citizen to report problems encountered in the streets of a city.
 
-> Click on the image to see it full-screen.
+This idea is inspired from the [FixMyStreet platform](https://www.fixmystreet.com/) you may know.
 
-<a class="center" href="images/template.jpg" target="blank"><img src="images/template.jpg" class="shadow" width="70%" /></a>
+<img src='images/citizen-engagement-1.jpg' width='80%' />
 
 ---
-## How to approach it?
+## Report a problem
 
-.breadcrumbs[<a href="#1">Bootstrap Exercise</a>]
+.breadcrumbs[<a href="#1">MAS-RAD -- Advanced Front-end Development (DFA)</a>]
 
-The steps could be:
-
-1. Analyze very thoroughly the screenshot
-2. Try and determine the major "blocks" of the layout
-3. Try and determine how you will use the grid system
-4. Start by the navbar and footer
-5. Follow this by creating the list
-6. End by the "discussion zone"
+<img src='images/citizen-engagement-2.jpg' width='80%' />
 
 ---
-## Custom CSS
+## Front-end
 
-.breadcrumbs[<a href="#1">Bootstrap Exercise</a>]
+.breadcrumbs[<a href="#1">MAS-RAD -- Advanced Front-end Development (DFA)</a>]
 
-**You don't have to add any additionnal CSS!**
+In this course, the focus is on the front-end side of the web application, building a rich user interface and experience.
 
-This exercise was only realised using Bootstrap classes.
-
-Try to do the same.
-
-> The **ONLY** custom CSS needed is the one that adds the margin on the content, due to the navbar being fixed to the top.
-
-```css
-main { margin-top: 60px; }
-```
-
-You can add this CSS directly in a `<script>` tag at the end of your `<head>` element, or create a new CSS file; your choice.
+<img src='images/citizen-engagement-mobile-app.jpg' width='80%' />
 
 ---
-## References
+## Back-end
 
-.breadcrumbs[<a href="#1">Bootstrap Exercise</a>]
+.breadcrumbs[<a href="#1">MAS-RAD -- Advanced Front-end Development (DFA)</a>]
 
-This exercice will require you to use:
+Our web application will make use of a REST web service backend for Citizen Engagement already implemented and ready to be used.
 
-* Navbar
-* List
-* Form
-* Grid System
+[Citizen Engagement API documentation](https://mediacomem.github.io/comem-citizen-engagement-api/)
 
-> To complete this exercise, you'll need to look up in the documentation how to use:
-* [Labels][labels]
-* [Panels][panel]
-* [Alerts][alert]
-* [Button groups][btn-group]
-* [Simple text in navbar][nav-text]
-* [Nested columns][nest]
-* the `active` class on the navbar and the list-group elements
-
----
-class: center, middle, image-header
-## Disclaimer
-
-.breadcrumbs[<a href="#1">Bootstrap Exercise</a>]
-
-
-
-> **Ask questions before throwing your computer through the window.**
-
-> Bootstrap can be quite frustrating some times ;)
-
-[bht]: https://gist.githubusercontent.com/Tazaf/420a368389367a83fcfb96ab3a51bf8a/raw/1c5af02f1dd3248189b8e6869a02c5133232db7b/index.html
-[labels]: http://getbootstrap.com/components/#labels
-[panel]: http://getbootstrap.com/components/#panels
-[alert]: http://getbootstrap.com/components/#alerts
-[btn-group]: http://getbootstrap.com/components/#btn-groups
-[nav-text]: http://getbootstrap.com/components/#navbar-text
-[nest]: http://getbootstrap.com/css/#grid-nesting
-[bb]: ../bootstrap-basics
-[blm]: ../bootstrap-layout-management
-[projset]: ../masrad-project-setup
-[sublime]: https://www.sublimetext.com/
-[chrome]: https://www.google.com/chrome/
-[ls]: https://www.npmjs.com/package/live-server
+<img src='images/archi-dfa.png' width='80%' />
     </textarea>
 
     <script src='../../assets/remark.min.js'></script>
