@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JavaScript Prototypes (COMEM+ Web Dev)</title>
+    <title>Angular UI Router (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -179,102 +179,37 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/57256be4f4fec4ef3fcfc268b4607d2dbcecbb23/subjects/js-prototypes/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/57256be4f4fec4ef3fcfc268b4607d2dbcecbb23/subjects/angular-ui-router/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
 
     <!-- Remark slides -->
     <textarea id='source'>
-# JavaScript Prototypes
+# Angular UI Router
 
-Learn how JavaScript prototypal inheritance works, how to make class-like structures from it, and the basics of the new classes added in ES6.
+Advanced routing for Angular applications.
 
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
 
-**You will need**
-
-* [Google Chrome][chrome] (recommended, any browser with developer tools will do)
-
 **Recommended reading**
 
-* [JavaScript](../js/)
+* [Angular](../angular/)
 
 
 
 
 
 ---
-class: center, middle
-## JavaScript has **prototypal inheritance**
+class: center, middle, image-header
+## What is UI Router?
 
-.breadcrumbs[<a href="#1">JavaScript Prototypes</a>]
-
-
+.breadcrumbs[<a href="#1">Angular UI Router</a>]
 
 
 
----
-### ES5 has no support for **classes**
-
-.breadcrumbs[<a href="#1">JavaScript Prototypes</a> > <a href="#2">JavaScript has **prototypal inheritance**</a>]
-
-TODO: ES6 classes
-
-There are 3 ways to create objects.
-
-```js
-// Create an object with a literal
-var person = {
-  firstName: "olivier",
-  lastName: "liechti"
-};
-
-// Create an object with a prototype
-var child = Object.create(person);
-
-// Create an object with a constructor
-var child = new Person("olivier", "liechti");
-```
-
-* **class** is a reserved word in JavaScript, but it is not used in the current version of the language (reserved for the future).
-* A **constructor** is a function like any other (uppercase is a coding convention).
-* It is the use of the **new** keyword that triggers the object creation process.
-
-
-
----
-### Every object **inherits** from a **prototype** object
-
-.breadcrumbs[<a href="#1">JavaScript Prototypes</a> > <a href="#2">JavaScript has **prototypal inheritance**</a>]
-
-TODO: add graph
-
-```js
-// Prints "Skywalker" on the console
-console.log(child.lastName);
-```
-
-* Every object inherits from a prototype object. It **inherits and can override** its properties, including its methods.
-* Objects created with object literals inherit from **Object.prototype**.
-* When you access the property of an object, JavaScript **looks up the prototype chain** until it finds an ancestor that has a value for this property.
-
-
-
----
-## TODO
-
-.breadcrumbs[<a href="#1">JavaScript Prototypes</a>]
-
-* [Symbols][js-symbol]
-
-  The data type "symbol" is a primitive data type having the quality that values of this type can be used to make object properties that are anonymous.
-  Every symbol value returned from Symbol() is unique.  A symbol value may be used as an identifier for object properties; this is the data type's only purpose.
-
-
-
-[chrome]: https://www.google.com/chrome/
+<p class='center'><img src='images/angular-ui-router.jpg' /></p>
 
     </textarea>
 
