@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JavaScript - Basics with the DOM API (COMEM+ Web Dev)</title>
+    <title>JavaScript - DOM API (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -183,14 +183,14 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/9fc6b34931d33aefea969d4a4d855c67d05cd408/subjects/js-dom/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/ceff8564ef592645cd5be63eb21f9820b61bffe1/subjects/js-dom/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
 
     <!-- Remark slides -->
     <textarea id='source'>
-# JavaScript - Basics with the DOM API
+# JavaScript - DOM API
 
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
@@ -205,8 +205,8 @@ Learn or rediscover how to use the DOM API to manipulate the underlying HTML obj
 **Recommended reading**
 
 * [Project setup][projset]
-* [Bootstrap - Basics][bootstrap]
-* [JavaScript basics and more][js-bas]
+* [Bootstrap][bootstrap]
+* [JavaScript][js-bas]
 
 
 
@@ -214,7 +214,7 @@ Learn or rediscover how to use the DOM API to manipulate the underlying HTML obj
 class: center, middle
 ## Starting file
 
-.breadcrumbs[<a href="#1">JavaScript - Basics with the DOM API</a>]
+.breadcrumbs[<a href="#1">JavaScript - DOM API</a>]
 
 This subject will use [this `index.html` file][bsef] as illustration.
 
@@ -225,7 +225,7 @@ Be sure to download it, if you want to try and follow with the examples.
 ---
 ## Document Object Model (DOM)
 
-.breadcrumbs[<a href="#1">JavaScript - Basics with the DOM API</a>]
+.breadcrumbs[<a href="#1">JavaScript - DOM API</a>]
 
 The Document Object Model (DOM) is a programming interface for **HTML, XML and SVG documents**. 
 
@@ -239,7 +239,7 @@ The Document Object Model (DOM) is a programming interface for **HTML, XML and S
 ---
 ### `Document` object and event handling
 
-.breadcrumbs[<a href="#1">JavaScript - Basics with the DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
+.breadcrumbs[<a href="#1">JavaScript - DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
 
 The `Document` object is the first object of interest, and event handling is key to manage the interaction with the web page. Many possible events are fired during its life cycle and can be listened to.
 
@@ -247,7 +247,7 @@ Let's add the following `<script>` section in our `index.html` file:
 
 > We know we shall avoid global variable, but for a small example like this, we can be tolerant ...
 
-```js
+```html
 <script type="text/javascript">
     var content = {
         alertText: "The document and all sub-resources have finished loading. The state 'complete' indicates that the load event is about to fire. ",
@@ -270,7 +270,7 @@ The `Document.readyState` property of a document describes the loading state of 
 ---
 ### Example 1 - message alert
 
-.breadcrumbs[<a href="#1">JavaScript - Basics with the DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
+.breadcrumbs[<a href="#1">JavaScript - DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
 
 We want to display a message alert on the top of the page as soon as the document is finished loading.
 
@@ -293,7 +293,7 @@ The result does not completely satisfy the requirement. Indeed, the message aler
 ---
 ### Example 1 - display as the first child
 
-.breadcrumbs[<a href="#1">JavaScript - Basics with the DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
+.breadcrumbs[<a href="#1">JavaScript - DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
 
 So what we have done is:
 
@@ -314,7 +314,7 @@ mainContainer.insertBefore(newDiv, mainContainer.firstChild);
 ---
 ### Example 1 - up to you!
 
-.breadcrumbs[<a href="#1">JavaScript - Basics with the DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
+.breadcrumbs[<a href="#1">JavaScript - DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
 
 We have a second information in our `content.alertLink`, let's use it. 
 
@@ -325,7 +325,7 @@ Add a small **More info ...** link next to the displayed message alert.
 ---
 ### Example 2 - alignment buttons
 
-.breadcrumbs[<a href="#1">JavaScript - Basics with the DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
+.breadcrumbs[<a href="#1">JavaScript - DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
 
 We want to enable these three alignment buttons we have in our user interface. Using them must align all `<p>` in the web page.
 
@@ -350,7 +350,7 @@ function enableAlignmentButtons() {
 ---
 ### Example 2 - align each paragraph
 
-.breadcrumbs[<a href="#1">JavaScript - Basics with the DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
+.breadcrumbs[<a href="#1">JavaScript - DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
 
 The last step is to capture what button the user has clicked on:
 
@@ -377,7 +377,7 @@ function alignAllText(e) {
 ---
 ### Exercice - up to you again!
 
-.breadcrumbs[<a href="#1">JavaScript - Basics with the DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
+.breadcrumbs[<a href="#1">JavaScript - DOM API</a> > <a href="#3">Document Object Model (DOM)</a>]
 
 We want to play with the username/password form and the table we have in the user interface.
 
@@ -399,7 +399,7 @@ The requirement is:
 ---
 ## Resources
 
-.breadcrumbs[<a href="#1">JavaScript - Basics with the DOM API</a>]
+.breadcrumbs[<a href="#1">JavaScript - DOM API</a>]
 
 You will find the final HTML file for this course [here][fef]
 
@@ -408,7 +408,7 @@ You will find the final HTML file for this course [here][fef]
 * [DOM documentation](domdoc)
 
 [domdoc]: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model
-[bootstrap]: ../bootstrap-basics
+[bootstrap]: ../bootstrap
 [js-bas]: ../js
 [projset]: ../masrad-project-setup
 [chrome]: https://www.google.com/chrome/
