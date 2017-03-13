@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>jQuery - DOM Manipulation (COMEM+ Web Dev)</title>
+    <title>jQuery - DOM Manipulation (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -183,7 +183,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/d47070dd054c2c411c10ef4ba15968b4ee0d0eba/subjects/jquery-dom/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/dc878085216d74b0cb8abf22f22b91b305f59ed9/subjects/jquery-dom/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -1331,7 +1331,7 @@ $("#send-btn").click(function(event) {
 
 We now have to create all the HTML structure necessary to add a new message to the dialog panel.
 
-Since we are using Bootstrap, this is all the code we'll have to create:
+Since we are using Bootstrap, this is the complete structure we'll have to create:
 
 ```html
 <div class="col-md-8 col-md-offset-4">
@@ -1395,9 +1395,9 @@ We can achieve that by using a `<script>` tag with an **unrecognized** `type` pr
 <script type="`text/template`">
 </script>
 ```
-> Such `<script>` tags should be placed **at the end** of your `<body>` tag, but **before** your `.js` inclusions.
+> Such `<script>` tags should be placed **at the end** of your `<body>` tag, but **before** your `.js` inclusions (around the **line 156**, in our example).
 
-We then give it an `id` for future reference, and write our HTML inside:
+We then give it an `id` for future reference, and copy our HTML inside:
 
 ```html
 <!-- Templates -->
@@ -1415,18 +1415,363 @@ To retrieve the templates placed inside `<script>`, we need to do two operations
 Firstly, get the content of the `<script>` tag:
 
 ```js
-var template = $("#new-sent-message").html()
+var template = $("#new-sent-message").text()
 ```
 > This will return the HTML structure as a `string` (because unrecognized `<script>` content is interpreted as a simple `string`).
 
 Secondly, generate a new DOM based on this template:
 
 ```js
-var newMessage = $(template);
+var $msgTemplate = $(template);
 ```
-> `newMessage` now contains a jQuery object representing the desired HTML template.
+> `$msgTemplate` now contains a jQuery object representing the desired HTML template.
 > 
 > We are now able to insert the data inside the template, and add it to our page.
+
+---
+### Code checkpoint
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#43">Feature : *"Add new message"*</a>]
+
+With the addition of these lines, our JS code for the new feature should be:
+
+```js
+$("#send-btn").click(function(event) {
+  // Getting the "New message" input
+  var $message = $("#message");
+
+  // Getting the new message text
+  var msgValue = $message.val();
+
+  if (msgValue === "") {
+    // If the new message is emplty, show an error
+    $message.parent().addClass("has-error");
+  } else {
+    // Get the correct alignment
+    var alignment = getAlignmentClass($message);
+  
+    // Get the new message template
+    var template = $("#new-sent-message").html();
+    var $msgTemplate = $(template);
+  }
+  event.preventDefault();
+});
+```
+---
+### Fill in the template
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#43">Feature : *"Add new message"*</a>]
+
+Next step is to **insert the values** for this new message. We have two values to add:
+* The new message content
+* The time at which the message has been sent
+
+Adding the new message is simple; we need to retrieve the `span.msg-content`, and insert the content of the `msgValue` variable.
+
+```js
+$("#send-btn").click(function(event) {
+  /* Previous code */
+  else {
+    // Get the correct alignment
+    var alignment = getAlignmentClass($message);
+
+    // Get the new message template
+    var template = $("#new-sent-message").html();
+    var $msgTemplate = $(template);
+
+*   $("span.msg-content", $msgTemplate).text(msgValue);
+
+  }
+  event.preventDefault();
+});
+```
+---
+### Getting the date
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#43">Feature : *"Add new message"*</a>]
+
+To get the message date, let's create a **function** that returns just that.
+
+We will use the JS Date feature for that.
+* The `Date.now()` method returns the current timestamp as an number
+* The `Date()` function create a new `Date` object based on a given timestamp
+* The `.getHours()` methid returns the hours of a `Date` object
+* The `.getMinutes()` method returns the minutes of a `Date` object
+
+Using all that together:
+
+```js
+function getCurrentTime() {
+  var date = new Date(Date.now());
+  return date.getHours() + ":" + date.getMinutes();
+}
+```
+Now, we get, in the new message template, the `small.text-info` element that'll contain the time and **insert** the new value:
+
+```js
+/* Previous code */
+  $("small.text-info", $msgTemplate).text(getCurrentTime());
+/* Following code */
+```
+---
+### Apply the alignment
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#43">Feature : *"Add new message"*</a>]
+
+Remember we retrieved the **correct alignment to apply** to the new message? Now's the time to actually apply it.
+
+For that, we need to **add the class** whose name is stored in the `alignment` variable, if any.
+
+> If the content of the new message should be aligned to the left, `alignment` contains `null`.
+
+```js
+$("#send-btn").click(function(event) {
+  /* Previous code */
+  else {
+    /* Previous code */
+    $("small.text-info", $msgTemplate).text(getCurrentTime());
+
+*   if (alignment) $msgTemplate.addClass(alignment);
+  }
+  event.preventDefault();
+});
+```
+
+---
+### Insert in the discussion
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#43">Feature : *"Add new message"*</a>]
+
+We have the **complete DOM structure** for our new message stored in **a jQuery object** inside the `$msgTemplate` variable.
+
+Let's **insert this new message in our page**. To do this, we'll use the `.append()` method.
+
+> This method append the given jQuery object at the end of the jQuery object that called the method.
+
+
+```js
+$("#send-btn").click(function(event) {
+  /* Previous code */
+  else {
+    /* Previous code */
+    if (alignment) $msgTemplate.addClass(alignment);
+
+*   $("#dialog").find("div.row").append($msgTemplate);
+  }
+  event.preventDefault();
+});
+```
+
+Finally, let's clean-up a bit, by adding this at the end of the `else` block:
+
+```js
+// Remove the content from the #message element.
+$message.val("");
+```
+
+---
+### Complete code - Functions
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#43">Feature : *"Add new message"*</a>]
+
+**`getAlignmentClass()`**
+
+```js
+// Get the alignment class name applied to the given element.
+// If it's the default alignement (left), returns null.
+function getAlignmentClass($ele) {
+  if ($ele.hasClass("text-right")) {
+    return "text-right";
+  } else if ($ele.hasClass("text-center")) {
+    return "text-center";
+  } else {
+    return null;
+  }
+}
+```
+**`getCurrentTime()`**
+
+```js
+// Returns the current time in a HH:MM formatted string
+function getCurrentTime() {
+  var date = new Date(Date.now());
+  return date.getHours() + ":" + date.getMinutes();
+}
+```
+---
+### Complete code - Event callback
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#43">Feature : *"Add new message"*</a>]
+
+```js
+$("#send-btn").click(createNewMessage);
+
+function createNewMessage(event) {
+  // Getting the "New message" value
+  var $message = $("#message");
+  var msgValue = $message.val();
+
+  if (msgValue === "") {
+    $message.parent().addClass("has-error");
+  } else {
+    // Get the correct alignment
+    var alignment = getAlignmentClass($message);
+
+    // Get the new message template
+    var template = $("#new-sent-message").text();
+    var $msgTemplate = $(template);
+
+    // Insert the value in the tempalte
+    $("span.msg-content", $msgTemplate).text(msgValue);
+    $("small.text-info", $msgTemplate).text(getCurrentTime());
+    if (alignment) $msgTemplate.addClass(alignment);
+    
+    // Add the template to the page
+    $("#dialog").find("div.row").append($msgTemplate);
+    $message.val("");
+  }
+  event.preventDefault();
+}
+```
+
+---
+class: center, middle
+## Feature : *"Remove messages"*
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a>]
+
+
+
+---
+### The `.remove()` method
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#63">Feature : *"Remove messages"*</a>]
+
+Removing something in jQuery is quite simple. Just use the `.remove()` method on a jQuery object, and the DOM it represents will be **removed from the page**.
+
+Our event should be attached to all the `button` elements that contains a `span.glyphicon-trash` element:
+
+```js
+$("span.glyphicon-trash").parent().click(function(event) {
+  
+});
+```
+But since the event is on the `button` element, we need to **travel up the DOM tree** to find the `button`s parent that correspond to the complete message.
+
+We could use the `.parent()` method to travel up step by step, which would give a code like this:
+
+```js
+$(this).parent().parent().parent().remove();
+```
+> This works... but it's certainly not a good option.
+
+???
+
+* We need to thouroughly analyze the HTML structure to count the number of steps we need to go.
+* What if the HTML structure changes and a new structure level is added? We would have to change our code...
+
+---
+### Get closer
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#63">Feature : *"Remove messages"*</a>]
+
+In our case, the element that we want to access is the `div.col-md-8`. But there's multiple `div.col-md-8` in our page, so we don't want any `div.col-md-8`; we want the closest one to our button.
+
+We can then use the `.closest()` method and give it the selector of the element we want to retrieve:
+
+```js
+$("span.glyphicon-trash").parent().click(function(event) {
+  console.log($(this).closest("div.col-md-8"));
+});
+```
+> This will correctly return you the `<div>` that contains the message to remove.
+
+Let's remove it!
+
+```js
+$("span.glyphicon-trash").parent().click(function(event) {
+  $(this).closest("div.col-md-8").remove();
+});
+```
+> Go on your page, and try to remove a message.
+
+> Now... add a new message and try to remove it.
+
+---
+### Time paradox
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#63">Feature : *"Remove messages"*</a>]
+
+This behavior is caused by the way the JS code is interpreted by the browser.
+
+Actually, the JS code is interpreted and executed when it's **firstly loaded by the HTML page**.
+
+This means that, when the browser loads the HTML page and found a `<script>` tag, it:
+1. Loads the file
+1. Parses the code
+1. Executes the code
+> If your code **creates and attaches event handlers** to element, the browser will do so... but only on elements that **already exists**!
+2. Stores functions in memory for future executions
+3. Continues parsing the HTML file
+
+> That's it. After that, your JS code will **not be executed again**.
+
+So... when you create, at a later time, new DOM nodes, events **won't be attached to them**; the "attach events to elements" phase **has already happenned**.
+
+---
+### Parent's responsibility
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#63">Feature : *"Remove messages"*</a>]
+
+To resolve this issue, the solution is to register the event **not on the element itself**, but on **one of its parents that is present** at page-load.
+
+In our case, this parent could be the `#dialog` element.
+
+The `.on()` method allows you to register an event on an element that can be activated only when **triggered by a descendant** of this element, not the element itself.
+
+In our case, we want to register on event on the `#dialog` element, but trigger it only when a `button` is clicked:
+
+> The arguments are : the `name` of the event, the `selector` of the descendant element, and the `function` to activate.
+
+```js
+$("#dialog").on("click", "button", function(event) {
+  // 'this' still represent the clicked button
+  // So we can reuse the same code as before.
+  $(this).closest("div.col-md-8").remove();
+});
+```
+> You can register other events than `click`.
+
+---
+### Complete code
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#63">Feature : *"Remove messages"*</a>]
+
+Here's the complete code for this feature:
+
+```js
+// Feature : "Remove message"
+$("#dialog").on("click", "button", removeMessage);
+
+function removeMessage(event) {
+  // 'this' still represent the clicked button
+  // So we can reuse the same code as before.
+  $(this).closest("div.col-md-8").remove();
+}
+```
+---
+class: center, middle
+## Complete App
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a>]
+
+
+
+The complete code for this example application can be found [here][complete].
+
+> In this complete code, note that the event declarations have been put at the top of the file, and that the function comes after.
+> 
+> This allows a better file structure.
 
 ---
 ## Resources
@@ -1454,43 +1799,7 @@ var newMessage = $(template);
 [css-select]: https://www.w3schools.com/cssref/css_selectors.asp
 [5-tips-selec]: https://www.sitepoint.com/efficient-jquery-selectors/
 [jq-events]: https://api.jquery.com/category/events/
-
----
-## TODO
-
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a>]
-
-* Add after line 162 :
-```html
-<!-- Templates -->
-<div class="hidden" id="template-new-message">
-  <div class="col-md-8 col-md-offset-4">
-    <div class="alert alert-warning">
-      <span class="message-text"></span>
-      <div class="pull-right">
-        <span class="small text-info"></span>
-        <button class="btn btn-link btn-xs">
-          <span class="glyphicon glyphicon-trash"></span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-```
-
----
-## TOADD
-
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a>]
-
-* on() function and event on created DOM element
-* children()
-* parents() VS parent()
-* fadeOut()
-* remove()
-* append()
-* clone() and templating techniques
-* text() VS html()
+[complete]: https://gist.githubusercontent.com/Tazaf/1eb7e4d4b2bd6a5508b6e2c88f6739c0/raw/cb5b91005a2ff5fd27f2df9afbe8f927781e2590/script.js
     </textarea>
 
     <script src='../../assets/remark.min.js'></script>
