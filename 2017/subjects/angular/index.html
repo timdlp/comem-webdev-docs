@@ -183,7 +183,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/88849deb699cafe389581810a753b8cc396a063b/subjects/angular/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/d47070dd054c2c411c10ef4ba15968b4ee0d0eba/subjects/angular/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -572,7 +572,7 @@ angular.module('starter').controller('HelloController', function() {
 Reference this new `ctrl.value` variable in the view with `ng-model`:
 
 ```html
-<p>Two times <input `ng-model='ctrl.value'` /> equals {{ double(`ctrl.value`) }}</p>
+<p>Two times <input `ng-model='ctrl.value'` /> equals {{ ctrl.double(`ctrl.value`) }}</p>
 ```
 
 ---
@@ -596,7 +596,7 @@ angular.module('starter').controller('HelloController', function() {
 Then add a button that calls this new function below the previous HTML:
 
 ```html
-<p>Two times <input ng-model='ctrl.value' /> equals {{ double(ctrl.value) }}</p>
+<p>Two times <input ng-model='ctrl.value' /> equals {{ ctrl.double(ctrl.value) }}</p>
 *<button type='button' ng-click='ctrl.reset()'>Reset</button>
 ```
 
@@ -774,8 +774,8 @@ You can now display the joke in the HTML template:
 ```html
 <div ng-controller='HelloController as ctrl'>
   <p>Hello {{ ctrl.name }}!</p>
-  <p>Two times two equals {{ double(2) }}</p>
-* <p>Did you hear? {{ joke }}</p>
+  <p>Two times two equals {{ ctrl.double(2) }}</p>
+* <p>Did you hear? {{ ctrl.joke }}</p>
 </div>
 ```
 
