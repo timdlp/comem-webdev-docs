@@ -183,7 +183,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/43ff71bbfa79bd91ee78aa668e2135597c099ff4/subjects/jquery-dom/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/40b02ecbd75080d37b06a2321d330e537562cb3f/subjects/jquery-dom/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -227,6 +227,39 @@ class: center, middle, image-header
 > **As such, some examples could be out-of-date.**
 
 ---
+class: center, middle
+## Example file
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a>]
+
+The rest of this slide-deck will rely on [this `index.html` file][ex-file] as context.
+
+Be sure to download it and place it in a new project directory (e.g. `jquery-course`), if you want to try and follow with the examples.
+
+<p class="center"><img src="images/template.jpg" class="shadow" width="70%" /></p>
+
+> Note that this example file includes Bootstrap through a CDN. Feel free to change that to a local link if you'd prefer ([see here][local-bs]).
+
+
+
+---
+## Learn by example
+
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a>]
+
+For the rest of this course, we are going to discover how to do things with jQuery by implementing features on the example template.
+
+These features are:
+
+* Select another discussion in the left list, and reset the unread indicator
+
+* Change the alignment of the "New message" area, using the three buttons
+
+* Add a new message to the discussion when clicking on the "Send" button
+
+* Remove messages from the discussion when clicking on the trash button
+
+---
 ## Include jQuery
 
 .breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a>]
@@ -255,7 +288,7 @@ You can also [download the complete file][dl-jquery], and save the file in a `js
 ---
 ### Script inclusions
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#3">Include jQuery</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#5">Include jQuery</a>]
 
 It's considered a good practice to include JS scripts **at the end of your HTML page**.
 
@@ -272,7 +305,7 @@ Plus, loading JS files while the DOM is not forces you to start all your JS scri
 ---
 ### Add custom script
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#3">Include jQuery</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#5">Include jQuery</a>]
 
 We will write our own JS code in a custom script file.
 
@@ -289,7 +322,7 @@ In the `js` directory inside your project directory, create a new file `script.j
 ---
 ### Test everything
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#3">Include jQuery</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#5">Include jQuery</a>]
 
 Add the following line in your `script.js` file, and save it:
 
@@ -360,7 +393,7 @@ To select DOM elements and receive jQuery objects matching the selected elements
 ---
 ### Good selecting practice
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#9">Selecting things</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#11">Selecting things</a>]
 
 Selecting elements in jQuery being [very vast][css-select], you can easily write selectors that aren't optimals, performace-wise.
 
@@ -377,7 +410,7 @@ There's many good practice regarding jQuery selectors. We are only going to see 
 ---
 #### Storing jQuery object
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#9">Selecting things</a> > <a href="#10">Good selecting practice</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#11">Selecting things</a> > <a href="#12">Good selecting practice</a>]
 
 When you know or discover that your are going to use the same jQuery selector **several time**, you should cache its result **in a JS variable**, for future reference.
 
@@ -401,7 +434,7 @@ var `$firstSentences` = $("article > p:first-child");
 ---
 #### Use `id` selectors
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#9">Selecting things</a> > <a href="#10">Good selecting practice</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#11">Selecting things</a> > <a href="#12">Good selecting practice</a>]
 
 HTML `id` attribute allows you to define **unique identifier** in an HTML page.
 
@@ -427,7 +460,7 @@ $("div.panel-body p:nth-of-type(2)")
 ---
 #### Don't over do it
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#9">Selecting things</a> > <a href="#10">Good selecting practice</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#11">Selecting things</a> > <a href="#12">Good selecting practice</a>]
 
 If you can't define `id` attributes in your HTML template, you'll need to use more complete selectors.
 
@@ -453,7 +486,7 @@ $("a.list-group-item h4")
 ---
 #### Using `class` selector
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#9">Selecting things</a> > <a href="#10">Good selecting practice</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#11">Selecting things</a> > <a href="#12">Good selecting practice</a>]
 
 CSS classes being shared among elements, it's a great way to quickly select all related elements.
 
@@ -476,7 +509,7 @@ $("li.list-group-item, a.list-group-item")
 ---
 #### Selecting order
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#9">Selecting things</a> > <a href="#10">Good selecting practice</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#11">Selecting things</a> > <a href="#12">Good selecting practice</a>]
 
 When jQuery encounters a selector like `$("a.list-group-item h4")`, how do you think it's going to execute it ?
 
@@ -497,7 +530,7 @@ To solve this problem, you have to options:
 ---
 ##### Try to `.find()` me
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#9">Selecting things</a> > <a href="#10">Good selecting practice</a> > <a href="#15">Selecting order</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#11">Selecting things</a> > <a href="#12">Good selecting practice</a> > <a href="#17">Selecting order</a>]
 
 The `.find()` method allows you to search for **elements in the DOM**, but limited to the context of the jQuery object on which you called the method.
 
@@ -511,7 +544,7 @@ $("a.list-group-item").find("h4")
 ---
 ##### Refine the use of `$()`
 
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#9">Selecting things</a> > <a href="#10">Good selecting practice</a> > <a href="#15">Selecting order</a>]
+.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a> > <a href="#11">Selecting things</a> > <a href="#12">Good selecting practice</a> > <a href="#17">Selecting order</a>]
 
 We said before that `$()` is the function to use to **retrieve DOM elements**.
 
@@ -536,39 +569,6 @@ In a more compressed style, it would resemble this:
 ```js
 $("h4", $("a.list-group-item"))
 ```
-
----
-class: center, middle
-## Example file
-
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a>]
-
-The rest of this slide-deck will rely on [this `index.html` file][ex-file] as context.
-
-Be sure to download it and place it in a new project directory (e.g. `jquery-course`), if you want to try and follow with the examples.
-
-<p class="center"><img src="images/template.jpg" class="shadow" width="70%" /></p>
-
-> Note that this example file includes Bootstrap through a CDN. Feel free to change that to a local link if you'd prefer ([see here][local-bs]).
-
-
-
----
-## Learn by example
-
-.breadcrumbs[<a href="#1">jQuery - DOM Manipulation</a>]
-
-For the rest of this course, we are going to discover how to do things with jQuery by implementing features on the example template.
-
-These features are:
-
-* Select another discussion in the left list, and reset the unread indicator
-
-* Change the alignment of the "New message" area, using the three buttons
-
-* Add a new message to the discussion when clicking on the "Send" button
-
-* Remove messages from the discussion when clicking on the trash button
 
 ---
 class: center, middle
