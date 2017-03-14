@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Asynchronous browser/server interaction (COMEM+ Web Dev)</title>
+    <meta charset='utf-8'>
+
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-desktop.css'>
+    <link rel='stylesheet' href='../../assets/bootstrap-btn.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+    <link rel='stylesheet' href='../../assets/fonts/YanoneKaffeesatz/YanoneKaffeesatz.css'>
+    <link rel='stylesheet' href='../../assets/fonts/DroidSerif/DroidSerif.css'>
+    <link rel='stylesheet' href='../../assets/fonts/UbuntuMono/UbuntuMono.css'>
+
+    <style>
+      body {
+        font-family: 'Droid Serif';
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      .image-header h2, .image-header h3, .image-header h4, .image-header h5 .image-header h6 {
+        display: none;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
+        margin: 1em 0;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        padding: 0 2px;
+        background-color: #eee;
+        color: indianred;
+        border-radius: 3px;
+        border: thin solid #dddddd;
+      }
+
+      .remark-slide-content img {
+        max-width: 100%;
+      }
+
+      .remark-slide-content p:first-child, .remark-slide-content ul:first-child {
+        margin-top: 0;
+      }
+
+      .container {
+        clear: both;
+      }
+
+      ul li {
+        margin-top: 0.4em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th, td {
+        padding: 0.2em 0.4em;
+      }
+
+      table tbody th, td {
+        border-top: 1px solid #c0c0c0;
+      }
+
+      pre:first-child, blockquote:first-child {
+        margin-top: 0;
+      }
+
+      blockquote {
+        font-style: italic;
+        border-left: 5px solid khaki;
+        margin-left: 0;
+        padding-left: 35px;
+      }
+
+      .center blockquote {
+        margin-right: 0;
+        padding-right: 35px;
+        border-right: 5px solid khaki;
+      }
+
+      #slide-logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #slide-logo img {
+        height: 60px;
+      }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
+
+      #slide-links {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 15px;
+        text-align: right;
+      }
+
+      .w5 { width: 5%; }
+      .w10 { width: 10%; }
+      .w15 { width: 15%; }
+      .w20 { width: 20%; }
+      .w30 { width: 30%; }
+      .w35 { width: 35%; }
+      .w40 { width: 40%; }
+      .w45 { width: 45%; }
+      .w50 { width: 50%; }
+      .w55 { width: 55%; }
+      .w60 { width: 60%; }
+      .w65 { width: 65%; }
+      .w70 { width: 70%; }
+      .w75 { width: 75%; }
+      .w80 { width: 80%; }
+      .w85 { width: 85%; }
+      .w90 { width: 90%; }
+      .w95 { width: 95%; }
+      .w100 { width: 100%; }
+
+      .x2 { font-size: 2em; }
+      .x3 { font-size: 3em; }
+      .x4 { font-size: 4em; }
+
+      .compact-table table td {
+        font-size: 0.9em;
+      }
+
+      .shadow {
+        box-shadow: lightgrey 0 0 3px;
+      }
+      p.shadow { width: 100%; }
+    </style>
+  </head>
+  <body>
+
+    <!-- Slides top-left logo -->
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
+
+    <!-- Slides top-right links -->
+    <div id='slide-links' style='display:none;'>
+      <!-- GitHub link -->
+      <a href='https://github.com/MediaComem/comem-webdev/tree/f157eca1fd79488714e208998c08aa68f0684237/subjects/js-ajax/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <!-- Home link -->
+      <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
+    </div>
+
+    <!-- Remark slides -->
+    <textarea id='source'>
+# Asynchronous browser/server interaction
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
+
+We will talk about a technology called **AJAX (Asynchronous JavaScript and XML)** which allows in some ways to improve the user interface behaviour with a good effect on the user experience.
+
+**You will need**
+
+* [Google Chrome][chrome] (recommended, any browser with developer tools will do)
+* [Sublime Text][sublime] (recommended, any code editor will do... **except Notepad**)
+
+**Recommended reading**
+
+* [Project setup][projset]
+* [Bootstrap][bootstrap]
+* [JavaScript][js-bas]
+* [DOM API][js-dom]
+* [jQuery basics][jq-dom]
+
+
+
+---
+## AJAX technology
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+From "classical" web sites (~ 1.0) to "desktop-like" **web applications** (~ 2.0)
+
+* Exchange data between browser and server
+  * raw text
+  * HTML
+  * XML, **JSON**, ...
+* Using asynchronous techniques 
+  * Dynamic Script Loading
+  * **XMLHttpRequest**
+
+
+* With JavaScript to orchestrate the communication
+
+> Also known as **Single Page Application**
+
+---
+## Classic model
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+<img src='images/syncModel.png' width='70%' />
+
+> The page is **fully reconstructed and reloaded** to update the content (quite inefficient) and the user activity is **interrupted, waiting** the end of the action request
+
+<img src='images/classicLoad.png' width='70%' />
+
+---
+## Asynchronous model
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+<img src='images/asyncModel.png' width='70%' />
+
+> Only **update a part** of the content and the user activity is **not interrupted** (continue to play with UI while update is in progress)  
+
+<img src='images/ajaxLoad.png' width='70%' />
+
+> The AJAX User eXperience is a key concept of the [web as a platform](https://platform.html5.org/)
+
+---
+class: center, middle
+## Starting file
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+This subject will use [this `index.html` file][ajsf] as illustration.
+Be sure to download it, if you want to try and follow with the examples.
+
+The basic idea of the following examples is about a user interface allowing to choose among a list of airports of Switzerland so as to get weather observation each time the user click on the button.
+
+
+
+---
+## Dynamic Script Loading (1)
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+At first we need to add some interaction with the button, calling a function named `send`, for example like this:
+
+```js
+document.onreadystatechange = function () {
+    if (document.readyState === "complete") {
+        var btn = document.getElementById("get-observation");
+        btn.addEventListener("click", send);
+    }
+};
+```
+
+> You can also decide to load the JavaScript at the end of the body ...
+
+---
+## Dynamic Script Loading
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+Now it's time for a first asynchronous request like this:
+
+```js
+function send() {
+    var serviceURL = "http://dfa-ogo.rhcloud.com/getWeatherIcaoHTML.php";
+    var code = document.getElementById("airportCode").selectedOptions[0].value;
+    serviceURL+= "?icao=" + code;
+
+    var DSLScript = document.createElement("script");
+    DSLScript.src = serviceURL;
+    DSLScript.type = "text/javascript";
+    document.body.appendChild(DSLScript);
+
+    document.body.removeChild(DSLScript);
+    document.getElementById("status").childNodes[0].data = "Waiting ...";
+}
+
+```
+* we compose the **web service URL** call with a **GET parameter**
+* we **insert a script element** so as to trigger the loading of an instruction
+* given that Dynamic script loading is asynchronous, the code **execution can go on**, so we insert a status message in the UI
+
+---
+class: center, middle
+## Web service, web resource, URL, HTTP GET, POST, ...
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+Let's already have a look at these slides:
+
+[https://mediacomem.github.io/comem-webdev-docs/2017/subjects/rest/#10](https://mediacomem.github.io/comem-webdev-docs/2017/subjects/rest/#10)
+
+
+
+---
+## Web resource `getWeatherIcaoHTML`
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+Let's click the button and nothing happens, except ...
+
+* we can see that a GET request **in the background**
+
+`http://dfa-ogo.rhcloud.com/getWeatherIcaoHTML.php?icao=LSZB`
+
+* we can see an **error**
+
+`ReferenceError: callback is not defined`
+
+* we can see the result of the GET request (a **JavaScript function call**)
+
+```js
+callback('<tr><td>Bern / Belp </td><td>16</td><td>29</td><td>clouds and visibility OK</td></tr>')
+```
+
+> Something is missing! 
+
+> We need to declare a callback function ...
+
+---
+## Callback function declaration
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+This is the function which the loaded instruction does order to call
+
+```js
+function callback(sMessage) {
+    var info = document.getElementById("tableInfo");
+    info.insertAdjacentHTML("beforeend", sMessage);
+
+    document.getElementById("status").childNodes[0].data = "Done";
+}
+
+```
+
+* as soon as **the script loaded is executed** by the browser (because it was insert in a `<script>` element), it calls the function called `callback`
+* it comes with a value parameter which contains some **HTML ready to be inserted in the page** (it is a `<tr>` element)
+* `insertAdjacentHTML` is used to insert the new line in the table, at the right place (before end)
+
+> We get some ready to be used HTML which means the **presentation logic is at the server-side**. The data are already tailored!
+
+> First AJAX call ... clap clap clap!
+
+---
+## Web resource `getWeatherIcaoJSONP`
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+Let's get **only the data** encoded with the **JSON format**.
+
+> Replace the service URL variable like this (and [try it!](http://dfa-ogo.rhcloud.com/getWeatherIcaoJSONP.php?icao=LSZB))
+
+`var serviceURL = "http://dfa-ogo.rhcloud.com/getWeatherIcaoJSONP.php";`
+
+> Replace the callback function like this
+
+```js
+function callback(sMessage) {
+    var weatherInfo = JSON.parse(sMessage);
+    console.log(weatherInfo);                
+    displayInfo(weatherInfo);    
+
+    document.getElementById("status").childNodes[0].data = "Done";
+}
+```
+* what we expect is a value parameter of the callback function which contains some JSON, so we parse it
+* AJAX with a response built of JSON data encapsulated in a function callback is called _JSON with padding_ aka **JSONP**
+* we get only data that we decide to display according to a dedicated function `displayInfo` ...
+
+---
+## Create the HTML user interface
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+Add the following function to build the user interface so as to tailor the data we received
+
+```js
+function displayInfo(info) {
+    // clone the hidden row
+    var newtr = document.getElementsByClassName("hidden").item(0).cloneNode(true);
+    newtr.classList.remove("hidden");
+
+    // feed the new row
+    newtr.children[0].childNodes[0].data = info.stationName;
+    newtr.children[1].childNodes[0].data = info.temperature;
+    newtr.children[2].childNodes[0].data = info.humidity;
+    newtr.children[3].childNodes[0].data = info.clouds;
+
+    // append it to the table
+    var tbody = document.getElementsByTagName("tbody").item(0);
+    tbody.appendChild(newtr);
+}
+```
+> We get only data which means the **presentation logic is at the client-side**. The client has to know how to tailor the data into the existing UI!
+
+---
+## Web resource `getWeatherIcaoJSON`
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+Dynamic Script Loading is useful but less and less used. When possible, prefer **the ultimate AJAX tool, the `XMLHttpRequest` object**!
+
+> Replace the `send` function like this
+
+```js
+function send() {
+    // Compose service URL call with a GET parameter
+    var serviceURL = "http://dfa-ogo.rhcloud.com/getWeatherIcaoJSON.php";
+    var code = document.getElementById("airportCode").selectedOptions[0].value;
+    serviceURL+= "?icao=" + code;
+
+    // -- On prépare l'objet XHR
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", serviceURL, true);
+    xmlhttp.onreadystatechange = callback;
+    xmlhttp.send(null);
+
+    // -- Cette technique étant asynchrone, l'interpréteur continue l'exécution des instructions ...
+    document.getElementById("status").childNodes[0].data = "Waiting ...";
+}
+```
+> May be you want to try the [getWeatherIcaoJSON](http://dfa-ogo.rhcloud.com/getWeatherIcaoJSON.php?icao=LSZB) web service used here.
+
+---
+## Callback function listener
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+Everything with JavaScript now! 
+* AJAX request is configured using a dedicated `XMLHttpRequest` object (XHR)
+* Callback function is a listener we need to configure
+
+> Replace the callback function like this
+
+```js
+function callback(evt) {
+    console.log("State change => " + this.readyState);
+
+    if (this.readyState === 4 && this.status === 200) {
+        var weatherInfo = JSON.parse(this.responseText);
+        console.log(weatherInfo);
+
+        displayInfo(weatherInfo);
+        document.getElementById("status").childNodes[0].data = "Done";
+    }
+}
+```
+* parse the response when the request is [DONE](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState) with successful HTTP status, 
+* it is stored as raw text in the `responseText` property of the XHR object
+
+---
+## More to come ...
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+---
+## Resources
+
+.breadcrumbs[<a href="#1">Asynchronous browser/server interaction</a>]
+
+You will find the final HTML file for this course here
+
+**Documentation**
+
+* [XMLHttpRequest Web API][xhr]
+
+[bootstrap]: ../bootstrap
+[js-bas]: ../js
+[js-dom]: ../js-dom
+[jq-dom]: ../jquery-dom
+[projset]: ../masrad-project-setup
+[chrome]: https://www.google.com/chrome/
+[sublime]: https://www.sublimetext.com/
+[ajsf]: https://gist.githubusercontent.com/oertz/f5b661e075aa59a326b2d56a4567495d/raw/567a446ecfe951db315c971079e652ee16e66c54/ajax_0
+[fef]: https://gist.githubusercontent.com/oertz/164a883774727e34fd9190e6abf84bd2/raw/95374b82a1fd742538dea9f72d9443d3dee5e08d/index.html
+[xhr]: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
+    </textarea>
+
+    <script src='../../assets/remark.min.js'></script>
+    <script src='../../assets/jquery-3.1.1.slim.min.js'></script>
+    <script src='../../assets/uri-1.18.7.js'></script>
+
+    <script>
+      var remarkOptions = {"highlightLines":true,"highlightSpans":true,"countIncrementalSlides":false};
+      var slideshow = remark.create(remarkOptions);
+
+      $('#slide-links .home-link').each(function() {
+        var $a = $(this);
+
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
+
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
+        }
+      });
+
+      var slides = $('.remark-slide-content');
+
+      // Remove logo from body and add it to each slide
+      $('#slide-logo').remove().prependTo(slides).show();
+
+      // Remove links from body and add them to each slide
+      $('#slide-links').remove().prependTo(slides).show();
+
+      // Make all external links open a new window
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
+    </script>
+  </body>
+</html>
