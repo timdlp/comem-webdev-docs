@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JavaScript Promises (COMEM+ Web Dev)</title>
+    <meta charset='utf-8'>
+
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-desktop.css'>
+    <link rel='stylesheet' href='../../assets/bootstrap-btn.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+    <link rel='stylesheet' href='../../assets/fonts/YanoneKaffeesatz/YanoneKaffeesatz.css'>
+    <link rel='stylesheet' href='../../assets/fonts/DroidSerif/DroidSerif.css'>
+    <link rel='stylesheet' href='../../assets/fonts/UbuntuMono/UbuntuMono.css'>
+
+    <style>
+      body {
+        font-family: 'Droid Serif';
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      .image-header h2, .image-header h3, .image-header h4, .image-header h5 .image-header h6 {
+        display: none;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
+        margin: 1em 0;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        padding: 0 2px;
+        background-color: #eee;
+        color: indianred;
+        border-radius: 3px;
+        border: thin solid #dddddd;
+      }
+
+      .remark-slide-content img {
+        max-width: 100%;
+      }
+
+      .remark-slide-content p:first-child, .remark-slide-content ul:first-child {
+        margin-top: 0;
+      }
+
+      .container {
+        clear: both;
+      }
+
+      ul li {
+        margin-top: 0.4em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th, td {
+        padding: 0.2em 0.4em;
+      }
+
+      table tbody th, td {
+        border-top: 1px solid #c0c0c0;
+      }
+
+      pre:first-child, blockquote:first-child {
+        margin-top: 0;
+      }
+
+      blockquote {
+        font-style: italic;
+        border-left: 5px solid khaki;
+        margin-left: 0;
+        padding-left: 35px;
+      }
+
+      .center blockquote {
+        margin-right: 0;
+        padding-right: 35px;
+        border-right: 5px solid khaki;
+      }
+
+      #slide-logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #slide-logo img {
+        height: 60px;
+      }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
+
+      #slide-links {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 15px;
+        text-align: right;
+      }
+
+      .w5 { width: 5%; }
+      .w10 { width: 10%; }
+      .w15 { width: 15%; }
+      .w20 { width: 20%; }
+      .w30 { width: 30%; }
+      .w35 { width: 35%; }
+      .w40 { width: 40%; }
+      .w45 { width: 45%; }
+      .w50 { width: 50%; }
+      .w55 { width: 55%; }
+      .w60 { width: 60%; }
+      .w65 { width: 65%; }
+      .w70 { width: 70%; }
+      .w75 { width: 75%; }
+      .w80 { width: 80%; }
+      .w85 { width: 85%; }
+      .w90 { width: 90%; }
+      .w95 { width: 95%; }
+      .w100 { width: 100%; }
+
+      .x2 { font-size: 2em; }
+      .x3 { font-size: 3em; }
+      .x4 { font-size: 4em; }
+
+      .compact-table table td {
+        font-size: 0.9em;
+      }
+
+      .shadow {
+        box-shadow: lightgrey 0 0 3px;
+      }
+      p.shadow { width: 100%; }
+    </style>
+  </head>
+  <body>
+
+    <!-- Slides top-left logo -->
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
+
+    <!-- Slides top-right links -->
+    <div id='slide-links' style='display:none;'>
+      <!-- GitHub link -->
+      <a href='https://github.com/MediaComem/comem-webdev/tree/1c9eb17436e49ee8fcfeb3d6adbf62b785c77c53/subjects/js-promises/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <!-- Home link -->
+      <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
+    </div>
+
+    <!-- Remark slides -->
+    <textarea id='source'>
+# JavaScript Promises
+
+Learn to use promises for asynchronous computation.
+
+**Recommended reading**
+
+* [JavaScript](../js/)
+* [JavaScript Closures](../js-closures/)
+
+
+
+
+
+---
+class: center, middle
+## What is a promise?
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a>]
+
+
+
+<img src='images/promises-logo.png' />
+
+> "A promise represents the **eventual result of an asynchronous operation**.
+> It is a placeholder into which the **successful result value or reason for failure** will materialize."
+
+
+
+---
+### Promises/A+ specification
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#2">What is a promise?</a>]
+
+All promises follow the [Promises/A+ specification](promises-spec).
+Basically, a promise is an object with a `then()` function that has the following signature:
+
+```js
+promise.then(onResolved, onRejected)
+```
+
+It takes **2 callback functions**:
+
+* The **first** one is called if the asynchronous operation was **successful**
+* The **second** one is called if the asynchronous operation **failed**
+
+
+
+---
+### English, please?
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#2">What is a promise?</a>]
+
+.grid-70[
+
+Imagine you are a **kid**.
+Your mom **promises** you that she'll get you a **new phone next week**.
+
+You don't **know** if you will get that phone **until next week**.
+Your mom can either **really buy** you a brand new phone, or **stand you up** and withhold the phone if she is not happy.
+
+
+]
+.grid-30[
+
+<img src='images/phone-gift.png' class='w70' />
+
+
+]
+.container[
+
+That's a promise.
+A promise has 3 states; it can be:
+
+* **Pending:** you don't know if you will get that phone until next week
+* **Resolved:** your mom really does buy you a brand new phone
+* **Rejected:** you don't get a new phone because your mom is not happy
+
+
+
+
+]
+---
+### Code, please?
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#2">What is a promise?</a>]
+
+Here's the same scenario in JavaScript:
+
+```js
+// Mom might be happy (or not)
+var isMomHappy = Math.random() < 0.5;
+
+// Make a promise
+var phonePromise = `new Promise(function(resolve, reject) {`
+
+  var oneWeek = 1000 * 60 * 60 * 24 * 7;
+
+  // In one week...
+  setTimeout(function() {
+    if (`isMomHappy`) {
+      var phone = {
+        brand: 'Samsung',
+        color: 'black'
+      };
+*     resolve(phone); // Resolve the promise (if mom is happy)
+    } else {
+      var reason = new Error('mom is very disappointed');
+*     reject(reason); // Reject the promise (if mom is not happy)
+    }
+  }, oneWeek);
+`})`;
+```
+
+
+
+---
+### Consuming a promise
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#2">What is a promise?</a>]
+
+As we've seen from the specification,
+simply call a promise's `then()` method to be notified when it is resolved or rejected:
+
+```js
+function onResolved(phone) {
+  console.log("I got a new phone! It's a " + phone.brand);
+}
+
+function onRejected(reason) {
+  console.log("I didn't get a phone because " + reason);
+}
+
+phonePromise.then(onResolved, onRejected);
+```
+
+* If a promise is **resolved**, the **first callback** will be called with the **resolved value** (the one passed to `resolve()` in the promise function)
+* If a promise is **rejected**, the **second callback** will be called with the **rejection reason** (the one passed to `reject()` in the promise function)
+
+---
+#### Let's try it
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#2">What is a promise?</a> > <a href="#6">Consuming a promise</a>]
+
+You could test this code with an interval to see that the promise is really **pending** until it is either **resolved or rejected**:
+
+```js
+var interval = setInterval(function() {
+  console.log("I still don't know if I'll get it...");
+}, 1000);
+
+function onResolved(phone) {
+  console.log("I got a new phone! It's a " + phone.brand);
+  clearInterval(interval);
+}
+
+function onRejected(reason) {
+  console.log("I didn't get a phone because " + reason);
+  clearInterval(interval);
+}
+
+phonePromise.then(onResolved, onRejected);
+```
+
+[See it in action here.][promises-codepen]
+
+
+
+---
+## Chaining promises
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a>]
+
+Promises are chainable.
+The `then()` function also **returns a promise**: a promise that **will be resolved or rejected when the original one is**.
+
+Let's say, you, the kid, **promise** your friend that you will **show them the new phone** when your mom buy you one.
+That's another promise.
+Let's write it!
+
+```js
+function showOff(phone) {
+  return new Promise(function(`resolve`, reject) {
+    var message = 'Hey friend, I have a new ' +
+        phone.color + ' ' + phone.brand + ' phone';
+
+    `resolve`(message);
+  });
+}
+```
+
+Chaining this promise together with the phone promise is as simple as:
+
+```js
+function onResolved(result) {
+  console.log(result);
+}
+
+phonePromise`.then(showOff)`.then(onResolved, onRejected);
+```
+
+---
+#### Not calling `reject`
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#8">Chaining promises</a>]
+
+Note that we **didn't call reject** in that second promise:
+
+```js
+function showOff(phone) {
+  return new Promise(function(`resolve`, reject) {
+    var message = 'Hey friend, I have a new ' +
+        phone.color + ' ' + phone.brand + ' phone';
+
+    `resolve`(message);
+  });
+}
+```
+
+You **don't have to call both** `resolve()` and `reject()`.
+Sometimes, you know things will never fail (like you showing off your new phone to your friend).
+
+
+
+---
+### Resolving promises in chains
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#8">Chaining promises</a>]
+
+.grid-35[
+
+That second promise we wrote looks a bit complicated.
+All we're doing is resolving it with a message.
+
+
+]
+.grid-65[
+
+```js
+function showOff(phone) {
+  return new Promise(function(`resolve`, reject) {
+    var message = 'Hey friend...';
+    `resolve`(message);
+  });
+}
+```
+
+
+]
+.container[
+
+.grid-35[
+
+You can use the `Promise.resolve` shortcut instead.
+It will create a promise that is automatically resolved with the passed value.
+
+
+]
+.grid-65[
+
+```js
+function showOff(phone) {
+  var message = 'Hey friend...';
+  return `Promise.resolve`(message);
+}
+```
+
+
+]
+
+]
+.container[
+
+.grid-35[
+
+Actually, a promise chain will even do that for you **automatically**.
+
+
+]
+.grid-65[
+
+```js
+function showOff(phone) {
+  return 'Hey friend...';
+}
+```
+
+
+]
+
+]
+.container[
+
+In this promise chain, the 3 `showOff()` functions above are **strictly equivalent**:
+
+```js
+phonePromise.then(showOff).then(onResolved, onRejected);
+```
+
+
+
+
+]
+---
+### Rejecting promises in chains
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#8">Chaining promises</a>]
+
+.grid-35[
+
+You could also **always reject** the promise.
+Maybe you broke your leg and can't show off.
+
+
+]
+.grid-65[
+
+```js
+function showOff(phone) {
+  return new Promise(function(resolve, `reject`) {
+    var reason = new Error('I broke my leg');
+    `reject`(reason);
+  });
+}
+```
+
+
+]
+.container[
+
+.grid-35[
+
+You can also use the `Promise.reject` shortcut.
+
+
+]
+.grid-65[
+
+```js
+function showOff(phone) {
+  var reason = new Error('I broke my leg');
+  return `Promise.resolve`(message);
+}
+```
+
+
+]
+
+]
+.container[
+
+.grid-35[
+
+A third way is to simply **throw an error**.
+That will **automatically reject the promise**.
+
+
+]
+.grid-65[
+
+```js
+function showOff(phone) {
+  throw new Error('I broke my leg');
+}
+```
+
+
+]
+
+]
+.container[
+
+In this promise chain, the 3 `showOff()` functions above are **strictly equivalent**:
+
+```js
+phonePromise.then(showOff).then(onResolved, onRejected);
+```
+
+
+
+
+]
+---
+### Using `catch()`
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#8">Chaining promises</a>]
+
+The `catch()` function is simply a shortcut to plug a **rejection callback** into a promise chain:
+
+```js
+phonePromise.then(showOff).then(onResolved)`.catch(onRejected)`;
+```
+
+It's equivalent to:
+
+```js
+phonePromise.then(showOff).then(onResolved, onRejected);
+```
+
+Or to:
+
+```js
+phonePromise.then(showOff).then(onResolved).then(undefined, onRejected);
+```
+
+But it's easier to read and is similar in behavior to `try/catch`.
+
+
+
+---
+### Behavior of a promise chain
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#8">Chaining promises</a>]
+
+We've seen that `then()` returns a promise, which is resolved or rejected when the original promise is.
+
+* What happens if you get the phone and successfully show off to your friend?
+* What happens if you get the phone but break your leg and can't show off?
+* What happens if you don't get the phone?
+
+```js
+phonePromise.then(showOff).then(onResolved).catch(onRejected);
+```
+
+**What functions are called** in these 3 cases?
+
+---
+#### All's right with the world
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#8">Chaining promises</a> > <a href="#13">Behavior of a promise chain</a>]
+
+Assuming **mom is happy**,
+and you didn't break your leg and **successfully showed off** to your friend,
+this is what will happen:
+
+<p class='center'><img src='images/promise-chain-1.png' class='w80' /></p>
+
+Both `showOff()` and `onResolved()` will be called,
+because **each promise** in the chain **is resolved**,
+so the **first callback** of the two `then()` calls are executed.
+
+`onRejected()` is **not called**.
+
+Remember, `catch()` is equivalent to this:
+
+```js
+phonePromise.then(`showOff`).then(`onResolved`, onRejected);
+```
+
+Since everything is resolved, only the **first callback** of each `then()` call is executed.
+
+---
+#### Catching errors in a promise chain
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#8">Chaining promises</a> > <a href="#13">Behavior of a promise chain</a>]
+
+What happens if **mom is happy** and gives you the phone,
+but you break your leg and **can't show off** to your friend?
+
+<p class='center'><img src='images/promise-chain-2.png' class='w80' /></p>
+
+In this case, `showOff()` is called because `phonePromise` was **resolved**,
+but `onResolved()` is **not called**.
+
+`showOff()` was rejected, so the promise returned by `then(showOff)` is rejected as well,
+therefore `onResolved()` will not be called.
+
+Instead, the **second callback**, or **the next `catch()`** will be called,
+therefore `onRejected()` is called:
+
+```js
+phonePromise.then(`showOff`).then(onResolved, `onRejected`);
+phonePromise.then(`showOff`).then(onResolved).catch(`onRejected`);
+```
+
+---
+#### Early errors in a promise chain
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#8">Chaining promises</a> > <a href="#13">Behavior of a promise chain</a>]
+
+What happens if **you don't get the phone**?
+
+<p class='center'><img src='images/promise-chain-3.png' class='w80' /></p>
+
+In this case, `phonePromise` is **rejected**, so `showOff()` will **not be called**,
+and the promise returned by `then(showOff)` will **also be rejected**, so `onResolved()` will not be called.
+
+This time, only `onRejected()` is called:
+
+```js
+phonePromise.then(showOff).then(onResolved, `onRejected`);
+phonePromise.then(showOff).then(onResolved).catch(`onRejected`);
+```
+
+
+
+
+
+---
+## Resources
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a>]
+
+* [Promises/A+ specification][promises-spec]
+
+**Further reading**
+
+* [JavaScript Promises for Dummies][javascript-promises-for-dummies]
+* [JavaScript Promises: an Introduction][javascript-promises-an-introduction]
+* [Promises][mdn-promises]
+
+
+
+---
+## TODO
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a>]
+
+* handling errors in rejection callbacks
+* asynchronous
+* all
+* https://developers.google.com/web/fundamentals/getting-started/primers/promises
+
+
+
+[javascript-promises-an-introduction]: https://developers.google.com/web/fundamentals/getting-started/primers/promises
+[javascript-promises-for-dummies]: https://scotch.io/tutorials/javascript-promises-for-dummies
+[mdn-promises]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[promises-codepen]: http://codepen.io/AlphaHydrae/pen/PpJNXb?editors=1010
+[promises-spec]: https://promisesaplus.com
+
+    </textarea>
+
+    <script src='../../assets/remark.min.js'></script>
+    <script src='../../assets/jquery-3.1.1.slim.min.js'></script>
+    <script src='../../assets/uri-1.18.7.js'></script>
+
+    <script>
+      var remarkOptions = {"highlightLines":true,"highlightSpans":true,"countIncrementalSlides":false};
+      var slideshow = remark.create(remarkOptions);
+
+      $('#slide-links .home-link').each(function() {
+        var $a = $(this);
+
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
+
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
+        }
+      });
+
+      var slides = $('.remark-slide-content');
+
+      // Remove logo from body and add it to each slide
+      $('#slide-logo').remove().prependTo(slides).show();
+
+      // Remove links from body and add them to each slide
+      $('#slide-links').remove().prependTo(slides).show();
+
+      // Make all external links open a new window
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
+    </script>
+  </body>
+</html>

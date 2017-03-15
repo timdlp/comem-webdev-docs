@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ionic (COMEM+ Web Dev)</title>
+    <title>Ionic (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -183,7 +183,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/739de0943d6451ba87abf99c903d3351b8ae99a6/subjects/ionic/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/1c9eb17436e49ee8fcfeb3d6adbf62b785c77c53/subjects/ionic/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -197,6 +197,7 @@ Learn about [Ionic][ionic], an open source framework to build hybrid mobile appl
 **You will need**
 
 * [Node.js][node] 6+
+* A free [Ionic account][ionic-account] (if you want to run your app with Ionic View)
 
 **Recommended reading**
 
@@ -618,26 +619,210 @@ Here's an example of the code for a **list view**:
 
 ]
 ---
+## Running apps on your mobile device
+
+.breadcrumbs[<a href="#1">Ionic</a>]
+
+There are several ways to run your Ionic application on a mobile device.
+This section will describe some of them:
+
+* Run on an iOS device (requires a paid Apple developer certificate)
+* Run on an Android device
+* Run with Ionic View (Android & iOS)
+
+In all these cases, make sure your app is ready for **production**.
+For example, if you're using an Ionic proxy during development,
+you should replace your proxy URLs by the actual URLs before running the app on a mobile device.
+
+
+
+---
+### iOS setup
+
+.breadcrumbs[<a href="#1">Ionic</a> > <a href="#16">Running apps on your mobile device</a>]
+
+.grid-80[
+
+Install Xcode from the App Store.
+
+Install the `ios-sim` and `ios-deploy` npm packages globally:
+
+```bash
+$> npm install -g ios-sim ios-deploy
+```
+
+
+]
+.grid-20[
+
+<img src='images/xcode.png' class='w100' />
+
+
+]
+.container[
+
+Then go into your app's directory, install Cordova's `ios` platform and build your app to make sure it works:
+
+```bash
+$> cd /path/to/projects/my-app
+$> ionic platform add ios
+$> ionic build
+```
+
+
+]
+---
+#### Run your iOS app
+
+.breadcrumbs[<a href="#1">Ionic</a> > <a href="#16">Running apps on your mobile device</a> > <a href="#17">iOS setup</a>]
+
+To run your app on an iOS device physically connected to your computer, run:
+
+```bash
+$> ionic run ios --device
+```
+
+For your app to run on iOS, it must be signed with a valid developer certificate.
+You must join the **iOS Developer Program** for $99/year.
+The procedure is [described here][ionic-publishing].
+
+
+
+---
+### Android setup
+
+.breadcrumbs[<a href="#1">Ionic</a> > <a href="#16">Running apps on your mobile device</a>]
+
+This is a summary of the instructions of the [Installing the Requirements][cordova-requirements] section in Cordova's Android Platform Guide:
+
+* Install the latest [Java SDK][java-sdk] (if you don't have it already)
+* Install and open [Android Studio][android-studio]
+  * Install the latest Android version (Android Studio will prompt you to do it when it starts the first time)
+  * Open its **Preferences**, and find and copy the **Android SDK Location** in **Appearance & Behavior > System Settings > Android SDK**
+* Add the SDK's `platform-tools` and `tools` directories to your `PATH`:
+  * Open `~/.bash_profile` or `~/.bashrc`
+  * Add the following content (replace `/path/to/sdk` by the Android SDK location you copied from Android Studio):
+
+      ```
+      export PATH=/path/to/sdk/platform-tools:/path/to/sdk/tools:$PATH
+      ```
+  * Restart your CLI
+
+
+
+---
+#### Run your Android app
+
+.breadcrumbs[<a href="#1">Ionic</a> > <a href="#16">Running apps on your mobile device</a> > <a href="#19">Android setup</a>]
+
+If you've installed everything correctly, you should be able to get the path to the `android` binary in your CLI:
+
+```bash
+$> which android
+/path/to/sdk/tools/android
+```
+
+You can now add the Android platform to your Ionic app and build it to make sure everything works:
+
+```bash
+$> cordova platform add https://github.com/apache/cordova-android
+$> ionic build android
+```
+
+To run your app on an Android device physically connected to your computer, run:
+
+```bash
+$> ionic run android --device
+```
+
+
+
+---
+### Ionic View
+
+.breadcrumbs[<a href="#1">Ionic</a> > <a href="#16">Running apps on your mobile device</a>]
+
+[Ionic View][ionic-view] is an Android and iOS application in which your own app can run without having to be built and installed on your physically connected device.
+
+To use it you will need a free [Ionic account][ionic-account].
+Create one now if you don't have one already.
+
+Once you have your account, run the following command in your app's directory to upload your app to Ionic View:
+
+```bash
+$> cd /path/to/projects/my-app
+$> ionic upload
+```
+
+Ionic will prompt you to log in if it's the first time, then upload your app.
+
+---
+#### Run your app from Ionic View
+
+.breadcrumbs[<a href="#1">Ionic</a> > <a href="#16">Running apps on your mobile device</a> > <a href="#21">Ionic View</a>]
+
+To run your app, you then need to install the free [Ionic View app][ionic-view] on your mobile device.
+Use your platform's standard store.
+
+.grid-60[
+
+Once you've installed and opened the app and logged in,
+you should see the list of Ionic apps you have uploaded.
+
+You can then simply click on the app to launch it.
+
+You always have to go through the Ionic View app to open yours,
+but it's good enough for development purposes.
+
+
+]
+.grid-40[
+
+<img src='images/ionic-view.png' class='w100' />
+
+
+]
+.container[
+
+You can give access to your uploaded apps to someone else who also has an Ionic account by running this command:
+
+```bash
+$> ionic share john.doe@example.com
+```
+
+
+
+
+]
+---
 ## Resources
 
 .breadcrumbs[<a href="#1">Ionic</a>]
 
 **Documentation**
 
+* [Cordova requirements][cordova-requirements]
 * [Ionic][ionic-docs]
   * [CSS components][ionic-css]
   * [JavaScript components][ionic-js]
+  * [Publishing][ionic-publishing]
 
 
 
+[android-studio]: https://developer.android.com/studio/index.html
 [angular]: https://angular.io
 [cordova]: https://cordova.apache.org
+[cordova-requirements]: http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html
 [geolocation-api]: https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation
 [ionic]: http://ionicframework.com
+[ionic-account]: https://apps.ionic.io/
 [ionic-css]: http://ionicframework.com/docs/components/
 [ionic-docs]: http://ionicframework.com/docs/v1/
 [ionic-js]: http://ionicframework.com/docs/api/
 [ionic-market]: https://market.ionic.io
+[ionic-publishing]: http://ionicframework.com/docs/guide/publishing.html
+[ionic-view]: http://view.ionic.io
+[java-sdk]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
 [node]: https://nodejs.org/en/
 
     </textarea>
