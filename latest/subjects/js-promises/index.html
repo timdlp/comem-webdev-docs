@@ -183,7 +183,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/8067280c15f293a923bb8d8bf22ee452064bea1b/subjects/js-promises/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/70cbfe42b3e23a6151f36579817565dce7f18065/subjects/js-promises/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -1044,6 +1044,12 @@ This behavior enables complex asynchronous workflows with smart error handling:
 <img src='images/complex-promise-chain.png' class='w100' />
 
 
+]
+.container[
+
+Promises are a **powerful abstraction** that make it **easy to compose asynchronous workflows**.
+
+
 
 
 ]
@@ -1082,34 +1088,122 @@ I got a Samsung
 
 
 ---
+## Parallel execution
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a>]
+
+We've seen how to handle **sequential** asynchronous operations,
+but promises also allow you to handle **parallel asynchronous operations**.
+
+The `Promise.all()` method takes an **array of promises** and returns a **new promise**.
+This new promise will be resolved **when all the promises in the array have been resolved**.
+
+```js
+Promise.all([ promise1, promise2, promise3 ]).then(function(results) {
+  console.log(results); // [ result1, result2, result3 ]
+}).catch(function(err) {
+  // At least one promise was rejected
+});
+```
+
+It will be resolved with an **array of results** which contains the resolution values of the original promises **in the same order** as they are passed to `Promise.all()`.
+
+If one or more of the original promises is **rejected**,
+the new promise **is also rejected** with the same reason as the first promise to be rejected.
+
+
+
+---
+### Successful parallel execution
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#31">Parallel execution</a>]
+
+Here's an example of parallel promise execution where **both are resolved**:
+
+```js
+var phonePromise = new Promise(function(resolve, reject) {
+  resolve({ brand: 'Samsung' });
+});
+
+var cakePromise = new Promise(function(resolve, reject) {
+  resolve('Yummy');
+});
+
+var promises = [ phonePromise, cakePromise ];
+
+Promise.all(promises).then(function(results) {
+  console.log(results.length); // 2
+  console.log(results[0]); // { brand: 'Samsung' }
+  console.log(results[1]); // 'Yummy'
+});
+```
+
+<p class='center'><img src='images/promise-all-1.png' class='w80'></p>
+
+
+
+---
+### Failed parallel execution
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#31">Parallel execution</a>]
+
+Here's an example of parallel promise execution where **one is rejected**:
+
+```js
+var phonePromise = new Promise(function(resolve, reject) {
+  resolve({ brand: 'Samsung' });
+});
+
+var cakePromise = new Promise(function(resolve, reject) {
+  reject(new Error('The cake is a lie'));
+});
+
+var promises = [ phonePromise, cakePromise ];
+
+Promise.all(promises).then(function(results) {
+  // not called
+}).catch(function(err) {
+  console.log(err.message); // 'The cake is a lie'
+});
+```
+
+<p class='center'><img src='images/promise-all-2.png' class='w80'></p>
+
+
+
+---
 ## Resources
 
 .breadcrumbs[<a href="#1">JavaScript Promises</a>]
 
+**Documentation**
+
 * [Promises/A+ specification][promises-spec]
+* [Promises][mdn-promises]
 
 **Further reading**
 
 * [JavaScript Promises for Dummies][javascript-promises-for-dummies]
 * [JavaScript Promises: an Introduction][javascript-promises-an-introduction]
-* [Promises][mdn-promises]
+* [Promise nuggets][promise-nuggets]
+* [Aren't promises just callbacks?][arent-promises-just-callbacks]
+
+**Popular promise librairies**
+
+* [Bluebird][bluebird]
+* [q][q]
 
 
 
----
-## TODO
-
-.breadcrumbs[<a href="#1">JavaScript Promises</a>]
-
-* all
-
-
-
+[arent-promises-just-callbacks]: http://stackoverflow.com/questions/22539815/arent-promises-just-callbacks
+[bluebird]: http://bluebirdjs.com/docs/getting-started.html
 [javascript-promises-an-introduction]: https://developers.google.com/web/fundamentals/getting-started/primers/promises
 [javascript-promises-for-dummies]: https://scotch.io/tutorials/javascript-promises-for-dummies
 [mdn-promises]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 [promises-codepen]: http://codepen.io/AlphaHydrae/pen/PpJNXb?editors=1010
+[promise-nuggets]: https://promise-nuggets.github.io/
 [promises-spec]: https://promisesaplus.com
+[q]: https://github.com/kriskowal/q
 
     </textarea>
 
