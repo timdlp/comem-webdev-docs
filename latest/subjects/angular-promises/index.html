@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Promises in Angular (COMEM+ Web Dev)</title>
+    <meta charset='utf-8'>
+
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-desktop.css'>
+    <link rel='stylesheet' href='../../assets/bootstrap-btn.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+    <link rel='stylesheet' href='../../assets/fonts/YanoneKaffeesatz/YanoneKaffeesatz.css'>
+    <link rel='stylesheet' href='../../assets/fonts/DroidSerif/DroidSerif.css'>
+    <link rel='stylesheet' href='../../assets/fonts/UbuntuMono/UbuntuMono.css'>
+
+    <style>
+      body {
+        font-family: 'Droid Serif';
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      .image-header h2, .image-header h3, .image-header h4, .image-header h5 .image-header h6 {
+        display: none;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
+        margin: 1em 0;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        padding: 0 2px;
+        background-color: #eee;
+        color: indianred;
+        border-radius: 3px;
+        border: thin solid #dddddd;
+      }
+
+      .remark-slide-content img {
+        max-width: 100%;
+      }
+
+      .remark-slide-content p:first-child, .remark-slide-content ul:first-child {
+        margin-top: 0;
+      }
+
+      .container {
+        clear: both;
+      }
+
+      ul li {
+        margin-top: 0.4em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th, td {
+        padding: 0.2em 0.4em;
+      }
+
+      table tbody th, td {
+        border-top: 1px solid #c0c0c0;
+      }
+
+      pre:first-child, blockquote:first-child {
+        margin-top: 0;
+      }
+
+      blockquote {
+        font-style: italic;
+        border-left: 5px solid khaki;
+        margin-left: 0;
+        padding-left: 35px;
+      }
+
+      .center blockquote {
+        margin-right: 0;
+        padding-right: 35px;
+        border-right: 5px solid khaki;
+      }
+
+      #slide-logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #slide-logo img {
+        height: 60px;
+      }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
+
+      #slide-links {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 15px;
+        text-align: right;
+      }
+
+      .w5 { width: 5%; }
+      .w10 { width: 10%; }
+      .w15 { width: 15%; }
+      .w20 { width: 20%; }
+      .w30 { width: 30%; }
+      .w35 { width: 35%; }
+      .w40 { width: 40%; }
+      .w45 { width: 45%; }
+      .w50 { width: 50%; }
+      .w55 { width: 55%; }
+      .w60 { width: 60%; }
+      .w65 { width: 65%; }
+      .w70 { width: 70%; }
+      .w75 { width: 75%; }
+      .w80 { width: 80%; }
+      .w85 { width: 85%; }
+      .w90 { width: 90%; }
+      .w95 { width: 95%; }
+      .w100 { width: 100%; }
+
+      .x2 { font-size: 2em; }
+      .x3 { font-size: 3em; }
+      .x4 { font-size: 4em; }
+
+      .compact-table table td {
+        font-size: 0.9em;
+      }
+
+      .shadow {
+        box-shadow: lightgrey 0 0 3px;
+      }
+      p.shadow { width: 100%; }
+    </style>
+  </head>
+  <body>
+
+    <!-- Slides top-left logo -->
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
+
+    <!-- Slides top-right links -->
+    <div id='slide-links' style='display:none;'>
+      <!-- GitHub link -->
+      <a href='https://github.com/MediaComem/comem-webdev/tree/27376133e0666a29af67e2a10d1357e3154481b9/subjects/angular-promises/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <!-- Home link -->
+      <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
+    </div>
+
+    <!-- Remark slides -->
+    <textarea id='source'>
+# Promises in Angular
+
+Learn how promises are integrated into Angular and how to use them.
+
+**Recommended reading**
+
+* [Promises](../js-promises/)
+* [Angular](../angular/)
+
+
+
+
+
+---
+## Promises in Angular
+
+.breadcrumbs[<a href="#1">Promises in Angular</a>]
+
+Promises are common in Angular.
+
+For example, the `$http` service **returns a promise** when you call it:
+a promise that will be **resolved** with the server's HTTP response when it's available,
+or **rejected** if the requests times out or the status code sent by the server indicates an error (e.g. 4xx or 5xx).
+
+Many popular Angular libraries also return promises.
+
+
+
+---
+## The `$q` service
+
+.breadcrumbs[<a href="#1">Promises in Angular</a>]
+
+You **MUST NOT** use native ES6 promises in Angular.
+They are not integrated into the Angular digest cycle which makes two-way binding possible.
+
+Instead, you should use the [$q][angular-q] service provided by Angular,
+which is a [Promises/A+][promises-spec]-compliant implementation of promises inspired by the popular promise library [q][q].
+
+
+
+---
+### Creating promises with `$q`
+
+.breadcrumbs[<a href="#1">Promises in Angular</a> > <a href="#3">The `$q` service</a>]
+
+If you have an asynchronous operation or piece of code that **does not already return a promise**,
+here's a few ways you can create promises with the `$q` service:
+
+.grid-45[
+
+```js
+// Create a resolved promise
+var promise = `$q.when('foo')`;
+promise.then(function(result) {
+  console.log(result); // 'foo'
+});
+```
+
+
+]
+.grid-55[
+
+```js
+// Create a rejected promise
+var promise = `$q.reject(new Error('bug'))`;
+promise.catch(function(err) {
+  console.log(err.message); // 'bug'
+});
+```
+
+
+]
+.container[
+
+```js
+// Execute asynchronous operations in parallel
+var usersPromise = $http({ url: '/users' });
+var itemsPromise = $http({ url: '/items' });
+
+`$.all([ usersPromise, itemsPromise ])`.then(function(results) {
+  var users = results[0];
+  var items = results[1];
+  // ...
+});
+```
+
+Don't forget to inject `$q` into your controller/service/etc.
+
+
+
+
+]
+---
+### Transforming asynchronous callbacks into promises
+
+.breadcrumbs[<a href="#1">Promises in Angular</a> > <a href="#3">The `$q` service</a>]
+
+Let's suppose you have a piece of code using **custom callbacks**,
+like a call to retrieve the user's location with the HTML5 geolocation API:
+
+```js
+navigator.geolocation.getCurrentPosition(function successCallback(data) {
+  // Do stuff with data
+}, function errorCallback(err) {
+  // Handle the error
+});
+```
+
+How can you **make it a promise** to benefit from promise chaining, composition and error handling?
+
+This is how you would do it with **ES6** promises
+(**DO NOT** do this in Angular):
+
+```js
+function getPicture() {
+  return `new Promise`(function(`resolve`, `reject`) {
+    navigator.geolocation.getCurrentPosition(function successCallback(data) {
+      `resolve(data)`;
+    }, function errorCallback(err) {
+      `reject(err)`;
+    });
+  })
+}
+```
+
+---
+#### Deferred objects
+
+.breadcrumbs[<a href="#1">Promises in Angular</a> > <a href="#3">The `$q` service</a> > <a href="#5">Transforming asynchronous callbacks into promises</a>]
+
+The `$q` service allows you to create a **deferred object**, let's call it `deferred`:
+
+```js
+var deferred = $q.defer();
+```
+
+This object contains a **promise** that you can retrieve and return with `deferred.promise`.
+You can **resolve or reject** that promise with the deferred object's `resolve()` or `reject()` functions:
+
+```js
+var promise = deferred.promise;
+if (allGood) {
+  deferred.resolve('Yeehaw!');
+} else {
+  deferred.reject(new Error('Oops'));
+}
+```
+
+---
+#### Deferred object example
+
+.breadcrumbs[<a href="#1">Promises in Angular</a> > <a href="#3">The `$q` service</a> > <a href="#5">Transforming asynchronous callbacks into promises</a>]
+
+Here's how you would transform the asynchronous geolocation call with **callbacks into a promise**:
+
+```js
+function getPicture() {
+  var `deferred` = `$q.defer()`;
+  navigator.geolocation.getCurrentPosition(function successCallback(data) {
+    `deferred.resolve(data)`;
+  }, function errorCallback(err) {
+    `deferred.reject(err)`;
+  });
+  return `deferred.promise`;
+}
+```
+
+
+
+---
+### Do not overuse deferred objects
+
+.breadcrumbs[<a href="#1">Promises in Angular</a> > <a href="#3">The `$q` service</a>]
+
+Why is this stupid?
+
+```js
+function getUserFromServer() {
+  var deferred = $q.defer();
+
+  $http({ url: '/users' }).then(function(res) {
+    deferred.resolve(res);
+  }).catch(function(err) {
+    deferred.reject(err);
+  });
+
+  return deferred.promise;
+}
+
+getUserFromServer().then(function(users) {
+  // Do something with "res.data"...
+});
+```
+
+---
+#### Do not make it a promise if it's one already
+
+.breadcrumbs[<a href="#1">Promises in Angular</a> > <a href="#3">The `$q` service</a> > <a href="#8">Do not overuse deferred objects</a>]
+
+The `$http` service **already returns a promise**,
+you don't have to make a new one.
+Just **chain it**:
+
+```js
+function getUserFromServer() {
+  return $http({ url: '/users' });
+}
+
+getUserFromServer().then(function(res) {
+  // Do something with "res.data"...
+});
+```
+
+
+
+---
+## Promises and `$http`
+
+.breadcrumbs[<a href="#1">Promises in Angular</a>]
+
+The `$http` service returns a promise when you use it:
+
+```js
+var promise = $http({
+  url: '/items'
+});
+```
+
+It is **resolved** with the HTTP response object when the request completes successfully:
+
+```js
+promise.then(function(res) {
+  console.log(res.data); // [ 'foo', 'bar', 'baz' ]
+});
+```
+
+Or **rejected** if the request times out or the server sends a status code indicating an error.
+The HTTP response is provided as the reason:
+
+```js
+promise.catch(function(res) {
+  console.log(res.status); // 422
+  console.log(res.statusText); // Unprocessable Entity
+});
+```
+
+
+
+---
+### Sequential HTTP requests
+
+.breadcrumbs[<a href="#1">Promises in Angular</a> > <a href="#10">Promises and `$http`</a>]
+
+HTTP requests are asynchronous, so to make several requests **sequentially**,
+you have to wait until each request is done to trigger the next one:
+
+```js
+`$http`({
+  method: 'POST',
+  url: '/users',
+  data: userData
+}).then(function userCreated(res) {
+  return `$http`({
+    method: 'POST',
+    url: '/auth',
+    data: userData
+  }).then(function userAuthenticated(res) {
+    return `$http`({
+      url: '/users/' + res.data.id + '/stats'
+    }).then(function userStatsRetrieved(res) {
+      // Do something with "res.data"...
+    });
+  });
+}).catch(function(err) {
+  $log.error(err);
+});
+```
+
+That's not very easy to read.
+
+---
+#### Flattening sequential HTTP requests with chained promises
+
+.breadcrumbs[<a href="#1">Promises in Angular</a> > <a href="#10">Promises and `$http`</a> > <a href="#11">Sequential HTTP requests</a>]
+
+```js
+function createUser(userData) {
+  return $http({ method: 'POST', url: '/users', data: userData })
+    .then(function() {
+      return userData;
+    });
+}
+
+function authenticateUser(userData) {
+  return $http({ method: 'POST', url: '/auth', data: userData })
+    .then(function(res) {
+      return res.data.id;
+    });
+}
+
+function getUserStats(userId) {
+  return $http({ url: '/users/' + userId + '/stats' });
+}
+
+var userData = { name: 'jdoe', password: 'letmein' };
+
+*createUser()
+* .then(authenticateUser)
+* .then(getUserStats)
+* .then(function(res) {
+*   // Do something with "res.data"...
+* }).catch(function(err) {
+*   $log.error(err);
+* });
+```
+
+
+
+---
+### Recursive HTTP requests
+
+.breadcrumbs[<a href="#1">Promises in Angular</a> > <a href="#10">Promises and `$http`</a>]
+
+What if you are getting items from a paginated collection and want to fetch all of them?
+
+.grid-60[
+
+```js
+function fetchAllItems(page, items) {
+  page = page || 1; // Start from page 1
+  items = items || [];
+
+  // GET the current page
+  return $http({
+    url: '/items',
+    params: {
+      page: page
+    }
+  }).then(function(res) {
+    if (res.data.length) {
+      // If there are any items, add them
+      // and recursively fetch the next page
+      items = items.concat(res.data);
+      return fetchAllItems(page + 1, items);
+    }
+    return items;
+  });
+}
+
+fetchAllItems().then(function(allItems) {
+  // Do something with "allItems"...
+});
+```
+
+
+]
+.grid-40[
+
+<img src='images/recursion.jpg' class='w100' />
+
+
+
+[angular-q]: https://docs.angularjs.org/api/ng/service/$q
+[promises-spec]: https://promisesaplus.com
+[q]: https://github.com/kriskowal/q
+
+]
+
+    </textarea>
+
+    <script src='../../assets/remark.min.js'></script>
+    <script src='../../assets/jquery-3.1.1.slim.min.js'></script>
+    <script src='../../assets/uri-1.18.7.js'></script>
+
+    <script>
+      var remarkOptions = {"highlightLines":true,"highlightSpans":true,"countIncrementalSlides":false};
+      var slideshow = remark.create(remarkOptions);
+
+      $('#slide-links .home-link').each(function() {
+        var $a = $(this);
+
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
+
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
+        }
+      });
+
+      var slides = $('.remark-slide-content');
+
+      // Remove logo from body and add it to each slide
+      $('#slide-logo').remove().prependTo(slides).show();
+
+      // Remove links from body and add them to each slide
+      $('#slide-links').remove().prependTo(slides).show();
+
+      // Make all external links open a new window
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
+    </script>
+  </body>
+</html>
