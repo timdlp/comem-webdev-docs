@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Angular UI Bootstrap (COMEM+ Web Dev)</title>
+    <meta charset='utf-8'>
+
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-desktop.css'>
+    <link rel='stylesheet' href='../../assets/bootstrap-btn.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+    <link rel='stylesheet' href='../../assets/fonts/YanoneKaffeesatz/YanoneKaffeesatz.css'>
+    <link rel='stylesheet' href='../../assets/fonts/DroidSerif/DroidSerif.css'>
+    <link rel='stylesheet' href='../../assets/fonts/UbuntuMono/UbuntuMono.css'>
+
+    <style>
+      body {
+        font-family: 'Droid Serif';
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      .image-header h2, .image-header h3, .image-header h4, .image-header h5 .image-header h6 {
+        display: none;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
+        margin: 1em 0;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        padding: 0 2px;
+        background-color: #eee;
+        color: indianred;
+        border-radius: 3px;
+        border: thin solid #dddddd;
+      }
+
+      .remark-slide-content img {
+        max-width: 100%;
+      }
+
+      .remark-slide-content p:first-child, .remark-slide-content ul:first-child {
+        margin-top: 0;
+      }
+
+      .container {
+        clear: both;
+      }
+
+      ul li {
+        margin-top: 0.4em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th, td {
+        padding: 0.2em 0.4em;
+      }
+
+      table tbody th, td {
+        border-top: 1px solid #c0c0c0;
+      }
+
+      pre:first-child, blockquote:first-child {
+        margin-top: 0;
+      }
+
+      blockquote {
+        font-style: italic;
+        border-left: 5px solid khaki;
+        margin-left: 0;
+        padding-left: 35px;
+      }
+
+      .center blockquote {
+        margin-right: 0;
+        padding-right: 35px;
+        border-right: 5px solid khaki;
+      }
+
+      #slide-logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #slide-logo img {
+        height: 60px;
+      }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
+
+      #slide-links {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 15px;
+        text-align: right;
+      }
+
+      .w5 { width: 5%; }
+      .w10 { width: 10%; }
+      .w15 { width: 15%; }
+      .w20 { width: 20%; }
+      .w30 { width: 30%; }
+      .w35 { width: 35%; }
+      .w40 { width: 40%; }
+      .w45 { width: 45%; }
+      .w50 { width: 50%; }
+      .w55 { width: 55%; }
+      .w60 { width: 60%; }
+      .w65 { width: 65%; }
+      .w70 { width: 70%; }
+      .w75 { width: 75%; }
+      .w80 { width: 80%; }
+      .w85 { width: 85%; }
+      .w90 { width: 90%; }
+      .w95 { width: 95%; }
+      .w100 { width: 100%; }
+
+      .x2 { font-size: 2em; }
+      .x3 { font-size: 3em; }
+      .x4 { font-size: 4em; }
+
+      .compact-table table td {
+        font-size: 0.9em;
+      }
+
+      .shadow {
+        box-shadow: lightgrey 0 0 3px;
+      }
+      p.shadow { width: 100%; }
+    </style>
+  </head>
+  <body>
+
+    <!-- Slides top-left logo -->
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
+
+    <!-- Slides top-right links -->
+    <div id='slide-links' style='display:none;'>
+      <!-- GitHub link -->
+      <a href='https://github.com/MediaComem/comem-webdev/tree/bd5d1c0167a4d5578bcc6266b9380ce23bc96387/subjects/angular-ui-bootstrap/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <!-- Home link -->
+      <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
+    </div>
+
+    <!-- Remark slides -->
+    <textarea id='source'>
+# Angular UI Bootstrap
+
+Learn how to use the Bootstrap JS plugins within an AngularJS app.
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
+
+**You will need**
+
+* [Google Chrome][chrome] (recommended, any browser with developer tools will do)
+* [Sublime Text][sublime] (recommended, any code editor will do... **except Notepad**)
+
+**Recommended reading**
+
+* [Bootstrap][bootstrap]
+* [Javascript][js]
+* [Angular][ng]
+
+
+
+---
+## Bootstrap JS
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a>]
+
+Bootstrap is **mainly** an HTML/CSS framework, as seen in the dedicated course.
+
+But Bootstrap developpers decided to **enhance the Bootstrap features** with some JS code, more precisely code using jQuery.
+
+This JS code allows more interesting and advanced behaviors.
+
+> Bootstrap JS could be seen as a library.
+
+---
+### Include Bootstrap JS
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a> > <a href="#2">Bootstrap JS</a>]
+
+In the same fashion as the Bootstrap CSS file, you can include the Bootstrap JS file in two ways:
+
+> We won't do a live example with this Bootstrap JS file.
+
+* Referencing a CDN url in your `index.html`:
+```html
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+```
+
+* Downloading Bootstrap, moving the `bootstrap.min.js` file in the `js` directory of your project directory, then referencing it in your `index.html`:
+```html
+<sccript src="js/bootstrap.min.js"></script>
+```
+
+> Be extra sure to add this `<script>` tag **AFTER** your jQuery inclusion, since Bootstrap JS relies solely on jQuery.
+
+> You'll need to include the Bootstrap CSS file as well.
+
+---
+## What can it do?
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a>]
+
+Bootstrap JS adds dynamic behavior to some Bootstrap components, using jQuery instructions.
+
+With it you can:
+* Add modals
+* Add dropdown menu
+* Handle tab navigation
+* Enhance alerts
+* Enhance buttons
+* And some other things
+
+We'll see two examples in this slide-deck: **dropdown menus** and **modals**
+
+> With Bootstrap JS, you generally **don't have** to actually write JS code.
+
+> Many JS components can be activated by adding **special HTML attributes** to your elements.
+
+---
+## Dropdown menus
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a>]
+
+To create a dropdown menu in your application, you'll need to respect a specific HTML markup:
+
+```html
+<div `class="dropdown"`>
+  <button class="btn btn-default" `data-toggle="dropdown"`>
+    Dropdown trigger
+    <span class="caret"></span>
+  </button>
+  <ul `class="dropdown-menu"`>
+    <li>`<a href="#">`Element 1`</a>`</li>
+    <li>`<a href="#">`Element 2`</a>`</li>
+  </ul>
+</div>
+```
+To behave as expected, you **must respect** this exact same structure with the exact same classes.
+
+> Be sure to wrap an `<a>` tag around your `<li>` element's content, otherwise they won't be correctly stylized.
+
+---
+## Modals
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a>]
+
+Modals are small "windows" that appear **in front** of your main content and **block all interactivity** with it, until the modal is discarded.
+
+They are useful for showing contextual information or specific interactivity that don't need a full page to be shown.
+
+Modal component also needs a specific markup, and can be activated by any button on your page, without needing you to write any JS code.
+
+---
+### The Modal Markup
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a> > <a href="#6">Modals</a>]
+
+The smallest HTML markup for modal components is as follow:
+
+```html
+<div class="modal fade" `id="myModal"`>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        Here goes the content.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+> Modal templates are hidden from your page by default, until they are "activated".
+
+> Elements with `data-dismiss="modal"` attribute can close the modal.
+
+---
+### The Modal Trigger
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a> > <a href="#6">Modals</a>]
+
+Showing modal can be done by any button or link anywhere in the page.
+
+In this case, we added a link in a navbar that will show our modal:
+
+```html
+<a href="#"
+  class="btn btn-success navbar-btn"
+  `data-toggle="modal"`
+  `data-target="#myModal"`>Log in</a>
+```
+> The `data-toggle` attribute needs to have the `modal` value.
+> 
+> The `data-target` attribute needs to have a selector that points to your modal's `id`
+> 
+> (e.g. if your modal component has an `id` whose value is `myModal` (as in the previous slide), the `data-target` will have a value of `#myModal`)
+
+---
+## What's wrong with Angular?
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a>]
+
+AngularJS **does not** include jQuery*, and it's **not advised** to include it manually.
+
+> \* Well not exactly. It includes a lightweight version of jQuery, named jqLite.
+
+Angular is written so that **classical jQuery operations** can be achieved using **Angular built-in features**.
+
+Since jQuery is not present in Angular, you can't just include the Bootstrap JS file; it just **won't work**.
+
+If you'd want to have the same features as offered by Bootstrap JS, you'd have to **write yourself** the code in *Angular style*.
+
+Fortunately, some people already take care of that for you by wrinting **Angular UI Bootstrap**.
+
+> This a library for Angular that provides you all Bootstrap JS components written in pure Angular JS.
+
+---
+## Include Angular UI Bootstrap
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a>]
+
+To add Angular UI Bootstrap in your project, you need to [download the file][auib] from to website, and place it, for example, on your `js` directory.
+
+> Note that you can built a version that contains only the specific features you need.
+
+Then, include the file with a `<script>` tag in your `index.html`
+
+> Be sure to add this **AFTER** the inclusion of angular itself.
+
+```html
+<!-- angular script inclusion -->
+<script src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+```
+
+Finally, don't forget to **add the dependency** in your app's `module`:
+
+```js
+angular.module('myModule', ['`ui.bootstrap`']);
+```
+
+---
+class: center, middle
+## Documentation
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a>]
+
+
+
+As always, the prime source of information about the library is it's official **documentation**.
+
+In the case of Angular UI Bootstrap, you'll find it [here][uib-doc]
+
+> Angular UI Bootstrap contains **all Bootstrap JS components**, along with some additionnal behaviors
+
+---
+## Dropdown Menus (Again)
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a>]
+
+Using Bootstrap Dropdown with Angular UI Bootstrap is very **simple**.
+
+You'll need to respect the **same HTML Bootstrap Markup** as before, but will need to **remove** all the `data-*` attribute, and replace them with **directives**:
+
+```html
+<!-- remove class="dropdown" -->
+<div `uib-dropdown`>
+  <!-- remove data-toggle="dropdown" -->
+  <button class="btn btn-default" `uib-dropdown-toggle`>
+    Dropdown trigger
+    <span class="caret"></span>
+  </button>
+  <!-- nothing to remove here. Just add the directive -->
+  <ul class="dropdown-menu" `uib-dropdown-menu`>
+    <li><a href="#">Element 1</a></li>
+    <li><a href="#">Element 2</a></li>
+  </ul>
+</div>
+```
+---
+## Modals (Again)
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a>]
+
+On the other hand, modals are a **little bit** more complicated to implement, because you'll need to **add some code**.
+
+The HTML markup for the modal template is **the same as before** (see [here](./#7)).
+
+> You should move this markup in it's own `html` file, for a better **structure**.
+
+In the case of Angular UI Bootstrap, you don't have to add an `id` attribute to the modal.
+
+---
+### The Modal Trigger
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a> > <a href="#13">Modals (Again)</a>]
+
+The button that previously triggered the showing of the modal needs to be **changed**.
+
+It will no longer rely on `data-*` attribute, but will instead trigger **a call to a function in its controller**.
+
+You can remove all `data-*` attributes from the button, and **replace** them with a `ng-click` directive, with the name of **the function to trigger**:
+
+```html
+<a href="#"
+  class="btn btn-success navbar-btn"
+  `ng-click="ctrl.openModal()"`>Log in</a>
+```
+---
+### The Trigger Function
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a> > <a href="#13">Modals (Again)</a>]
+
+Now, in the controller that's **responsible for this button**, add a new service dependency, called `$uibModal`.
+
+Use this service's `.open()` method to create the function that will **show the modal** when triggered by the button.
+
+```js
+angular.module("myApp").controller("myController", function(`$uibModal`) {
+  var ctrl = this;
+
+  ctrl.openModal = function() {
+      `$uibModal.open`({
+        // Pass the path to the file containing your modal template
+        templateUrl: "modal/template.html",
+        // You can assign your modal its own controller
+        controller: "myModalController",
+        // The alias for the modal's controller
+        controllerAs: "modal"
+      });
+  };
+});
+```
+
+---
+### The Modal Controller
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a> > <a href="#13">Modals (Again)</a>]
+
+As said in the previous slide, you can assign **its own controller** to your modal.
+
+In this controller, if you want to **access the current modal instance**, you'll need to inject **a new service dependency**, called `$uibModalInstance`.
+
+With this service, you could for example create a function that will **close the currently opened modal**, using the `.close()` method:
+
+```js
+angular
+  .module("myApp")
+  .controller("myModalController", function($`uibModalInstance`) {
+    var ctrl = this;
+  
+    // This function could be called by a button in the modal template
+    ctrl.close = `$uibModalInstance.close`;
+  });
+```
+
+---
+class: middle
+## Resources
+
+.breadcrumbs[<a href="#1">Angular UI Bootstrap</a>]
+
+
+
+**Documentation**
+
+* [Angular UI Bootstrap Documentation][uib-doc]
+
+[js]: ../js
+[bootstrap]: ../bootstrap
+[ng]: ../angular
+[git]: ../git/
+[chrome]: https://www.google.com/chrome/
+[sublime]: https://www.sublimetext.com/
+[auib]: https://angular-ui.github.io/bootstrap/
+[uib-doc]: https://angular-ui.github.io/bootstrap/
+
+    </textarea>
+
+    <script src='../../assets/remark.min.js'></script>
+    <script src='../../assets/jquery-3.1.1.slim.min.js'></script>
+    <script src='../../assets/uri-1.18.7.js'></script>
+
+    <script>
+      var remarkOptions = {"highlightLines":true,"highlightSpans":true,"countIncrementalSlides":false};
+      var slideshow = remark.create(remarkOptions);
+
+      $('#slide-links .home-link').each(function() {
+        var $a = $(this);
+
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
+
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
+        }
+      });
+
+      var slides = $('.remark-slide-content');
+
+      // Remove logo from body and add it to each slide
+      $('#slide-logo').remove().prependTo(slides).show();
+
+      // Remove links from body and add them to each slide
+      $('#slide-links').remove().prependTo(slides).show();
+
+      // Make all external links open a new window
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
+    </script>
+  </body>
+</html>
