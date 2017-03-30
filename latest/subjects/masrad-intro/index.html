@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MAS-RAD -- Advanced Front-end Development (DFA) (COMEM+ Web Dev)</title>
+    <title>MAS-RAD -- Advanced Front-end Development (DFA) (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -183,7 +183,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/bd5d1c0167a4d5578bcc6266b9380ce23bc96387/subjects/masrad-intro/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/91080821162b3437d23ee5510c7c8ae66d4c76cd/subjects/masrad-intro/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -240,6 +240,46 @@ Our web application will make use of a REST web service backend for Citizen Enga
 [Citizen Engagement API documentation](https://mediacomem.github.io/comem-citizen-engagement-api/)
 
 <img src='images/archi-dfa.png' width='80%' />
+
+---
+## Features requirements
+
+.breadcrumbs[<a href="#1">MAS-RAD -- Advanced Front-end Development (DFA)</a>]
+
+* A citizen must be able to register a new account and log in to the app (and log out)
+* A citizen must be able to report an issue at a specific location, with a description, a type of issue and optional tags
+* A citizen must be able to see what issues there are on a map of the area, and the details of those issues
+* A citizen must be able to filter issues by type so as to see only some issues (on the map and/or in other screens)
+* A citizen must be able to search so as to see only some issues (on the map and/or in other screens)
+* A citizen and a staff member must be able to post comments on issues and the list of comments for an issue must be visible somewhere in the app
+
+* *Bonus*: 
+  * a staff member can log in to the app, start working on issues, and resolve or reject them
+  * a staff member can add, edit and remove issue types from inside the app
+
+---
+## Implementation requirements
+
+.breadcrumbs[<a href="#1">MAS-RAD -- Advanced Front-end Development (DFA)</a>]
+
+* The app must follow Bootstrap and AngularJS best practices
+* The app must use the Citizen Engagement API
+* The app must use HTML5 Geolocation API (e.g. to automatically determine an issue's location or center the map)
+* The app must use Mapbox (or an equivalent map library)
+
+---
+### Delivery
+
+.breadcrumbs[<a href="#1">MAS-RAD -- Advanced Front-end Development (DFA)</a> > <a href="#7">Implementation requirements</a>]
+
+Each person or group must send an e-mail **no later than May 8th 2017** to Olivier Ertz with
+* either the link to your source code repository on GitHub or with an archive of your source code (don't forget to comment it!)
+* only what is required to make your app run and use CDN links in your final delivery
+* a documentation (e.g. README file) that presents your approach, the organization of your solution and optionally some information to know to make it run 
+
+
+
+
     </textarea>
 
     <script src='../../assets/remark.min.js'></script>
