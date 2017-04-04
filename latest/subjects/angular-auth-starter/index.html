@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Angular Auth Starter (COMEM+ Web Dev)</title>
+    <meta charset='utf-8'>
+
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
+    <link rel='stylesheet' href='../../assets/unsemantic-grid-desktop.css'>
+    <link rel='stylesheet' href='../../assets/bootstrap-btn.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+    <link rel='stylesheet' href='../../assets/fonts/YanoneKaffeesatz/YanoneKaffeesatz.css'>
+    <link rel='stylesheet' href='../../assets/fonts/DroidSerif/DroidSerif.css'>
+    <link rel='stylesheet' href='../../assets/fonts/UbuntuMono/UbuntuMono.css'>
+
+    <style>
+      body {
+        font-family: 'Droid Serif';
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      h4 {
+        font-size: 30px;
+        margin: 1em 0;
+      }
+
+      h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+        text-decoration: underline;
+      }
+
+      .image-header h2, .image-header h3, .image-header h4, .image-header h5 .image-header h6 {
+        display: none;
+      }
+
+      strong em {
+        text-decoration: underline;
+      }
+
+      center {
+        margin: 1em 0;
+      }
+
+      .remark-code, .remark-inline-code {
+        font-family: 'Ubuntu Mono';
+      }
+
+      .remark-inline-code {
+        padding: 0 2px;
+        background-color: #eee;
+        color: indianred;
+        border-radius: 3px;
+        border: thin solid #dddddd;
+      }
+
+      .remark-slide-content img {
+        max-width: 100%;
+      }
+
+      .remark-slide-content p:first-child, .remark-slide-content ul:first-child {
+        margin-top: 0;
+      }
+
+      .container {
+        clear: both;
+      }
+
+      ul li {
+        margin-top: 0.4em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th, td {
+        padding: 0.2em 0.4em;
+      }
+
+      table tbody th, td {
+        border-top: 1px solid #c0c0c0;
+      }
+
+      pre:first-child, blockquote:first-child {
+        margin-top: 0;
+      }
+
+      blockquote {
+        font-style: italic;
+        border-left: 5px solid khaki;
+        margin-left: 0;
+        padding-left: 35px;
+      }
+
+      .center blockquote {
+        margin-right: 0;
+        padding-right: 35px;
+        border-right: 5px solid khaki;
+      }
+
+      #slide-logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #slide-logo img {
+        height: 60px;
+      }
+
+      .breadcrumbs {
+        position: absolute;
+        top: 15px;
+        left: 5.333em;
+        font-size: 15px;
+        color: #c0c0c0;
+      }
+
+      .breadcrumbs a {
+        color: #c0c0c0;
+        text-decoration: none;
+      }
+
+      .breadcrumbs a:hover {
+        text-decoration: underline;
+      }
+
+      .center.middle .breadcrumbs {
+        display: none;
+      }
+
+      #slide-links {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 15px;
+        text-align: right;
+      }
+
+      .w5 { width: 5%; }
+      .w10 { width: 10%; }
+      .w15 { width: 15%; }
+      .w20 { width: 20%; }
+      .w30 { width: 30%; }
+      .w35 { width: 35%; }
+      .w40 { width: 40%; }
+      .w45 { width: 45%; }
+      .w50 { width: 50%; }
+      .w55 { width: 55%; }
+      .w60 { width: 60%; }
+      .w65 { width: 65%; }
+      .w70 { width: 70%; }
+      .w75 { width: 75%; }
+      .w80 { width: 80%; }
+      .w85 { width: 85%; }
+      .w90 { width: 90%; }
+      .w95 { width: 95%; }
+      .w100 { width: 100%; }
+
+      .x2 { font-size: 2em; }
+      .x3 { font-size: 3em; }
+      .x4 { font-size: 4em; }
+
+      .compact-table table td {
+        font-size: 0.9em;
+      }
+
+      .shadow {
+        box-shadow: lightgrey 0 0 3px;
+      }
+      p.shadow { width: 100%; }
+    </style>
+  </head>
+  <body>
+
+    <!-- Slides top-left logo -->
+    <span id='slide-logo' style='display:none;'><a href='http://www.heig-vd.ch/'><img src='../../assets/heig.png' /></a></span>
+
+    <!-- Slides top-right links -->
+    <div id='slide-links' style='display:none;'>
+      <!-- GitHub link -->
+      <a href='https://github.com/MediaComem/comem-webdev/tree/49aa1878d7498fdd3057b247fd1c40350c872fb0/subjects/angular-auth-starter/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <!-- Home link -->
+      <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
+    </div>
+
+    <!-- Remark slides -->
+    <textarea id='source'>
+# Angular Auth Starter
+
+Kickstart your Citizen Engagement project by implementing a complete authentification workflow.
+
+This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+
+
+**You will need**
+
+* [Google Chrome][chrome] (recommended, any browser with developer tools will do)
+* [Sublime Text][sublime] (recommended, any code editor will do... **except Notepad**)
+
+**Recommended reading**
+
+* [Angular][ng]
+* [Angular UI Router][ng-router]
+
+
+
+---
+## First step
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+To start your project, you can clone the repository that contains a basic project structure.
+
+To do this, go to the directory that contains all your project, and use this command:
+
+```shell
+$> git clone git@github.com:MediaComem/comem-webdev-angular-auth-starter.git
+```
+
+> You can also access directly the [GitHub page of the project][git-proj], and download a `.zip` file of the project.
+
+> If you do this, be sure to download a zip for the `master` branch.
+
+---
+## What is contained in the base project
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+This project already contains some basic structure. That is:
+* The `angular` framework
+* The `angular-ui-router` library
+* The `lodash`library *(not required, but could prove usefule for your project)*
+* The `moment` library *(not required, but could prove usefule for your project)*
+* The `Bootstrap CSS` framework
+* An `index.html` file that includes all preceding frameworks/libraires
+* An `app.js` file that contains:
+  * The main `angular` module, named `app`
+  * A `config` function attached to this `app` module with one predefined route, `home`
+* An almost blank `main.html` template, used by the `home` state
+
+---
+## The log in page
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+First, let's create an `html` template that will display a form, which we will use to log our user.
+
+In the `templates` directory, create a new file called `login.html` and put in the following code:
+
+```html
+<form id="login" name="loginForm">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input required type="text" id="username" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input required type="password" class="form-control" id="password">
+  </div>
+  <button class="btn btn-success">Log in</button>
+</form>
+```
+> We will complete this template throughout the slides.
+
+---
+### Add the controller
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a> > <a href="#4">The log in page</a>]
+
+To control this page, i.e. the form, the button and the data, we will need a controller.
+
+In the `js` directory, create a new file called `login-ctrl.js`, and add in the following code:
+
+```js
+angular
+  .module('app')
+  .controller('LoginCtrl', LoginCtrl);
+
+function LoginCtrl() {
+  var login = this;
+}
+```
+
+> Don't forget to add a `<script>` tag in your `index.html` file that points to this file, after the inclusion of the main `app.js` file.
+
+---
+### Show it on the app
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a> > <a href="#4">The log in page</a>]
+
+To link all this together and show our login page on our app, we need to add a new navigation state to our router.
+
+The states definition are located in the main `app.js` file. Open it and, right after the line 7, add a new `state` that points to the `login.html` template, with the `LoginCtrl` :
+
+```js
+// After line 7
+$stateProvider.state('login', {
+    url: '/login',
+    templateUrl: './templates/login.html',
+    controller: 'LoginCtrl as login'
+});
+```
+To try it, go to your app, and access the [url defined in this new state][login].
+
+You should see the form.
+
+> We do not user the HTML5 mode in this example. But if you'd like your url to not have the `#!` fragment, see [here][html5mode]
+
+---
+### Get the values
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a> > <a href="#4">The log in page</a>]
+
+We will use this form to log on our user. For that, we will call the `POST /auth` URL of the Citizen Engagment API.
+
+Tale a loog a the [documentation for this URL][auth-url] to see what we'll need to send.
+
+Using angular's two-way-binding, we can bind our form input to a similar object in our controller.
+
+In our `login-ctrl.js` add this after the line 5:
+
+```js
+login.user = {};
+```
+
+In our `login.html`, use the `ng-model` directive to bind each input to this object:
+
+```html
+<input [...] id="username" [...] `ng-model="login.user.name"`>
+```
+
+```html
+<input [...] id="password" ng-model="login.user.password">
+```
+
+> Angular will automatically create the `name` and `password` property to the `user` object, event though we didn't explecitly declared them.
+
+---
+### Button click
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a> > <a href="#4">The log in page</a>]
+
+These binded values will be used when our user click on the button to log himself in.
+
+So let's create a function that will be triggered by this user interaction:
+
+In `login-ctrl.js`, add this code:
+
+```js
+login.connect = function() {
+  console.log(login.user);
+};
+```
+And bind this function to the click on the button, using `ng-click`:
+
+```html
+<button class="btn btn-success" `ng-click="login.connect()"`>Log in</button>
+```
+> Try filling your form and clicking on the button with your console open
+
+To ensure that the click is only possible when the form is valid, add this:
+
+```html
+<button [...] `ng-disabled="loginForm.$invalid"`>Log in</button>
+```
+
+---
+## Manage the authentication
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+We will regularly check if our user is connected thoughout our app.
+
+To manage this information, let's create an angular service that we'll call `AuthService`.
+
+In the `js` directory, create a new file, called `auth-service.js`, and add this code:
+
+```js
+angular
+  .module('app')
+  .factory('AuthService', AuthService);
+
+function AuthService() {
+  var service = {};
+
+  return service;
+}
+```
+> It doesn't do much for now...
+> 
+> Again, don't forget to add the `auth-service.js` file to your `index.html` script inclusions.
+
+---
+### Complete the service
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a> > <a href="#9">Manage the authentication</a>]
+
+With the [API auth documentation][auth-url], we know that we will receive a `token` when our user is logged in.
+
+This token will then need to be sent along any other request.
+
+So it could be a good idea to store this token in our `AuthService`.
+
+Let's do this:
+
+```js
+function AuthService() {
+  var service = {
+*   token: null,
+*    
+*   setToken: function(token) {
+*     service.token = token;
+*   }
+*
+*   unsetToken: function() {
+*     service.token = null;
+*   }
+  };
+
+  return service;
+}
+```
+---
+## Get the authentication token
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+We'll need :
+* The angular `$http` service to call the API and retrieve the result
+* Our brand new `AuthService` to store the token we'll receive
+* The `$state` service to redirect the user when he's logged in
+
+In `login-ctrl.js` add the correct dependencies to the controller:
+
+```js
+function LoginCtrl(`AuthService, $http, $state`) {
+```
+Then, complete the `connect` function:
+
+```js
+login.connect = function() {
+  $http({
+    method: 'POST',
+    url: 'https://citizen-api.herokuapp.com/api/auth',
+    data: login.user
+  }).then(function(res) {
+    AuthService.setToken(res.data.token);
+    $state.go('home');
+  });
+};
+```
+---
+### Add error handling
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a> > <a href="#11">Get the authentication token</a>]
+
+Right now, if an error occurs, we don't do anything, which is not good.
+
+What we'd like to do is catch any error and tell the user that something went wrong.
+
+Let's add some HTML at the end of our `login.html`:
+
+```html
+<div class="alert alert-danger" ng-if="login.error">
+  {{ login.error }}
+</div>
+```
+And update our `connect` function in `login-ctrl.js`:
+
+```js
+login.connect = function() {
+* delete login.error;
+  $http({
+    // ...
+  }).then(function(res) {
+    // ...
+  })`.catch(function(error) {`
+*   login.error = "Unable to log you."
+*   console.log(error);
+* });
+};
+```
+---
+## Restrict access
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+We can now use our `AuthService` to restrict access to our app to only logged in user.
+
+This can be done in a `run` block, using the `$stateChangeStart` event of Angular UI Router:
+
+Add this at the end of your `app.js` file:
+
+```js
+angular.module('app').run(function(AuthService, $rootScope, $state) {
+    $rootScope.$on('$stateChangeStart', function(event, toState) {
+        if (!AuthService.token && toState.name !== 'login') {
+            event.preventDefault();
+            $state.go('login');
+        }
+    });
+});
+```
+> This basically detect any time the user tries to go to antoher state, and check if someone not logged in (`!AuthService.token`) tries to go to any other state than the `login` one (`toState.name !== 'login'`).
+
+> If this is the case, the transition is prevented (`event.preventDefault()`) and the user is redirected to the `login` state (`$state.go('login')`).
+
+---
+## Persist the token
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+You might have noticed that, every time you reload the app, you have to log in again.
+
+That's perfectly normal: your `AuthService` is recreated each time, and thus the auth token is `null`.
+
+To keep the connected state, we'll need to store this token in a more persistant manner, in this case the `localStorage`.
+
+To follow the "*Angular Way*", we will not use it directly, but rather use a library that provides a dedicated angular service.
+
+This library is [Angular Storage][ng-store].
+
+Download the `js` file [here][dl-ng-store], and save it in your `assets/js` directory.
+
+> Don't forget to:
+> * Include the `js` file in your `index.html` script inclusions
+> * Register the `angular-storage` module in your `app` module dependencies
+
+---
+### Update our app
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a> > <a href="#14">Persist the token</a>]
+
+To use this persistant storage, we only need to update our `AuthService`, since it's responsible fot token management.
+
+```js
+function AuthService(`store`) {
+  var service = {
+    token: `store.get('auth-token')`,
+    setToken: function(token) {
+      service.token = token;
+*     store.set('auth-token', token);
+    },
+    unsetToken: function() {
+      service.token = null;
+*     store.remove('auth-token');
+    }
+  };
+
+  return service;
+}
+```
+> This way, each time we reload, the `AuthService` will try to get the `token` from `localStorage`.
+
+> It the `auth-token` key doesn't exist, `token` will be `null` and the user will be considered not logged in.
+
+---
+## Add a new page
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+To test all this, we will add a new page to our app, for the logged in user to go to.
+
+Add a new file on the `templates` directory, name it `second.html` and add this markup:
+
+```html
+<h1>Second Page</h1>
+<button class="btn btn-default">Log out</button>
+```
+Add a new `state` in `app.js`, after the `login` one:
+
+```js
+$stateProvider.state('second', {
+    url: '/second',
+    templateUrl: './templates/second.html'
+});
+```
+> Now, try to access this new state. You should be redirected to the `login` page instead.
+
+> Then, log into the app, and try to go again to the new state, after being redirected to the main page.
+
+---
+## Log out
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+Finally, let's implement the log out feature.
+
+To do so, we'll create a new controller, `LogoutCtrl`, in a `logout-ctrl.js` file inside the `js` directory, with this code:
+
+```js
+angular
+  .module('app')
+  .controller('LogoutCtrl', LogoutCtrl);
+
+function LogoutCtrl() {
+  var logout = this;
+}
+```
+This controller will have to delete the `token` from the `localStorage` when the user log out, and then redirect to the `login` page.
+
+So it needs two dependencies:
+
+```js
+function LogoutCtrl(`AuthService, $state`) {
+```
+
+> Don't forget, once again, to add the new file in your `index.html` inclusions.
+---
+### Add the function
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a> > <a href="#17">Log out</a>]
+
+The function that will be triggered when the user log out will be as follow:
+
+```js
+function LogoutCtrl(AuthService, $state) {
+  var logout = this;
+
+* logout.disconnect = function() {
+*   AuthService.unsetToken();
+*   $state.go('login');
+* }
+}
+```
+We can now call this function by reacting to a click on the button inside the `second.html` page:
+
+```html
+<button 
+  class="btn btn-default"
+  `ng-controller="LogoutCtrl as logout"`
+  `ng-click="logout.disconnect()"`>
+  Log out
+</button>
+```
+---
+class: middle
+## Conclusion
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+
+
+You now have a functionning authentication workflow that you can use for your Citizen Engagment Project.
+
+You'll obviously have to adapt the given template to your design and site.
+
+**You can delete the `second.html` template and remove its corresponding state, as they are completely useless for your app.**
+
+> The complete code for this course can be download from GitHub [here][solution].
+
+[ng]: ../angular
+[ng-router]: ../angular-ui-router
+[chrome]: https://www.google.com/chrome/
+[sublime]: https://www.sublimetext.com/
+[ng-storage]: https://github.com/auth0/angular-storage/blob/master/dist/angular-storage.min.js
+[git-proj]: https://github.com/MediaComem/comem-webdev-angular-auth-starter
+[html5mode]: ../angular-ui-router/#13
+[login]: http://127.0.0.1:8080/#!/login
+[auth-url]: https://mediacomem.github.io/comem-citizen-engagement-api/#auth_post
+[second]: http://127.0.0.1:8080/#!/second
+[dl-ng-store]: https://github.com/MediaComem/comem-webdev-angular-auth-starter/blob/solution/assets/js/angular-storage.min.js
+[ng-store]: https://github.com/auth0/angular-storage
+[solution]: https://github.com/MediaComem/comem-webdev-angular-auth-starter/tree/solution
+    </textarea>
+
+    <script src='../../assets/remark.min.js'></script>
+    <script src='../../assets/jquery-3.1.1.slim.min.js'></script>
+    <script src='../../assets/uri-1.18.7.js'></script>
+
+    <script>
+      var remarkOptions = {"highlightLines":true,"highlightSpans":true,"countIncrementalSlides":false};
+      var slideshow = remark.create(remarkOptions);
+
+      $('#slide-links .home-link').each(function() {
+        var $a = $(this);
+
+        var currentUri = URI(window.location.href);
+        var home = currentUri.search(true).home
+
+        if (typeof(home) == 'string' && home.match(/^[a-z0-9\-\_\.]+\/[a-z0-9\-\_\.]+(?:#.*)?$/i)) {
+          $a.attr('href', 'https://github.com/' + home);
+        } else if (typeof(home) == 'string') {
+          $a.attr('href', home);
+        } else if (currentUri.hostname() == 'localhost') {
+          $a.attr('href', currentUri.path('').hash('').toString());
+        }
+      });
+
+      var slides = $('.remark-slide-content');
+
+      // Remove logo from body and add it to each slide
+      $('#slide-logo').remove().prependTo(slides).show();
+
+      // Remove links from body and add them to each slide
+      $('#slide-links').remove().prependTo(slides).show();
+
+      // Make all external links open a new window
+      $('a[href]').not('.home-link').not('[href^="#"]').attr('target', '_blank');
+    </script>
+  </body>
+</html>
