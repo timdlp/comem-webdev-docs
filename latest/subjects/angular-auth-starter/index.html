@@ -183,7 +183,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/49aa1878d7498fdd3057b247fd1c40350c872fb0/subjects/angular-auth-starter/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/f71258830feca284ef0870c425dccb8d6c1bdf27/subjects/angular-auth-starter/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -277,13 +277,9 @@ To control this page, i.e. the form, the button and the data, we will need a con
 In the `js` directory, create a new file called `login-ctrl.js`, and add in the following code:
 
 ```js
-angular
-  .module('app')
-  .controller('LoginCtrl', LoginCtrl);
-
-function LoginCtrl() {
+angular.module('app').controller('LoginCtrl', function() {
   var login = this;
-}
+});
 ```
 
 > Don't forget to add a `<script>` tag in your `index.html` file that points to this file, after the inclusion of the main `app.js` file.
@@ -295,10 +291,12 @@ function LoginCtrl() {
 
 To link all this together and show our login page on our app, we need to add a new navigation state to our router.
 
-The states definition are located in the main `app.js` file. Open it and, right after the line 7, add a new `state` that points to the `login.html` template, with the `LoginCtrl` :
+The states definition are located in the main `app.js` file.
+
+Open it and, right after the `home` state declaration, add a new state that points to the `login.html` template, with the `LoginCtrl` :
 
 ```js
-// After line 7
+// After home state
 $stateProvider.state('login', {
     url: '/login',
     templateUrl: './templates/login.html',
@@ -322,7 +320,7 @@ Tale a loog a the [documentation for this URL][auth-url] to see what we'll need 
 
 Using angular's two-way-binding, we can bind our form input to a similar object in our controller.
 
-In our `login-ctrl.js` add this after the line 5:
+In our `login-ctrl.js` add this at the end of the controller function:
 
 ```js
 login.user = {};
@@ -349,7 +347,7 @@ These binded values will be used when our user click on the button to log himsel
 
 So let's create a function that will be triggered by this user interaction:
 
-In `login-ctrl.js`, add this code:
+In `login-ctrl.js`, add this code at the end of the controller function:
 
 ```js
 login.connect = function() {
@@ -381,15 +379,11 @@ To manage this information, let's create an angular service that we'll call `Aut
 In the `js` directory, create a new file, called `auth-service.js`, and add this code:
 
 ```js
-angular
-  .module('app')
-  .factory('AuthService', AuthService);
-
-function AuthService() {
+angular.module('app').factory('AuthService', function() {
   var service = {};
 
   return service;
-}
+});
 ```
 > It doesn't do much for now...
 > 
@@ -409,8 +403,8 @@ So it could be a good idea to store this token in our `AuthService`.
 Let's do this:
 
 ```js
-function AuthService() {
-  var service = {
+angular.module('app').factory('AuthService', function() {
+  var service = {};
 *   token: null,
 *    
 *   setToken: function(token) {
@@ -423,7 +417,7 @@ function AuthService() {
   };
 
   return service;
-}
+});
 ```
 ---
 ## Get the authentication token
@@ -438,7 +432,7 @@ We'll need :
 In `login-ctrl.js` add the correct dependencies to the controller:
 
 ```js
-function LoginCtrl(`AuthService, $http, $state`) {
+[...].controller('LoginCtrl', function(`AuthService, $http, $state`) {
 ```
 Then, complete the `connect` function:
 
@@ -539,8 +533,8 @@ Download the `js` file [here][dl-ng-store], and save it in your `assets/js` dire
 To use this persistant storage, we only need to update our `AuthService`, since it's responsible fot token management.
 
 ```js
-function AuthService(`store`) {
-  var service = {
+angular.module('app').factory('AuthService', function(`store`) {
+  var service = {};
     token: `store.get('auth-token')`,
     setToken: function(token) {
       service.token = token;
@@ -553,7 +547,7 @@ function AuthService(`store`) {
   };
 
   return service;
-}
+});
 ```
 > This way, each time we reload, the `AuthService` will try to get the `token` from `localStorage`.
 
@@ -589,25 +583,21 @@ $stateProvider.state('second', {
 
 .breadcrumbs[<a href="#1">Angular Auth Starter</a>]
 
-Finally, let's implement the log out feature.
+Now that we can log in, let's implement a log out feature.
 
 To do so, we'll create a new controller, `LogoutCtrl`, in a `logout-ctrl.js` file inside the `js` directory, with this code:
 
 ```js
-angular
-  .module('app')
-  .controller('LogoutCtrl', LogoutCtrl);
-
-function LogoutCtrl() {
+angular.module('app').controller('LogoutCtrl', function() {
   var logout = this;
-}
+});
 ```
 This controller will have to delete the `token` from the `localStorage` when the user log out, and then redirect to the `login` page.
 
 So it needs two dependencies:
 
 ```js
-function LogoutCtrl(`AuthService, $state`) {
+angular.module('app').controller('LogoutCtrl', function(`AuthService, $state`) {
 ```
 
 > Don't forget, once again, to add the new file in your `index.html` inclusions.
@@ -619,14 +609,14 @@ function LogoutCtrl(`AuthService, $state`) {
 The function that will be triggered when the user log out will be as follow:
 
 ```js
-function LogoutCtrl(AuthService, $state) {
+angular.module('app').controller('LogoutCtrl', function(AuthService, $state) {
   var logout = this;
 
 * logout.disconnect = function() {
 *   AuthService.unsetToken();
 *   $state.go('login');
 * }
-}
+});
 ```
 We can now call this function by reacting to a click on the button inside the `second.html` page:
 
@@ -638,6 +628,82 @@ We can now call this function by reacting to a click on the button inside the `s
   Log out
 </button>
 ```
+---
+## Add the header
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+Nearly every URL of the Citizen Engagment API requires a logged in user to be executed.
+
+So each time we make one of these calls in our app, we'll have to add an `Authorization` header, whose value should be `Bearer` followed by the auth token.
+
+This can be easily done with the angular `$http` service.
+
+For example, if we were to retrieve the list of issue types, we would do something like this:
+
+```js
+$http({
+    method: 'GET',
+    url: 'https://citizen-api.herokuapp.com/api/issueTypes',
+*   headers: {
+*       Authorization: 'Bearer ' + AuthService.authToken
+*   }
+}).then(/* ... */).catch(/* ... */)
+```
+> Adding manually this header for each API call will quickly become annoying. We can automate this using an angular interceptor.
+
+---
+## Interceptor 2000©
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a>]
+
+An **Interceptor** is nothing more than a special angular service, that will intercept an http call, an possibly manipulate it.
+
+To create the interceptor, in the `js` directory, create a new `auth-interceptor.js` file, and add this:
+
+```js
+angular.module('app').factory('AuthInterceptor', function(AuthService) {
+  return {
+    request: function (config) {
+      if (AuthService.token) {
+        config.headers.Authorization = "Bearer " + AuthService.token;
+      }
+      return config;
+    }
+  }
+});
+```
+
+This interceptor check if the user is logged in (`AuthService.token`) and, if it's the case, it add a new header to the request, with the correct syntax and the auth token.
+
+> Again... include the file in `index.html`.
+
+---
+### Register the Interceptor
+
+.breadcrumbs[<a href="#1">Angular Auth Starter</a> > <a href="#20">Interceptor 2000©</a>]
+
+For the interceptor to kick in, you'll need to register it in your `$http` service.
+
+To do that, in your `config` block in `app.js`, add a dependency to the `$httpProvider` and the following code at the end of the function:
+
+```js
+$httpProvider.interceptors.push('AuthInterceptor');
+```
+This tells the `$http` service that all requests must be given to `AuthInterceptor` prior to being executed.
+
+You can now omit the `Authorization` header from your manual calls.
+
+So the previous example could now be:
+
+```js
+$http({
+    method: 'GET',
+    url: 'https://citizen-api.herokuapp.com/api/issueTypes',
+}).then(/* ... */).catch(/* ... */)
+```
+> No `Authorizazion` header! Yet it will still be applied, thanks to the **Inteceptor**.
+
 ---
 class: middle
 ## Conclusion
