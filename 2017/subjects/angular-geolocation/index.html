@@ -183,7 +183,7 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/3744543e0aafc8823ba6fdb868675859ab73744e/subjects/angular-geolocation/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/83fd4170ceb3027878cfc4b723d3431ff3181899/subjects/angular-geolocation/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
@@ -262,7 +262,7 @@ angular.module("app").controller("myController", function ($geolocation) {
   $geolocation.getCurrentPosition()
     .then(function (position) {
       // This will be executed when the location is accessed
-      console.log(data)
+      console.log(position)
     }, function (error) {
       // This will be executed if the user denies access
       // or the browser doesn't support the Geolocation API
@@ -275,13 +275,13 @@ angular.module("app").controller("myController", function ($geolocation) {
 Use `position.coords.latitude` and `position.coords.longitude` to actually get the position's coordinates
 
 ---
-### `.watchLocation()`
+### `.watchPosition()`
 
 .breadcrumbs[<a href="#1">Angular Geolocation</a> > <a href="#3">Use the API</a>]
 
 You could want to access the user location on a regular bassis. To do this, you mustn't call the `.getCurrentLocation()` each time.
 
-You'll use the `.watchLocation()` method.
+You'll use the `.watchPosition()` method.
 
 ```js
 angular.module("app").controller("myController", function ($geolocation) {
@@ -300,7 +300,7 @@ Delete the watch using the `$geolocation.clearWatch()` method.
 ---
 #### `$geolocation.position`
 
-.breadcrumbs[<a href="#1">Angular Geolocation</a> > <a href="#3">Use the API</a> > <a href="#5">`.watchLocation()`</a>]
+.breadcrumbs[<a href="#1">Angular Geolocation</a> > <a href="#3">Use the API</a> > <a href="#5">`.watchPosition()`</a>]
 
 If the position can be accessed, `$geolocation.position` will have a Position object.
 
