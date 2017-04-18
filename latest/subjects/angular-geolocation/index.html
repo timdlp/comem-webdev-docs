@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JavaScript Prototypes (COMEM+ Web Dev)</title>
+    <title>Angular Geolocation (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
 
     <link rel='stylesheet' href='../../assets/unsemantic-grid-base.css'>
@@ -183,16 +183,16 @@
     <!-- Slides top-right links -->
     <div id='slide-links' style='display:none;'>
       <!-- GitHub link -->
-      <a href='https://github.com/MediaComem/comem-webdev/tree/0413d2660e9607033de8c6671ead87020d67f424/subjects/js-prototypes/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
+      <a href='https://github.com/MediaComem/comem-webdev/tree/0413d2660e9607033de8c6671ead87020d67f424/subjects/angular-geolocation/'><img src='../../assets/github.svg' width='24' height='24' alt='Source code' title='GitHub' /></a>
       <!-- Home link -->
       <a class='home-link' href='https://mediacomem.github.io/comem-webdev-docs/'><img src='../../assets/home.svg' width='24' height='24' alt='Home' title='Home' /></a>
     </div>
 
     <!-- Remark slides -->
     <textarea id='source'>
-# JavaScript Prototypes
+# Angular Geolocation
 
-Learn how JavaScript prototypal inheritance works, how to make class-like structures from it, and the basics of the new classes added in ES6.
+Learn to use the Geolocation API in an Angular app.
 
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
@@ -200,86 +200,128 @@ This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development 
 **You will need**
 
 * [Google Chrome][chrome] (recommended, any browser with developer tools will do)
+* [Sublime Text][sublime] (recommended, any code editor will do... **except Notepad**)
 
 **Recommended reading**
 
-* [JavaScript](../js/)
-
-
-
-
-
----
-class: center, middle
-## JavaScript has **prototypal inheritance**
-
-.breadcrumbs[<a href="#1">JavaScript Prototypes</a>]
-
-
+* [Angular][ng]
 
 
 
 ---
-### ES5 has no support for **classes**
+## Introduction
 
-.breadcrumbs[<a href="#1">JavaScript Prototypes</a> > <a href="#2">JavaScript has **prototypal inheritance**</a>]
+.breadcrumbs[<a href="#1">Angular Geolocation</a>]
 
-TODO: ES6 classes
+Web Browser provides an [Geolocation API][geoapi-doc] that allow developers to access the geolocation of their users.
 
-There are 3 ways to create objects.
+But, as usual, it's not advised to use this API directly inside an Angular App ; you need a service that wraps this API to be complient with Angular.
 
-```js
-// Create an object with a literal
-var person = {
-  firstName: "olivier",
-  lastName: "liechti"
-};
+We'll use [ngGeolocation][ngloc].
 
-// Create an object with a prototype
-var child = Object.create(person);
+To include it in your project, download the `.js` file [here][ngloc-file] and save it somewhere in your project.
 
-// Create an object with a constructor
-var child = new Person("olivier", "liechti");
+Include the file in your `index.html`, and the module in your app's dependencies:
+
+```html
+<script type="text/javascript" src="assets/js/ngGeolocation.min.js"></script>
 ```
 
-* **class** is a reserved word in JavaScript, but it is not used in the current version of the language (reserved for the future).
-* A **constructor** is a function like any other (uppercase is a coding convention).
-* It is the use of the **new** keyword that triggers the object creation process.
-
-
-
----
-### Every object **inherits** from a **prototype** object
-
-.breadcrumbs[<a href="#1">JavaScript Prototypes</a> > <a href="#2">JavaScript has **prototypal inheritance**</a>]
-
-TODO: add graph
-
 ```js
-// Prints "Skywalker" on the console
-console.log(child.lastName);
+angular.module('app', [..., `'ngGeolocation'`]);
 ```
 
-* Every object inherits from a prototype object. It **inherits and can override** its properties, including its methods.
-* Objects created with object literals inherit from **Object.prototype**.
-* When you access the property of an object, JavaScript **looks up the prototype chain** until it finds an ancestor that has a value for this property.
+---
+class: middle
+## Use the API
+
+.breadcrumbs[<a href="#1">Angular Geolocation</a>]
 
 
+
+You'll need to add the `$geolocation` service as a depency to the controller in which you want to access the API.
+
+```js
+angular.module("app").controller("myController", function (`$geolocation`) {
+  // ...
+}
+```
+---
+### `.getCurrentPosition()`
+
+.breadcrumbs[<a href="#1">Angular Geolocation</a> > <a href="#3">Use the API</a>]
+
+Then, you can use the `.getCurrentPosition()` method to access the current user's position:
+
+> The user will be asked if he/she accepts to reveal it's location
+
+```js
+angular.module("app").controller("myController", function ($geolocation) {
+  // Previous code
+
+  $geolocation.getCurrentPosition()
+    .then(function (position) {
+      // This will be executed when the location is accessed
+      console.log(data)
+    }, function (error) {
+      // This will be executed if the user denies access
+      // or the browser doesn't support the Geolocation API
+      console.log(error);
+    })
+}
+```
+> Getting the location is an **asynchronous** operation.
+
+Use `position.coords.latitude` and `position.coords.longitude` to actually get the position's coordinates
 
 ---
-## TODO
+### `.watchLocation()`
 
-.breadcrumbs[<a href="#1">JavaScript Prototypes</a>]
+.breadcrumbs[<a href="#1">Angular Geolocation</a> > <a href="#3">Use the API</a>]
 
-* [Symbols][js-symbol]
+You could want to access the user location on a regular bassis. To do this, you mustn't call the `.getCurrentLocation()` each time.
 
-  The data type "symbol" is a primitive data type having the quality that values of this type can be used to make object properties that are anonymous.
-  Every symbol value returned from Symbol() is unique.  A symbol value may be used as an identifier for object properties; this is the data type's only purpose.
+You'll use the `.watchLocation()` method.
 
+```js
+angular.module("app").controller("myController", function ($geolocation) {
+  // Previous code
+  `$geolocation.watchPosition()`;
+}
+```
+This method will get the user's location regularly and store the result in the `$geolocation.position` property.
 
+> Getting the location is still an **asynchronous** operation.
+> 
+> Meaning, that if you'd try to access `$geolocation.position` right after calling the method, you'll get an `undefined`.
 
+Delete the watch using the `$geolocation.clearWatch()` method.
+
+---
+#### `$geolocation.position`
+
+.breadcrumbs[<a href="#1">Angular Geolocation</a> > <a href="#3">Use the API</a> > <a href="#5">`.watchLocation()`</a>]
+
+If the position can be accessed, `$geolocation.position` will have a Position object.
+
+With it, your can access `$geolocation.position.coords.latitude` and `$geolocation.position.coords.longitude` for the coordinates.
+
+When `.watchPosition()` detects a new position, it fires an event, called `$geolocation.position.changed` to which you can listen.
+
+----
+
+If something went wrong and the position could not be accessed, `$geolocation.position` will contain and Error object.
+
+To know the reason of the error, access the `$geolocation.position.error.message`.
+
+When `.watchPosition()` detects and error, it fires an event, called `$geolocation.position.error` to which you can listen.
+
+[ng]: ../angular
 [chrome]: https://www.google.com/chrome/
-
+[sublime]: https://www.sublimetext.com/
+[geoapi-doc]: https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation
+[ngloc]: https://github.com/ninjatronic/ngGeolocation
+[ngloc-file]: https://github.com/ninjatronic/ngGeolocation/blob/master/ngGeolocation.min.js
     </textarea>
 
     <script src='../../assets/remark.min.js'></script>
