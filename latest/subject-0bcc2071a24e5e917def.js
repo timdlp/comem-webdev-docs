@@ -57,7 +57,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/";
+/******/ 	__webpack_require__.p = "https://mediacomem.github.io/comem-webdev-docs/2017-2018/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 3);
@@ -79101,8 +79101,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js!./font-awesome.css", function() {
-			var newContent = require("!!../../css-loader/index.js!./font-awesome.css");
+		module.hot.accept("!!../../../../../mei/courses-md/node_modules/css-loader/index.js!./font-awesome.css", function() {
+			var newContent = require("!!../../../../../mei/courses-md/node_modules/css-loader/index.js!./font-awesome.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -79277,8 +79277,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!./bootstrap-btn.css", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!./bootstrap-btn.css");
+		module.hot.accept("!!../../../../../mei/courses-md/node_modules/css-loader/index.js!./bootstrap-btn.css", function() {
+			var newContent = require("!!../../../../../mei/courses-md/node_modules/css-loader/index.js!./bootstrap-btn.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -79322,8 +79322,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js!./tippy.css", function() {
-			var newContent = require("!!../../css-loader/index.js!./tippy.css");
+		module.hot.accept("!!../../../../../mei/courses-md/node_modules/css-loader/index.js!./tippy.css", function() {
+			var newContent = require("!!../../../../../mei/courses-md/node_modules/css-loader/index.js!./tippy.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -79367,8 +79367,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../../../node_modules/css-loader/index.js!./DroidSerif.css", function() {
-			var newContent = require("!!../../../../../node_modules/css-loader/index.js!./DroidSerif.css");
+		module.hot.accept("!!../../../../../../../mei/courses-md/node_modules/css-loader/index.js!./DroidSerif.css", function() {
+			var newContent = require("!!../../../../../../../mei/courses-md/node_modules/css-loader/index.js!./DroidSerif.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -79436,8 +79436,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../../../node_modules/css-loader/index.js!./UbuntuMono.css", function() {
-			var newContent = require("!!../../../../../node_modules/css-loader/index.js!./UbuntuMono.css");
+		module.hot.accept("!!../../../../../../../mei/courses-md/node_modules/css-loader/index.js!./UbuntuMono.css", function() {
+			var newContent = require("!!../../../../../../../mei/courses-md/node_modules/css-loader/index.js!./UbuntuMono.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -79487,8 +79487,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../../../node_modules/css-loader/index.js!./YanoneKaffeesatz.css", function() {
-			var newContent = require("!!../../../../../node_modules/css-loader/index.js!./YanoneKaffeesatz.css");
+		module.hot.accept("!!../../../../../../../mei/courses-md/node_modules/css-loader/index.js!./YanoneKaffeesatz.css", function() {
+			var newContent = require("!!../../../../../../../mei/courses-md/node_modules/css-loader/index.js!./YanoneKaffeesatz.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -79538,8 +79538,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!./slides.css", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!./slides.css");
+		module.hot.accept("!!../../../../../mei/courses-md/node_modules/css-loader/index.js!./slides.css", function() {
+			var newContent = require("!!../../../../../mei/courses-md/node_modules/css-loader/index.js!./slides.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -79583,8 +79583,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!./git-memoir.css", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!./git-memoir.css");
+		module.hot.accept("!!../../../../../mei/courses-md/node_modules/css-loader/index.js!./git-memoir.css", function() {
+			var newContent = require("!!../../../../../mei/courses-md/node_modules/css-loader/index.js!./git-memoir.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
