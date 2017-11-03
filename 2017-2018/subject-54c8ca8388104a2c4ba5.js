@@ -2313,7 +2313,7 @@ var Subject = function () {
 
       var $logo = $('<div class="slide-logo" />');
       var $logoLink = $('<a />').appendTo($logo).attr('href', this.logoOptions.url);
-      var $logoImg = $('<img />').appendTo($logoLink).attr('src', this.config.basePath + '/' + this.logoOptions.imageUrl);
+      var $logoImg = $('<img />').appendTo($logoLink).attr('src', this.logoOptions.imageUrl);
 
       if (this.logoOptions.width) {
         $logoImg.attr('width', this.logoOptions.width);
