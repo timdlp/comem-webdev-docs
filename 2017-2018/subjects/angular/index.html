@@ -3,13 +3,15 @@
   <head>
     <title>Angular (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
-    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/4b2b3495299ab4c8eebdefffdfe2857edded4ff9/subjects/angular&quot;}'>
+    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/6ba0e3c0b84886d25196de82b10e1dfe5d1fb05f/subjects/angular&quot;}'>
   </head>
   <body>
     <textarea id='source'>
 # Angular
 
-Getting started with and understanding the basics of [AngularJS][angular] (version 1), the JavaScript front-end web application framework.
+Get started with and understand the basics of [Angular][angular], the JavaScript front-end web application framework.
+
+This is a 
 
 This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
 
@@ -22,6 +24,7 @@ This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development 
 
 * [JavaScript][js]
 * [JavaScript closures][js-closures]
+* [TypeScript][ts-subject]
 
 
 
@@ -131,12 +134,11 @@ With Angular, you can:
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#2">What is Angular?</a>]
 
 Angular is one of the most popular client-side frameworks, and it is still evolving.
-[Angular 2][angular-2] has been released recently (June 2016) to take advantage of:
+Starting with version 2 of the framework (released in June 2016) you can take advantage of:
 
-* [TypeScript][typescript]: a superset of JavaScript with optional typing and the latest ECMAScript features
+* [TypeScript][ts]: a superset of JavaScript with optional typing and the latest ECMAScript features
 * [Web components][web-components]: a way to create reusable user interface widgets
-
-This tutorial will cover Angular 1, but many concepts are useful to understand Angular 2 as well.
+* And more...
 
 
 
@@ -155,30 +157,10 @@ class: center, middle
 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
 
-You can use this template for the exercises in this tutorial.
-It includes Angular already.
-Save it as an HTML file and create an empty `angular-demo.js` file next to it:
+You can clone the following project for the exercises in this tutorial:
 
-```html
-<!DOCTYPE html>
-<html lang='en'>
-  <head>
-    <meta charset='utf-8'>
-    <title>Angular demo</title>
-    <script
-src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js'>
-    </script>
-  </head>
-  <body>
-    <!-- Your HTML goes here -->
+[COMEM+ Angular Starter Project][angular-starter]
 
-    <!-- Your JavaScript goes in that file -->
-    <script src='angular-demo.js'></script>
-  </body>
-&lt;/html&gt;
-```
-
-You can use [live-server][live-server] to serve these files in your browser.
 You should keep your [developer console][chrome-dev] open throughout this tutorial to detect errors in your code.
 
 
@@ -193,14 +175,11 @@ You should keep your [developer console][chrome-dev] open throughout this tutori
 **Angular elements**
 
 * Modules
-* Controllers
-* Scope
+* Components
+* Directives
 * Services
-* Filters
-* Directives & components
-* Constants
-* Config functions
-* Run functions
+* HTTP
+* Pipes
 
 
 ]
@@ -209,9 +188,8 @@ You should keep your [developer console][chrome-dev] open throughout this tutori
 **Angular concepts**
 
 * Interpolation
-* Two-way data binding
+* Data binding
 * Dependency injection
-* Scope hierarchy
 * Form validation
 
 
@@ -223,264 +201,312 @@ You should keep your [developer console][chrome-dev] open throughout this tutori
 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
 
-To make an Angular application, you have to create a **module**:
+An Angular application is a **module**.
+You can find one in `src/app/app.module.ts` in the starter project:
 
-```js
-// Create an angular module
-angular.module('starter', []);
+```ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+`@NgModule`({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class `AppModule` { }
 ```
 
-The two arguments of `angular.module()` are:
+A module is a way to help organize related things (components, services, etc) together.
 
-* A name (in this case: the name of your application)
-* A list of dependencies (leave it blank for now)
+---
+#### Basic module definition
 
-To plug your Angular application into a web page, use the `ng-app` attribute.
-It's customary to put it on the `<body>` tag:
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#11">Modules</a>]
 
-```html
-*<body ng-app='starter'>
-  <!-- Page content -->
-</body>
+Take a look at the [`@NgModule`][angular-docs-ng-module] annotation:
+
+```ts
+@NgModule({
+  `declarations`: [
+    AppComponent
+  ],
+  `imports`: [
+    BrowserModule
+  ],
+  `providers`: [],
+  `bootstrap`: [AppComponent]
+})
 ```
+
+* The **declarations** array is a list of components (also directives and pipes) which belong to this module.
+* The **imports** array is a list of other modules whose exported components should be available in this module.
+  It allows you to express a dependency on another module.
+* The **providers** array is a list of service providers (more about that later).
+* **bootstrap** is the root component that Angular creates and inserts into `index.html`
 
 
 
 ---
-### Controllers
+### Components
 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
 
-A controller is a function which **controls part of an HTML template**:
+Components are the most basic **building block** of an UI in an Angular application.
+An Angular application is a tree of Angular components.
 
-```js
-angular.module('starter').controller(`'HelloController'`, function($scope) {
-  $scope.name = 'World';
-});
+You will find a component in `src/app/app.component.ts` in the starter project:
+
+```ts
+import { Component } from '@angular/core';
+
+`@Component`({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export `class AppComponent` {
+  title: string;
+
+  constructor() {
+    this.title = 'app';
+  }
+}
 ```
 
-You can apply your controller to the HTML tags you want to control with the `ng-controller` attribute:
-
-```html
-<div `ng-controller='HelloController'`>
-  <p>Hello {{ name }}!</p>
-</div>
-```
+A component is any [JavaScript class][js-classes] annotated with the [`@Component`][angular-docs-component] decorator.
 
 Let's dig into that line by line.
 
 ---
-#### Creating a controller
+#### Component selector
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#12">Controllers</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#13">Components</a>]
 
-Note that we call `angular.module()` again, but this time **only with the name**.
-Instead of creating a new module, this returns the **existing module** with that name:
+The `selector` property of the `@Component` decorator indicates what tag you should put in your HTML to instantiate the component:
 
-```js
-`angular.module('starter')`.controller('HelloController', function($scope) {
-  $scope.name = 'World';
-});
+```ts
+@Component({
+  `selector: 'app-root'`,
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
 ```
 
-Then, we define a controller named `HelloController`:
+Open `src/index.html` in the starter project.
+You will find the `<app-root>` tag:
 
-```js
-angular.module('starter')`.controller('HelloController'`, function($scope) {
-  $scope.name = 'World';
-});
-```
-
-That controller is simply a **function**:
-
-```js
-angular.module('starter').controller('HelloController', `function($scope) {`
-* $scope.name = 'World';
-`}`);
+```html
+<body>
+  `<app-root></app-root>`
+&lt;/body&gt;
 ```
 
 ---
-#### The scope
+#### Component template
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#12">Controllers</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#13">Components</a>]
 
-The `$scope` object is the **view model**, i.e. the model that will be presented by the view:
+The `templateUrl` property of the `@Component` decorator tells Angular which HTML file to use to display the component:
 
-```js
-angular.module('starter').controller('HelloController', function(`$scope`) {
-  `$scope.name` = 'World';
-});
+```ts
+@Component({
+  selector: 'app-root',
+  `templateUrl: './app.component.html'`,
+  styleUrls: ['./app.component.css']
+})
 ```
 
-Properties you attach to the scope can be interpolated into HTML templates with double curly braces:
+For very simple components, you can also use `template` instead of `templateUrl` to use an **inline template**:
 
-```html
-<div ng-controller='HelloController'>
-  <p>Hello `{{ name }}`!</p>
-</div>
-```
-
----
-#### Named controllers
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#12">Controllers</a>]
-
-You can also access the scope by using **named controllers**.
-**Instead** of using the `$scope`, you attach properties directly to the controller using `this`:
-
-```js
-angular.module('starter').controller('HelloController', function() {
-  `var helloCtrl = this;`
-  `helloCtrl.name` = 'World';
-});
-```
-
-In the template, use `MyController as myName` in the `ng-controller` attribute.
-This assigns a name to the controller, which you can then use in interpolation:
-
-```html
-<div ng-controller='HelloController `as helloCtrl`'>
-  <p>Hello {{ `helloCtrl.name` }}!</p>
-</div>
-```
-
-Even when using this syntax, there is still a **scope** being created and used.
-
-You will find examples of both (using only the scope or using named controllers) in the documentation and examples online.
-
----
-#### Outside the scope of a controller
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#12">Controllers</a>]
-
-Add a new `div` outside the one you already created:
-
-```html
-<div ng-controller='HelloController as helloCtrl'>
-  <p>Hello {{ helloCtrl.name }}</p>
-</div>
-
-*<div>
-* <p>I am {{ helloCtrl.name }}</p>
-*</div>
-```
-
-No name will be displayed there.
-
-This new part of the DOM is **outside the scope** of `HelloController`,
-as we applied the `ng-controller` only to the other `div`.
-
----
-#### Multiple controllers
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#12">Controllers</a>]
-
-Add another controller:
-
-```js
-angular.module('starter').controller('OtherController', function() {
-  var otherCtrl = this;
-  otherCtrl.name = 'Bob';
-});
-```
-
-Also add an `ng-controller` to use it on the second `div`,
-and change the variable from `helloCtrl.name` to `otherCtrl.name`:
-
-```html
-<div `ng-controller='OtherController as otherCtrl'`>
- <p>I am {{ `otherCtrl`.name }}</p>
-</div>
-```
-
-This time it will work.
-
-As you can see, **each controller has its scope** and controls only that part of the DOM to which it is applied with `ng-controller`.
-
----
-#### Using functions in the view
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#12">Controllers</a>]
-
-You can also attach functions to the scope or controller:
-
-```js
-angular.module('starter').controller('HelloController', function() {
-  var helloCtrl = this;
-  helloCtrl.name = 'World';
-* helloCtrl.double = function(n) {
-*   return n * 2;
-* };
-});
-```
-
-These functions can be called in the view:
-
-```html
-<div ng-controller='HelloController as helloCtrl'>
-  <p>Hello {{ helloCtrl.name }}!</p>
-* <p>Two times two equals {{ helloCtrl.double(2) }}</p>
-</div>
+```ts
+@Component({
+  selector: 'app-root',
+  `template: '<h1>Welcome to {{ title }}!</h1>'`,
+  styleUrls: ['./app.component.css']
+})
 ```
 
 ---
-#### Using `ng-model`
+#### Component styles
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#12">Controllers</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#13">Components</a>]
 
-You can bind the **view model** and **view** together:
+Similarly, the `styleUrls` property is a list of CSS files to apply to the component:
 
-```js
-angular.module('starter').controller('HelloController', function() {
-  var helloCtrl = this;
-  // ...
-  `helloCtrl.value = 2;`
-});
+```ts
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  `styleUrls: ['./app.component.css']`
+})
 ```
 
-Reference this new `helloCtrl.value` variable in the view with `ng-model`:
+It's also possible to use **inline styles** for very simple components:
 
-```html
-<p>
-  Two times <input `ng-model='helloCtrl.value'` />
-  equals {{ helloCtrl.double(`helloCtrl.value`) }}
-</p>
+```ts
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  `styles: [ 'h1 { font-weight: normal;  }' ]`
+})
 ```
+
+Styles in Angular are **modular**.
+They apply only *within the template of that component*.
+
+Read the [Component Styles][angular-component-styles] documentation to learn more.
 
 ---
 #### Data binding
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#12">Controllers</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#13">Components</a>]
 
-What's interesting about `ng-model` is that it goes both ways.
-Add a function that modifies the value of your scope variable:
+You can display data by **binding** parts of an HTML template to properties of a component.
 
-```js
-angular.module('starter').controller('HelloController', function() {
-  var helloCtrl = this;
-  // ...
-* helloCtrl.reset = function() {
-*   helloCtrl.value = 2;
-* };
-});
+```ts
+export class AppComponent {
+  `title: string;`
+
+  constructor() {
+    this.title = 'app';
+  }
+}
 ```
 
-Then add a button that calls this new function below the previous HTML:
+Enclosing a component's property name in double curly braces in the template is called **interpolation**:
+
+```html
+<h1>
+  Welcome to `{{ title }}`!
+</h1>
+```
+
+---
+#### Interpolation with functions
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#13">Components</a>]
+
+Interpolation is not limited to simple properties.
+You can also use a component's **methods** in the template.
+
+Add the following method to the component (`src/app/app.component.ts`):
+
+```ts
+export class AppComponent {
+  // ...
+
+* hello(name: string): string {
+*   return 'Hello ' + name + '!';
+* }
+}
+```
+
+Now use that function in the template (`src/app/app.component.html`):
 
 ```html
 <p>
-  Two times <input ng-model='helloCtrl.value' />
-  equals {{ helloCtrl.double(helloCtrl.value) }}
+  `{{ hello("World") }}`
 </p>
-*<button type='button' ng-click='helloCtrl.reset()'>Reset</button>
 ```
 
-See how the view changes when you modify the value and click the reset button.
+
+
+---
+### User input
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
+
+One of the things you will need to do is **react to user input** (e.g. through forms).
+Let's make our greeting **dynamic** by adding an input field to customize the name.
+Make the following changes to the component:
+
+```ts
+export class AppComponent {
+  title: string;
+  `greeting: string;`
+
+  constructor() {
+    this.title = 'app';
+    `this.greeting = '';`
+  }
+  // ...
+}
+```
+
+Now interpolate that new property into the function in the template:
+
+```html
+<p>
+  {{ `hello(greeting)` }}
+</p>
+```
+
+---
+#### `ngModel`
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#19">User input</a>]
+
+Add an input field to the template above the greeting:
+
+```html
+*<p>
+* <input type='text' placeholder='Who are you?' [(ngModel)]='greeting' />
+*</p>
+<p>
+  {{ `hello(greeting)` }}
+</p>
+```
+
+`[(ngModel)]` is Angular's **two-way data binding** syntax.
+It binds the `greeting` property to the HTML input field.
+
+You will most likely get this error:
+
+```
+Uncaught Error: Template parse errors:
+Can't bind to 'ngModel' since it isn't a known property of 'input'.
+```
+
+This is because `[(ngModel)]` belongs to the optional `FormsModule`, which you have to *opt in* to using.
+
+---
+#### `FormsModule`
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#19">User input</a>]
+
+To **import** the module into your application, you must add it to the `imports` array of your own module in `src/app/app.module.ts`:
+
+```ts
+*import { FormsModule } from '@angular/forms';
+// Other imports...
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    `FormsModule`
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+Once you've done that, the field should display correctly.
 
 ---
 #### Two-way data binding
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#12">Controllers</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#19">User input</a>]
 
 .grid-50[
 
@@ -496,8 +522,8 @@ The developer has to write code that constantly syncs the view with the model an
 
 With Angular changes are **immediately reflected** in both view and model.
 
-This is one of the great strengths of Angular: the **controller** is completely **isolated from and unaware of the view**.
-It does not care about DOM manipulation or rendering concerns.
+Also note that our **component** is **isolated from and unaware of the view**:
+it does not care about DOM manipulation or rendering concerns.
 
 <img src='images/two-way-data-binding.png' width='100%' />
 
@@ -506,57 +532,414 @@ It does not care about DOM manipulation or rendering concerns.
 
 ]
 ---
-### Services
+### Directives
 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
 
-In general, controllers shouldn't try to do too much.
-They should contain only the business logic needed for a **single view**.
-Keep controllers slim is by encapsulating work that doesn't belong to controllers into **services** and then using these services in controllers.
+A **directive** is a class with a `@Directive` decorator.
 
-You can create a service by calling `factory()`.
-As the name implies, you must pass a **factory function** that will create and return the service.
+The **component** that we've seen before is a *directive-with-a-template*
+A `@Component` decorator is actually a `@Directive` decorator extended with template-oriented features.
 
-Let's create a service with that `double` function we wrote earlier:
+Two other kinds of directives exist: **structural** and **attribute** directives.
 
-```js
-angular.module('starter')`.factory('HelloService', function() {`
+---
+#### Structural directives
 
-  var service = {};
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#23">Directives</a>]
 
-  service.double = function(n) {
-    return n * 2;
-  };
+Structural directives are responsible for HTML layout.
+They shape or reshape the **DOM's structure**, typically by **adding, removing, or manipulating elements**.
 
-  return service;
-`}`);
+Let's add the [`ngIf`][angular-docs-ng-if] directive to our template as an example:
+
+```html
+<p `*ngIf='greeting'`>
+  {{ hello(greeting) }}
+</p>
+```
+
+As you can see, the entire paragraph is now removed from the DOM as long as the `greeting` property is blank (e.g. `undefined` or an empty string).
+It is added back as soon as `greeting` has a value.
+
+Read the [documentation][angular-structural-directives] to learn more about structural directives.
+Many more such directives are provided by Angular out of the box, like [`ngFor`][angular-docs-ng-for] (which we'll use later) and [`ngSwitch`][angular-docs-ng-switch].
+
+---
+#### Attribute directives
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#23">Directives</a>]
+
+An **attribute** directive changes the **appearance or behavior of a DOM element**.
+
+Create a `src/app/highlight.directive.ts` file with the following contents:
+
+```ts
+import { Directive } from '@angular/core';
+
+`@Directive`({
+  selector: '[appHighlight]'
+})
+export `class HighlightDirective` {
+  constructor() {
+    console.log('the highlight directive was used');
+  }
+}
+```
+
+Similarly to a component, a directive is a JavaScript class, this time annotated with the [`@Directive`][angular-docs-directive] decorator.
+
+The selector, `[appHighlight]` is an [attribute selector][css-attribute-selector].
+Also note that it is good practice to prefix the selector with your application name ("app" for this example) to avoid **naming collisions** with other directives.
+
+---
+##### Using an attribute directive
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#23">Directives</a> > <a href="#25">Attribute directives</a>]
+
+To use your new attribute directive, you must **declare** it in your module's `declarations` array in `src/app/app.module.ts`:
+
+```ts
+*import { HighlightDirective } from './highlight.directive';
+// Other imports...
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    `HighlightDirective`
+  ],
+  // ...
+})
+export class AppModule { }
+```
+
+Now all you need to do is add the attribute to an element in `src/app/app.component.html`.
+Let's add it to the greeting.
+
+```html
+<h1 `appHighlight`>
+  Welcome to {{ title }}!
+</h1>
+```
+
+You should see the directive being used in the console after entering some text in the input field.
+
+---
+##### Modifying the DOM
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#23">Directives</a> > <a href="#25">Attribute directives</a>]
+
+Now add an `ElementRef` argument to the directive's constructor:
+
+```ts
+import { Directive, `ElementRef` } from '@angular/core';
+
+@Directive({
+  selector: '[appHighlight]'
+})
+export class HighlightDirective {
+  constructor(`el: ElementRef`) {
+    `el.nativeElement.style.backgroundColor = 'yellow';`
+  }
+}
+```
+
+Doing this **injects** a reference to the host DOM element, the element to which you applied the `appHighlight` attribute.
+
+`ElementRef` grants direct access to the host DOM element through its `nativeElement` property.
+In this example we set the background color to yellow.
+
+---
+#### Common directives
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#23">Directives</a>]
+
+These common directives are provided by Angular out of the box:
+
+* [`ngClass`][angular-docs-ng-class] - Adds and removes **CSS classes** on an HTML element.
+* [`ngFor`][angular-docs-ng-for] - Instantiates a template **once per item** from an iterable.
+* [`ngIf`][angular-docs-ng-if] - **Conditionally includes** a template based on the value of an expression.
+* [`ngPlural`][angular-docs-ng-plural] - Adds/removes DOM sub-trees based on a numeric value. (Tailored for **pluralization**.)
+* [`ngStyle`][angular-docs-ng-style] - Update an HTML element's **styles**.
+* [`ngSwitch`][angular-docs-ng-switch] - Adds/removes DOM sub-trees when the nest match expressions matches the **switch** expression.
+
+
+
+---
+### Models
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
+
+Let's make our application funny by adding some jokes.
+
+It's good practice to create **classes** for your **business models**.
+A TypeScript class with clearly defined fields and types will help us avoid mistakes in our code.
+Let's start with a very simple one.
+
+Angular CLI comes with scaffolding tools to help you create files.
+You can generate a model class with the following command:
+
+```bash
+$> ng generate class models/joke
+```
+
+This will create a `src/app/models/joke.ts` file.
+Open it and add a `text` attribute to our new `Joke` class:
+
+```ts
+export class Joke {
+  `text: string;`
+}
 ```
 
 ---
-#### Dependency injection
+#### Using models
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#22">Services</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#29">Models</a>]
 
-Using the service is as simple as adding it as an argument to our controller:
+Let's add some jokes to our component:
 
-```js
-angular.module('starter').controller('HelloController', function(`HelloService`) {
-  var helloCtrl = this;
-  helloCtrl.name = 'World';
-  helloCtrl.double = `HelloService.double`;
-});
+```ts
+// Other imports...
+`import { Joke } from './models/joke';`
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title: string;
+  greeting: string;
+  `jokes: Joke[];`
+
+  constructor() {
+    this.title = 'app';
+    this.greeting = '';
+*   this.jokes = [
+*     { text: 'Knock knock' },
+*     { text: 'The cake is a lie' }
+*   ];
+  }
+  // ...
+}
 ```
 
-This works because Angular is built around **dependency injection**:
+---
+#### Using `ngFor`
 
-* When you define a controller, service or other kind of Angular element, you give it **a name**
-* In the factory function that creates the controller (or other element), you tell Angular **the names of the other elements you need** as arguments
-* Angular will **inject** the required elements into your factory function for you
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#29">Models</a>]
+
+Now that we have some jokes, let's display them.
+We want a `<ul>` list, with a `<li>` item for each joke.
+That's a job for the [`ngFor`][angular-docs-ng-for] directive.
+
+Add this at the bottom of the component's template:
+
+```html
+<ul>
+  <li *ngFor='let joke of jokes'>{{ joke.text }}</li>
+</ul>
+```
+
+The directive handles repeating the `<li>` element for us.
+No need to write it multiple times, or to manually build and concatenate DOM elements in the component's TypeScript code.
+
+---
+#### Using `ngPlural`
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#29">Models</a>]
+
+While we're at it, let's also add a header above the list:
+
+```html
+<h2>
+  {{ jokes.length }} jokes
+</h2>
+```
+
+You might notice that we'll have a minor problem when there is only one joke.
+It will say "1 jokes" instead of "1 joke".
+
+The [`ngPlural`][angular-docs-ng-plural] directive comes to the rescue:
+
+```html
+<h2 [ngPlural]='jokes.length'>
+  {{ jokes.length }}
+  <ng-template ngPluralCase='=1'>joke</ng-template>
+  <ng-template ngPluralCase='other'>jokes</ng-template>
+</h2>
+```
+
+
+
+---
+## Services
+
+.breadcrumbs[<a href="#1">Angular</a>]
+
+Let's do something more interesting: fetch some jokes from the internet.
+
+To do it "The Angular Way", we'll encapsulate that functionality into a **service**.
+
+Why?
+**Components** should not try to do too much;
+they should focus on **presenting data** and **delegate data access** to specialized classes.
+**Services** are here to fill that role.
+
+This helps your components remain as simple as possible while services handle your business logic.
+
+Let's use Angular CLI to generate a joke service:
+
+```bash
+$> ng generate service --spec false services/joke
+```
+
+(The `--spec false` option disables the generation of an test file for the service.
+We will not cover [automated tests][angular-testing] in this tutorial, but you should definitely check it out.)
+
+---
+### The joke service
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#33">Services</a>]
+
+The `src/app/services/joke.service.ts` file has been generated:
+
+```ts
+import { Injectable } from '@angular/core';
+
+`@Injectable`()
+export `class JokeService` {
+  constructor() { }
+}
+```
+
+Once again, a service is simply a JavaScript class, annotated with the [`@Injectable`][angular-docs-injectable] decorator.
+More about that later.
+
+For now, simply add a method which returns a joke:
+
+```ts
+`import { Joke } from '../models/joke';`
+
+@Injectable()
+export class JokeService {
+  constructor() { }
+
+* getJoke(): Joke {
+*   return { text: 'Knock knock' };
+* }
+}
+```
+
+---
+### Providing the joke service
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#33">Services</a>]
+
+To use the service, you must **provide** it in your module's `providers` array in `src/app/app.module.ts`:
+
+```ts
+// Other imports...
+`import { JokeService } from './services/joke.service';`
+
+@NgModule({
+  // ...
+  providers: [
+    `JokeService`
+  ],
+  // ...
+})
+export class AppModule { }
+```
+
+---
+### Injecting the joke service
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#33">Services</a>]
+
+Once you've done that, you can **inject** it into your component.
+You just have to add a **constructor parameter property**.
+While you're at it, also add a **method to add a joke**:
+
+```ts
+export class AppComponent {
+  // ...
+  constructor(`private jokeService: JokeService`) {
+    // ...
+  }
+
+* addJoke() {
+*   this.jokes.push(this.jokeService.getJoke());
+* }
+  // ...
+}
+```
+
+And add a button to use that method in the template:
+
+```html
+<p>
+  <button type='button' (click)='addJoke()'>Add joke</button>
+</p>
+```
+
+The `(click)` attribute is Angular's syntax to listen to the `click` event on a DOM element and trigger something when it occurs.
+
+---
+### Why does it work?
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#33">Services</a>]
+
+Our component now uses the service.
+But why does it work?
+All you did was add a parameter property to the constructor:
+
+```ts
+constructor(`private jokeService: JokeService`) {
+  // ...
+}
+```
+
+As a reminder, in TypeScript this is equivalent to:
+
+```ts
+export class AppComponent {
+  `jokeService: JokeService;`
+
+  constructor(`jokeService: JokeService`) {
+    `this.jokeService = jokeService;`
+  }
+}
+```
+
+You **never instantiated the service with `new`**, so where is the instance coming from?
+
+---
+### Dependency injection
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#33">Services</a>]
+
+Angular relies on [dependency injection][di] to plug components, services and other elements together.
+
+* After creating your service, you **provided** it in the application **module**.
+* This makes it possible for Angular's **injector** to know that your service exists and to create instances of it.
+* By adding the parameter to the component's constructor, you **asked Angular to inject** an instance of the service at runtime.
+
+Dependency injection is a form of [inversion of control][ioc],
+meaning that parts of your code **receive** the flow of control instead of driving it like in classic procedural programming.
+
+The general goal is to:
+
+* **Decouple** the execution of a task from implementation.
+* **Focus** a component on the task it is designed for.
+* **Free components from assumptions** about how other systems do what they do and instead rely on **contracts**.
+* **Prevent side effects** when **replacing** a component.
 
 ---
 #### Why dependency injection?
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#22">Services</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#33">Services</a> > <a href="#38">Dependency injection</a>]
 
 .grid-50[
 
@@ -597,645 +980,564 @@ function Gas(lead) {
 <img src='images/di-injection.png' width='100%' />
 
 
+
+
 ]
 ---
-#### The $http service
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#22">Services</a>]
-
-Angular provides several useful services out of the box.
-The `$http` service can make AJAX requests for you:
-
-```js
-angular.module('starter').factory('HelloService', function(`$http`) {
-
-  var service = {};
-
-  // ...
-
-* service.retrieveJoke = function() {
-*   return $http.get('https://api.icndb.com/jokes/random').then(function(res) {
-*     return res.data.value.joke;
-*   });
-* };
-
-  return service;
-});
-```
-
----
-#### Making HTTP requests through a service
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#22">Services</a>]
-
-It's good practice to make HTTP requests in a service rather than in a controller directly.
-That way your controller remains **as simple as possible** and only manages the view:
-
-```js
-angular.module('starter').controller('HelloController', function(HelloService) {
-
-  var helloCtrl = this;
-  helloCtrl.name = 'World';
-  helloCtrl.double = HelloService.double;
-
-* HelloService.retrieveJoke().then(function(joke) {
-*   helloCtrl.joke = joke;
-* });
-});
-```
-
-You can now display the joke in the HTML template:
-
-```html
-<div ng-controller='HelloController as helloCtrl'>
-  <p>Hello {{ helloCtrl.name }}!</p>
-  <p>Two times two equals {{ helloCtrl.double(2) }}</p>
-* <p>Did you hear? {{ helloCtrl.joke }}</p>
-</div>
-```
-
----
-#### Using `service()`
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#22">Services</a>]
-
-Services can also be defined with Angular's `service()` function instead of `factory()`.
-They **both create services**; the only difference is how your **factory function** is invoked to create the service.
-
-When using `factory()`, Angular will simply call your factory function to create the service:
-
-```js
-function MyServiceFactory() {
-  var service = {};      // Create the service yourself
-  service.foo = 'bar';   // Attach stuff to it
-  return service;        // Return it
-}
-
-// Angular will execute "MyServiceFactory()" to create the service
-angular.module('starter').factory('MyService', MyServiceFactory);
-```
-
-When using `service()`, Angular calls your factory function as a **constructor**:
-
-```js
-function MyServiceFactory() {
-  this.foo = 'bar'; // Attach stuff to "this", which will be the service
-}
-
-// Angular will execute "new MyServiceFactory()" to create the service
-angular.module('starter').service('MyService', MyServiceFactory);
-```
-
-
-
----
-### Filters
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
-
-Filters are simple functions that format a value for display to the user.
-
-To create a filter, you must use `filter()` and pass a factory function (where you can inject dependencies if you need them).
-This function **must return the filter function** that will be called with the value:
-
-```js
-angular.module('starter').filter('hello', function() {
-* return function(input) {
-*   return 'Hello ' + input + '!';
-* };
-});
-```
-
-You apply a filter by "piping" a value into it.
-Let's modify the first paragraph of our previous template a bit:
-
-```html
-<p>{{ `helloCtrl.name | hello` }}</p>
-```
-
----
-#### Built-in filters
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#28">Filters</a>]
-
-Angular has a number of useful [built-in filters][angular-built-in-filters]:
-
-Filter    | Purpose
-:---      | :---
-`filter`    | Filter an array
-`currency`  | Format a number as currency
-`number`    | Format a number as text (e.g. with thousands separator)
-`date`      | Format date a string with a custom format
-`json`      | Converts a JavaScript object into a JSON string
-`lowercase` | Converts a string to lower case
-`uppercase` | Converts a string to upper case
-`limitTo`   | Select a subset from an array
-`orderBy`   | Order an array's elements
-
----
-#### A few filter examples
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#28">Filters</a>]
-
-Several filters can be "piped" together:
-
-```html
-<p>{{ helloCtrl.name | uppercase | hello }}</p>
-```
-
-Let's try the `date` filter.
-Create a date in your controller first:
-
-```js
-angular.module('starter').controller('HelloController', function(HelloService) {
-  var helloCtrl = this;
-  // ...
-  `helloCtrl.now = new Date();`
-});
-```
-
-Then filter it in the view:
-
-```html
-<p>It's {{ `helloCtrl.now | date: 'HH:mm:ss'` }}</p>
-```
-
-
-
----
-### Directives
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
-
-[Directives][angular-directives] are **markers on a DOM element** that tell Angular's **HTML compiler** to attach a **specified behavior** to that DOM element, or to **transform** the DOM element and its children.
-
-You've already used them: `ng-controller` and `ng-model` are directives.
-
-A directive can be an **HTML attribute**:
-
-```html
-<input `ng-model='helloCtrl.value'` />
-```
-
-An **HTML class**:
-
-```html
-<p `class='my-directive'`>Hello</p>
-```
-
-Or a custom **HTML tag**:
-
-```html
-*<person person='person'></person>
-```
-
----
-#### Making your own directive
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#31">Directives</a>]
-
-A directive is not magic, you can create your own using Angular's `directive` function.
-This function must return a **directive definition object**:
-
-```js
-angular.module('starter')`.directive('redAlert', function() {`
-  return `{`
-*   link: function(scope, element, attributes) {
-*     element.css('background-color', '#ff7777');
-*   }
-  `}`;
-`}`);
-```
-
-You can then use this directive in the view:
-
-```html
-<div ng-controller='HelloController as helloCtrl'>
-  <!-- ... -->
-  <p `red-alert`>Did you hear? {{ joke }}</p>
-</div>
-```
-
-Note that you use **dash-delimited names in the view**,
-but Angular looks for a directive with a corresponding **camel-case name**.
-
----
-#### DOM manipulation in directives
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#31">Directives</a>]
-
-The **main goal** of directives is to perform **DOM manipulation instead of controllers**,
-so that controllers only have to deal with the view model.
-
-A directive's link function has the following signature:
-
-```
-  function(scope, element, attributes)
-```
-
-* The `scope` is the Angular scope object corresponding to the HTML DOM element to which the directive is attached
-* The `element` is a [jQuery][jquery] wrapper around the HTML DOM element
-* The `attributes` are an object representing the HTML DOM element's attributes and values
-
-If you have not included jQuery in your project, the `element` is actually a [jqLite wrapper][angular-element].
-
-jqLite is a tiny, API-compatible **subset of jQuery** that allows Angular to manipulate the DOM in a cross-browser compatible way.
-It implements only the **most commonly needed** functionality with the goal of having a **very small footprint**.
-
----
-#### Built-in directives
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#31">Directives</a>]
-
-Directive             | Description
-:---                  | :---
-`ng-app`              | Designate the root HTML element of an Angular application
-`ng-class`            | Set CSS classes on an HTML element based on an expression
-`ng-controller`       | Attach an Angular controller to an HTML element
-`ng-click`            | Specify custom behavior when an HTML element is clicked
-`ng-disabled`         | Sets the `disabled` attribute on an HTML element (e.g. `<input>`, `<button>`, `<select>`) based on an expression
-`ng-if`               | Removes or recreates an HTML element based on an expression
-`ng-model`            | Bind a form input (e.g. `<input>`, `<select>`, `<textarea>`) to a property of the Angular scope
-`ng-repeat`           | Repeat an HTML element once per item from a list
-`ng-show` / `ng-hide` | Shows or hides an HTML element based on an expression
-`ng-switch`           | Conditionally swap HTML elements based on an expression
-
-Read the [documentation][angular-directives-list] to learn more.
-
----
-#### An example with `ng-repeat`
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#31">Directives</a>]
-
-Let's add a list of people to our `HelloController`:
-
-```js
-angular.module('starter').controller('HelloController', function(HelloService) {
-  var helloCtrl = this;
-  // ...
-* helloCtrl.people = [
-*   { firstName: 'John', lastName: 'Doe' },
-*   { firstName: 'Jane', lastName: 'Doe' },
-*   { firstName: 'Richard', lastName: 'Doe' }
-* ];
-});
-```
-
-Let's say we want to display an `<ul>` list with an `<li>` element for each person.
-`ng-repeat` can handle that for you:
-
-```html
-<div ng-controller='HelloController as helloCtrl'>
-  <!-- ... -->
-  <p>
-    <ul>
-      <li `ng-repeat='person in helloCtrl.people'`>
-        {{ person.firstName }} {{ person.lastName }}
-      </li>
-    </ul>
-  </p>
-</div>
-```
-
----
-#### Two-way binding with `ng-repeat`
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#31">Directives</a>]
-
-Let's add a couple of HTML input fields to add a new person with a first and last name,
-and a button that will call `helloCtrl.addPerson()` when clicked:
-
-```html
-<div ng-controller='HelloController as helloCtrl'>
-  <!-- ... -->
-  <p>
-    <input ng-model='helloCtrl.newPerson.firstName' placeholder='First' />
-    <input ng-model='helloCtrl.newPerson.lastName' placeholder='Last' />
-    <button type='button' ng-click='helloCtrl.addPerson()'>Add</button>
-  </p>
-</div>
-```
-
-Now add that function to the controller:
-
-```js
-angular.module('starter').controller('HelloController', function(HelloService) {
-  var helloCtrl = this;
-  // ...
-* helloCtrl.addPerson = function() {
-*   helloCtrl.people.push(helloCtrl.newPerson);
-*   helloCtrl.newPerson = {};
-* };
-});
-```
-
-The HTML is automatically updated when the new person is pushed into the array.
-Angular's two-way binding and `ng-repeat` do everything for us.
-
-
-
----
-### Components
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
-
-Components are a **special kind of directive** with simpler configuration and which is suitable for a **component-based application structure**.
-They're a first step towards making applications with [web components][a-guide-to-web-components], an approach which has been taken further in Angular 2.
-
-A component is basically:
-
-* A **reusable view** (an HTML template)
-* Some **logic** attached to this template (a controller)
-* Clearly defined **inputs** and **outputs**
-
-For this example, we'll create a `<person>` component to display a person.
-
----
-#### Component HTML template
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#37">Components</a>]
-
-Let's say we want to reuse the bit of template we wrote to display a person,
-because we know we're going to display people at multiple places in our app:
-
-```html
-{{ personCtrl.person.firstName }} {{ personCtrl.person.lastName }}
-```
-
-`personCtrl` will be our component's controller.
-We will define it later.
-
-Save this content to a `person.html` file next to `index.html`.
-Angular will make an AJAX request to load it dynamically when we define our component.
-
----
-#### Component definition
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#37">Components</a>]
-
-Call Angular's `component()` function to define a component.
-The second argument is a **component definition object** with various properties that configure your component:
-
-```js
-angular.module('starter').component('person', `{`
-* templateUrl: 'person.html',
-* bindings: {
-*   person: '<'
-* },
-* controller: function() {
-*   var personCtrl = this;
-* },
-* controllerAs: 'personCtrl'
-`}`);
-```
-
-* `templateUrl` tells Angular what **HTML template** to use
-  (it can be a relative or absolute URL)
-* `bindings` defines the component's **inputs** and **outputs**
-* `controller` is the component's **controller** that will be applied to the template
-  (just like if we used `ng-controller`)
-* `controllerAs` is the **name of the controller** in the template
-  (just like if we used `as personCtrl` in `ng-controller`)
-
----
-#### Using a component
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#37">Components</a>]
-
-Now we can use our new component in the main view.
-Update the list to use your new component:
-
-```html
-<p>
-  <ul>
-    <li ng-repeat='person in helloCtrl.people'>
-      `<person person='person'></person>`
-    </li>
-  </ul>
-</p>
-```
-
-It's good practice to structure your application into **reusable components**.
-
----
-#### Component inputs
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#37">Components</a>]
-
-Components should only control **their own view and data**.
-You can define the behavior of inputs with the values in the `bindings` object:
-
-Binding | Description
-:---    | :---
-`<`     | Input with one-way binding: changes to the value will not be reflected in the parent (although if it's an object or array, changes to its contents will be reflected)
-`=`     | Input with two-way binding (changes to the value will be reflected in the parent)
-`@`     | String input (when the input is simply a string that doesn't change, i.e. not a variable)
-
-When writing components, it's good practice to use `<` and `@` instead of `=`,
-to make it clearer who controls what data.
-Here's an example of the difference between using `<` and `@`:
-
-```html
-<!-- Input with '<': takes a variable -->
-<hello name='person.name'></hello>
-
-<!-- Input with '@': takes a string -->
-<hello name='John Doe'></hello>
-```
-
----
-#### Component outputs
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#37">Components</a>]
-
-Outputs allow your component to **communicate with the parent component** (or view).
-Let's modify our `person.html` template and add a button to say hello to each person:
-
-```html
-{{ personCtrl.person.firstName }} {{ personCtrl.person.lastName }}
-*<button type='button' ng-click='personCtrl.sayHello()'>Say hello</button>
-```
-
-Add the `sayHello` function to the component's controller.
-Just log the name for now and make sure it works:
-
-```js
-angular.module('starter').component('person', {
-  templateUrl: 'person.html',
-  bindings: {
-    person: '<'
-  },
-  controller: function() {
-    var personCtrl = this;
-*   personCtrl.sayHello = function() {
-*     console.log(personCtrl.person);
-*   };
-  },
-  controllerAs: 'personCtrl'
-});
-```
-
----
-#### Output callbacks
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#37">Components</a>]
-
-Component outputs allow you to define **callbacks to component events**.
-
-You define an output by adding a `&` binding.
-This kind of binding is a **function** that is added to the scope and **which you can call**:
-
-```js
-angular.module('starter').component('person', {
-  templateUrl: 'person.html',
-  bindings: {
-    person: '<',
-*   onSayHello: '&'
-  },
-  controller: function() {
-    var personCtrl = this;
-    personCtrl.sayHello = function() {
-*     personCtrl.onSayHello({ personToSalute: personCtrl.person });
-    };
-  },
-  controllerAs: 'personCtrl'
-});
-```
-
----
-#### Using a component output
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#37">Components</a>]
-
-The **parent component** (or view) can plug a **callback function** into our new component output:
-
-```html
-<person
-  person='person'
-  `on-say-hello='helloCtrl.sayHelloToPerson(personToSalute)'`>
-</person>
-```
-
-We can use the property names of the object passed to the output as variables in the parent
-(the `personToSalute` variable name is defined by the component when it uses the output).
-
-Define the `sayHelloToPerson` function in `HelloController` to react to the output:
-
-```js
-angular.module('starter').controller('HelloController', function(HelloService) {
-  var helloCtrl = this;
-  // ...
-* helloCtrl.sayHelloToPerson = function(person) {
-*   helloCtrl.name = person.firstName;
-* };
-});
-```
-
-
-
----
-### Application configuration and runtime
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
-
-The remaining Angular elements are simple but useful:
-
-* **Constants** allow to define constant values that can serve as configuration
-* **Config functions** are run when configuring the Angular application,
-  and allow you to customize services and other elements
-* **Run functions** are run after configuration is complete,
-  before your controllers, directives and components are applied
-
----
-#### Constants
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#45">Application configuration and runtime</a>]
-
-A constant is simply a **value that can be injected** into other Angular elements.
-You define it by calling Angular's `constant()` function:
-
-```js
-angular.module('starter')`.constant('theMeaningOfLife', 42)`;
-```
-
-Simply inject it where you need it:
-
-```js
-angular.module('starter')
-  .controller('HelloController', function(HelloService, `theMeaningOfLife`) {
-    var helloCtrl = this;
-    // ...
-*   console.log('The meaning of life is ' + theMeaningOfLife);
-  });
-```
-
----
-#### Config functions
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#45">Application configuration and runtime</a>]
-
-A **config function** is called while the Angular application is being configured:
-
-```js
-angular.module('starter').config(function() {
-  // Do some stuff...
-});
-```
-
-You **cannot** inject services into a config function, as they have not been instantiated yet.
-You can however inject constants and **providers**, which can be used to customize services:
-
-```js
-angular.module('starter').config(function(`$httpProvider`, `theMeaningOfLife`) {
-  // Get the object of default headers send by $http on every request
-  var commonHeaders = `$httpProvider`.defaults.headers.common;
-  // Tell $http to always request XML from the server
-  commonHeaders.Accept = 'application/xml';
-  // Tell $http to always send the MeaningOfLife header to the server
-  commonHeaders.MeaningOfLife = `theMeaningOfLife`;
-});
-```
-
----
-#### Run functions
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#45">Application configuration and runtime</a>]
-
-A **run function** is called after the Angular application is configured but **before** your controllers, directives and components are applied:
-
-```js
-angular.module('starter').run(function(HelloService) {
-  console.log('2 times 2 equals ' + HelloService.double(2));
-});
-```
-
-You can use it to perform tasks that should be run once when your application starts.
-
-
-
----
-## Scope hierarchy
+## Observable data
 
 .breadcrumbs[<a href="#1">Angular</a>]
 
-Many directives in Angular create a **new scope**, like `ng-controller` or `ng-repeat`.
-Child scopes **inherit properties from their parent scope**.
+Our current `getJoke()` method has a **synchronous** signature; implying that data is returned right away:
 
-<p class='center'><img src='images/scope-hierarchy.png' /></p>
+```ts
+const joke = jokeService.getJoke();
+```
 
-You can see it in action [here][angular-codepen-scope-hierarchy].
+This will **not** work when fetching jokes from a **remote server**, which is inherently an **asynchronous** operation.
+
+The `getJoke()` method must be modified to not immediately return a joke, but to have an asynchronous signature.
+It could take a **callback** or return a [**Promise**][js-promise].
+
+Another solution is to return an **Observable**.
+Angular includes the [RxJS][rxjs] library for reactive programming using Observables,
+to make it easier to compose asynchronous or callback-based code.
+
+---
+### What is reactive programming?
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#40">Observable data</a>]
+
+Basically, **reactive programming** is programming with **asynchronous** data **streams**.
+
+<p class='center'><img src='images/reactive-programming.png' class='w50' /></p>
+
+RxJS is a library which provides an amazing toolbox of functions to **combine, create and filter** any of those streams.
+
+In Angular 2+, many asynchronous operations are represented as Observable streams.
+For example, making an **HTTP call** will return an **Observable** which emits either a **response** or an **error**.
+You may **subscribe** to that observable to be notified of the result of the asynchronous call.
+
+To learn more about reactive programming,
+you may want to read ["The introduction to Reactive Programming you've been missing"][intro-to-reactive-programming].
+
+---
+### Making `getJoke()` observable
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#40">Observable data</a>]
+
+Since Angular's `HttpClient` returns **Observables**, that's what we'll use.
+
+For now, let's modify the `getJoke()` method's signature to return an Observable,
+without actually making an HTTP call yet:
+
+```ts
+// Other imports...
+*import { Observable } from 'rxjs/Rx';
+
+@Injectable()
+export class JokeService {
+  // ...
+  getJoke(): `Observable<Joke>` {
+    return `Observable.of({ text: 'Knock knock' })`;
+  }
+}
+```
+
+`Observable.of` allows us to create a stream which will simply emit the specified value (or values) and complete.
+
+---
+### Subscribing to an Observable
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#40">Observable data</a>]
+
+Of course, the code in our component no longer works now,
+since it expects a `Joke` and gets an Observable of a `Joke` instead:
+
+```
+ERROR in src/app/app.component.ts(26,21): error TS2345:
+  Argument of type 'Observable<Joke>' is not assignable to parameter of type 'Joke'.
+  Property 'text' is missing in type 'Observable<Joke>'.
+```
+
+Use the `subscribe` method of the Observable to be notified when a Joke is emitted on the stream:
+
+```ts
+addJoke() {
+* this.jokeService.getJoke().subscribe(joke => {
+*   this.jokes.push(joke);
+* });
+}
+```
+
+We now have our **asynchronous** implementation:
+
+* The call to `subscribe` is made immediately when `addJoke` is called.
+* But the **callback** adding the new joke into the array will be called **later**,
+  after the data has been fetched from the remote server.
 
 
 
 ---
-### Scopes and components
+## Making HTTP calls
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#49">Scope hierarchy</a>]
+.breadcrumbs[<a href="#1">Angular</a>]
 
-When you define a component, you create an **isolated scope** which **does not inherit** from the parent scope.
-Your component can only communicate with the parent view through **inputs** and **outputs**.
+Time to actually fetch some jokes from the internet.
+We'll need Angular's [`HttpClient`][angular-docs-http-client].
+It is part of `HttpClientModule`,
+so we need to provide that to our own application module:
 
-You can see it in action [here][angular-codepen-scope-components].
+```ts
+// Other imports...
+*import { HttpClientModule } from '@angular/common/http';
+
+@NgModule({
+  // ...
+  imports: [
+    BrowserModule,
+    FormsModule,
+    `HttpClientModule`
+  ],
+  // ...
+})
+export class AppModule { }
+```
+
+---
+### Injecting `HttpClient`
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#44">Making HTTP calls</a>]
+
+Earlier we annotated `JokeService` with the [`@Injectable`][angular-docs-injectable] decorator.
+This not only makes it available to the **injector** for creation,
+but also allows it to **inject dependencies of its own**.
+
+Now that `HttpClientModule` is available, you can inject `HttpClient` into `JokeService`:
+
+```ts
+// Other imports...
+*import { HttpClient } from '@angular/common/http';
+
+@Injectable()
+export class JokeService {
+  constructor(`private httpClient: HttpClient`) { }
+  // ...
+}
+```
+
+---
+### Joke API response
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#44">Making HTTP calls</a>]
+
+The API we are going to call returns JSON data that looks like this:
+
+```json
+{
+  "type": "success",
+  "value": {
+    "categories": [],
+    "id": 1,
+    "joke": "Knock knock"
+  }
+}
+```
+
+This does not fit our `Joke` model, which only has a `text` property.
+
+---
+#### Joke API response model
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#44">Making HTTP calls</a> > <a href="#46">Joke API response</a>]
+
+Let's create a new `JokeResponse` model that we can use with this API:
+
+```bash
+$> ng generate class models/joke-response
+```
+
+Update the generated model to reflect the **structure** of the API response.
+Since it's a nested structure, we'll need **2 classes**:
+
+```ts
+export class JokeResponse {
+  type: string;
+  value: JokeResponseValue;
+}
+
+export class JokeResponseValue {
+  categories: string[];
+  id: number;
+  joke: string;
+}
+```
+
+---
+### Making a GET call
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#44">Making HTTP calls</a>]
+
+We can now update `addJoke()` to make an actual HTTP call:
+
+```ts
+// Other imports...
+*import { JokeResponse } from '../models/joke-response';
+
+@Injectable()
+export class JokeService {
+  // ...
+  getJoke(): Observable<Joke> {
+*   return this.httpClient
+*     .get<JokeResponse>('https://api.icndb.com/jokes/random');
+  }
+}
+```
+
+As you can see, [`HttpClient`][angular-docs-http-client]'s `get` method is **generic**,
+and Angular will take care of parsing the response body and giving us an object of the right type.
+
+But we're still left with one problem: we need an Observable of `Joke` objects, and have one of `JokeResponse` objects instead:
+
+```
+ERROR in src/app/services/joke.service.ts(15,5): error TS2322:
+  Type 'Observable<JokeResponse>' is not assignable to type 'Observable<Joke>'.
+  Type 'JokeResponse' is not assignable to type 'Joke'.
+  Property 'text' is missing in type 'JokeResponse'.
+```
+
+---
+### Transforming data
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#44">Making HTTP calls</a>]
+
+We need to be able to transform a `JokeResponse` object into a `Joke`.
+Let's add a utility function at the bottom of the file:
+
+```ts
+function convertJokeResponseToJoke(response: JokeResponse): Joke {
+  return {
+    text: response.value.joke
+  };
+}
+```
+
+---
+### Transforming Observable streams
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#44">Making HTTP calls</a>]
+
+Similarly to the [`map`][js-array-map] method of JavaScript arrays, Observables have a [`map`][observable-map] operator,
+which allows you to transform each item emitted in the stream:
+
+<p class='center'><img src='images/observable-map.png' class='w50' /></p>
+
+To use it, you need to import it and use the Observable's `pipe` method:
+
+```ts
+// Other imports...
+*import { map } from 'rxjs/operators';
+
+// ...
+  getJoke(): Observable<Joke> {
+    return this.httpClient
+      .get<JokeResponse>('https://api.icndb.com/jokes/random')
+*     .pipe(map(convertJokeResponseToJoke));
+  }
+```
+
+
+
+---
+## Component interaction
+
+.breadcrumbs[<a href="#1">Angular</a>]
+
+As described earlier, components are Angular's fundamental building blocks.
+
+We're going to add a few features to our application:
+
+* The ability to **vote** on which are the best jokes.
+* The ability to see the **total** number of votes and how many votes the **best** joke has had.
+* The ability to **clear** all the collected votes.
+
+.grid-50[
+
+We could implement all of this in `AppComponent`,
+but that would not be viable in a real-world scenario with more complex features.
+When you have a complex page with multiple areas that each have their specific logic,
+it's good practice to **isolate each part into a component**:
+
+
+]
+.grid-50[
+
+<p class='center'><img src='images/master-detail-components.png' /></p>
+
+
+]
+---
+### Adding votes to the model
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Component interaction</a>]
+
+Update the `Joke` model to have an additional `votes` property:
+
+```ts
+export class Joke {
+  text: string;
+* votes: number;
+}
+```
+
+You need to update `src/app/app.component.ts` to set the initial votes to `0`:
+
+```ts
+this.jokes = [
+  { text: 'Knock knock'`, votes: 0` },
+  { text: 'The cake is a lie'`, votes: 0` }
+];
+```
+
+You also need to update the `convertJokeResponseToJoke` function in `src/app/services/joke.service.ts`:
+
+```ts
+function convertJokeResponseToJoke(response: JokeResponse): Joke {
+  return {
+    text: response.value.joke,
+*   votes: 0
+  };
+}
+```
+
+---
+### Creating a child component
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Component interaction</a>]
+
+Let's generate our **new component**, the `JokeComponent`:
+
+```ts
+$> ng generate component --spec false components/joke
+```
+
+This will create a component in the `src/app/components/joke` directory,
+with its own TypeScript definition, HTML template and CSS styles.
+
+---
+#### The `JokeComponent`
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Component interaction</a> > <a href="#53">Creating a child component</a>]
+
+The responsibility of the new `JokeComponent` will be to display a `Joke` object,
+and to provide a button to vote on the joke.
+
+Let's add a `joke` property to the new component:
+
+```ts
+// Other imports...
+*import { Joke } from '../../models/joke';
+
+@Component({
+  selector: 'app-joke',
+  templateUrl: './joke.component.html',
+  styleUrls: ['./joke.component.css']
+})
+export class JokeComponent implements OnInit {
+* joke: Joke;
+  // ...
+}
+```
+
+And update the component's template to display the joke's text:
+
+```html
+{{ joke.text }}
+```
+
+---
+### Passing data from parent to child with input binding
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Component interaction</a>]
+
+We want the joke to be provided by the parent component (`AppComponent`).
+It's an **input** of the `JokeComponent`.
+Annotating a component's property with the [`@Input`][angular-docs-input] decorator marks it as an **input property** which can be set by a parent component:
+
+```ts
+// Other imports...
+import { Component, `Input`, OnInit } from '@angular/core';
+
+// ...
+export class JokeComponent implements OnInit {
+  `@Input()`
+  joke: Joke;
+  // ...
+}
+```
+
+You can now use the `JokeComponent` in the main component's template.
+You need to create an `<app-joke>` tag (matching the component's selector),
+and to set the `joke` input property:
+
+```html
+<ul>
+  <li *ngFor='let joke of jokes'>`<app-joke [joke]='joke'></app-joke>`</li>
+</ul>
+```
+
+---
+### Voting on jokes
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Component interaction</a>]
+
+Add a `vote()` method to `JokeComponent`:
+
+```ts
+vote() {
+  this.joke.votes++;
+}
+```
+
+Add these 2 lines to the component's template:
+
+```html
+({{ joke.votes }} votes)
+<button type='button' (click)='vote()'>+1</button>
+```
+
+You can now vote!
+
+---
+### Displaying global voting information
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Component interaction</a>]
+
+Let's now display the **total number of votes** and the **best vote** on the page.
+That's the job of the main component, since a `JokeComponent` only knows about its own joke,
+so it can't know the total number of votes or whether its number of votes is the highest.
+
+Add this information to the component:
+
+```ts
+export class AppComponent {
+  // ...
+* bestVote: number;
+* totalVotes: number;
+
+  constructor(private jokeService: JokeService) {
+*   this.bestVote = 0;
+*   this.totalVotes = 0;
+    // ...
+  }
+  // ...
+}
+```
+
+And display it in the template:
+
+```html
+<p>Total votes: {{ totalVotes }}, best vote: {{ bestVote }}</p>
+```
+
+---
+### Output from child components
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Component interaction</a>]
+
+The vote button is in the child component's template, so `AppComponent` can't put an event listener on it directly.
+Instead, we need our `JokeComponent` to have an **output** that its parent can listen to.
+
+Annotating a component's property with the [`@Output`][angular-docs-output] decorator marks it as an **output property**.
+An output property must be an [`EventEmitter`][angular-docs-event-emitter] (or an Observable).
+Let's add one to `JokeComponent` now:
+
+```ts
+import { Component, `EventEmitter`, Input, OnInit, Output } from '@angular/core';
+
+// ...
+export class JokeComponent implements OnInit {
+  // ...
+* @Output()
+* voted: EventEmitter<Joke>;
+
+  constructor() {
+*  this.voted = new EventEmitter();
+  }
+
+  vote() {
+    this.joke.votes++;
+*   this.voted.emit(this.joke);
+  }
+}
+```
+
+---
+### Listening to child component events from a parent
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Component interaction</a>]
+
+Let's add an `onJokeVoted()` method to `AppComponent`:
+
+```ts
+onJokeVoted(joke: Joke) {
+  this.totalVotes++;
+  if (joke.votes > this.bestVote) {
+    this.bestVote = joke.votes;
+  }
+}
+```
+
+We want this method to be called every time a vote button is clicked in a child `JokeComponent`.
+
+From the parent's point of view, an **output property** of a child component is **just like any other event**.
+You bind to it using Angular's `(event)='expression'` syntax, exactly like you bind to `(click)` on a `<button>` tag:
+
+```html
+<app-joke [joke]='joke' `(voted)='onJokeVoted(joke)'`></app-joke>
+```
+
+---
+### Clearing the votes
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Component interaction</a>]
+
+Now that our components are already plugged together,
+adding the functionality to **clear the votes** is trivial.
+
+Add the `clearVotes()` method to the main component.
+It simply resets all votes to zero, including the jokes':
+
+```ts
+clearVotes() {
+  this.bestVote = 0;
+  this.totalVotes = 0;
+  this.jokes.forEach(joke => joke.votes = 0);
+}
+```
+
+And add a button to call it in the template:
+
+```html
+<button type='button' (click)='clearVotes()'>Clear votes</button>
+```
+
+It just works!
+
+The `Joke` objects in the `JokeComponent` children are the same objects as the ones in the main component's `jokes` array, bound through Angular's input properties.
+When you modify them in any component, Angular automatically updates all the relevant templates.
+
+---
+### More component interaction
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Component interaction</a>]
+
+These were just a few examples of how to communicate between components.
+
+There are other ways to do it, like injecting the same **service** into multiple components.
+This can be useful if two components must communicate but neither is a parent of the other, so they cannot use inputs or outputs.
+
+Read the [documentation][angular-component-interaction] to learn more.
 
 
 
@@ -1255,9 +1557,9 @@ However, keep in mind that although this provides a good user experience, it can
 ---
 ### HTML validations
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a>]
 
-HTML 5 has built-in validation attributes to define validations on your form inputs (e.g. `<input>`, `<textarea>`, etc):
+HTML 5 has [built-in validation attributes][html-input] to define validations on your form inputs (e.g. `<input>`, `<textarea>`, etc):
 
 Attribute   | Description
 :---        | :---
@@ -1268,436 +1570,287 @@ Attribute   | Description
 `pattern`   | Regular expression for a string
 `required`  | Required field
 
-You simply add them to the HTML tag to ask the **browser** to validate user input:
+You simply add them to the HTML tag:
 
 ```html
 <input type='text' `required minlength=2` />
 ```
 
-Read the [documentation][html-input] to learn more.
+Usually the **browser** performs these validations.
+But Angular **overrides** these and provide its own implementation.
+This allows you to add **more complex validations and interaction**.
+
+
 
 ---
-#### Using `novalidate`
+### Creating a form
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Forms</a> > <a href="#52">HTML validations</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a>]
 
-In Angular, you don't want the browser to perform the validations as it's not flexible.
-By adding the `novalidate` attribute to your form, it will **disable browser validation**:
+Let's turn our lonely greeting input field into a proper form:
+
+* Wrap that part of the template in a `<form>` tag.
+* Add a `name` attribute to the input field (required by Angular).
+* Add a `required` attribute to the input field to have some validation.
+* Add a submit `<button>` tag to complete the form.
 
 ```html
-<form `novalidate`>
+`<form>`
+  <p>
+    <input type='text' placeholder='Who are you?' [(ngModel)]='greeting'
+      `name='greeting' required` />
+
+    `<button type='submit'>Submit</button>`
+  </p>
+`</form>`
+```
+
+---
+#### Updating the component
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a> > <a href="#64">Creating a form</a>]
+
+Let's now make it so that the greeting will only be displayed if submitted through the form.
+We need to add a separate property to our component:
+
+* The `greeting` property will represent the value of the input field.
+* The `displayedGreeting` property will represent the submitted value (which will no longer be bound to the input field).
+
+We also need a new `displayGreeting()` method which will take the current value of `greeting` and copy it to `displayedGreeting`:
+
+```ts
+// ...
+export class AppComponent {
+  // ...
+  greeting: string;
+* displayedGreeting: string;
+  // ...
+
+* displayGreeting() {
+*   this.displayedGreeting = this.greeting;
+*   console.log('Greeting displayed');
+* }
+}
+```
+
+---
+#### Listening to form submit events
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a> > <a href="#64">Creating a form</a>]
+
+Update the component's template to reflect the fact that we now want to display `displayedGreeting` instead of `greeting`:
+
+```html
+<p *ngIf='displayedGreeting'>
+  {{ hello(displayedGreeting) }}
+</p>
+```
+
+Bind the new `displayGreeting()` method to the form's `submit` event to make it work:
+
+```html
+<form `(submit)='displayGreeting()'`>
+```
+
+
+
+---
+### Checking the validation state
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a>]
+
+You might have noticed that we have marked the input field as **required**,
+but that the user can **still submit the form** when it is invalid (i.e. the input field is empty).
+
+That's not very user-friendly.
+We're going to make the following improvements:
+
+* **Prevent the form's submission** if it has invalid fields.
+* **Disable the submit button** if the form has invalid fields.
+* **Display an error message** when the greeting input field contains an invalid value.
+* **Set the input field background color to red** if it contains an invalid value.
+
+---
+#### Prevent the form's submission
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a> > <a href="#67">Checking the validation state</a>]
+
+In Angular, any `<form>` tag is enriched by the [`NgForm`][angular-docs-ng-form] directive.
+You can retrieve the instance of the directive attached to the form by using a [**template reference variable**][angular-template-reference-variable]
+(`#greetingForm` in this example):
+
+```html
+<form `#greetingForm='ngForm'` (submit)='displayGreeting(`greetingForm`)'>
+```
+
+We can now update the implementation of `displayGreeting()` to add this new argument.
+
+[`NgForm`][angular-docs-ng-form] must be imported from `@angular/forms`.
+This class provides, among other things, a `valid` (or `invalid`) attribute to check whether all the fields are valid or not:
+
+```ts
+*import { NgForm } from '@angular/forms';
+// ...
+
+displayGreeting(`form: NgForm`) {
+  `if (form.valid) {`
+    this.displayedGreeting = this.greeting;
+    console.log('Greeting displayed');
+  `}`
+}
+```
+
+---
+#### Disable the submit button
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a> > <a href="#67">Checking the validation state</a>]
+
+The `#greetingForm` template reference variable is already available in the template from the previous modification,
+since we passed it to `displayGreeting()` as an argument.
+
+You can also bind it to DOM elements or their attributes elsewhere in the template.
+
+This time, we'll use [`NgForm`][angular-docs-ng-form]'s `invalid` attribute.
+We simply have to bind the value of the `<button>` tag's `disabled` attribute to it:
+
+* When the form is **invalid** (`greetingForm.invalid` is true), the button should be **disabled** (`disabled` should be true).
+* When the form is **valid** (`greetingForm.invalid` is false), the button should **not be disabled** (`disabled` should be false).
+
+```html
+<button type='submit' `[disabled]='greetingForm.invalid'`>Submit</button>
+```
+
+---
+#### Display an error message
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a> > <a href="#67">Checking the validation state</a>]
+
+We've seen that the `<form>` tag is **enriched** with the [`NgForm`][angular-docs-ng-form] **directive**,
+and that it's possible to **retrieve that directive** to gain access to the **form's validation state**.
+
+You can do the same with the `<input>` tag, by retrieving the field's [`NgModel`][angular-docs-ng-model]'s directive
+(which you applied by using `[(ngModel)]='expression'`):
+
+```html
+<input type='text' placeholder='Who are you?' [(ngModel)]='greeting'
+  name='greeting' required `#greetingInput='ngModel'` />
+```
+
+The `NgModel` directive also has the `valid` and `invalid` attributes,
+indicating whether that particular field is valid.
+All we have to do is add an error message to the form, and, through judicious use of our old friend the `NgIf` directive,
+only display the message when the field is invalid.
+
+```html
+<form #greetingForm='ngForm' (submit)='displayGreeting(greetingForm)'>
   <!-- ... -->
+* <p *ngIf='greetingInput.invalid'>
+*   Name is required
+* </p>
 </form>
 ```
 
-Angular **will validate** your inputs for you instead of the browser.
-This enables **more complex validations and interaction**.
-Another advantage is that Angular **polyfills** HTML 5 validations in older browsers that don't support them.
-
-
-
 ---
-### Binding to form state
+##### Dirty, pristine, touched, untouched
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a> > <a href="#67">Checking the validation state</a> > <a href="#70">Display an error message</a>]
 
-Any form in an Angular application is an instance of [FormController][angular-form-controller].
-Any input with the `ng-model` directive is an instance of [NgModelController][angular-ng-model-controller].
-By adding a `name` attribute to these elements, you can **bind form state to the scope**:
+That's nice, but the error message is displayed right away.
+It makes sense, since the **initial value** of the input field's **is actually invalid**.
+But that's not very user-friendly.
+Ideally, we would want the error message to be displayed **only once the user has interacted with the form**.
+
+Enter the following `NgForm` and `NgModel` attributes:
+
+* `dirty` - A control is **dirty** if the user has **changed its value**.
+* `pristine` - A control is **pristine** if the user has **not yet changed its value** (the opposite of `dirty`).
+* `touched` - A control is **touched** if the user has triggered a **[`blur`][blur-event] event** on it.
+* `untouched` - A control is **untouched** if the user has **not yet** triggered a **[`blur`][blur-event] event** on it (the opposite of `touched`).
+
+Make the following change to only display the error message after the user has started typing:
 
 ```html
-<form `name='userForm'` ng-submit='submit()' novalidate>
-  <input type='text' ng-model='user.name' `name='name'` `required` />
-  <div ng-if='`userForm.name.$error.required`'>Tell us your name.</div>
-</form>
+<p *ngIf='greetingInput.invalid` && greetingInput.dirty`'>
+  Name is required
+</p>
 ```
 
-In this example, adding `name='userForm'` to the form **puts the `userForm` variable in the scope**:
-this is the `FormController` instance.
+---
+#### Set the input field background color to red
 
-Adding `name='name'` to the form field **puts the `userForm.name` variable in the scope**:
-this is the `NgModelController` instance.
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a> > <a href="#67">Checking the validation state</a>]
+
+Angular automatically **mirrors** many `NgModel` **properties** onto the `<input>` tag as **CSS classes**.
+You can use these classes to **style** form elements according to the state of the form.
+
+These are some of the supported classes ([full list][angular-form-control-status-classes]):
+
+* `.ng-valid` or `.ng-invalid` is applied depending on whether the value is valid
+* `.ng-pristine` or `.ng-dirty` is applied depending on whether the user has changed the value
+* `.ng-untouched` or `.ng-touched` is applied depending on whether the user has triggered `blur` event
+
+So when our field is invalid and dirty, it will have both the `.ng-invalid` and `.ng-dirty` CSS classes added to it.
+All you need to do is modify `src/app/app.component.css` to add a background color to input fields with this combination of classes:
+
+```css
+input.ng-invalid.ng-dirty {
+  background-color: #ffc0c0;
+}
+```
 
 ---
-#### Form and `ng-model` controllers
+### Default Angular validators
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Forms</a> > <a href="#54">Binding to form state</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a>]
 
-Form and `ng-model` controllers have the following useful properties:
+These are some of the validators provided **out of the box** by Angular:
 
-Ctrl       | Property     | Description
-:---       | :---         | :---
-Form       | `$pristine`  | True if the user has not interacted with the form
-Form       | `$dirty`     | True if the user has interacted with the form
-Form       | `$valid`     | True if all inputs are valid
-Form       | `$invalid`   | True if at least one input is invalid
-Form       | `$pending`   | True if an asynchronous validation is pending
-Form       | `$submitted` | True if the form has been submitted (even if invalid)
-`ng-model` | `$error`     | An object with all failing validations as keys
-`ng-model` | `$untouched` | True if the input has not lost focus yet
-`ng-model` | `$touched`   | True if the input has lost focus
-`ng-model` | `$pristine`  | True if the user has not interacted with the input
-`ng-model` | `$dirty`     | True if the user has interacted with the input
-`ng-model` | `$valid`     | True if the input has no errors
-`ng-model` | `$invalid`   | True if there is at least one error for the input
+* [`email`][angular-docs-email-validator] - Validates that a string is a valid e-mail address.
+* [`min`][angular-docs-min-validator] & [`max`][angular-docs-max-validator] - Validate that a number is within the specified bound(s).
+* [`min-length`][angular-docs-min-length-validator] & [`max-length`][angular-docs-max-length-validator] - Validate that a string's length is within the specified bound(s).
+* [`pattern`][angular-docs-pattern-validator] - Validates that a value matches a regular expression.
+* [`required`][angular-docs-required-validator] - Validates that a value is present.
 
----
-#### Complete validation example
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Forms</a> > <a href="#54">Binding to form state</a>]
+Here's a few usage examples:
 
 ```html
-<form `name='userForm'` ng-submit='submit()' novalidate>
-  <label>
-    Name:
-    <input type='text' ng-model='user.name' `name='name'` required minlength=2 />
-  </label>
-  <div ng-if='`userForm.name.$dirty`'>
-    <div ng-if='`userForm.name.$error.required`'>Tell us your name.</div>
-    <div ng-if='`userForm.name.$error.minlength`'>Your name is too short.</div>
-  </div>
-
-  <label>
-    E-mail:
-    <input type='email' ng-model='user.email' `name='email'` required />
-  </label>
-  <div ng-if='`userForm.email.$dirty`'>
-    <span ng-if='`userForm.email.$error.required`'>Tell us your e-mail.</span>
-    <span ng-if='`userForm.email.$error.email`'>This is not a valid e-mail.</span>
-  </div>
-
-  <input type='submit' ng-disabled='`userForm.$invalid`' value='Save' />
-</form>
+<input `type='email'` name='email' />
+<input type='number' name='age' `min='3' max='10'` />
+<input type='text' name='firstName' `min-length='1' max-length='50'` />
+<input type='text' name='lastName' `pattern='[a-zA-Z ]*'` />
+<input type='text' name='occupation' `required` />
 ```
 
-See it in action [here][angular-codepen-form-validation].
-Read the [documentation][angular-forms] to learn more.
-
 ---
-#### Custom synchronous validators
+#### Custom validators
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#51">Forms</a> > <a href="#54">Binding to form state</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#62">Forms</a> > <a href="#73">Default Angular validators</a>]
 
-AngularJS provides basic implementation for most common HTML 5 validations,
-but sometimes you need to add your own.
-You can do that by defining a **validation directive**:
+These validators are nice, but you might need **more complex validations**.
 
-```js
-var INTEGER_REGEXP = /^-?\d+$/;
-app.directive('integer', function() {
-  return {
-    `require: 'ngModel',` // Gives access to the ng-model controller
-    link: function(scope, element, attrs, `ngModelCtrl`) {
-      `ngModelCtrl.$validators.integer` = function(modelValue, viewValue) {
-        if (ngModelCtrl.$isEmpty(modelValue)) {
-          return true; // Consider an empty value to be valid
-        }
+That's why Angular allows you to implement [custom validators][angular-custom-validators].
+Here's an example of a validator that checks whether a string is all uppercase or all lowercase:
 
-        // Return true if the string value is an integer
-        `return INTEGER_REGEXP.test(viewValue);`
+```ts
+export function uniformCaseValidator(upper: boolean): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} => {
+
+    const lowercase = control.value.toLowerCase() === control.value;
+    const uppercase = control.value.toUpperCase() === control.value;
+    if (upper && !uppercase) || (!upper && !lowercase)) {
+      // The value is invalid.
+      return { // Return an error named after the validator.
+        uniformCase: { value: control.value }
       };
     }
+
+    return null; // All is well, there is no error.
   };
-});
-```
-
-Using it is as simple as applying the directive as an attribute:
-
-```html
-<input type='number' ng-model='size' name='size' min='0' max='10' `integer` />
-```
-
-
-
----
-class: center, middle
-## The `$http` service
-
-.breadcrumbs[<a href="#1">Angular</a>]
-
-
-
-The `$http` service is a core AngularJS service that facilitates communication with remote HTTP servers.
-
-
-
----
-### How to make requests
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#58">The `$http` service</a>]
-
-Here's a typical HTTP `POST` request to authenticate a user:
-
-```http
-POST /authenticate HTTP/1.1
-Authorization: Bearer letmein
-Content-Type: application/json
-
-{ "name": "jdoe", "password": "test" }
-```
-
-Here's how you would make that request with Angular:
-
-```js
-$http({
-  method: 'POST',
-  headers: {
-    Authorization: 'Bearer letmein',
-    Content-Type: 'application/json'
-  },
-  data: {
-    name: 'jdoe',
-    password: 'test'
-  }
-});
-```
-
----
-#### Query parameters
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#58">The `$http` service</a> > <a href="#59">How to make requests</a>]
-
-Here's an HTTP `GET` request with query parameters:
-
-```http
-GET /movies?director=abc&include=foo&include=bar&page=2&pageSize=30
-```
-
-You can put the query parameters in the URL yourself:
-
-```js
-var director = 'abc';
-var page = 2;
-var pageSize = 30;
-var includes = [ 'foo', 'bar' ];
-
-var url = '/movies';
-url = url + '?director=' + director;
-url = url + '&page=' + page + '&pageSize=' + pageSize;
-
-for (var i = 0; i < includes.length; i++) {
-  url = url + '&include=' + includes[i];
-}
-
-$http({
-  url: url
-});
-
-// GET /movies?director=abc&include=foo&include=bar&page=2&pageSize=30
-```
-
----
-#### Using the `params` object
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#58">The `$http` service</a> > <a href="#59">How to make requests</a>]
-
-Or you can use the `params` object which does it for you:
-
-```js
-var director = 'abc';
-var page = 2;
-var pageSize = 30;
-var includes = [ 'foo', 'bar' ];
-
-$http({
-  url: '/movies,
-* params: {
-*   director: director,
-*   page: page,
-*   pageSize: pageSize,
-*   include: includes
-* }
-});
-
-// GET /movies?director=abc&include=foo&include=bar&page=2&pageSize=30
-```
-
-
-
----
-### How to parse a response
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#58">The `$http` service</a>]
-
-Here's a typical HTTP response:
-
-```http
-HTTP/1.1 201 Created
-Content-Type: application/json
-Location: /users/abc
-
-{
-  "id": "abc",
-  "name": "jdoe"
 }
 ```
 
-Here's how to extract all the data from that response:
-
-```js
-$http(options).then(function(res) {
-  // Get the status code
-  console.log(res`.status`); // 201
-  console.log(res`.statusText`); // 'Created'
-  // Get the headers
-  console.log(res`.headers`('Content-Type')); // 'application/json'
-  console.log(res`.headers`('Location')); // '/users/abc'
-  // Get the response body
-  console.log(res`.data`); // { id: 'abc', name: 'jdoe' }
-  console.log(res`.data`.name); // 'jdoe'
-});
-```
-
-
-
----
-class: center, middle, image-header
-## Best practices
-
-.breadcrumbs[<a href="#1">Angular</a>]
-
-
-
-<img src='images/best-practices.jpg' class='w50' />
-
-
-
----
-### File structure
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#63">Best practices</a>]
-
-There are several possible file structures:
-
-.grid-50[
-
-**By element type**
-
-```txt
-index.html
-*controllers
-  hello-controller.js
-  other-controller.js
-*services
-  hello-service.js
-*components
-  person-component.js
-  person-component.html
-```
-
-
-]
-.grid-50[
-
-**By feature**
-
-```txt
-index.html
-*hello
-  hello-controller.js
-  hello-service.js
-*other
-  other-controller.js
-*person-component
-  person-component.js
-  person-component.html
-```
-
-
-]
-.container[
-
-There is no *right or wrong* solution here.
-
-Just **don't put everything in one file**.
-
-
-
-
-]
----
-### Multiple controllers on one page
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#63">Best practices</a>]
-
-When you have a complex page with multiple areas that each have their specific logic,
-it's good practice to **isolate each part into a component**:
-
-<p class='center'><img src='images/master-detail-components.png' class='w80' /></p>
-
-
-
----
-### Dependency injection and minification
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#63">Best practices</a>]
-
-**Minification** is the process of **removing all unnecessary characters** from source code **without changing its functionality**.
-Take the following code as an example:
-
-```js
-var numbers = [];
-for (var i = 0; i < 20; i++) {
-  numbers[i] = i;
-}
-```
-
-It can be rewritten like this:
-
-```js
-for(var a=[i=0];++i<20;a[i]=i);
-```
-
-Although much less readable, minified code can be much smaller.
-Minification tools are often used to **reduce file size**, especially when downloading a rich Internet application's **JavaScript files**.
-
----
-#### Dependency injection is broken by minification
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#63">Best practices</a> > <a href="#66">Dependency injection and minification</a>]
-
-Angular relies on **variable names** to perform dependency injection by default:
-
-```js
-.controller('HelloController', function(`HelloService`) {
-  var helloCtrl = this;
-  helloCtrl.double = `HelloService`.double;
-});
-```
-
-This code **will not work if variable names are minified**:
-
-```js
-.controller('HelloController',function(`a`){
-var b=this;b.double=`a`.double;
-});
-```
-
-How would Angular know that variable `a` should be your `HelloService`?
-
----
-#### Inline array annotation
-
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#63">Best practices</a> > <a href="#66">Dependency injection and minification</a>]
-
-When you know your code is going to be minified, you should use the **inline array annotation** to declare your injected parameters:
-
-```js
-.controller('HelloController', `[ 'HelloService', function(HelloService) {`
-  var helloCtrl = this;
-  helloCtrl.double = HelloService.double;
-`}]`);
-```
-
-That way, even when your variables are minified, the **names in the inline array** will tell Angular what you need to inject:
-
-```js
-.controller('HelloController',[`'HelloService'`,function(`a`){
-var b=this;b.double=`a`.double;
-}]);
-```
-
-You will often find the inline array annotation in examples as it is the recommended dependency injection syntax.
+It takes a bit more code than that to register the validator in order to use it in templates.
+You can find a full example [in the documentation][angular-custom-validators].
 
 
 
@@ -1720,46 +1873,105 @@ You will often find the inline array annotation in examples as it is the recomme
 
 * [A guide to web components][a-guide-to-web-components]
 * [Angular 2 components][angular-2-series-components]
-* [JavaScript promises][js-promises]
+* [JavaScript promises][js-promises-subject]
 * [Promises in Angular][angular-promises]
+
+
+
+---
+## TODO
+
+.breadcrumbs[<a href="#1">Angular</a>]
+
+* Explain `[attr]` & `(event)`
+* Move directive section
+* Pipes
+* Get HTTP response
+* Mention async validators
+* Mention reactive forms
+* Observable error example
+* Prune references at bottom
 
 
 
 [a-guide-to-web-components]: https://css-tricks.com/modular-future-web-components/
 [ajax]: https://developer.mozilla.org/en-US/docs/AJAX/Getting_Started
-[angular]: https://angularjs.org/
+[angular]: https://angular.io
+[angularjs]: https://angularjs.org/
 [angular-api]: https://docs.angularjs.org/api
 [angular-built-in-filters]: https://docs.angularjs.org/api/ng/filter
 [angular-codepen]: http://codepen.io/AlphaHydrae/pen/LxoRze?editors=1010#0
 [angular-codepen-form-validation]: http://codepen.io/AlphaHydrae/pen/EWZOOR?editors=1011
 [angular-codepen-scope-hierarchy]: http://codepen.io/AlphaHydrae/pen/ryjaXN?editors=1010#0
 [angular-codepen-scope-components]: http://codepen.io/AlphaHydrae/pen/LWxVzj?editors=1010#0
+[angular-component-interaction]: https://angular.io/guide/component-interaction
+[angular-component-styles]: https://angular.io/guide/component-styles
 [angular-components]: https://docs.angularjs.org/guide/component
+[angular-custom-validators]: https://angular.io/guide/form-validation#custom-validators
 [angular-directives]: https://docs.angularjs.org/guide/directive
 [angular-directives-list]: https://docs.angularjs.org/api/ng/directive
+[angular-docs-component]: https://angular.io/api/core/Component
+[angular-docs-directive]: https://angular.io/api/core/Directive
+[angular-docs-email-validator]: https://angular.io/api/forms/EmailValidator
+[angular-docs-event-emitter]: https://angular.io/api/core/EventEmitter
+[angular-docs-http-client]: https://angular.io/guide/http
+[angular-docs-injectable]: https://angular.io/api/core/Injectable
+[angular-docs-input]: https://angular.io/api/core/Input
+[angular-docs-max-length-validator]: https://angular.io/api/forms/MaxLengthValidator
+[angular-docs-min-length-validator]: https://angular.io/api/forms/MinLengthValidator
+[angular-docs-max-validator]: https://angular.io/api/forms/Validators#max
+[angular-docs-min-validator]: https://angular.io/api/forms/Validators#min
+[angular-docs-ng-class]: https://angular.io/api/common/NgClass
+[angular-docs-ng-for]: https://angular.io/api/common/NgForOf
+[angular-docs-ng-if]: https://angular.io/api/common/NgIf
+[angular-docs-ng-form]: https://angular.io/api/forms/NgForm
+[angular-docs-ng-model]: https://angular.io/api/forms/NgModel
+[angular-docs-ng-module]: https://angular.io/api/core/NgModule
+[angular-docs-ng-plural]: https://angular.io/api/common/NgPlural
+[angular-docs-ng-style]: https://angular.io/api/common/NgStyle
+[angular-docs-ng-switch]: https://angular.io/api/common/NgSwitch
+[angular-docs-output]: https://angular.io/api/core/Output
+[angular-docs-pattern-validator]: https://angular.io/api/forms/PatternValidator
+[angular-docs-required-validator]: https://angular.io/api/forms/RequiredValidator
 [angular-element]: https://docs.angularjs.org/api/ng/function/angular.element
+[angular-form-control-status-classes]: https://angular.io/guide/form-validation#control-status-css-classes
 [angular-form-controller]: https://docs.angularjs.org/api/ng/type/form.FormController
 [angular-forms]: https://docs.angularjs.org/guide/forms
 [angular-guide]: https://docs.angularjs.org/guide
 [angular-input]: https://docs.angularjs.org/api/ng/directive/input
 [angular-ng-model-controller]: https://docs.angularjs.org/api/ng/type/ngModel.NgModelController
 [angular-promises]: ../angular-promises/
-[angular-2]: https://angular.io
+[angular-reactive-forms]: https://angular.io/guide/reactive-forms
+[angular-starter]: https://github.com/MediaComem/comem-angular-starter#readme
+[angular-structural-directives]: https://angular.io/guide/structural-directives
+[angular-template-reference-variable]: https://angular.io/guide/template-syntax#ref-vars
+[angular-testing]: https://angular.io/guide/testing
 [angular-2-series-components]: http://blog.ionic.io/angular-2-series-components/
+[blur-event]: https://developer.mozilla.org/en-US/docs/Web/Events/blur
 [chrome]: https://www.google.com/chrome/
 [chrome-dev]: https://developers.google.com/web/tools/chrome-devtools/console/
+[css-attribute-selector]: https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
+[di]: https://en.wikipedia.org/wiki/Dependency_injection
 [html-history-api]: https://developer.mozilla.org/en-US/docs/Web/API/History_API
 [html-input]: https://www.w3schools.com/tags/tag_input.asp
+[intro-to-reactive-programming]: https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
 [jquery]: http://jquery.com
 [js]: ../js/
+[js-array-map]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+[js-classes]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 [js-closures]: ../js-closures/
-[js-promises]: ../js-promises/
-[live-server]: https://www.npmjs.com/package/live-server
+[js-promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[js-promises-subject]: ../js-promises/
+[ioc]: https://en.wikipedia.org/wiki/Inversion_of_control
 [minification]: https://en.wikipedia.org/wiki/Minification_(programming)
-[typescript]: https://www.typescriptlang.org
+[observable-map]: http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-map
+[rxjs]: http://reactivex.io/rxjs/
+[ts]: https://www.typescriptlang.org
+[ts-subject]: ../ts
 [web-components]: https://developer.mozilla.org/en-US/docs/Web/Web_Components
 
     </textarea>
-<script src="../../subject-54c8ca8388104a2c4ba5.js"></script>
+    <script src='https://embed.runkit.com'></script>
+    <script src='../../subject-bfbd7c563950f0b00013.js'></script>
   </body>
 </html>

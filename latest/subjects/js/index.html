@@ -3,7 +3,7 @@
   <head>
     <title>JavaScript (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
-    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:false,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/4b2b3495299ab4c8eebdefffdfe2857edded4ff9/subjects/js&quot;}'>
+    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:false,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/6ba0e3c0b84886d25196de82b10e1dfe5d1fb05f/subjects/js&quot;}'>
   </head>
   <body>
     <textarea id='source'>
@@ -47,22 +47,27 @@ It has been standardized in the [ECMAScript][es] language specification.
 
 <img src='images/timeline.png' width='100%' />
 
-**ECMAScript 2015** (also known as ECMAScript 6 or ES6) added iterators and for/of loops, Python-style [generators][js-generators] and generator expressions, [arrow functions][js-arrow-functions], binary data, typed arrays, collections (maps, sets and weak maps), [promises][js-promise], number and math enhancements, reflection, and [proxies][js-proxy].
+[**ECMAScript 2015** (also known as ECMAScript 6 or ES6)][es6] added iterators and for/of loops, Python-style [generators][js-generators] and generator expressions, [arrow functions][js-arrow-functions], binary data, typed arrays, collections (maps, sets and weak maps), [promises][js-promise], number and math enhancements, reflection, and [proxies][js-proxy].
 
-**ECMAScript 2017** (ES8) will add [async/await functions][js-async] and [shared memory and atomics][js-shared-memory].
+[**ECMAScript 2017** (ES8)][es8] added [async/await functions][js-async] and [shared memory and atomics][js-shared-memory].
+
+[**ECMAScript 2018** (ES9)][es9] will add [asynchronous iteration][js-async-iteration] and more.
 
 
 
 ---
-### JavaScript ES6 support
+### JavaScript ES6+ support
 
 .breadcrumbs[<a href="#1">JavaScript</a> > <a href="#2">What is JavaScript?</a>]
 
 There are features from ES6 that are **not yet fully supported** on all browsers.
 
-In client-side code running in the **browser**, you should stick with **ES5** or use a JavaScript compiler like [Babel][babel] to turn your ES6+ code into compatible ES5 code before releasing it.
+In client-side code running in the **browser**,
+you should stick with **ES5** or use a JavaScript compiler like [Babel][babel] or a module bundler like [Webpack][webpack]
+to turn your ES6+ code into compatible ES5 code before releasing it.
 
-In server-side code running with the latest **Node.js** versions, all **ES6** features are supported except for [imports][js-imports].
+In server-side code running with the latest **Node.js** versions,
+all **ES6+** features are supported except for [imports][js-imports].
 
 
 
@@ -84,12 +89,12 @@ class: center, middle
 .grid-70[
 
 ```js
-var aString = "HEIG-VD";
-var aNumber = 3.12;
-var aBoolean = true;
-var nullValue = null;
-var undefinedValue;
-var aSymbol = Symbol('foo');
+let aString = "HEIG-VD";
+let aNumber = 3.12;
+let aBoolean = true;
+let nullValue = null;
+let undefinedValue;
+let aSymbol = Symbol('foo');
 
 console.log(typeof aString); // "string"
 console.log(typeof aNumber); // "number"
@@ -99,9 +104,9 @@ console.log(typeof undefinedValue); // "undefined"
 console.log(typeof aSymbol); // "symbol"
 
 // There is no integer type
-console.log(isInteger(aNumber)); // false
+console.log(Number.isInteger(aNumber)); // false
 console.log(typeof 4); // "number"
-console.log(isInteger(4)); // true
+console.log(Number.isInteger(4)); // true
 
 // Symbols are unique identifiers
 console.log(Symbol('foo') == aSymbol); // false
@@ -140,7 +145,7 @@ The types are:
 
 ```js
 // Let's create an object
-var person = {
+let person = {
   firstName: 'John',
   lastName: 'Doe'
 };
@@ -148,14 +153,14 @@ var person = {
 // We can dynamically add properties
 person.gender = 'male';
 
-var property = 'zip';
+let property = 'zip';
 person[property] = 1446;
 
 // And delete them
 delete person.firstName;
 
 // And list them
-for (var key in person) {
+for (let key in person) {
   console.log(key + ': ' + person[key]);
 }
 ```
@@ -187,12 +192,12 @@ They are list-like objects with numeric keys.
 
 ```js
 // Let's create an array
-var fruits = [ 'apple', 'pear' ];
+let fruits = [ 'apple', 'pear' ];
 
 console.log(typeof fruits); // "object"
 
 // Iterate over it
-for (var i = 0; i < fruits.length; i++) {
+for (let i = 0; i < fruits.length; i++) {
   console.log('fruit ' + i + ' is ' + fruits[i]);
 }
 
@@ -213,7 +218,7 @@ Values have a type, but **variables don't**.
 When you declare a variable, you don't specify a type.
 
 ```js
-var aVariable = "aString";
+let aVariable = "aString";
 console.log(typeof aVariable); // "string"
 
 aVariable = 3.12;
@@ -277,7 +282,7 @@ if (0) {
 This can cause weird bugs sometimes:
 
 ```js
-var countdown = "";
+let countdown = "";
 if (countdown == 0) {
   console.log('We are done'); // "We are done"
 }
@@ -309,7 +314,7 @@ It can be stored in variables like any other value.
 
 ```js
 // Store a function in a variable
-var hello = function(name) {
+let hello = function(name) {
   console.log('Hello ' + name + '!');
 };
 
@@ -320,7 +325,7 @@ console.log(typeof(hello)); // "function"
 hello('World'); // "Hello World!"
 
 // Store a function as an object's property
-var anObject = {
+let anObject = {
   aProperty: function() {
     return 42;
   }
@@ -329,7 +334,7 @@ var anObject = {
 // That property now holds a function as its value
 console.log(typeof(anObject.aProperty)); // "function"
 
-var value = anObject.aProperty();
+let value = anObject.aProperty();
 console.log(value); // 42
 ```
 
@@ -349,10 +354,10 @@ function makeSquareFunction() {
 }
 
 // By calling it, we get a function
-var square = makeSquareFunction();
+let square = makeSquareFunction();
 console.log(typeof(square)); // "function"
 
-var result = square(5);
+let result = square(5);
 console.log(result); // 25
 ```
 
@@ -407,7 +412,7 @@ function compute() {
 }
 
 // Call compute with "add"
-var value = compute(2, 4, add);
+let value = compute(2, 4, add);
 console.log(value); // 6
 
 // Call compute with "multiply"
@@ -426,11 +431,11 @@ Use the console in your browser's developer tools to see what the `console.log` 
 
 .breadcrumbs[<a href="#1">JavaScript</a> > <a href="#12">JavaScript supports [first-class functions][first-class-functions]</a>]
 
-These properties of functions enable powerful functional programming patterns:
+These properties of functions enable powerful **functional programming** patterns:
 
 ```js
 // Define an array of people objects
-var people = [
+let people = [
   { firstName: 'John', lastName: 'Doe' },
   { firstName: 'John', lastName: 'Smith' },
   { firstName: 'Deborah', lastName: 'Smith' }
@@ -444,7 +449,7 @@ function getName(person) {
 // The "map" function of arrays returns an array of the same size,
 // but with each element "mapped" or "transformed" using the provided
 // function
-var lastNames = people.map(getName);
+let lastNames = people.map(getName);
 
 // We transformed an array of people into an array of last names
 console.log(lastNames); // [ "Doe", "Smith", "Smith" ]
@@ -460,14 +465,14 @@ console.log(lastNames); // [ "Doe", "Smith", "Smith" ]
 While seaching for examples on the web, you will stumble upon some strange syntax:
 
 ```js
-var result = compute(3, 4, (nb1, nb2) => nb1 / nb2);
+let result = compute(3, 4, (nb1, nb2) => nb1 / nb2);
 ```
 
 You are facing the new **ES6** syntax for functions.
 The example above is equivalent to writing:
 
 ```js
-var result = compute(3, 4, function(nb1, nb2) {
+let result = compute(3, 4, function(nb1, nb2) {
   return nb1 / nb2;
 });
 ```
@@ -488,7 +493,7 @@ The part left of the `=>` represents the **function's arguments**.
 If your function has **only one** argument, you can **omit** the parentheses:
 
 ```js
-var squareroot = compute(16, number => Math.sqrt(number));
+let squareroot = compute(16, number => Math.sqrt(number));
 ```
 
 But if your function has **no arguments**, you **MUST** add **empty parentheses**:
@@ -513,13 +518,13 @@ The `return` keyword is **implicit** with one-line bodies that have no brackets:
 
 ```js
 // This arrow function will return the square root of the number
-var squareroot = compute(16, number => Math.sqrt(number));
+let squareroot = compute(16, number => Math.sqrt(number));
 ```
 
 If the body has **more than one line**, you **MUST add brackets** `{}` around it (_and use the `return` keyword if necessary_):
 
 ```js
-var square = compute(4, number => {
+let square = compute(4, number => {
   let result = number * number;
   return number;
 });
@@ -539,7 +544,7 @@ All you have to do is call the function with `new` like in mose object-oriented 
 function Starship() {
 }
 
-var discovery = new Starship();
+let discovery = new Starship();
 console.log(discovery); // {}
 console.log(discovery instanceof Starship); // true
 ```
@@ -565,7 +570,7 @@ function Starship(name, designation) {
 * this.designation = designation;
 }
 
-var discovery = new Starship("Discovery", "NCC-1031");
+let discovery = new Starship("Discovery", "NCC-1031");
 ```
 
 Now, if we log this new object, we'll see:
@@ -796,13 +801,13 @@ In JavaScript, you (now) have 3 ways to use strings:
 
 ```js
 // With single quotes: '
-var string = 'I\'m your "Wurst" nightmare: ' + worstNightmare;
+let string = 'I\'m your "Wurst" nightmare: ' + worstNightmare;
 ```
 You have to **escape** all other single quotes, and use `+` to concatenate.
 
 ```js
 // With double quotes: "
-var string = "I'm your \"Wurst\" nightmare: " + worstNightmare;
+let string = "I'm your \"Wurst\" nightmare: " + worstNightmare;
 ```
 You have to escape all other double quotes, and use `+` to concatenate.
 
@@ -810,7 +815,7 @@ You have to escape all other double quotes, and use `+` to concatenate.
 
 ```js
 // With backticks (template literals): `
-var string = `I'm your "Wurst" nightmare: ${worstNightmare}`;
+let string = `I'm your "Wurst" nightmare: ${worstNightmare}`;
 ```
 
 You don't have to escape anything. To insert variables inside the string, use `${variable}`.
@@ -819,7 +824,7 @@ You don't have to escape anything. To insert variables inside the string, use `$
 
 
 ---
-## Array functions
+## Manipulating arrays
 
 .breadcrumbs[<a href="#1">JavaScript</a>]
 
@@ -838,12 +843,12 @@ Function     | Effect
 ---
 ### Examples
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#32">Array functions</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#32">Manipulating arrays</a>]
 
 `.forEach()`
 
 ```js
-var crew = ["Jonathan", "T'Pol", "Trip", "Malcolm", "Sato", "Travis"];
+let crew = ["Jonathan", "T'Pol", "Trip", "Malcolm", "Sato", "Travis"];
 crew.forEach(function(element, index) {
   console.log("Hello, my name is " + element + ", and I'm n°" + index);
 });
@@ -852,8 +857,8 @@ crew.forEach(function(element, index) {
 `.find()`
 
 ```js
-var ages = [3, 10, 19, 25];
-var adult = ages.find(function(age) {
+let ages = [3, 10, 19, 25];
+let adult = ages.find(function(age) {
   return age >= 18;
 });
 console.log(adult); // 19
@@ -862,10 +867,221 @@ console.log(adult); // 19
 `.slice()`
 
 ```js
-var starships = ["NX-01", "NCC-1701", "NCC-1701 D", "NCC-1764", "NCC-74656"];
+let starships = ["NX-01", "NCC-1701", "NCC-1701 D", "NCC-1764", "NCC-74656"];
 // Start at position 0, included, and end before position 3, excluded.
-var enterprises = starships.slice(0, 3);
+let enterprises = starships.slice(0, 3);
 console.log(enterprises); // ["NX-01", "NCC-1701", "NCC-1701 D"]
+```
+
+---
+### The `for...of` loop
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#32">Manipulating arrays</a>]
+
+**ES6**'s `for...of` loop is a new, simpler way of **iterating over all elements** of an array:
+
+```js
+let fruits = [ 'apple', 'pear' ];
+
+// Classic "for" loop
+for (let i = 0; i < fruits.length; i++) {
+  let fruit = fruits[i];
+  console.log('fruit: ' + fruit);
+}
+
+// Equivalent "for...of" loop
+for (let fruit of fruits) {
+  console.log('fruit: ' + fruit);
+}
+```
+
+The `for...of` loop is actually not limited to arrays:
+it can iterate over any [iterable object][js-iterable] such as Map, Set, etc.
+
+
+
+---
+class: center, middle
+## Destructuring assignment
+
+.breadcrumbs[<a href="#1">JavaScript</a>]
+
+
+
+The destructuring assignment syntax makes it possible to **unpack values from arrays**, or **properties from objects**, into **distinct variables**.
+
+
+
+---
+### Array destructuring
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#35">Destructuring assignment</a>]
+
+.grid-50[
+
+Basic variable assignment.
+
+```js
+let foo = [ 'one', 'two', 'three' ];
+
+*let [ one, two, three ] = foo;
+console.log(one); // "one"
+console.log(two); // "two"
+console.log(three); // "three"
+```
+
+
+]
+.grid-50[
+
+Equivalent without destructuring.
+
+```js
+let foo = [ 'one', 'two', 'three' ];
+
+*let one = foo[0];
+*let two = foo[1];
+*let three = foo[2];
+console.log(one); // "one"
+console.log(two); // "two"
+console.log(three); // "three"
+```
+
+
+]
+.container[
+
+You can also use destructuring separately from the variables' declaration:
+
+```js
+let foo = [ 'one', 'two', 'three' ];
+let one, two, three;
+
+*[ one, two, three ] = foo;
+console.log(one); // "one"
+console.log(two); // "two"
+console.log(three); // "three"
+```
+
+
+]
+---
+#### Array destructuring features & tricks
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#35">Destructuring assignment</a> > <a href="#36">Array destructuring</a>]
+
+Here's a few things you can do with array destructuring:
+
+```js
+// Default values
+let a, b;
+*[ a=5, b=7 ] = [ 1 ];
+console.log(a); // 1
+console.log(b); // 7
+
+// Swapping variables
+let a = 1;
+let b = 3;
+*[a, b] = [b, a];
+console.log(a); // 3
+console.log(b); // 1
+
+// Ignoring values
+*let [ a, , b ] = [ 1, 2, 3 ];
+console.log(a); // 1
+console.log(b); // 3
+
+// Assigning the rest to a variable
+*let [ a, ...b ] = [ 1, 2, 3 ];
+console.log(a); // 1
+console.log(b); // [2, 3]
+```
+
+
+
+---
+### Object destructuring
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#35">Destructuring assignment</a>]
+
+.grid-50[
+
+Basic variable assignment.
+
+```js
+let o = { p: 42, q: true };
+
+*let { p, q } = o;
+console.log(p); // 42
+console.log(q); // true
+```
+
+
+]
+.grid-50[
+
+Equivalent without destructuring.
+
+```js
+let o = { p: 42, q: true };
+
+*let p = o.p;
+*let q = o.q;
+console.log(p); // 42
+console.log(q); // true
+```
+
+
+]
+.container[
+
+You can also use destructuring separately from the variables' declaration
+(but you have to put it within parentheses):
+
+```js
+let o = { p: 42, q: true };
+let p, q;
+
+*({ p, q } = 0);
+console.log(p); // 42
+console.log(q); // true
+```
+
+
+]
+---
+#### Object destructuring features & tricks
+
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#35">Destructuring assignment</a> > <a href="#38">Object destructuring</a>]
+
+Here's a few things you can do with object destructuring:
+
+```js
+// Assigning to new variable names
+let o = { p: 42, q: true };
+
+*let { p: foo, q: bar } = o;
+console.log(foo); // 42
+console.log(bar); // true
+
+// Default values
+*let { a = 10, b = 5 } = { a: 3 };
+console.log(a); // 3
+console.log(b); // 5
+
+// Unpacking fields from function parameters
+*function userId({id}) {
+  return id;
+}
+
+let user = { id: 42, name: 'Bob' };
+console.log('userId: ' + userId(user)); // "userId: 42"
+
+// Assigning the rest to a variable
+*let { a, b, ...rest } = { a: 10, b: 20, c: 30, d: 40 }
+console.log(a); // 10
+console.log(b); // 20
+console.log(rest); // { c: 30, d: 40 }
 ```
 
 
@@ -883,7 +1099,7 @@ class: center, middle
 ---
 ### JSON who?
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#34">JSON</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#40">JSON</a>]
 
 JSON stands for **J**ava**S**cript **O**bject **N**otation.
 It is a syntax that is used to **represent JavaScript objects** with **text**.
@@ -908,14 +1124,14 @@ Note that you **cannot** put a JavaScript function in a JSON object.
 ---
 ### Example
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#34">JSON</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#40">JSON</a>]
 
-Here is an example of a **JavaScript object**, and it's **description in JSON**:
+Here is an example of a **JavaScript object**, and its **description in JSON**:
 
 .grid-50[
 
 ```js
-var starship = {
+let starship = {
   designation: "NX-01",
   crew: 83,
   captain: {
@@ -971,7 +1187,7 @@ This is JSON. The double quotes around property names are **required**.
 ---
 ### Using JSON
 
-.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#34">JSON</a>]
+.breadcrumbs[<a href="#1">JavaScript</a> > <a href="#40">JSON</a>]
 
 **Manually** declaring a JavaScript object in JSON (or the opposite) can be quite tedious, especially with deep, complex objects.
 
@@ -979,8 +1195,8 @@ Fortunately, JavaScript provides the **global `JSON` object** which can do it fo
 To transform a **JavaScript object to JSON text**, use `JSON.stringify()`:
 
 ```js
-var crew = {name: "T'Pol", species: "Vulcan", station: "Science Officer"};
-*var crewJson = JSON.stringify(crew);
+let crew = {name: "T'Pol", species: "Vulcan", station: "Science Officer"};
+*let crewJson = JSON.stringify(crew);
 console.log(crewJson);
 // "{"name":"T'Pol","species":"Vulcan","station":"Science Officer"}"
 ```
@@ -988,8 +1204,8 @@ console.log(crewJson);
 To do the opposite, that is create a JavaScript object from JSON text, use `JSON.parse()`:
 
 ```js
-var crewJson = '{"name": "Travis", "species": "Human", "station": "Helm"}';
-*var crew = JSON.parse(crewJson);
+let crewJson = '{"name": "Travis", "species": "Human", "station": "Helm"}';
+*let crew = JSON.parse(crewJson);
 console.log(crew);
 // Object {name: "Travis", species: "Human", station: "Helm"}
 ```
@@ -1014,16 +1230,34 @@ console.log(crew);
 
 
 
+---
+## TODO
+
+.breadcrumbs[<a href="#1">JavaScript</a>]
+
+* classes, static
+* getters/setters
+* import/export
+
+
+
 [array-functions]: https://www.w3schools.com/jsref/jsref_obj_array.asp
 [babel]: http://babeljs.io
 [chrome]: https://www.google.com/chrome/
 [es]: https://en.wikipedia.org/wiki/ECMAScript
+[es6]: http://es6-features.org/
+[es8]: http://2ality.com/2016/02/ecmascript-2017.html
+[es9]: http://2ality.com/2017/02/ecmascript-2018.html
 [ex-function-as-argument]: http://codepen.io/AlphaHydrae/pen/dNBpPv?editors=0010
 [first-class-functions]: https://en.wikipedia.org/wiki/First-class_function
 [js-arrow-functions]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
 [js-async]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+[js-async-iteration]: http://2ality.com/2016/10/asynchronous-iteration.html
+[js-destructuring-assignment]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
 [js-generators]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators
 [js-imports]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
+[js-iterable]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
+[js-loops]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration
 [js-promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 [js-proxy]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
 [js-shared-memory]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer
@@ -1036,8 +1270,10 @@ console.log(crew);
 [push-doc]: https://www.w3schools.com/jsref/jsref_push.asp
 [slice-doc]: https://www.w3schools.com/jsref/jsref_slice_array.asp
 [reverse-doc]: https://www.w3schools.com/jsref/jsref_reverse.asp
+[webpack]: https://webpack.js.org/
 
     </textarea>
-<script src="../../subject-54c8ca8388104a2c4ba5.js"></script>
+    <script src='https://embed.runkit.com'></script>
+    <script src='../../subject-bfbd7c563950f0b00013.js'></script>
   </body>
 </html>
