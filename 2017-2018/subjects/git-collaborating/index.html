@@ -3,7 +3,7 @@
   <head>
     <title>Collaborating with Git (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
-    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/720bfbda54c8e5f09f562694aaf40ef2c9e0a983/subjects/git-collaborating&quot;}'>
+    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/e0fac29c0ccd0b706ec62532adb53687d7d96668/subjects/git-collaborating&quot;}'>
   </head>
   <body>
     <textarea id='source'>
@@ -11,7 +11,7 @@
 
 Learn how to collaborate on [GitHub][github] with [Git][git].
 
-This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development courses](https://github.com/MediaComem/comem-webdev).
+This material is part of [web development courses](https://github.com/MediaComem/comem-webdev) for [Media Engineering](https://heig-vd.ch/formations/bachelor/filieres/ingenierie-des-medias).
 
 
 **You will need**
@@ -33,7 +33,7 @@ This material is used in [COMEM+](http://www.heig-vd.ch/comem) [web development 
 .breadcrumbs[<a href="#1">Collaborating with Git</a>]
 
 This tutorial is meant to be performed by a group of two.
-Throughout the rest of the document, the members of the group will be referred to as **Person A** and **Person B**.
+Throughout the rest of the document, the members of the group will be referred to as **Bob** and **Alice**.
 
 The tutorial assumes that you have followed the [previous Git tutorial][git-tutorial] and have kept your calculator repository.
 
@@ -187,11 +187,11 @@ Clone repositories, push and pull commits
 
 
 ---
-### A: create a repository on GitHub
+### Bob: create a repository on GitHub
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
-**Person A** should create a repository from the GitHub menu:
+**Bob** should create a repository from the GitHub menu:
 
 .grid-20[
 
@@ -208,42 +208,42 @@ Clone repositories, push and pull commits
 
 ]
 ---
-### A: add B as a collaborator
+### Bob: add B as a collaborator
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
 For this tutorial, both team members will need push access to the repository.
-**Person A** should go to the repository's **collaborator settings**,
-and add the GitHub username of **Person B** as a collaborator:
+**Bob** should go to the repository's **collaborator settings**,
+and add the GitHub username of **Alice** as a collaborator:
 
 <img src='images/github-collaborators.png' width='100%' />
 
-**Person B** must then **_accept the invitation sent by e-mail_** for the change to be effective.
+**Alice** must then **_accept the invitation sent by e-mail_** for the change to be effective.
 
 
 
 ---
-### A: copy the remote SSH URL
+### Bob: copy the remote SSH URL
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
-**Person A** should copy the SSH URL of the GitHub repository:
+**Bob** should copy the SSH URL of the GitHub repository:
 
 <img src='images/github-ssh-url.png' width='100%' />
 
 
 
 ---
-### A: add the remote to your local repository
+### Bob: add the remote to your local repository
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
-**Person A** should move into their local repository and add the GitHub repository as a remote:
+**Bob** should move into their local repository and add the GitHub repository as a remote:
 
 ```bash
 $> cd /path/to/projects/comem-webdev-git-branching-ex
 
-$> git remote add origin git@github.com:PersonA/github-demo.git
+$> git remote add origin git@github.com:bob/github-demo.git
 ```
 
 It's a convention to name the default remote **origin**.
@@ -252,18 +252,18 @@ You can check what remotes are available with `git remote`:
 
 ```bash
 $> git remote -v
-origin  git@github.com:PersonA/github-demo.git (fetch)
-origin  git@github.com:PersonA/github-demo.git (push)
+origin  git@github.com:bob/github-demo.git (fetch)
+origin  git@github.com:bob/github-demo.git (push)
 ```
 
 
 
 ---
-### A: push your commits to the shared repository
+### Bob: push your commits to the shared repository
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
-It's time for **Person A** to put the code in the shared GitHub repository.
+It's time for **Bob** to put the code in the shared GitHub repository.
 This is done using the `git push` command:
 
 ```bash
@@ -274,7 +274,7 @@ Compressing objects: 100% (33/33), done.
 Writing objects: 100% (35/35), 4.16 KiB | 0 bytes/s, done.
 Total 35 (delta 14), reused 11 (delta 2)
 remote: Resolving deltas: 100% (14/14), done.
-To github.com:PersonA/github-demo.git
+To github.com:bob/github-demo.git
  * [new branch]      master -> master
 ```
 
@@ -285,7 +285,7 @@ The `-u` option (or `--set-upstream`) tells Git to remember that you have linked
 
 
 ---
-### A: remote branches
+### Bob: remote branches
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
@@ -314,26 +314,26 @@ It tells you where the **master** branch points to on the **origin** remote (the
 
 ]
 ---
-### B: get the remote repository's SSH URL
+### Alice: get the remote repository's SSH URL
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
-**Person B** can now go to the repository's page on GitHub (under **Person A**'s account) and copy the SSH URL:
+**Alice** can now go to the repository's page on GitHub (under **Bob**'s account) and copy the SSH URL:
 
 <img src='images/github-clone-url.png' width='100%' />
 
 
 
 ---
-### B: clone the shared repository
+### Alice: clone the shared repository
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
-**Person B** can now get a copy of the shared GitHub repository on their machine.
+**Alice** can now get a copy of the shared GitHub repository on their machine.
 This is done using the `git clone` command:
 
 ```bash
-$> git clone git@github.com:PersonA/github-demo.git
+$> git clone git@github.com:bob/github-demo.git
 Cloning into 'github-demo'...
 remote: Counting objects: 35, done.
 remote: Compressing objects: 100% (21/21), done.
@@ -349,7 +349,7 @@ The `git clone [url]` command copies the **remote** repository to your machine.
 
 
 ---
-### B: remote branches
+### Alice: remote branches
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
@@ -365,7 +365,7 @@ The entire history of the project is **pulled** (or downloaded) from the GitHub 
 
 Git will also automatically checkout the **master** branch in the working directory so you have something to work from.
 
-Again, Git has created a **remote-tracking branch** in Person B's repository,
+Again, Git has created a **remote-tracking branch** in Alice's repository,
 so that you can know what the current state of the remote is.
 
 
@@ -373,11 +373,11 @@ so that you can know what the current state of the remote is.
 
 ]
 ---
-### B: make local changes
+### Alice: make local changes
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
-**Person B** thinks that the project's filenames are too long. Let's fix that:
+**Alice** thinks that the project's filenames are too long. Let's fix that:
 
 ```bash
 $> mv addition.js add.js
@@ -389,7 +389,7 @@ $> git commit -m "Shorter filenames"
 
 
 ---
-### B: check the state of branches
+### Alice: check the state of branches
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
@@ -401,16 +401,16 @@ $> git commit -m "Shorter filenames"
 ]
 .grid-30[
 
-This is now the state of the shared repository and **Person B**'s local repository.
+This is now the state of the shared repository and **Alice**'s local repository.
 
-There is a new commit in **Person B**'s repository that is not in the shared GitHub repository.
+There is a new commit in **Alice**'s repository that is not in the shared GitHub repository.
 
 
 
 
 ]
 ---
-### B: push to the shared repository
+### Alice: push to the shared repository
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
@@ -425,7 +425,7 @@ $> git push origin master
 
 
 ---
-### A: check the state of branches
+### Bob: check the state of branches
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
@@ -437,17 +437,17 @@ $> git push origin master
 ]
 .grid-40[
 
-This is now the state from **Person A**'s perspective.
+This is now the state from **Bob**'s perspective.
 
 Notice that the new commit is in the shared repository (on GitHub)
-but that the remote-tracking branch origin/master **is not up-to-date** in **Person A**'s repository.
+but that the remote-tracking branch origin/master **is not up-to-date** in **Bob**'s repository.
 
 
 ]
 .container[
 
 Git does not automatically sync repositories.
-**As far as Person A knows** looking at information from their local repository,
+**As far as Bob knows** looking at information from their local repository,
 the master branch still points to `4f94ga` in the shared repository.
 
 
@@ -455,11 +455,11 @@ the master branch still points to `4f94ga` in the shared repository.
 
 ]
 ---
-### A: fetch changes from the shared repository
+### Bob: fetch changes from the shared repository
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
-**Person A** should now get the changes from the shared repository:
+**Bob** should now get the changes from the shared repository:
 
 ```bash
 $> git fetch origin
@@ -467,7 +467,7 @@ remote: Counting objects: 2, done.
 remote: Compressing objects: 100% (1/1), done.
 remote: Total 2 (delta 1), reused 2 (delta 1), pack-reused 0
 Unpacking objects: 100% (2/2), done.
-From github.com:PersonA/github-demo
+From github.com:bob/github-demo
    4f94ga..92fb8c  master     -> origin/master
 ```
 
@@ -488,7 +488,7 @@ However, the local master branch **has not moved** and the working directory has
 
 ]
 ---
-### A: check the state of branches
+### Bob: check the state of branches
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
@@ -513,7 +513,7 @@ Fast-forward
 
 As expected, master has been fast-forwarded to the commit pointed to by origin/master and the working directory has been updated.
 
-**Person A**'s repository is now up-to-date.
+**Bob**'s repository is now up-to-date.
 
 
 
@@ -552,11 +552,11 @@ class: center, middle
 
 
 ---
-### A: fix the bug
+### Bob: fix the bug
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
-**Person A** now notices that the last change breaks the calculator.
+**Bob** now notices that the last change breaks the calculator.
 This is because the files were renamed, but the `<script>` tags in `index.html` were not updated.
 Fix that bug, then commit and push the change:
 
@@ -572,11 +572,11 @@ $> git push origin master
 
 
 ---
-### B: make other changes
+### Alice: make other changes
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
-**Person B**, not having noticed the bug, proceeds to make 2 changes on `index.html`:
+**Alice**, not having noticed the bug, proceeds to make 2 changes on `index.html`:
 
 * Add an `<h2>` title before each computation
 * Put the two last `<script>` tags on one line
@@ -595,7 +595,7 @@ $> git push origin master
 
 
 ---
-### B: push the other changes
+### Alice: push the other changes
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
@@ -617,9 +617,9 @@ $> git push origin master
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
 ```bash
-To github.com:PersonA/github-demo.git
+To github.com:bob/github-demo.git
  ! [rejected]        master -> master (fetch first)
-error: failed to push some refs to 'git@github.com:PersonA/github-demo.git'
+error: failed to push some refs to 'git@github.com:bob/github-demo.git'
 hint: Updates were rejected because the remote contains work that you do
 hint: not have locally. This is usually caused by another repository pushing
 hint: to the same ref. You may want to first integrate the remote changes
@@ -637,16 +637,16 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 The push was **rejected** by the remote repository. Why?
 
-This is the state of **Person B**'s repository right now.
+This is the state of **Alice**'s repository right now.
 
 
 ]
 ---
-#### B: fetch the changes
+#### Alice: fetch the changes
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a> > <a href="#32">Rejected pushes</a>]
 
-Since Git tells Person B that the local copy of the remote repository is out of date, try fetching those changes:
+Since Git tells Alice that the local copy of the remote repository is out of date, try fetching those changes:
 
 ```bash
 $> git fetch origin
@@ -655,15 +655,15 @@ $> git fetch origin
 <git-memoir name='github' chapter='alice-fetch-changes' svg-height='325px'></git-memoir>
 
 ---
-#### B: try to push again
+#### Alice: try to push again
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a> > <a href="#32">Rejected pushes</a>]
 
 ```bash
 $> git push origin master
-To github.com:PersonA/github-demo.git
+To github.com:bob/github-demo.git
  ! [rejected]        master -> master (non-fast forward)
-error: failed to push some refs to 'git@github.com:PersonA/github-demo.git'
+error: failed to push some refs to 'git@github.com:bob/github-demo.git'
 ```
 
 .grid-70[
@@ -676,7 +676,7 @@ error: failed to push some refs to 'git@github.com:PersonA/github-demo.git'
 
 The push was **rejected again**!. Why?
 
-This is the state of **Person B**'s repository right now.
+This is the state of **Alice**'s repository right now.
 
 
 
@@ -697,7 +697,7 @@ This is the state of **Person B**'s repository right now.
 .grid-30[
 
 It's for the same reason as in the previous tutorial:
-**Person A** and **Person B**'s work have diverged from a common ancestor.
+**Bob** and **Alice**'s work have diverged from a common ancestor.
 
 A remote repository will **only accept fast-forward pushes** by default.
 
@@ -706,11 +706,11 @@ A remote repository will **only accept fast-forward pushes** by default.
 
 ]
 ---
-### B: pull changes from the shared repository
+### Alice: pull changes from the shared repository
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
-**Person B** wants to fetch **and** merge the changes made by **Person A**.
+**Alice** wants to fetch **and** merge the changes made by **Bob**.
 Let's use the `git pull` command:
 
 ```bash
@@ -719,7 +719,7 @@ remote: Counting objects: 3, done.
 remote: Compressing objects: 100% (2/2), done.
 remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
 Unpacking objects: 100% (3/3), done.
-From github.com:PersonA/github-demo
+From github.com:bob/github-demo
  * branch            master     -> FETCH_HEAD
    92fb8c..3ff531    master     -> origin/master
 Auto-merging index.html
@@ -732,11 +732,11 @@ The fetch succeeded, but the merge failed because of a **conflict** on `index.ht
 
 
 ---
-### B: check the conflict markers
+### Alice: check the conflict markers
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
-**Person B** should take a look at `index.html`:
+**Alice** should take a look at `index.html`:
 
 ```txt
 <<<<<<< HEAD
@@ -763,11 +763,11 @@ $> git commit -m "Merge origin/master"
 
 
 ---
-### B: check the state of branches
+### Alice: check the state of branches
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
-Now the state of **Person B**'s local repository is consistent with the state of the shared repository:
+Now the state of **Alice**'s local repository is consistent with the state of the shared repository:
 the commit pointed to by **master** is ahead of the commit pointed to by **origin/master**.
 
 <git-memoir name='github' chapter='alice-pull-changes' svg-height='325px'></git-memoir>
@@ -775,7 +775,7 @@ the commit pointed to by **master** is ahead of the commit pointed to by **origi
 
 
 ---
-### B: push the changes
+### Alice: push the changes
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
@@ -790,17 +790,32 @@ $> git push origin master
 
 
 ---
-### A: pull the changes
+### Bob: pull the changes
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
-**Person A** can now pull those latest changes to keep up-to-date:
+**Bob** can now pull those latest changes to keep up-to-date:
 
 ```bash
 $> git pull origin master
 ```
 
 <git-memoir name='github' chapter='bob-pull-merge' svg-height='335px'></git-memoir>
+
+
+
+---
+### TODO
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
+
+* slide 4: change text to mention and explain trees, refer to blue box in diagram
+* slide 4: fix contents of commit description: mention date
+* slide 17: specify that files will change when checkout
+* slide 18: monospace master branch name?
+* slide 20: monospace branch names
+* slide 21 & 22: monospace excercise paragraph
+* slide 23: monospace master
 
 
 
@@ -811,7 +826,7 @@ $> git pull origin master
 
     </textarea>
     <script src='https://embed.runkit.com'></script>
-    <script src='../../subject-62f9aec2bb2e7ccba06a.js'></script>
+    <script src='../../subject-5c45d35157b2ae586f5e.js'></script>
     <script src='./index.js'></script>
   </body>
 </html>

@@ -4,7 +4,7 @@
 
       .chapter('staging', {
         before: function(step, drawer) {
-          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).getRepositoryGridLayoutStrategy().uniformColumnWidth = false;
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).uniformRepositoryGridColumnWidthAcrossFileSystems = true;
         }
       })
       .fileSystem('bob', fs => {}, {
@@ -52,6 +52,12 @@
       .chapter('alice-pull')
       .pull('origin', 'master')
 
+      .chapter('alice-commit-settings', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridColumns = 4;
+        }
+      })
+
       .chapter('alice-commit')
       .commit({ commit: { hash: '92fb8c' } })
 
@@ -72,6 +78,12 @@
       .chapter('bob-merge')
       .merge('origin/master')
 
+      .chapter('box-fix-settings', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridColumns = 5;
+        }
+      })
+
       .chapter('bob-fix')
       .commit({ commit: { hash: '55e12a' } })
       .push('origin', 'master')
@@ -89,6 +101,12 @@
 
       .chapter('alice-fetch-changes')
       .fetch({ remote: 'origin' })
+
+      .chapter('alice-pull-changes-settings', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridColumns = 6;
+        }
+      })
 
       .chapter('alice-pull-changes')
       .pull('origin', 'master')

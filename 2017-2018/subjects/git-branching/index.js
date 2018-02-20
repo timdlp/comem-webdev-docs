@@ -6,7 +6,13 @@
       .fileSystem('demo', fs => {}, { showFiles: false })
       .repo('demo', {}, { showInternals: false })
 
-      .chapter('setup')
+      .chapter('setup', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridColumns = 3;
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).uniformRepositoryGridColumnWidth = true;
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).uniformRepositoryGridColumnWidthAcrossFileSystems = true;
+        }
+      })
       .commit({ commit: { hash: '387f12' } })
 
       .chapter('commits')
@@ -18,6 +24,12 @@
 
       .chapter('checkout')
       .checkout('feature-sub')
+
+      .chapter('commit-on-a-branch-width', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridColumns = 4;
+        }
+      })
 
       .chapter('commit-on-a-branch')
       .commit({ commit: { hash: '712ff2' } })
@@ -73,6 +85,12 @@
   subject.gitMemoirs.branching = function() {
     return createBranchingBaseMemoir()
 
+      .chapter('divergent-history-settings', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridRows = 2;
+        }
+      })
+
       .chapter('divergent-history')
       .commit({ commit: { hash: '2817bc' } })
 
@@ -89,12 +107,18 @@
       .chapter('delete-branch')
       .branch('fix-add', { delete: true })
 
+      .chapter('work-on-feature-branch-settings', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridColumns = 5;
+        }
+      })
+
       .chapter('work-on-feature-branch')
       .checkout('feature-sub')
       .commit({ commit: { hash: 'f92ab0' } })
 
       // Disable uniform column width for later steps (or the commit graph gets too wide)
-      .chapter('foo', {
+      .chapter('column-width-settings', {
         before: function(step, drawer) {
           drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).getRepositoryGridLayoutStrategy().uniformColumnWidth = false;
         }
@@ -102,6 +126,12 @@
 
       .chapter('merge-checkout')
       .checkout('master')
+
+      .chapter('merge-settings', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridColumns = 6;
+        }
+      })
 
       .chapter('merge')
       .merge('feature-sub', { commit: { hash: '04fb82' } })
@@ -112,8 +142,20 @@
       .chapter('checkout-past')
       .checkout('better-sub', { new: true, refspec: '4f94fa' })
 
+      .chapter('conflicting-change-settings', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridRows = 3;
+        }
+      })
+
       .chapter('conflicting-change')
       .commit({ commit: { hash: '98ff62' } })
+
+      .chapter('merge-conflicting-change-settings', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridColumns = 7;
+        }
+      })
 
       .chapter('merge-conflicting-change')
       .checkout('master')
@@ -123,11 +165,23 @@
       .chapter('conflicting-file-change-checkout')
       .checkout('cleanup', { new: true, refspec: '4f94fa' })
 
+      .chapter('conflicting-file-change-settings', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridRows = 4;
+        }
+      })
+
       .chapter('conflicting-file-change')
       .commit({ commit: { hash: '12ac65' } })
 
       .chapter('merge-conflicting-file-change-checkout')
       .checkout('master')
+
+      .chapter('merge-conflicting-file-change-settings', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).minRepositoryGridColumns = 8;
+        }
+      })
 
       .chapter('merge-conflicting-file-change')
       .merge('cleanup')
