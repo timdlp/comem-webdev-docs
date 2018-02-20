@@ -3,7 +3,7 @@
   <head>
     <title>Collaborating with Git (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
-    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/2c9cc26290caa879316f23db79e263d1f7e40b93/subjects/git-collaborating&quot;}'>
+    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/720bfbda54c8e5f09f562694aaf40ef2c9e0a983/subjects/git-collaborating&quot;}'>
   </head>
   <body>
     <textarea id='source'>
@@ -291,7 +291,7 @@ The `-u` option (or `--set-upstream`) tells Git to remember that you have linked
 
 .grid-60[
 
-<img src='images/demo-1-git-push.png' width='100%' />
+<git-memoir name='github' chapter='bob-push' svg-height='300px'></git-memoir>
 
 
 ]
@@ -355,7 +355,7 @@ The `git clone [url]` command copies the **remote** repository to your machine.
 
 .grid-60[
 
-<img src='images/demo-2-git-clone.png' width='100%' />
+<git-memoir name='github' chapter='alice-pull' svg-height='275px'></git-memoir>
 
 
 ]
@@ -364,10 +364,6 @@ The `git clone [url]` command copies the **remote** repository to your machine.
 The entire history of the project is **pulled** (or downloaded) from the GitHub repository.
 
 Git will also automatically checkout the **master** branch in the working directory so you have something to work from.
-
-
-]
-.container[
 
 Again, Git has created a **remote-tracking branch** in Person B's repository,
 so that you can know what the current state of the remote is.
@@ -397,32 +393,37 @@ $> git commit -m "Shorter filenames"
 
 .breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
 
-.grid-60[
+.grid-70[
 
-<img src='images/demo-3-local-commit.png' width='100%' />
+<git-memoir name='github' chapter='alice-commit' svg-height='275px'></git-memoir>
 
 
 ]
-.grid-40[
+.grid-30[
 
 This is now the state of the shared repository and **Person B**'s local repository.
 
 There is a new commit in **Person B**'s repository that is not in the shared GitHub repository.
 
 
-]
-.container[
 
-Push it to update the shared repository:
+
+]
+---
+### B: push to the shared repository
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#11">Sharing changes</a>]
+
+Push to update the shared repository:
 
 ```bash
 $> git push origin master
 ```
 
+<git-memoir name='github' chapter='alice-push' svg-height='275px'></git-memoir>
 
 
 
-]
 ---
 ### A: check the state of branches
 
@@ -430,7 +431,7 @@ $> git push origin master
 
 .grid-60[
 
-<img src='images/demo-4-remote-out-of-sync.png' width='100%' />
+<git-memoir name='github' chapter='bob-look' controls='false' svg-height='275px'></git-memoir>
 
 
 ]
@@ -470,13 +471,13 @@ From github.com:PersonA/github-demo
    4f94ga..92fb8c  master     -> origin/master
 ```
 
-.grid-60[
+.grid-70[
 
-<img src='images/demo-5-git-fetch.png' width='100%' />
+<git-memoir name='github' chapter='bob-fetch' svg-height='250px'></git-memoir>
 
 
 ]
-.grid-40[
+.grid-30[
 
 The new commit is now here and the remote-tracking branch has been updated.
 
@@ -502,13 +503,13 @@ Fast-forward
  rename addition.js => add.js (100%)
 ```
 
-.grid-60[
+.grid-70[
 
-<img src='images/demo-6-git-merge.png' width='100%' />
+<git-memoir name='github' chapter='bob-merge' svg-height='240px'></git-memoir>
 
 
 ]
-.grid-40[
+.grid-30[
 
 As expected, master has been fast-forwarded to the commit pointed to by origin/master and the working directory has been updated.
 
@@ -553,11 +554,10 @@ class: center, middle
 ---
 ### A: fix the bug
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
 **Person A** now notices that the last change breaks the calculator.
 This is because the files were renamed, but the `<script>` tags in `index.html` were not updated.
-
 Fix that bug, then commit and push the change:
 
 ```bash
@@ -567,12 +567,14 @@ $> git commit -m "Fix bad <script> tags"
 $> git push origin master
 ```
 
+<git-memoir name='github' chapter='bob-fix' svg-height='250px'></git-memoir>
+
 
 
 ---
 ### B: make other changes
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
 **Person B**, not having noticed the bug, proceeds to make 2 changes on `index.html`:
 
@@ -590,6 +592,13 @@ $> git push origin master
 <script src="addition.js"></script><script src="subtraction.js"></script>
 ```
 
+
+
+---
+### B: push the other changes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
+
 Commit and push the changes:
 
 ```bash
@@ -598,12 +607,14 @@ $> git commit -m "Improve layout"
 $> git push origin master
 ```
 
+<git-memoir name='github' chapter='alice-fix' svg-height='250px'></git-memoir>
+
 
 
 ---
 ### Rejected pushes
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
 ```bash
 To github.com:PersonA/github-demo.git
@@ -616,17 +627,57 @@ hint: (e.g., 'git pull ...') before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ```
 
-.grid-60[
+.grid-70[
 
-<img src='images/demo-7-b-state.png' width='100%' />
+<git-memoir name='github' chapter='alice-fix' controls='false' svg-height='250px'></git-memoir>
 
 
 ]
-.grid-40[
+.grid-30[
 
 The push was **rejected** by the remote repository. Why?
 
 This is the state of **Person B**'s repository right now.
+
+
+]
+---
+#### B: fetch the changes
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a> > <a href="#32">Rejected pushes</a>]
+
+Since Git tells Person B that the local copy of the remote repository is out of date, try fetching those changes:
+
+```bash
+$> git fetch origin
+```
+
+<git-memoir name='github' chapter='alice-fetch-changes' svg-height='325px'></git-memoir>
+
+---
+#### B: try to push again
+
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a> > <a href="#32">Rejected pushes</a>]
+
+```bash
+$> git push origin master
+To github.com:PersonA/github-demo.git
+ ! [rejected]        master -> master (non-fast forward)
+error: failed to push some refs to 'git@github.com:PersonA/github-demo.git'
+```
+
+.grid-70[
+
+<git-memoir name='github' chapter='alice-fetch-changes' controls='false' svg-height='325px'></git-memoir>
+
+
+]
+.grid-30[
+
+The push was **rejected again**!. Why?
+
+This is the state of **Person B**'s repository right now.
+
 
 
 
@@ -635,20 +686,20 @@ This is the state of **Person B**'s repository right now.
 ---
 ### Divergent history
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
-.grid-60[
+.grid-70[
 
-<img src='images/demo-8-git-fetch.png' width='100%' />
+<git-memoir name='github' chapter='alice-fetch-changes' controls='false' svg-height='325px'></git-memoir>
 
 
 ]
-.grid-40[
+.grid-30[
 
 It's for the same reason as in the previous tutorial:
 **Person A** and **Person B**'s work have diverged from a common ancestor.
 
-If **Person B** did a `git fetch` now, this is what their repository would look like.
+A remote repository will **only accept fast-forward pushes** by default.
 
 
 
@@ -657,9 +708,9 @@ If **Person B** did a `git fetch` now, this is what their repository would look 
 ---
 ### B: pull changes from the shared repository
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
-**Person B** wants to fetch and merge the changes made by **Person A**.
+**Person B** wants to fetch **and** merge the changes made by **Person A**.
 Let's use the `git pull` command:
 
 ```bash
@@ -683,7 +734,7 @@ The fetch succeeded, but the merge failed because of a **conflict** on `index.ht
 ---
 ### B: check the conflict markers
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
 **Person B** should take a look at `index.html`:
 
@@ -714,19 +765,19 @@ $> git commit -m "Merge origin/master"
 ---
 ### B: check the state of branches
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
 Now the state of **Person B**'s local repository is consistent with the state of the shared repository:
 the commit pointed to by **master** is ahead of the commit pointed to by **origin/master**.
 
-<img src='images/demo-9-b-state.png' width='80%' />
+<git-memoir name='github' chapter='alice-pull-changes' svg-height='325px'></git-memoir>
 
 
 
 ---
 ### B: push the changes
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
 The push will be accepted now:
 
@@ -734,14 +785,14 @@ The push will be accepted now:
 $> git push origin master
 ```
 
-<img src='images/demo-10-git-push.png' width='80%' />
+<git-memoir name='github' chapter='alice-push-merge' svg-height='335px'></git-memoir>
 
 
 
 ---
 ### A: pull the changes
 
-.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#27">Managing conflicting commit histories</a>]
+.breadcrumbs[<a href="#1">Collaborating with Git</a> > <a href="#28">Managing conflicting commit histories</a>]
 
 **Person A** can now pull those latest changes to keep up-to-date:
 
@@ -749,7 +800,7 @@ $> git push origin master
 $> git pull origin master
 ```
 
-<img src='images/demo-11-git-pull.png' width='80%' />
+<git-memoir name='github' chapter='bob-pull-merge' svg-height='335px'></git-memoir>
 
 
 
@@ -760,6 +811,7 @@ $> git pull origin master
 
     </textarea>
     <script src='https://embed.runkit.com'></script>
-    <script src='../../subject-73fbb81569d76a0108f1.js'></script>
+    <script src='../../subject-62f9aec2bb2e7ccba06a.js'></script>
+    <script src='./index.js'></script>
   </body>
 </html>

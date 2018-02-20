@@ -80,8 +80,10 @@
       .checkout('feature-sub')
       .checkout('fix-add')
 
-      .chapter('fast-forward-merge')
+      .chapter('fast-forward-merge-checkout')
       .checkout('master')
+
+      .chapter('fast-forward-merge')
       .merge('fix-add')
 
       .chapter('delete-branch')
@@ -91,9 +93,45 @@
       .checkout('feature-sub')
       .commit({ commit: { hash: 'f92ab0' } })
 
-      .chapter('merge')
+      // Disable uniform column width for later steps (or the commit graph gets too wide)
+      .chapter('foo', {
+        before: function(step, drawer) {
+          drawer.requireExtension(gitMemoir.horizontalLayoutExtensionPredicate).getRepositoryGridLayoutStrategy().uniformColumnWidth = false;
+        }
+      })
+
+      .chapter('merge-checkout')
       .checkout('master')
+
+      .chapter('merge')
       .merge('feature-sub', { commit: { hash: '04fb82' } })
+
+      .chapter('delete-feature-sub')
+      .branch('feature-sub', { delete: true })
+
+      .chapter('checkout-past')
+      .checkout('better-sub', { new: true, refspec: '4f94fa' })
+
+      .chapter('conflicting-change')
+      .commit({ commit: { hash: '98ff62' } })
+
+      .chapter('merge-conflicting-change')
+      .checkout('master')
+      .merge('better-sub')
+      .branch('better-sub', { delete: true })
+
+      .chapter('conflicting-file-change-checkout')
+      .checkout('cleanup', { new: true, refspec: '4f94fa' })
+
+      .chapter('conflicting-file-change')
+      .commit({ commit: { hash: '12ac65' } })
+
+      .chapter('merge-conflicting-file-change-checkout')
+      .checkout('master')
+
+      .chapter('merge-conflicting-file-change')
+      .merge('cleanup')
+      .branch('cleanup', { delete: true })
 
       .memoir;
   };
