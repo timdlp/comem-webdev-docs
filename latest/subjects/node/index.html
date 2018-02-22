@@ -3,7 +3,7 @@
   <head>
     <title>Node.js Introduction (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
-    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/b6bdca70ecb59252b3ce84048cc7bca38b6adfdd/subjects/node&quot;}'>
+    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/8ef5df96dfcb2f2c4624a1c606668a7c0901d1a7/subjects/node&quot;}'>
   </head>
   <body>
     <textarea id='source'>
@@ -404,7 +404,7 @@ const fs = require('fs');
 console.log('Hello');
 
 // List the files at the root of the file system
-fs.readdir('/', 'utf-8', function(err, result) {
+fs.readdir('/', function(err, result) {
   console.log('Files: ' + result.join(', '));
   console.log('Done');
 });
@@ -465,7 +465,7 @@ Although I/O operations are non-blocking, **your code always executes in a singl
 const fs = require('fs');
 let fileCount = 0;
 
-fs.readdir('/', 'utf-8', function(err, result) {
+fs.readdir('/', function(err, result) {
   `fileCount = fileCount + result.length`;
   console.log('Files listed:', fileCount);
 });
@@ -531,7 +531,7 @@ Node.js callback functions usually have this signature:
 Like the previous example:
 
 ```js
-fs.readdir('/', 'utf-8', `function(err, result) {`
+fs.readdir('/', `function(err, result) {`
   // ...
 `}`);
 ```
@@ -539,12 +539,12 @@ fs.readdir('/', 'utf-8', `function(err, result) {`
 There are two ways that the function can be called back by Node.js:
 
 1. The operation **failed**:
-  * `err` contains an error describing the problem
+  * `err` contains an **error** describing the problem
   * `result` is `null` or `undefined`
 
 2. The operation **succeeded**:
   * `err` is `null` or `undefined`
-  * `result` contains the result of the operation
+  * `result` contains the **result** of the operation
 
 
 
@@ -937,6 +937,6 @@ server.on('request', function(message) {
 
     </textarea>
     <script src='https://embed.runkit.com'></script>
-    <script src='../../subject-9fecb6e06388668f68b2.js'></script>
+    <script src='../../subject-5c45d35157b2ae586f5e.js'></script>
   </body>
 </html>
