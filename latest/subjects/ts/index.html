@@ -3,7 +3,7 @@
   <head>
     <title>TypeScript (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
-    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/b516aa2b6b3d0ec92b9391b8892e320b4249b15f/subjects/ts/README.md&quot;}'>
+    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/209684a5538d00dbe8afea84b76f4a31e2a7b58c/subjects/ts/README.md&quot;}'>
   </head>
   <body>
     <textarea id='source'>
@@ -13,6 +13,8 @@ Learn the basics of [TypeScript][typescript], a typed superset of JavaScript tha
 
 TypeScript is also the language recommended by the Angular team to develop [Angular][angular] applications
 (but it can be used with any framework or library).
+
+This tutorial is a summary of some of the [TypeScript Handbook][typescript-handbook]'s chapters.
 
 This material is part of [web development courses](https://github.com/MediaComem/comem-webdev) for [Media Engineering](https://heig-vd.ch/formations/bachelor/filieres/ingenierie-des-medias).
 
@@ -69,7 +71,7 @@ Here's a few examples with the basic types:
 let isDone: boolean = false;
 let value: number = 6;
 let name: string = 'World';
-let hello: string = `Hello ${name}!`;
+let hello: string = \`Hello ${name}!`;
 
 // Arrays
 let digits: number[] = [ 1, 2, 3 ];
@@ -273,8 +275,6 @@ let numerals: (string | number)[] = [ 1, 2, 3 ];
 numerals.push('forty-two');
 ```
 
-
-
 ---
 #### Type guards
 
@@ -297,10 +297,10 @@ You can use a **type guard** to *narrow* a value to a specific type:
 ```ts
 function lower(value: string | number): string {
   if (typeof(value) == 'string') {
-    // In this block, TypeScript knows that `value` is a string
+    // In this block, TypeScript knows that "value" is a string
     return value.toLowerCase();
   } else {
-    // In this block, TypeScript knows that `value` is a number
+    // In this block, TypeScript knows that "value" is a number
     // (since it's not a string, and it's either a string or a number)
     return (value - 1).toString();
   }
@@ -309,6 +309,8 @@ function lower(value: string | number): string {
 console.log(lower('HEY'));  // "hey"
 console.log(lower(43));     // "42"
 ```
+
+
 
 ---
 ### Enums
@@ -339,6 +341,8 @@ if (value === Direction.South) {
 }
 ```
 
+
+
 ---
 ### Void
 
@@ -360,6 +364,29 @@ let foo: string = warnUser();
 
 
 ---
+### Type aliases
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#2">Types</a>]
+
+Type aliases create a **new name for a type**.
+They can be used to "rename" primitives, unions, tuples, and any other types that you'd otherwise have to write by hand:
+
+```ts
+type GitHash = string;
+type StringOrNumber = string | number;
+
+let hash: GitHash = '9e91aa6c05f96251c20507f9068d177019af2742';
+
+let value: StringOrNumber = 'foo';
+value = 42;
+```
+
+Aliasing doesn’t actually create a new type—it creates a new name to refer to that type.
+It can be used as a form of documentation, e.g. to improve readability.
+
+
+
+---
 class: center, middle
 ## Functions
 
@@ -374,7 +401,7 @@ How to *do* things.
 ---
 ### Mandatory parameters
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#14">Functions</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#15">Functions</a>]
 
 In TypeScript, every function parameter is assumed to be required by the function.
 You can pass `null` or `undefined`, but the compiler will check that you have provided the correct number of parameters.
@@ -395,7 +422,7 @@ let result2 = buildName("Bob", "Adams", "Sr.");
 let result3 = buildName("Bob", "Adams");
 console.log(result3); // "Bob Adams"
 
-// You can also give `null` or `undefined`:
+// You can also give null or undefined:
 let result4 = buildName("Bob", null);
 console.log(result4); // "Bob null"
 ```
@@ -405,7 +432,7 @@ console.log(result4); // "Bob null"
 ---
 ### Optional parameters
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#14">Functions</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#15">Functions</a>]
 
 In JavaScript, every parameter is optional, and their value is `undefined` if not provided:
 
@@ -448,7 +475,7 @@ Object-oriented TypeScript.
 ---
 ### Class types
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#17">Classes</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#18">Classes</a>]
 
 TypeScript extends the JavaScript classes available since ECMAScript 6.
 You can use types in them as well:
@@ -466,7 +493,7 @@ class Greeter {
 
   // Specify the type of method parameters and/or their return value.
   greet(): void {
-    return `Hello ${this.name}!`;
+    return \`Hello ${this.name}!`;
   }
 }
 
@@ -479,7 +506,7 @@ greeter.greet(); // "Hello World!"
 ---
 ### Accessibility modifiers
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#17">Classes</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#18">Classes</a>]
 
 The `private`, `protected` and `public` accessibility modifiers can be used in TypeScript classes to restrict access to fields or methods.
 By default, a field or method is always `public`:
@@ -509,7 +536,7 @@ class Animal {
 ---
 #### Private
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#17">Classes</a> > <a href="#19">Accessibility modifiers</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#18">Classes</a> > <a href="#20">Accessibility modifiers</a>]
 
 When a field or method is marked `private`, it cannot be accessed from outside of its containing class:
 
@@ -541,7 +568,7 @@ new Animal('Cat').getName();
 ---
 #### Protected
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#17">Classes</a> > <a href="#19">Accessibility modifiers</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#18">Classes</a> > <a href="#20">Accessibility modifiers</a>]
 
 A field or method marked `protected` behaves like one marked `private`,
 with the exception that it **can** be accessed from within a **sub-class**:
@@ -560,7 +587,7 @@ class Cat extends Animal {
   }
 
   describe() {
-    return `I am a ${this.name}`;
+    return \`I am a ${this.name}`;
   }
 }
 
@@ -575,7 +602,7 @@ console.log(cat.name);
 ---
 #### Read-only
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#17">Classes</a> > <a href="#19">Accessibility modifiers</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#18">Classes</a> > <a href="#20">Accessibility modifiers</a>]
 
 The `readonly` modifier forces a field to be initialized at its declaration or in the constructor.
 It cannot be modified later:
@@ -598,7 +625,7 @@ cat.name = 'Dog';
 ---
 #### Parameter properties
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#17">Classes</a> > <a href="#19">Accessibility modifiers</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#18">Classes</a> > <a href="#20">Accessibility modifiers</a>]
 
 It is a common pattern to have a field with an accessibility modifier
 and to set the value of that field directly from a constructor parameter:
@@ -632,7 +659,7 @@ class Animal {
 ---
 ### Abstract classes
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#17">Classes</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#18">Classes</a>]
 
 Abstract classes are base classes from which other classes may be derived.
 
@@ -644,7 +671,7 @@ abstract class Animal {
   abstract getCry(): string;
 
   cry(): void {
-    console.log(`I sound like this: ${this.getCry()}`);
+    console.log(\`I sound like this: ${this.getCry()}`);
   }
 }
 
@@ -661,7 +688,7 @@ cat.cry(); // "I sound like this: Meow"
 ---
 #### Abstract methods
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#17">Classes</a> > <a href="#24">Abstract classes</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#18">Classes</a> > <a href="#25">Abstract classes</a>]
 
 A non-abstract class extending an abstract class **must implement all its abstract methods**:
 
@@ -670,7 +697,7 @@ abstract class Animal {
   abstract getCry(): string;
 
   cry(): void {
-    console.log(`I sound like this: ${this.getCry()}`);
+    console.log(\`I sound like this: ${this.getCry()}`);
   }
 }
 
@@ -687,7 +714,7 @@ class Dog extends Animal {
 ---
 #### Abstract classes cannot be instantiated
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#17">Classes</a> > <a href="#24">Abstract classes</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#18">Classes</a> > <a href="#25">Abstract classes</a>]
 
 An abstract class **cannot be instantiated directly**:
 
@@ -696,7 +723,7 @@ abstract class Animal {
   abstract getCry(): string;
 
   cry(): void {
-    console.log(`I sound like this: ${this.getCry()}`);
+    console.log(\`I sound like this: ${this.getCry()}`);
   }
 }
 
@@ -722,7 +749,7 @@ A powerful way of defining contracts within your code.
 ---
 ### Defining an interface
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#27">Interfaces</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#28">Interfaces</a>]
 
 Here's a simple example:
 
@@ -747,7 +774,7 @@ but the compiler only checks that **at least** the ones required are present and
 ---
 #### Interface checks
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#27">Interfaces</a> > <a href="#28">Defining an interface</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#28">Interfaces</a> > <a href="#29">Defining an interface</a>]
 
 If you try to pass an object which does not match the interface, TypeScript will refuse to compile the code:
 
@@ -773,7 +800,7 @@ printLabel(invalidValue);
 ---
 ### Optional properties
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#27">Interfaces</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#28">Interfaces</a>]
 
 Much like with function parameters, you can mark some properties of an interface as **optional** by adding an **interrogation mark** after the property name.
 
@@ -804,7 +831,7 @@ let square = createSquare({ color: "black" }); // OK, the width is optional
 ---
 ### Interface functions
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#27">Interfaces</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#28">Interfaces</a>]
 
 An interface is also capable of describing that an object must have a specific function:
 
@@ -815,9 +842,9 @@ interface Greeter {
 
 let value: Greeter;
 
-// OK, this object has a `greet` function.
+// OK, this object has a "greet" function.
 value = {
-  greet: (name: string) => `Hi ${name}!`
+  greet: (name: string) => \`Hi ${name}!`
 };
 
 console.log(value.greet('Bob')); // "Hi Bob!"
@@ -833,7 +860,7 @@ value = { foo: 'bar' };
 ---
 #### Classes implementing interfaces
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#27">Interfaces</a> > <a href="#31">Interface functions</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#28">Interfaces</a> > <a href="#32">Interface functions</a>]
 
 Classes which implement this interface **must** have a `greet` method:
 
@@ -844,7 +871,7 @@ interface Greeter {
 
 class Person implements Greeter {
   greet(name: string): string {
-    return `Hello ${name}!`;
+    return \`Hello ${name}!`;
   }
 }
 
@@ -869,7 +896,7 @@ class Dog implements Greeter {
 ---
 ### Extending interfaces
 
-.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#27">Interfaces</a>]
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#28">Interfaces</a>]
 
 Like classes, interfaces can **extend** each other.
 This allows you to copy the properties and functions of one interface into another:
@@ -894,23 +921,397 @@ square = {
 
 
 ---
-## TODO
+class: center, middle
+## Generics
 
 .breadcrumbs[<a href="#1">TypeScript</a>]
 
-* Generics
-* Decorators
-* Declaring custom types (`type StringOrNumber = string | number`)
+
+
+Work on the data of today as well as the data of tomorrow.
+
+
+
+---
+### Generic functions
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#35">Generics</a>]
+
+Let's take a look at this logging function which logs the specified value and returns it:
+
+```ts
+function logAndReturnValue(arg: `number`): `number` {
+  console.log(arg);
+  return arg;
+}
+
+const n = logAndReturnValue(42); // 42
+
+console.log(n.toUpperCase());
+//           ^^^^^^^^^^^^^^ ERROR!
+// Property 'toUppercase' does not exist on type 'number'.
+```
+
+It's typed and returns the value as a `number`, which is good,
+because then TypeScript won't let us use properties or methods that should not be available.
+
+**However,** this "log and return" functionality could be **generic** and take **any type of value**.
+
+---
+#### Pseudo-generic function with `any`
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#35">Generics</a> > <a href="#36">Generic functions</a>]
+
+You could rewrite the function using the `any` type:
+
+```ts
+function logAndReturnValue(arg: `any`): `any` {
+  console.log(arg);
+  return arg;
+}
+
+const n = logAndReturnValue(42);       // 42
+const s = logAndReturnValue('Hello');  // Hello
+
+console.log(s.toUpperCase());
+
+// No error in editor at compile time.
+// TypeError at runtime: n.toUpperCase is not a function
+console.log(n.toUpperCase());
+```
+
+It now takes and returns any type of value,
+but you **lose the information** about **what type of value** the function **returns**.
+
+---
+#### Using generics in a function
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#35">Generics</a> > <a href="#36">Generic functions</a>]
+
+Instead, we need a way of **capturing the type** of the argument in such a way that we can also use it to denote what is being returned:
+
+```ts
+function logAndReturnValue`<T>`(arg: `T`): `T` {
+  console.log(arg);
+  return arg;
+}
+
+const n = logAndReturnValue<number>(42); // 42
+
+console.log(n.toUpperCase());
+//           ^^^^^^^^^^^^^^ ERROR!
+// Property 'toUppercase' does not exist on type 'number'.
+```
+
+We've now added a type variable `T` to the identity function.
+This `T` allows us to capture the type the user provides (e.g. number), so that we can use that information later.
+Here, we use `T` again as the return type.
+This allows us to use the function's **input type** to describe its **output type**.
+
+The function is now **generic**.
+It works over a range of types, **without losing the type information** of its return value.
+
+
+
+---
+### Generic type syntax
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#35">Generics</a>]
+
+You may name the **type variable** however you want.
+It's often named `T` when there is only one, but that's not mandatory:
+
+```ts
+function logAndReturnValue`<ValueType>`(arg: `ValueType`): `ValueType` {
+  console.log(arg);
+  return arg;
+}
+```
+
+You may specify **multiple type variables** if your function needs to have multiple generic type arguments:
+
+```ts
+function logAndReturnFirst`<T, U>`(arg1: `T`, arg2: `U`): `T` {
+  console.log(arg1);
+  console.log(arg2);
+  return arg1;
+}
+```
+
+
+
+---
+### Generic type argument inference
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#35">Generics</a>]
+
+You may have noticed that we specified the **input type** of the generic function **when calling it**:
+
+```ts
+function logAndReturnValue<T>(arg: T): T {
+  console.log(arg);
+  return arg;
+}
+
+const n = logAndReturnValue`<number>`(42); // 42
+```
+
+This is not mandatory.
+If you don't specify a type argument, TypeScript will automatically **infer the type** based on the argument you pass in:
+
+```ts
+// TypeScript automatically infers that 42 is a number.
+const n = logAndReturnValue(42); // 42
+
+console.log(n.toUpperCase());
+//           ^^^^^^^^^^^^^^ ERROR!
+// Property 'toUppercase' does not exist on type 'number'.
+```
+
+However, in some cases it may improve the **readability** of your code to explicity specify the type.
+
+
+
+---
+### Generic classes & interfaces
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#35">Generics</a>]
+
+Generic type arguments can also be used on **classes**:
+
+```ts
+`class` GenericValueLogger`<T>` {
+
+  constructor(private value: `T`) {}
+
+  logAndReturn(): `T` {
+    console.log(this.value);
+    return this.value;
+  }
+}
+
+const logger = new GenericValueLogger`<number>`(42);
+
+const n = logger.logAndReturn(); // 42
+
+console.log(n.toUpperCase());
+//           ^^^^^^^^^^^^^^ ERROR!
+// Property 'toUppercase' does not exist on type 'number'.
+```
+
+And on **interfaces**:
+
+```ts
+`interface` GenericLogger`<T>` {
+  logValueAndReturn(arg: `T`): `T`;
+}
+```
+
+
+
+---
+### Generic constraints
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#35">Generics</a>]
+
+What if we wanted to create a generic logging function that logs an object's **length**.
+It should work with **any type of object that has a length**, such as an **array** or **string**.
+
+```ts
+function logLengthAndReturn<T>(arg: T): T {
+  console.log(arg`.length`);
+  //             ^^^^^^^ ERROR!
+  // Property 'length' does not exist on type 'T'.
+  return arg;
+}
+```
+
+In this example we simply use `T` as a type argument.
+TypeScript will refuse to compile the function, because `T` could be **any type**, not just a string or an array.
+
+---
+#### Adding a generic type argument constraint
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#35">Generics</a> > <a href="#42">Generic constraints</a>]
+
+By using the `extends` keyword, you can specify that a type argument **must match a constraint**.
+In this case, we require that the argument of type `T` must match an interface that requires a `length` property:
+
+```ts
+interface HasLength {
+  length: number;
+}
+
+function logLengthAndReturn<`T extends HasLength`>(arg: T): T {
+  console.log(arg.length);
+  return arg;
+}
+
+const a = logLengthAndReturn([ 1, 2, 3 ]);  // 3
+const s = logLengthAndReturn('abcdef');     // 5
+
+console.log(a.reverse());      // [ 3, 2, 1 ]
+console.log(s.toUpperCase());  // "ABCDEF"
+```
+
+This generic function **now only accepts matching types**:
+
+```ts
+logLengthAndReturn(42);
+//                 ^^ ERROR!
+// Argument of type '42' is not assignable to parameter of type 'WithLength'.
+```
+
+
+
+---
+class: center, middle
+## Decorators
+
+.breadcrumbs[<a href="#1">TypeScript</a>]
+
+
+
+Modify existing classes.
+
+
+
+---
+### What is a decorator?
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#44">Decorators</a>]
+
+Decorators are an experimental feature ([stage 2 proposal][js-decorators-proposal]) of JavaScript that is available in TypeScript.
+
+They provide a way to add **annotations** to class declarations, methods, accessors, properties and parameters.
+An annotation takes the form `@expression`, where `expression` must evaluate to a function that will be called at runtime with information about the decorated declaration.
+
+```ts
+`@classDecorator`
+class Person {
+  constructor(private name: string) {}
+
+  `@methodDecorator`
+  getName() {
+    return this.name;
+  }
+}
+```
+
+---
+#### Implementing a decorator
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#44">Decorators</a> > <a href="#45">What is a decorator?</a>]
+
+Any function can be used as a decorator by applying it with `@` before a class, method, accessor, property or parameter.
+In this example, we **decorate a class**.
+
+```ts
+function `classDecorator`(target: Function) {
+  console.log(\`Class "${target.name}" is decorated`);
+}
+
+`@classDecorator`
+class Person {}
+// Class "Person" is decorated
+```
+
+The function is called at runtime with the class being decorated as an argument,
+
+
+
+---
+### Decorator factory
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#44">Decorators</a>]
+
+If we want to customize how a decorator is applied to a declaration, we can write a **decorator factory**.
+It's simply a function that builds and returns the actual decorator:
+
+```ts
+function color(value: string) { // This is the decorator factory.
+  return function (target) { // This is the decorator.
+    // Do something with "target" and "value"...
+  };
+}
+```
+
+For example, this is how you would use it on a class:
+
+```ts
+@color('blue')
+class Whale {}
+```
+
+You **apply the factory** with `@`, and the **resulting decorator** will be applied to the class.
+
+
+
+---
+### Class decorator example
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#44">Decorators</a>]
+
+Class decorators can be used to apply **modifications to an existing class** and return the updated class.
+
+For example, this is used in the [Angular][angular] framework to add functionality to **component classes**:
+
+```ts
+*@Component({
+* selector: 'greet',
+* template: '<strong>Hello {{ name }}!</strong>'
+*})
+class GreetComponent {
+  name: string = 'World';
+}
+```
+
+In this example, the decorator defines that `GreetComponent` is used with the `<greet>` tag and specifies its HTML template.
+
+
+
+---
+### Method decorator example
+
+.breadcrumbs[<a href="#1">TypeScript</a> > <a href="#44">Decorators</a>]
+
+This example shows how it's possible to **override methods** on an existing class with a **method decorator**:
+
+```ts
+function `logCalls`(target, key, descriptor) {
+
+  const originalMethod = target[key];
+  descriptor.value = function(...args: any[]) {
+    console.log(\`Method "${key}" was called`);
+    return originalMethod.apply(this, args);
+  };
+
+  return descriptor;
+}
+
+class Person {
+  constructor(private name: string) {}
+
+  `@logCalls`
+  getName() {
+    return this.name;
+  }
+}
+
+const jdoe = new Person('John Doe');
+const name = jdoe.getName(); // Method "getName" was called
+```
 
 
 
 [angular]: https://angular.io
+[js-decorators-proposal]: https://github.com/tc39/proposal-decorators
 [typescript]: https://www.typescriptlang.org
 [typescript-enums]: https://www.typescriptlang.org/docs/handbook/enums.html
 [typescript-handbook]: https://www.typescriptlang.org/docs/handbook/basic-types.html
 
     </textarea>
     <script src='https://embed.runkit.com'></script>
-    <script src='../../subject-5c45d35157b2ae586f5e.js'></script>
+    <script src='../../subject-a3d594c9b948fff315d7.js'></script>
   </body>
 </html>
