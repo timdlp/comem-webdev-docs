@@ -3,7 +3,7 @@
   <head>
     <title>RESTful API Conventions (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
-    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/209684a5538d00dbe8afea84b76f4a31e2a7b58c/subjects/rest-conventions/README.md&quot;}'>
+    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/cafbc81b1a8530a75ebc888491fab048a82a3699/subjects/rest-conventions/README.md&quot;}'>
   </head>
   <body>
     <textarea id='source'>
@@ -496,7 +496,7 @@ Link: <https://example.com/api/movies?`page=1`&pageSize=50>; rel="`first prev`",
 
 .breadcrumbs[<a href="#1">RESTful API Conventions</a> > <a href="#14">Pagination</a> > <a href="#18">The `Link` header (solution 1)</a>]
 
-Multiple links in the `Link` header are comma-separated.
+Multiple links in the header are comma-separated.
 Each link looks like this:
 
 ```
@@ -516,6 +516,11 @@ You can use your own custom relation types but instead of single words, they sho
 ```
   <http://example.com/manual>; rel="http://example.com/my-rels/rtfm"
 ```
+
+You don't have to build this format by hand.
+You can probably find a package that does it for you.
+For example, a quick [search for "link header"][npm-search-link-header] in the npm registry suggests several packages:
+[format-link-header][npm-format-link-header], [parse-link-header][npm-parse-link-header], [http-link-header][npm-http-link-header], and more.
 
 
 
@@ -636,10 +641,14 @@ Content-Type: application/json; charset=utf-8
 [haters-gonna-hateoas]: http://timelessrepo.com/haters-gonna-hateoas
 [link-header-rels]: http://www.iana.org/assignments/link-relations/link-relations.xhtml
 [link-header-rfc]: https://tools.ietf.org/html/rfc5988
+[npm-http-link-header]: https://www.npmjs.com/package/http-link-header
+[npm-format-link-header]: https://www.npmjs.com/package/format-link-header
+[npm-parse-link-header]: https://www.npmjs.com/package/parse-link-header
+[npm-search-link-header]: https://www.npmjs.com/search?q=link+header
 [understanding-hateoas]: https://spring.io/understanding/HATEOAS
 
     </textarea>
     <script src='https://embed.runkit.com'></script>
-    <script src='../../subject-a3d594c9b948fff315d7.js'></script>
+    <script src='../../subject-2db538c08c5f5ef0ffca.js'></script>
   </body>
 </html>
