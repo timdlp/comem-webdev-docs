@@ -3,7 +3,7 @@
   <head>
     <title>Angular (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
-    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/cafbc81b1a8530a75ebc888491fab048a82a3699/subjects/angular/README.md&quot;}'>
+    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/a0ad8e1950a253dce4aea3ca05651466a062aa46/subjects/angular/README.md&quot;}'>
   </head>
   <body>
     <textarea id='source'>
@@ -24,7 +24,8 @@ This material is part of [web development courses](https://github.com/MediaComem
 **Recommended reading**
 
 * [JavaScript][js]
-* [JavaScript closures][js-closures]
+* [JavaScript classes][js-classes]
+* [JavaScript modules][js-modules]
 * [TypeScript][ts-subject]
 
 
@@ -1929,14 +1930,14 @@ Let's turn our lonely greeting input field into a proper form:
 * Add a submit `<button>` tag to complete the form.
 
 ```html
-`<form>`
+*<form>
   <p>
     <input type='text' placeholder='Who are you?' [(ngModel)]='greeting'
       `name='greeting' required` />
 
     `<button type='submit'>Submit</button>`
   </p>
-`</form>`
+*</form>
 ```
 
 ---
@@ -2628,8 +2629,9 @@ Read the documentation to learn more.
 [jquery]: http://jquery.com
 [js]: ../js/
 [js-array-map]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
-[js-classes]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+[js-classes]: ../js-classes/
 [js-closures]: ../js-closures/
+[js-modules]: ../js-modules/
 [js-promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 [ioc]: https://en.wikipedia.org/wiki/Inversion_of_control
 [observable-map]: http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-map
@@ -2641,6 +2643,6 @@ Read the documentation to learn more.
 
     </textarea>
     <script src='https://embed.runkit.com'></script>
-    <script src='../../subject-2db538c08c5f5ef0ffca.js'></script>
+    <script src='../../subject-2a0b2e2073c42dbc4f86.js'></script>
   </body>
 </html>
