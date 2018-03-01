@@ -3,7 +3,7 @@
   <head>
     <title>JavaScript Promises (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
-    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/a0ad8e1950a253dce4aea3ca05651466a062aa46/subjects/js-promises/README.md&quot;}'>
+    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/7d01dabe1fa7fa1cffe7cc39bdc33517de18b6c2/subjects/js-promises/README.md&quot;}'>
   </head>
   <body>
     <textarea id='source'>
@@ -30,8 +30,8 @@ class: center, middle
 
 <img src='images/promises-logo.png' />
 
-> "A promise represents the **eventual result of an asynchronous operation**.
-> It is a placeholder into which the **successful result value or reason for failure** will materialize."
+> A promise represents the **eventual result of an asynchronous operation**.
+> It is a placeholder into which the **successful result value or reason for failure** will materialize.
 
 
 
@@ -75,7 +75,9 @@ fs.readFile('hello.txt', 'utf-8', function(err, result) {
 
 Promises are another way to organize asynchronous code.
 
-All promises follow the [Promises/A+ specification](promises-spec).
+All promises follow the [Promises/A+ specification][promises-spec].
+Promises have been integrated into the JavaScript language since ECMAScript 2015.
+
 Basically, a promise is an object with a `then()` function that has the following signature:
 
 ```js
@@ -85,9 +87,9 @@ promise.then(onResolved, onRejected)
 It takes **2 callback functions**:
 
 * The **first** one is called when the asynchronous operation is **successful**;
-  in this case, we say the promise is **resolved**
+  in this case, we say the promise is **resolved**.
 * The **second** one is called when the asynchronous operation **failed**;
-  in this case, we say the promise is **rejected**
+  in this case, we say the promise is **rejected**.
 
 **Only one** of them is called, never both.
 
@@ -103,7 +105,7 @@ It takes **2 callback functions**:
 Imagine you are a **kid**.
 Your mom **promises** you that she'll get you a **new phone next week**.
 
-You don't **know** if you will get that phone **until next week**.
+You don't **know** whether you will get that phone **until next week**.
 Your mom can either **really buy** you a brand new phone, or **stand you up** and withhold the phone if she is not happy.
 
 
@@ -119,9 +121,9 @@ Your mom can either **really buy** you a brand new phone, or **stand you up** an
 That's a promise.
 A promise has 3 states; it can be:
 
-* **Pending:** you don't know if you will get that phone until next week
-* **Resolved:** your mom really does buy you a brand new phone
-* **Rejected:** you don't get a new phone because your mom is not happy
+* **Pending:** you don't know if you will get that phone until next week.
+* **Resolved:** your mom really does buy you a brand new phone.
+* **Rejected:** you don't get a new phone because your mom is not happy.
 
 
 
@@ -135,25 +137,26 @@ A promise has 3 states; it can be:
 Here's the same scenario in **ES6** JavaScript:
 
 ```js
-// Mom might be happy (or not)
-var isMomHappy = Math.random() < 0.5;
-
 // Make a promise
 // We are given two functions to resolve or reject the promise with
-var phonePromise = `new Promise(function(resolve, reject) {`
+let phonePromise = `new Promise(function(resolve, reject) {`
 
-  var oneWeek = 1000 * 60 * 60 * 24 * 7;
+  let oneWeek = 1000 * 60 * 60 * 24 * 7; // One week in milliseconds.
 
   // In one week...
   setTimeout(function() {
+
+    // Mom might be happy (or not)
+    let isMomHappy = Math.random() < 0.5;
+
     if (`isMomHappy`) {
-      var phone = {
+      let phone = {
         brand: 'Samsung',
         color: 'black'
       };
 *     resolve(phone); // Resolve the promise (if mom is happy)
     } else {
-      var reason = new Error('mom is very disappointed');
+      let reason = new Error('mom is very disappointed');
 *     reject(reason); // Reject the promise (if mom is not happy)
     }
   }, oneWeek);
@@ -179,7 +182,7 @@ function onRejected(reason) {
   console.log("I didn't get a phone because " + reason);
 }
 
-phonePromise.then(onResolved, onRejected);
+phonePromise`.then(onResolved, onRejected)`;
 ```
 
 * If a promise is **resolved**, the **first callback** will be called with the **resolved value** (the one passed to `resolve()` in the promise function)
@@ -190,41 +193,313 @@ phonePromise.then(onResolved, onRejected);
 
 .breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#2">What is a promise?</a> > <a href="#7">Consuming a promise</a>]
 
-You could test this code with an interval to see that the promise is really **pending** until it is either **resolved or rejected**:
+<runkit></runkit>
 
 ```js
-var interval = setInterval(function() {
-  console.log("I still don't know if I'll get it...");
+let phonePromise = new Promise(function(resolve, reject) {
+  setTimeout(function() {
+    let isMomHappy = Math.random() < 0.5;
+    if (isMomHappy) {
+      resolve({ brand: 'Samsung', color: 'black' });
+    } else {
+      reject(new Error('mom is very disappointed'));
+    }
+  }, 5000);
+});
+
+let i = 0;
+let interval = setInterval(function() {
+  console.log(\`I still don't know if I'll get it (${i++})...`);
 }, 1000);
 
 function onResolved(phone) {
-  console.log("I got a new phone! It's a " + phone.brand);
+  console.log(\`I got a new phone! It's a ${phone.brand}`);
   clearInterval(interval);
 }
 
 function onRejected(reason) {
-  console.log("I didn't get a phone because " + reason);
+  console.log(\`I didn't get a phone because ${reason.message}`);
   clearInterval(interval);
 }
 
 phonePromise.then(onResolved, onRejected);
 ```
 
-[See it in action here.][promises-codepen]
+
+
+---
+class: center, middle
+## Basic promise behavior
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a>]
+
+
 
 
 
 ---
-### Promises are resolved with one and only one value
+### Promise callback syntax
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#2">What is a promise?</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#9">Basic promise behavior</a>]
 
-**Only one value** can be passed whenusing `resolve()` in a promise.
+<runkit></runkit>
+
+As we've seen in the previous examples,
+you can declare your resolution and rejection callbacks separately and pass them to `.then()`:
+
+```js
+let promise = new Promise(function(resolve, reject) {
+  resolve('ok');
+});
+
+function `onResolved`(value) {
+  console.log(value);
+}
+
+function `onRejected`(err) {
+  console.warn(\`Oops: ${err.message}`);
+}
+
+promise.then(`onResolved`, `onRejected`); // "ok"
+```
+
+---
+#### More promise callback syntax
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#9">Basic promise behavior</a> > <a href="#10">Promise callback syntax</a>]
+
+<runkit></runkit>
+
+But you can also declare the callbacks directly in the `.then()` call:
+
+```js
+let promise = new Promise(function(resolve, reject) {
+  resolve('ok');
+});
+
+promise.then(`function onResolved`(value) {
+  console.log(value);
+}, `function onRejected`(err) {
+  console.warn(\`Oops: ${err.message}`);
+}); // "ok"
+```
+
+For maximum laziness, you can also use arrow functions:
+
+```js
+let promise = new Promise(function(resolve, reject) {
+  reject(new Error('bug'));
+});
+
+// "Oops: bug"
+*promise.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+```
+
+Further examples will use these shorter versions for brevity.
+
+
+
+---
+### Promise callbacks are **optional**
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#9">Basic promise behavior</a>]
+
+<runkit></runkit>
+
+You don't have to pass both resolution and rejection callbacks:
+
+```js
+let promise = new Promise(function(resolve, reject) {
+  resolve('ok');
+});
+
+// Only check if resolved.
+promise.then(console.log); // "ok"
+
+// Only check if rejected.
+promise.then(undefined, console.warn); // Not called.
+```
+
+---
+#### Unhandled promise rejections
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#9">Basic promise behavior</a> > <a href="#12">Promise callbacks are **optional**</a>]
+
+<runkit></runkit>
+
+However, if you don't specify a **rejection callback** and the promise is rejected,
+it will produce an **unhandled promise rejection warning**.
+Depending on the JavaScript runtime, it may even kill the process:
+
+```js
+let promise = new Promise(function(resolve, reject) {
+  reject(new Error('bug'));
+});
+
+// Only check if resolved.
+promise.then(console.log); // Not called, but UnhandledPromiseRejectionWarning.
+```
+
+It's good practice to always check for rejections.
+However, you may safely **omit the resolution callback** if you don't need it:
+
+```js
+let promise = new Promise(function(resolve, reject) {
+  reject(new Error('bug'));
+});
+
+// Only check if rejected.
+promise.then(undefined, err => console.warn(\`Oops: ${err.message}`));
+// "Oops: bug"
+```
+
+
+
+---
+### Using `catch()`
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#9">Basic promise behavior</a>]
+
+The `catch()` function is simply a shortcut to plug a **rejection callback** into a promise chain:
+
+```js
+phonePromise.then(onResolved)`.catch(onRejected)`;
+```
+
+It's **equivalent** to:
+
+```js
+phonePromise`.then`(onResolved, `onRejected`);
+```
+
+Or to:
+
+```js
+phonePromise.then(onResolved)`.then`(undefined, `onRejected`);
+```
+
+But it's easier to read and is similar in behavior to `try/catch`.
+
+
+
+---
+### Asynchronicity
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#9">Basic promise behavior</a>]
+
+<runkit></runkit>
+
+A promise is **always asynchronous**:
+
+```js
+*console.log('Before promising a phone');
+
+let phonePromise = new Promise(function(resolve, reject) {
+  // Immediately resolve the promise
+  resolve({ brand: 'Samsung' });
+});
+
+phonePromise.then(function onResolved(phone) {
+* console.log(\`I got a ${phone.brand}`);
+});
+
+*console.log('After promising a phone');
+```
+
+The output of this code will **always** be:
+
+```txt
+Before promising a phone
+After promising a phone
+I got a Samsung
+```
+
+
+
+---
+### Promises can only be resolved or rejected **once**
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#9">Basic promise behavior</a>]
+
+<runkit></runkit>
+
+Once you call `resolve`, the promise is **resolved**,
+and additional calls to `resolve` or `reject` have no effect:
+
+```js
+let promise = new Promise(function(resolve, reject) {
+* resolve('ok');
+  reject(new Error('bug')); // No effect.
+  resolve('foo'); // No effect.
+});
+
+// "ok"
+promise.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+```
+
+Similarly, once you call `reject`, the promise is **rejected**,
+and additional calls to `resolve` or `reject` have no effect:
+
+```js
+let promise = new Promise(function(resolve, reject) {
+* reject(new Error('bug'));
+  reject(new Error('wheeee')); // No effect.
+  resolve("I'm ok after all..."); // No effect.
+});
+
+// "Oops: bug"
+promise.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+```
+
+
+
+---
+### The result of a promise can be retrieved **later**
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#9">Basic promise behavior</a>]
+
+<runkit></runkit>
+
+Once a promise is resolved or rejected, its resolution value or rejection reason is **cached**.
+Further calls to `.then()` will always produce the same result, even if called **later**:
+
+```js
+let promise = new Promise(function(resolve, reject) {
+  resolve('ok');
+});
+
+// Check the promise now.
+*promise.then(value => console.log(\`Now: ${value}`), console.warn);
+// "Now: ok"
+
+// Check again 2 seconds later.
+setTimeout(function() {
+* promise.then(value => console.log(\`After 2s: ${value}`), console.warn);
+  // "After 2s: ok"
+}, 2000);
+
+// Check again 4 seconds later.
+setTimeout(function() {
+* promise.then(value => console.log(\`After 4s: ${value}`), console.warn);
+  // "After 4s: ok"
+}, 4000);
+```
+
+
+
+---
+### Promises are resolved with **one** value
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#9">Basic promise behavior</a>]
+
+<runkit></runkit>
+
+**Only one value** can be passed when using `resolve()` in a promise.
 Additional values will be ignored:
 
 ```js
-var fruitsPromise = new Promise(function(resolve, reject) {
-  resolve('apple', 'banana', 'orange');
+let fruitsPromise = new Promise(function(resolve, reject) {
+  resolve(`'apple'`, 'banana', 'orange'); // Additional values are ignored.
 });
 
 fruitsPromise.then(console.log); // "apple"
@@ -234,8 +509,8 @@ If you need to send multiple values to the next callback,
 use an **array or object**:
 
 ```js
-var fruitsPromise = new Promise(function(resolve, reject) {
-  resolve([ 'apple', 'banana', 'orange' ]);
+let fruitsPromise = new Promise(function(resolve, reject) {
+  resolve(`[ 'apple', 'banana', 'orange' ]`);
 });
 
 fruitsPromise.then(console.log); // [ "apple", "banana", "orange" ]
@@ -244,70 +519,286 @@ fruitsPromise.then(console.log); // [ "apple", "banana", "orange" ]
 
 
 ---
-## Chaining promises
+### Promise utilities
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#9">Basic promise behavior</a>]
 
-Promises are chainable; the `then()` function also **returns a promise**:
+<runkit></runkit>
 
-```js
-var promise2 = phonePromise.then(onResolved, onRejected);
-```
-
-Will `promise2` be resolved or rejected?
-That depends on `phonePromise`, `onResolved` and `onRejected`.
-
-The simplest case is this one:
+Quickly create a resolved promise with `Promise.resolve`:
 
 ```js
-var promise2 = phonePromise.then();
+const resolvedPromise = `Promise.resolve`('foo');
+
+resolvedPromise.then(function onResolved(value) {
+* console.log(value); // "foo"
+}, function onRejected(err) {
+  console.warn(\`Oops: ${err.message}`); // not called
+});
 ```
 
-If neither `onResolved` nor `onRejected` is given, `promise2` will have the same state as `phonePromise`
-(i.e. it will be resolved if `phonePromise` is resolved, or rejected when `phonePromise` is rejected).
+Quickly create a rejected promise with `Promise.reject`:
+
+```js
+const rejectedPromise = `Promise.reject`(new Error('bug'));
+
+rejectedPromise.then(function onResolved(value) {
+  console.log(value); // not called
+}, function onRejected(err) {
+* console.warn(\`Oops: ${err.message}`); // "Oops: bug"
+});
+```
 
 
 
 ---
+class: center, middle
+## Chaining promises
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a>]
+
+
+
+
+
+---
+### Chaining `.then()` calls
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a>]
+
+<runkit except='0'></runkit>
+
+Promises are chainable; the `then()` function also **returns a promise**:
+
+```js
+let promise2 = phonePromise.then(onResolved, onRejected);
+```
+
+Will `promise2` be resolved or rejected?
+That depends on `phonePromise`, `onResolved` and `onRejected`.
+The simplest case is this one:
+
+.grid-50[
+
+```js
+let promise1 = Promise.resolve('ok');
+*let promise2 = promise1.then();
+
+promise2.then(function(value) {
+* console.log(value); // "ok"
+}, function(err) {
+  console.log(\`Oops: ${err.message}`);
+});
+```
+
+
+]
+.grid-50[
+
+```js
+const reason = new Error('bug');
+let promise1 = Promise.reject(reason);
+*let promise2 = promise1.then();
+
+promise2.then(function(value) {
+  console.log(value);
+}, function(err) {
+  // "Oops: bug"
+* console.log(\`Oops: ${err.message}`);
+});
+```
+
+
+]
+.container[
+
+If neither `onResolved` nor `onRejected` is given, `promise2` will have **the same state** as `promise1`
+(i.e. it will be resolved when `promise1` is resolved, or rejected when `promise1` is rejected).
+
+
+
+
+]
+---
 ### Promise resolution procedure
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a>]
 
 What if `phonePromise` is **resolved** and `onResolved` is called?
 
 ```js
-var promise2 = phonePromise.then(`onResolved`, onRejected);
+let promise2 = phonePromise.then(`onResolved`, onRejected);
 ```
 
-* If `onResolved` returns **a value**, `promise2` will be resolved with that value
-* If `onResolved` returns **another promise**, `promise2` will have the same state as that new promise
-* If `onResolved` throws an error, `promise2` will be rejected with that error as the reason
+* **1:** If `onResolved` returns **a value**, `promise2` will be resolved with that value
+* **2:** If `onResolved` throws an error, `promise2` will be rejected with that error as the reason
+* **3:** If `onResolved` returns **another promise**, `promise2` will have the same state as that new promise
 
 Similarly if `phonePromise` is **rejected** and `onRejected` is called:
 
 ```js
-var promise2 = phonePromise.then(onResolved, `onRejected`);
+let promise2 = phonePromise.then(onResolved, `onRejected`);
 ```
 
-* If `onRejected` returns **a value**, `promise2` will be resolved with that value
-* If `onRejected` returns **another promise**, `promise2` will have the same state as that new promise
-* If `onRejected` throws an error, `promise2` will be rejected with that error as the reason
+* **4:** If `onRejected` returns **a value**, `promise2` will be resolved with that value
+* **5:** If `onRejected` throws an error, `promise2` will be rejected with that error as the reason
+* **6:** If `onRejected` returns **another promise**, `promise2` will have the same state as that new promise
+
+---
+#### Returning a value from the resolution or rejection callback (1 & 4)
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a> > <a href="#22">Promise resolution procedure</a>]
+
+<runkit></runkit>
+
+If `phonePromise` is resolved and we **return a value in the resolution callback**,
+the new `promise2` promise will be **resolved with that new value**:
+
+```js
+let phonePromise = `Promise.resolve('Samsung')`;
+let promise2 = phonePromise.then(function onResolved(value) {
+* return \`I got a ${value}`;
+}, console.warn);
+
+promise2.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+// "I got a Samsung"
+```
+
+**Returning a value in the rejection callback** behaves similarly;
+the new `promise2` promise will also be **resolved with that new value**:
+
+```js
+let phonePromise = `Promise.reject(new Error('bug'))`;
+let promise2 = phonePromise.then(console.log, function onRejected(err) {
+* return \`${err.message}, but I'm ok now`;
+});
+
+promise2.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+// "bug, but I'm ok now"
+```
+
+Note that in the second case, we **handled the error**:
+the original promise, `phonePromise`, is **rejected**;
+but `promise2` is now **resolved**.
+
+---
+#### Throwing an error from the resolution or rejection callback (2 & 5)
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a> > <a href="#22">Promise resolution procedure</a>]
+
+<runkit></runkit>
+
+If `phonePromise` is resolved and we **throw an error in the resolution callback**,
+the new `promise2` promise will be **rejected with that error**:
+
+```js
+let phonePromise = `Promise.resolve('Samsung')`;
+let promise2 = phonePromise.then(function onResolved(value) {
+* throw new Error('bug');
+}, console.warn);
+
+promise2.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+// "Oops: bug"
+```
+
+We just transformed a **resolved promise**, `phonePromise`,
+into a **rejected promise**, `promise2`.
+
+**Throwing an error in the rejection callback** behaves similarly;
+the new `promise2` promise will also be **rejected with that error**:
+
+```js
+let phonePromise = `Promise.reject(new Error('bug'))`;
+let promise2 = phonePromise.then(console.log, function onRejected(err) {
+* throw new Error('another bug');
+});
+
+promise2.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+// "Oops: another bug"
+```
+
+---
+#### Returning a promise in the resolution callback (3 & 6)
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a> > <a href="#22">Promise resolution procedure</a>]
+
+<runkit></runkit>
+
+The most interesting behavior is what happens when we **return a promise from a callback**,
+in this example the resolution callback:
+
+```js
+let phonePromise = `Promise.resolve('Samsung')`;
+
+let promise2 = phonePromise.then(function onResolved(value) {
+  `return new Promise`(function(resolve, reject) {
+    setTimeout(function() {
+      `resolve`(\`Hey, I got a ${value}`);
+    }, 5000);
+  });
+}, console.warn);
+
+// "Samsung" (immediately)
+phonePromise.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+
+// "Hey, I got a Samsung" (5 seconds later)
+promise2.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+```
+
+`phonePromise` is resolved immediately, but we return **a new promise** from its **resolution callback**.
+That new promise is resolved 5 seconds later.
+`promise2` will **wait for that new promise to be resolved or rejected**, and **adopt its state**.
+In this example, it will be resolved.
+
+---
+#### Returning a rejected promise in the resolution callback (3 & 6)
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a> > <a href="#22">Promise resolution procedure</a>]
+
+<runkit></runkit>
+
+The most interesting behavior is what happens when we **return a promise from a callback**,
+in this example the resolution callback:
+
+```js
+let phonePromise = `Promise.resolve('Samsung')`;
+
+let promise2 = phonePromise.then(function onResolved(value) {
+  `return new Promise`(function(resolve, reject) {
+    setTimeout(function() {
+      `reject`(new Error('bug'));
+    }, 5000);
+  });
+}, console.warn);
+
+// "Samsung" (immediately)
+phonePromise.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+
+// "Oops: bug" (5 seconds later)
+promise2.then(console.log, err => console.warn(\`Oops: ${err.message}`));
+```
+
+Again, `phonePromise` is resolved immediately, but we return **a new promise** from its **resolution callback**.
+That new promise is resolved 5 seconds later.
+`promise2` will **wait for that new promise to be resolved or rejected**, and **adopt its state**.
+In this example, it will be rejected.
 
 
 
 ---
 ### An example
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a>]
 
-Let's say, you, the kid, **promise** your friend that you will **show them the new phone** when your mom buy you one.
+Starting from our initial **phone promise** example.
+Let's say, you, the kid, **promise** your friend that you will **show them the new phone** when your mom buys you one.
 That's another promise.
 Let's write it!
 
 ```js
 function showOff(phone) {
   return new Promise(function(`resolve`, reject) {
-    var message = 'Hey friend, I have a new ' +
+    let message = 'Hey friend, I have a new ' +
         phone.color + ' ' + phone.brand + ' phone';
 
     `resolve`(message);
@@ -315,48 +806,31 @@ function showOff(phone) {
 }
 ```
 
-Chaining this promise together with the phone promise is as simple as:
+**Chaining** this promise together with the phone promise is as simple as:
 
 ```js
 function onResolved(result) {
   console.log(result);
 }
 
+function onRejected(err) {
+  console.warn(\`Oops: ${err.message}`);
+}
+
 phonePromise`.then(showOff)`.then(onResolved, onRejected);
 ```
-
----
-#### Not calling `reject`
-
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a> > <a href="#12">An example</a>]
-
-Note that we **didn't call reject** in that second promise:
-
-```js
-function showOff(phone) {
-  return new Promise(function(`resolve`, reject) {
-    var message = 'Hey friend, I have a new ' +
-        phone.color + ' ' + phone.brand + ' phone';
-
-    `resolve`(message);
-  });
-}
-```
-
-You **don't have to call both** `resolve()` and `reject()`.
-Sometimes, you know things will not fail (like you showing off your new phone to your friend).
 
 
 
 ---
 ### Resolving promises in chains
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a>]
 
 .grid-35[
 
 That second promise we wrote looks a bit complicated.
-All we're doing is resolving it with a message.
+All we're doing is immediately resolving it with a message:
 
 
 ]
@@ -364,8 +838,8 @@ All we're doing is resolving it with a message.
 
 ```js
 function showOff(phone) {
-  return new Promise(function(`resolve`, reject) {
-    var message = 'Hey friend...';
+  return `new Promise`(function(`resolve`, reject) {
+    let message = 'Hey friend...';
     `resolve`(message);
   });
 }
@@ -377,8 +851,7 @@ function showOff(phone) {
 
 .grid-35[
 
-You can use the `Promise.resolve` shortcut instead.
-It will create a promise that is automatically resolved with the passed value.
+You can use the `Promise.resolve` shortcut instead:
 
 
 ]
@@ -386,7 +859,7 @@ It will create a promise that is automatically resolved with the passed value.
 
 ```js
 function showOff(phone) {
-  var message = 'Hey friend...';
+  let message = 'Hey friend...';
   return `Promise.resolve`(message);
 }
 ```
@@ -399,7 +872,8 @@ function showOff(phone) {
 
 .grid-35[
 
-Actually, a promise chain will even do that for you **automatically**.
+Or as we've seen in the promise resolution procedure,
+you can simply **return a value**:
 
 
 ]
@@ -407,7 +881,7 @@ Actually, a promise chain will even do that for you **automatically**.
 
 ```js
 function showOff(phone) {
-  return 'Hey friend...';
+  return `'Hey friend...'`;
 }
 ```
 
@@ -430,12 +904,12 @@ phonePromise.then(showOff).then(onResolved, onRejected);
 ---
 ### Rejecting promises in chains
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a>]
 
 .grid-35[
 
-You could also **always reject** the promise.
-Maybe you broke your leg and can't show off.
+You could also **reject the promise**.
+Maybe you broke your leg and can't show off:
 
 
 ]
@@ -443,8 +917,8 @@ Maybe you broke your leg and can't show off.
 
 ```js
 function showOff(phone) {
-  return new Promise(function(resolve, `reject`) {
-    var reason = new Error('I broke my leg');
+  return `new Promise`(function(resolve, `reject`) {
+    let reason = new Error('I broke my leg');
     `reject`(reason);
   });
 }
@@ -456,7 +930,7 @@ function showOff(phone) {
 
 .grid-35[
 
-You can also use the `Promise.reject` shortcut.
+You can also use the `Promise.reject` shortcut:
 
 
 ]
@@ -464,7 +938,7 @@ You can also use the `Promise.reject` shortcut.
 
 ```js
 function showOff(phone) {
-  var reason = new Error('I broke my leg');
+  let reason = new Error('I broke my leg');
   return `Promise.reject`(message);
 }
 ```
@@ -478,7 +952,7 @@ function showOff(phone) {
 .grid-35[
 
 A third way is to simply **throw an error**.
-That will **automatically reject the promise**.
+That will **automatically reject the promise**:
 
 
 ]
@@ -486,7 +960,7 @@ That will **automatically reject the promise**.
 
 ```js
 function showOff(phone) {
-  throw new Error('I broke my leg');
+  `throw new Error`('I broke my leg');
 }
 ```
 
@@ -507,36 +981,9 @@ phonePromise.then(showOff).then(onResolved, onRejected);
 
 ]
 ---
-### Using `catch()`
-
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a>]
-
-The `catch()` function is simply a shortcut to plug a **rejection callback** into a promise chain:
-
-```js
-phonePromise.then(showOff).then(onResolved)`.catch(onRejected)`;
-```
-
-It's equivalent to:
-
-```js
-phonePromise.then(showOff).then(onResolved, onRejected);
-```
-
-Or to:
-
-```js
-phonePromise.then(showOff).then(onResolved).then(undefined, onRejected);
-```
-
-But it's easier to read and is similar in behavior to `try/catch`.
-
-
-
----
 ### Behavior of a promise chain
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a>]
 
 We've seen that `then()` returns a promise, which is resolved or rejected depending on the state of the original promise and the result of the callback.
 
@@ -553,7 +1000,7 @@ phonePromise.then(showOff).then(onResolved).catch(onRejected);
 ---
 #### All's right with the world
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a> > <a href="#17">Behavior of a promise chain</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a> > <a href="#30">Behavior of a promise chain</a>]
 
 Assuming **mom is happy**,
 and you didn't break your leg and **successfully showed off** to your friend,
@@ -578,7 +1025,7 @@ Since everything is resolved, only the **first callback** of each `then()` call 
 ---
 #### Catching errors in a promise chain
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a> > <a href="#17">Behavior of a promise chain</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a> > <a href="#30">Behavior of a promise chain</a>]
 
 What happens if **mom is happy** and gives you the phone,
 but you break your leg and **can't show off** to your friend?
@@ -602,7 +1049,7 @@ phonePromise.then(`showOff`).then(onResolved).catch(`onRejected`);
 ---
 #### Early errors in a promise chain
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a> > <a href="#17">Behavior of a promise chain</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a> > <a href="#30">Behavior of a promise chain</a>]
 
 What happens if **you don't get the phone**?
 
@@ -623,12 +1070,12 @@ phonePromise.then(showOff).then(onResolved).catch(`onRejected`);
 ---
 ### Handling errors in a promise chain
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a>]
 
 Remember the promise resolution procedure when a promise is **rejected**:
 
 ```js
-var promise2 = phonePromise.then(onResolved, `onRejected`);
+let promise2 = phonePromise.then(onResolved, `onRejected`);
 ```
 
 * **If `onRejected` returns a value, `promise2` will be resolved with that value**
@@ -642,7 +1089,7 @@ the new promise returned by `then()` **might still be resolved** instead of reje
 ---
 #### Handling error example
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a> > <a href="#21">Handling errors in a promise chain</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a> > <a href="#34">Handling errors in a promise chain</a>]
 
 Let's assume `phonePromise` will be **resolved** successfully,
 what will be the output of that code?
@@ -676,7 +1123,7 @@ What will it be called with?
 ---
 #### Handling error result
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#10">Chaining promises</a> > <a href="#21">Handling errors in a promise chain</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a> > <a href="#34">Handling errors in a promise chain</a>]
 
 The output will be:
 
@@ -698,6 +1145,81 @@ The following functions will be called:
 
 
 ---
+### An asynchronous example
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a>]
+
+<runkit></runkit>
+
+```js
+const request = require('request-promise-native'), peer = require('request');
+const apiUrl = 'https://evening-meadow-25867.herokuapp.com/api';
+const now = new Date().getTime();
+
+function `createDirector`() {
+  const director = { name: \`John ${now}`, gender: 'male' };
+  return request({
+    method: 'POST', url: \`${apiUrl}/people`,
+    body: director, json: true
+  });
+}
+
+function `createMovie`(createdDirector) {
+  console.log(\`Director ${createdDirector.name} created!`);
+  const movie = { title: \`Movie ${now}`, directorHref: createdDirector.id };
+  return request({
+    method: 'POST', url: \`${apiUrl}/movies`,
+    body: movie, json: true, qs: { include: 'director' }
+  });
+}
+
+console.log('Doing all the things... please wait...');
+
+*Promise.resolve().then(createDirector).then(createMovie)
+  .then(createdMovie => console.log(\`Movie ${createdMovie.title} created!`))
+  .catch(err => console.warn(\`Oops: ${err.message}`));
+```
+
+---
+#### An asynchronous example with error handling
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#20">Chaining promises</a> > <a href="#37">An asynchronous example</a>]
+
+<runkit></runkit>
+
+```js
+const request = require('request-promise-native'), peer = require('request');
+const apiUrl = 'https://evening-meadow-25867.herokuapp.com/api';
+const now = new Date().getTime();
+
+function createDirector() {
+  const director = { /* `no name!` */ gender: 'male' };
+  return request({
+    method: 'POST', url: \`${apiUrl}/people`,
+    body: director, json: true
+  });
+}
+
+function createMovie(createdDirector) {
+  // `I am not being called!`
+  console.log(\`Director ${createdDirector.name} created!`);
+  const movie = { title: \`Movie ${now}`, directorHref: createdDirector.id };
+  return request({
+    method: 'POST', url: \`${apiUrl}/movies`,
+    body: movie, json: true, qs: { include: 'director' }
+  });
+}
+
+console.log('Doing all the things... please wait...');
+
+Promise.resolve().then(createDirector).then(createMovie)
+  .then(createdMovie => console.log(\`Movie ${createdMovie.title} created!`))
+* .catch(err => console.warn(\`Oops: ${err.message}`));
+```
+
+
+
+---
 class: center, middle
 ## Why use promises?
 
@@ -712,7 +1234,7 @@ class: center, middle
 ---
 ### Triumph over the callback hell
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#24">Why use promises?</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#39">Why use promises?</a>]
 
 .grid-50[
 
@@ -728,10 +1250,20 @@ Asynchronous code tends to be **nested** very deeply and be quite difficult to r
 
 
 ]
+.container[
+
+Our previous example showed us that we can execute **successive asynchronous calls without nesting**:
+
+```js
+Promise.resolve().then(createDirector).then(createMovie)
+```
+
+
+]
 ---
 #### Callback hell example
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#24">Why use promises?</a> > <a href="#25">Triumph over the callback hell</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#39">Why use promises?</a> > <a href="#40">Triumph over the callback hell</a>]
 
 Imagine that you want to do **3 sequential asynchronous operations** with a web service when a new user registers on your website:
 
@@ -744,7 +1276,7 @@ With jQuery, you could write it like this:
 ```js
 $.post('/api/users', userData, function(createdUser) {
   $.post('/api/auth', userData, function(authData) {
-    var query = { userId: createdUser.id, token: authData.token };
+    let query = { userId: createdUser.id, token: authData.token };
     $.get('/api/stats', query, function(statsData) {
       // Do something with statsData...
     });
@@ -759,7 +1291,7 @@ This is pretty deep already, and we're not even handling errors yet.
 ---
 #### Flatten the pyramid of doom
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#24">Why use promises?</a> > <a href="#25">Triumph over the callback hell</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#39">Why use promises?</a> > <a href="#40">Triumph over the callback hell</a>]
 
 You could mitigate the issue by separating the calls into isolated functions:
 
@@ -777,7 +1309,7 @@ function authenticateUser(createdUser) {
 }
 
 function retrieveUserStats(createdUser, authData) {
-  var query = { userId: createdUser.id, token: authData.token };
+  let query = { userId: createdUser.id, token: authData.token };
   $.get('/api/stats', { userId: createdUser.id }, function(statsData) {
     // Do something with statsData...
   });
@@ -793,7 +1325,7 @@ And we're **still not handling errors**.
 ---
 #### Flatten the pyramid of doom with promises
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#24">Why use promises?</a> > <a href="#25">Triumph over the callback hell</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#39">Why use promises?</a> > <a href="#40">Triumph over the callback hell</a>]
 
 It just so happens that jQuery AJAX calls also **return promises**:
 
@@ -809,7 +1341,7 @@ function authenticateUser(createdUser) {
 }
 
 function retrieveUserStats(data) {
-  var query = { userId: data.createdUser.id, token: data.authData.token };
+  let query = { userId: data.createdUser.id, token: data.authData.token };
   return $.get('/api/stats', { userId: createdUser.id });
 }
 
@@ -830,7 +1362,7 @@ Now we have **flat code and automatic error handling**.
 ---
 ### Complex chains
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#24">Why use promises?</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#39">Why use promises?</a>]
 
 This behavior enables complex asynchronous workflows with smart error handling:
 
@@ -871,40 +1403,6 @@ Promises are a **powerful abstraction** that make it **easy to compose asynchron
 
 ]
 ---
-## Asynchronicity
-
-.breadcrumbs[<a href="#1">JavaScript Promises</a>]
-
-A promise is **always asynchronous**:
-
-```js
-function `onResolved`(phone) {
-  console.log('I got a ' + phone.brand);
-}
-
-console.log('Before promising a phone');
-
-var phonePromise = new Promise(function(`resolve`, reject) {
-  // Immediately resolve the promise
-  `resolve`({ brand: 'Samsung' });
-});
-
-phonePromise.then(`onResolved`);
-
-console.log('After promising a phone');
-```
-
-The output of this code will **always** be:
-
-```txt
-Before promising a phone
-After promising a phone
-I got a Samsung
-```
-
-
-
----
 ## Parallel execution
 
 .breadcrumbs[<a href="#1">JavaScript Promises</a>]
@@ -933,20 +1431,22 @@ the new promise **is also rejected** with the same reason as the first promise t
 ---
 ### Successful parallel execution
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#31">Parallel execution</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#45">Parallel execution</a>]
+
+<runkit></runkit>
 
 Here's an example of parallel promise execution where **both are resolved**:
 
 ```js
-var phonePromise = new Promise(function(resolve, reject) {
+let phonePromise = new Promise(function(resolve, reject) {
   resolve({ brand: 'Samsung' });
 });
 
-var cakePromise = new Promise(function(resolve, reject) {
+let cakePromise = new Promise(function(resolve, reject) {
   resolve('Yummy');
 });
 
-var promises = [ phonePromise, cakePromise ];
+let promises = [ phonePromise, cakePromise ];
 
 Promise.all(promises).then(function(results) {
   console.log(results.length); // 2
@@ -962,20 +1462,22 @@ Promise.all(promises).then(function(results) {
 ---
 ### Failed parallel execution
 
-.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#31">Parallel execution</a>]
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#45">Parallel execution</a>]
+
+<runkit></runkit>
 
 Here's an example of parallel promise execution where **one is rejected**:
 
 ```js
-var phonePromise = new Promise(function(resolve, reject) {
+let phonePromise = new Promise(function(resolve, reject) {
   resolve({ brand: 'Samsung' });
 });
 
-var cakePromise = new Promise(function(resolve, reject) {
+let cakePromise = new Promise(function(resolve, reject) {
   reject(new Error('The cake is a lie'));
 });
 
-var promises = [ phonePromise, cakePromise ];
+let promises = [ phonePromise, cakePromise ];
 
 Promise.all(promises).then(function(results) {
   // not called
@@ -989,6 +1491,301 @@ Promise.all(promises).then(function(results) {
 
 
 ---
+class: center, middle
+## `async`/`await`
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a>]
+
+
+
+> With [ECMAScript 2017 (or ES8)][es8], JavaScript brings a new powerful way of working with promises: **`async` functions** and the **`await`** operator.
+
+
+
+---
+### The problem with promises
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#48">`async`/`await`</a>]
+
+<runkit></runkit>
+
+Promises are powerful, but they're still an **asynchronous construct** that's hard to reason about:
+
+.grid-55[
+
+```js
+function multiplyAsync(value, by) {
+  return new Promise((resolve, rej) => {
+    setTimeout(function() {
+      resolve(value * by);
+    }, 1500);
+  })
+}
+
+function computeAllTheThings() {
+* Promise
+*   .resolve()
+*   .then(() => multiplyAsync(2, 3))
+*   .then(r1 => multiplyAsync(r1, 4))
+*   .then(console.log);
+}
+
+console.log('Computing in progress...');
+computeAllTheThings(); // 24 (3s later)
+```
+
+
+]
+.grid-45[
+
+```js
+function multiply(value, by) {
+  return value * by;
+}
+
+function computeAllTheThings() {
+* const r1 = multiply(2, 3);
+* const r2 = multiply(r1, 4);
+* console.log(r2);
+}
+
+computeAllTheThings(); // 24
+```
+
+
+]
+.container[
+
+It's still **better than traditional callbacks** because it helps us **avoid nesting** and has **error-handling**,
+but it's just easier to understand **synchronous execution**.
+
+
+
+
+]
+---
+### Async functions and the `await` operator
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#48">`async`/`await`</a>]
+
+<runkit></runkit>
+
+By declaring a function with the `async` keyword,
+we can use the `await` operator inside it to **pause the execution of the function and wait for the promise to be resolved**.
+
+.grid-55[
+
+```js
+function multiplyAsync(value, by) {
+  return new Promise((resolve, rej) => {
+    setTimeout(function() {
+      resolve(value * by);
+    }, 1500);
+  })
+}
+
+`async` function computeAllTheThings() {
+  const r1 = `await` multiplyAsync(2, 3);
+  const r2 = `await` multiplyAsync(r1, 4);
+  console.log(r2);
+}
+
+console.log('Computing in progress...');
+computeAllTheThings(); // 24 (3s later)
+```
+
+
+]
+.grid-45[
+
+```js
+function multiply(value, by) {
+  return value * by;
+}
+
+function computeAllTheThings() {
+  const r1 = multiply(2, 3);
+  const r2 = multiply(r1, 4);
+  console.log(r2);
+}
+
+computeAllTheThings(); // 24
+```
+
+
+]
+.container[
+
+Our **asynchronous code** on the left now **looks synchronous** and is much easier to understand.
+At the same time, it **retains its asynchronous and non-blocking properties**.
+
+
+
+
+]
+---
+### `await` and rejected promises
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#48">`async`/`await`</a>]
+
+<runkit></runkit>
+
+When the promise being awaited is **rejected**,
+the function behaves as if the rejection error had been **thrown** on the line where the `await` statement is:
+
+.grid-55[
+
+```js
+function multiplyAsync(value, by) {
+  return new Promise((res, reject) => {
+    setTimeout(function() {
+*     reject(new Error('bug'));
+    }, 1500);
+  })
+}
+
+async function computeAllTheThings() {
+* const r1 = await multiplyAsync(2, 3);
+  const r2 = await multiplyAsync(r1, 4);
+  console.log(r2);
+}
+
+console.log('Computing in progress...');
+
+computeAllTheThings()
+  .catch(err => console.warn(err));
+*// Error: bug (1.5s later)
+```
+
+
+]
+.grid-45[
+
+```js
+function multiply(value, by) {
+* throw new Error('bug');
+}
+
+function computeAllTheThings() {
+* const r1 = multiply(2, 3);
+  const r2 = multiply(r1, 4);
+  console.log(r2);
+}
+
+computeAllTheThings();
+*// Error: bug
+```
+
+
+]
+---
+#### Handling rejected promises with `await`
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#48">`async`/`await`</a> > <a href="#51">`await` and rejected promises</a>]
+
+<runkit></runkit>
+
+Since a **rejected promise** behaves like a `throw` when using `await`,
+you can simply catch that error using a **traditional try/catch**:
+
+```js
+function multiplyAsync(value, by) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => reject(new Error('bug')), 1500);
+  })
+}
+
+async function computeAllTheThings() {
+  let r1;
+  `try {`
+    r1 = `await` multiplyAsync(2, 3);
+  `} catch (err) {`
+    console.warn(\`Oops, first multiplication failed: ${err.message}`);
+    return 0;
+  `}`
+
+  const r2 = await multiplyAsync(r1, 4);
+  console.log(r2);
+}
+
+console.log('Computing in progress...');
+
+computeAllTheThings().then(console.log) // 0
+  .catch(err => console.warn(err));
+*// Oops, first multiplication failed: bug (1.5s later)
+```
+
+
+
+---
+### Awaiting the result of parallel executions
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#48">`async`/`await`</a>]
+
+<runkit></runkit>
+
+`Promise.all` is used to wait for the results of multiple promises executing in parallel.
+Since that also returns a promise, you can simply `await` that:
+
+```js
+function multiplyAsync(value, by) {
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      resolve(value * by);
+    }, 2000);
+  })
+}
+
+async function computeAllTheThingsInParallel() {
+  const promise1 = multiplyAsync(2, 3);
+  const promise2 = multiplyAsync(3, 4);
+  const results = `await Promise.all`([ promise1, promise2 ]);
+  console.log(results);
+}
+
+console.log('Computing in progress...');
+
+computeAllTheThingsInParallel()
+  .catch(err => console.warn(err));
+// [ 6, 12 ] (after 2s)
+```
+
+In this example, the 2 computations are executed in parallel and both results are available after 2 seconds (instead of 4).
+
+
+
+---
+### Async functions always return promises
+
+.breadcrumbs[<a href="#1">JavaScript Promises</a> > <a href="#48">`async`/`await`</a>]
+
+<runkit></runkit>
+
+```js
+async function multiplyAsync(value, by) {
+  return value * by;
+}
+
+const result = multiplyAsync(2, 4);
+
+console.log('before');
+console.log(result);
+result.then(value => console.log(value));
+console.log('after');
+```
+
+The output will **always** be:
+
+```
+before
+Promise {}
+after
+8
+```
+
+
+
+---
 ## Resources
 
 .breadcrumbs[<a href="#1">JavaScript Promises</a>]
@@ -997,6 +1794,7 @@ Promise.all(promises).then(function(results) {
 
 * [Promises/A+ specification][promises-spec]
 * [Promises][mdn-promises]
+* [`async`][async] & [`await`][await]
 
 **Further reading**
 
@@ -1013,11 +1811,13 @@ Promise.all(promises).then(function(results) {
 
 
 [arent-promises-just-callbacks]: http://stackoverflow.com/questions/22539815/arent-promises-just-callbacks
+[async]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+[await]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await
 [bluebird]: http://bluebirdjs.com/docs/getting-started.html
+[es8]: http://2ality.com/2016/02/ecmascript-2017.html
 [javascript-promises-an-introduction]: https://developers.google.com/web/fundamentals/getting-started/primers/promises
 [javascript-promises-for-dummies]: https://scotch.io/tutorials/javascript-promises-for-dummies
 [mdn-promises]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
-[promises-codepen]: http://codepen.io/AlphaHydrae/pen/PpJNXb?editors=1010
 [promise-nuggets]: https://promise-nuggets.github.io/
 [promises-spec]: https://promisesaplus.com
 [q]: https://github.com/kriskowal/q
