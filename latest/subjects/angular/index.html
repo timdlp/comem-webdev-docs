@@ -3,7 +3,7 @@
   <head>
     <title>Angular (COMEM+ Web Dev)</title>
     <meta charset='utf-8'>
-    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/1b2dc2d3bc51e44192f73f2dead87f3bf3af2f10/subjects/angular/README.md&quot;}'>
+    <meta name='config' content='{&quot;basePath&quot;:&quot;../..&quot;,&quot;remark&quot;:{&quot;highlightLines&quot;:true,&quot;highlightSpans&quot;:true,&quot;countIncrementalSlides&quot;:false},&quot;subjectUrl&quot;:&quot;https://github.com/MediaComem/comem-webdev/tree/e9ec536e05d4035e8113704fd58f03349d05ed12/subjects/angular/README.md&quot;}'>
   </head>
   <body>
     <textarea id='source'>
@@ -374,6 +374,7 @@ Read the [Component Styles][angular-component-styles] documentation to learn mor
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a>]
 
 You can display data by **binding** parts of an HTML template to properties of a component.
+There is already a `title` property in `AppComponent` in `src/app/app.component.ts`:
 
 ```ts
 export class AppComponent {
@@ -385,7 +386,8 @@ export class AppComponent {
 }
 ```
 
-Enclosing a component's property name in double curly braces in the template is called **interpolation**:
+Enclosing a component's property name in double curly braces in the template is called **interpolation**.
+This is already done in the `AppComponent`'s template in `src/app/app.component.html`:
 
 ```html
 <h1>
@@ -399,7 +401,7 @@ Enclosing a component's property name in double curly braces in the template is 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#17">Data binding</a>]
 
 Let's see what else we can interpolate.
-Add a `titleComment` property to the component:
+Add a `titleComment` property to the component in `src/app/app.component.ts`:
 
 ```ts
 export class AppComponent {
@@ -413,7 +415,8 @@ export class AppComponent {
 }
 ```
 
-Angular's `[]` syntax allows you to bind the value of a DOM element's **attribute** to one of the component's variables:
+Angular's `[]` syntax allows you to bind the value of a DOM element's **attribute** to one of the component's variables.
+You can do this in `src/app/app.component.html`:
 
 ```html
 <h1 `[title]='titleComment'`>
@@ -461,7 +464,7 @@ not the value of the corresponding variable:
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#17">Data binding</a>]
 
 Let's imagine that we want to log something when the user clicks on the title.
-Add an `onTitleClicked()` function to the component:
+Add an `onTitleClicked()` function to the component in `src/app/app.component.ts`:
 
 ```ts
 export class AppComponent {
@@ -473,7 +476,8 @@ export class AppComponent {
 }
 ```
 
-Angular's `()` syntax allows you to **bind functions to events** from a DOM element:
+Angular's `()` syntax allows you to **bind functions to events** from a DOM element.
+Let's bind the function we just added to click events on the `<h1>` tag in `src/app/app.component.html`:
 
 ```html
 <h1 [title]='titleComment' `(click)='onTitleClicked()'`>
@@ -481,12 +485,15 @@ Angular's `()` syntax allows you to **bind functions to events** from a DOM elem
 </h1>
 ```
 
+You should now see the message being logged in the console when clicking on the title.
+
 ---
 ##### Getting at the event
 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#8">Getting started</a> > <a href="#17">Data binding</a> > <a href="#20">Binding to events</a>]
 
-You might need the actual [event object][dom-event] to get some data out of it (e.g. the click coordinates):
+You might need the actual [event object][dom-event] to get some data out of it (e.g. the click coordinates).
+Let's update `onTitleClicked()` in `src/app/app.component.ts` to also log the event object:
 
 ```ts
 export class AppComponent {
@@ -498,7 +505,8 @@ export class AppComponent {
 }
 ```
 
-Simply add the `$event` variable to your function call, and Angular will pass the event object to your function:
+To make it work, simply add the special `$event` variable to your function call in `src/app/app.component.html`,
+and Angular will pass the event object to your function:
 
 ```html
 <h1 [title]='titleComment' (click)='onTitleClicked(`$event`)'>
@@ -514,7 +522,7 @@ Simply add the `$event` variable to your function call, and Angular will pass th
 Interpolation is not limited to simple properties.
 You can also use a component's **methods** in the template.
 
-Add the following method to the component (`src/app/app.component.ts`):
+Add the following method to the component in `src/app/app.component.ts`:
 
 ```ts
 export class AppComponent {
@@ -526,7 +534,7 @@ export class AppComponent {
 }
 ```
 
-Now use that function in the template (`src/app/app.component.html`):
+Now use that function in the template in `src/app/app.component.html`:
 
 ```html
 <p>
@@ -543,7 +551,7 @@ Now use that function in the template (`src/app/app.component.html`):
 
 One of the things you will need to do is **react to user input** (e.g. through forms).
 Let's make our greeting **dynamic** by adding an input field to customize the name.
-Make the following changes to the component:
+Make the following changes to the component in `src/app/app.component.ts`:
 
 ```ts
 export class AppComponent {
@@ -558,7 +566,7 @@ export class AppComponent {
 }
 ```
 
-Now interpolate that new property into the function in the template:
+Now interpolate that new property into the `hello` function in the template in `src/app/app.component.html`:
 
 ```html
 <p>
@@ -571,7 +579,7 @@ Now interpolate that new property into the function in the template:
 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#23">User input</a>]
 
-Add an input field to the template above the greeting:
+Add an input field to the template above the greeting in `src/app/app.component.html`:
 
 ```html
 *<p>
@@ -602,8 +610,8 @@ This is because `[(ngModel)]` belongs to the optional `FormsModule`, which you h
 To **import** the module into your application, you must add it to the `imports` array of your own module in `src/app/app.module.ts`:
 
 ```ts
-*import { FormsModule } from '@angular/forms';
 // Other imports...
+*import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -620,6 +628,9 @@ export class AppModule { }
 ```
 
 Once you've done that, the field should display correctly.
+
+Note that as you type in the input field, the `greeting` variable is **automatically kept up-to-date**,
+and Angular **updates the template** to reflect its new value.
 
 ---
 ### Two-way data binding
@@ -669,7 +680,7 @@ Two other kinds of directives exist: **structural** and **attribute** directives
 Structural directives are responsible for HTML layout.
 They shape or reshape the **DOM's structure**, typically by **adding, removing, or manipulating elements**.
 
-Let's add the [`ngIf`][angular-docs-ng-if] directive to our template as an example:
+Let's add the [`ngIf`][angular-docs-ng-if] directive to our template in `src/app/app.component.html` as an example:
 
 ```html
 <p `*ngIf='greeting'`>
@@ -735,7 +746,7 @@ Now all you need to do is add the attribute to an element in `src/app/app.compon
 Let's add it to the greeting.
 
 ```html
-<h1 `appHighlight`>
+<h1 [title]='titleComment' (click)='onTitleClicked($event)' `appHighlight`>
   Welcome to {{ title }}!
 </h1>
 ```
@@ -747,7 +758,7 @@ You should see the directive being used in the console after entering some text 
 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#27">Directives</a> > <a href="#29">Attribute directives</a>]
 
-Now add an `ElementRef` argument to the directive's constructor:
+Now add an `ElementRef` argument to the directive's constructor in `src/app/highlight.directive.ts`:
 
 ```ts
 import { Directive, `ElementRef` } from '@angular/core';
@@ -796,9 +807,11 @@ A TypeScript class with clearly defined fields and types will help us avoid mist
 Let's start with a very simple one.
 
 Angular CLI comes with scaffolding tools to help you create files.
-You can generate a model class with the following command:
+Install it, then generate a model class
+(the second command must be run in the project's directory):
 
 ```bash
+$> npm install -g @angular/cli
 $> ng generate class models/joke
 ```
 
@@ -816,7 +829,7 @@ export class Joke {
 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#33">Models</a>]
 
-Let's add some jokes to our component:
+Let's add some jokes to our component in `src/app/app.component.ts`:
 
 ```ts
 // Other imports...
@@ -853,7 +866,7 @@ Now that we have some jokes, let's display them.
 We want a `<ul>` list, with a `<li>` item for each joke.
 That's a job for the [`ngFor`][angular-docs-ng-for] directive.
 
-Add this at the bottom of the component's template:
+Add this at the bottom of the component's template in `src/app/app.component.html`:
 
 ```html
 <ul>
@@ -939,12 +952,12 @@ export class ExclamationPipe implements PipeTransform {
 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#37">Pipes</a>]
 
-Note that Angular automatically registered our pipe in the module's `declarations` array.
+Note that Angular automatically registered our pipe in the module's `declarations` array in `src/app/app.module.ts`.
 This is necessary to be able to use it in a template:
 
 ```ts
 // Other imports...
-import { ExclamationPipe } from './pipes/exclamation.pipe';
+*import { ExclamationPipe } from './pipes/exclamation.pipe';
 
 @NgModule({
   declarations: [
@@ -956,7 +969,8 @@ import { ExclamationPipe } from './pipes/exclamation.pipe';
 export class AppModule { }
 ```
 
-Using the pipe is as simple as "piping" an interpolated value into it with the pipe (`|`) character in the template:
+Using the pipe is as simple as "piping" an interpolated value into it with the pipe (`|`) character in a template.
+You can do that in `src/app/app.component.html`, then type some text in the input field to see it:
 
 ```html
 <p>
@@ -970,7 +984,7 @@ Using the pipe is as simple as "piping" an interpolated value into it with the p
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#37">Pipes</a>]
 
 Pipe can also take **parameters**.
-Let's add a number parameter to allow customizing the number of exclamation points:
+Let's add a number parameter to allow customizing the number of exclamation points in `src/app/pipes/exclamation.pipe.ts`:
 
 ```ts
 import { Pipe, PipeTransform } from '@angular/core';
@@ -986,7 +1000,7 @@ export class ExclamationPipe implements PipeTransform {
 }
 ```
 
-Parameters are passed to pipes by appending `:value` to them in the template:
+Parameters are passed to pipes by appending `:value` to them in the template in `src/app/app.component.html`:
 
 ```html
 <p>
@@ -1112,11 +1126,15 @@ export class AppModule { }
 
 .breadcrumbs[<a href="#1">Angular</a> > <a href="#42">Services</a>]
 
-Once you've done that, you can **inject** it into your component.
+Once you've done that, you can **inject** it into your component in `src/app/app.component.ts`.
+
 You just have to add a **constructor parameter property**.
 While you're at it, also add a **method to add a joke**:
 
 ```ts
+// Other imports...
+*import { JokeService } from './services/joke.service';
+
 export class AppComponent {
   // ...
   constructor(`private jokeService: JokeService`) {
@@ -1130,7 +1148,13 @@ export class AppComponent {
 }
 ```
 
-And add a button to use that method in the template:
+---
+#### Calling a method from a button
+
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#42">Services</a> > <a href="#45">Injecting the joke service</a>]
+
+To use our new method,
+you can add a button in the template in `src/app/app.component.html`:
 
 ```html
 <p>
@@ -1182,7 +1206,6 @@ Angular relies on [dependency injection][di] to plug components, services and ot
 
 Dependency injection is a form of [inversion of control][ioc],
 meaning that parts of your code **receive** the flow of control instead of driving it like in classic procedural programming.
-
 The general goal is to:
 
 * **Decouple** the execution of a task from implementation.
@@ -1193,7 +1216,7 @@ The general goal is to:
 ---
 #### Why dependency injection?
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#42">Services</a> > <a href="#47">Dependency injection</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#42">Services</a> > <a href="#48">Dependency injection</a>]
 
 .grid-50[
 
@@ -1250,7 +1273,7 @@ const joke = jokeService.getJoke();
 
 This will **not** work when fetching jokes from a **remote server**, which is inherently an **asynchronous** operation.
 
-The `getJoke()` method must be modified to not immediately return a joke, but to have an asynchronous signature.
+The `getJoke()` method must be modified to not immediately return a joke, but to have an asynchronous signature instead.
 It could take a **callback** or return a [**Promise**][js-promise].
 
 Another solution is to return an **Observable**.
@@ -1260,7 +1283,7 @@ to make it easier to compose asynchronous or callback-based code.
 ---
 ### What (the hell) is an observable?
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#49">Observable data</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#50">Observable data</a>]
 
 An observable is an **asynchronous data stream**, meaning that it allows you to observe **multiple events over time**.
 
@@ -1272,7 +1295,7 @@ there will be several of them and they will happen at different times in the fut
 ---
 ### What (the hell) is reactive programming?
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#49">Observable data</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#50">Observable data</a>]
 
 Basically, **reactive programming** is programming with **asynchronous** data **streams**.
 
@@ -1290,16 +1313,17 @@ you may want to read ["The introduction to Reactive Programming you've been miss
 ---
 ### Making `getJoke()` observable
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#49">Observable data</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#50">Observable data</a>]
 
 Since Angular's `HttpClient` returns **Observables**, that's what we'll use.
 
-For now, let's modify the `getJoke()` method's signature to return an Observable,
+For now, let's modify the signature of our `getJoke()` method in `JokeService` in `src/app/services/joke.service.ts` to return an Observable,
 without actually making an HTTP call yet:
 
 ```ts
 // Other imports...
-*import { Observable } from 'rxjs/Rx';
+*import { Observable } from 'rxjs/Observable';
+*import 'rxjs/add/observable/of';
 
 @Injectable()
 export class JokeService {
@@ -1312,10 +1336,12 @@ export class JokeService {
 
 `Observable.of` allows us to create a stream which will simply emit the specified value (or values) and complete.
 
+In this case, we created an Observable which will emit one joke.
+
 ---
 ### Subscribing to an Observable
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#49">Observable data</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#50">Observable data</a>]
 
 Of course, the code in our component no longer works now,
 since it expects a `Joke` and gets an Observable of a `Joke` instead:
@@ -1326,7 +1352,7 @@ ERROR in src/app/app.component.ts(26,21): error TS2345:
   Property 'text' is missing in type 'Observable<Joke>'.
 ```
 
-Use the `subscribe` method of the Observable to be notified when a Joke is emitted on the stream:
+Use the `subscribe` method of the Observable to be notified when a Joke is emitted on the stream in `AppComponent` in `src/app/app.component.ts`:
 
 ```ts
 addJoke() {
@@ -1338,7 +1364,7 @@ addJoke() {
 
 We now have our **asynchronous** implementation:
 
-* The call to `subscribe` is made immediately when `addJoke` is called.
+* We **subscribe** to the Observable when `addJoke` is called.
 * But the **callback** adding the new joke into the array will be called **later**,
   after the data has been fetched from the remote server.
 
@@ -1352,7 +1378,7 @@ We now have our **asynchronous** implementation:
 Time to actually fetch some jokes from the internet.
 We'll need Angular's [`HttpClient`][angular-docs-http-client].
 It is part of `HttpClientModule`,
-so we need to provide that to our own application module:
+so we need to provide that to our own application module, `AppModule`, in `src/app/app.module.ts`:
 
 ```ts
 // Other imports...
@@ -1373,13 +1399,13 @@ export class AppModule { }
 ---
 ### Injecting `HttpClient`
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#54">Making HTTP calls</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#55">Making HTTP calls</a>]
 
 Earlier we annotated `JokeService` with the [`@Injectable`][angular-docs-injectable] decorator.
 This not only makes it available to the **injector** for creation,
 but also allows it to **inject dependencies of its own**.
 
-Now that `HttpClientModule` is available, you can inject `HttpClient` into `JokeService`:
+Now that `HttpClientModule` is available, you can inject `HttpClient` into `JokeService` in `src/app/services/joke.service.ts`:
 
 ```ts
 // Other imports...
@@ -1395,7 +1421,7 @@ export class JokeService {
 ---
 ### Joke API response
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#54">Making HTTP calls</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#55">Making HTTP calls</a>]
 
 The API we are going to call returns JSON data that looks like this:
 
@@ -1415,7 +1441,7 @@ This does not fit our `Joke` model, which only has a `text` property.
 ---
 #### Joke API response model
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#54">Making HTTP calls</a> > <a href="#56">Joke API response</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#55">Making HTTP calls</a> > <a href="#57">Joke API response</a>]
 
 Let's create a new `JokeResponse` model that we can use with this API:
 
@@ -1423,7 +1449,8 @@ Let's create a new `JokeResponse` model that we can use with this API:
 $> ng generate class models/joke-response
 ```
 
-Update the generated model to reflect the **structure** of the API response.
+This generates a new model file in `src/app/models/joke-response.ts`.
+Update it to reflect the **structure** of the API response.
 Since it's a nested structure, we'll need **2 classes**:
 
 ```ts
@@ -1442,9 +1469,9 @@ export class JokeResponseValue {
 ---
 ### Making a GET call
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#54">Making HTTP calls</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#55">Making HTTP calls</a>]
 
-We can now update `addJoke()` to make an actual HTTP call:
+We can now update `getJoke()` in `src/app/services/joke.service.ts` to make an actual HTTP call:
 
 ```ts
 // Other imports...
@@ -1462,7 +1489,6 @@ export class JokeService {
 
 As you can see, [`HttpClient`][angular-docs-http-client]'s `get` method is **generic**,
 and Angular will take care of parsing the response body and giving us an object of the right type.
-
 But we're still left with one problem: we need an Observable of `Joke` objects, and have one of `JokeResponse` objects instead:
 
 ```
@@ -1475,10 +1501,10 @@ ERROR in src/app/services/joke.service.ts(15,5): error TS2322:
 ---
 ### Transforming data
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#54">Making HTTP calls</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#55">Making HTTP calls</a>]
 
 We need to be able to transform a `JokeResponse` object into a `Joke`.
-Let's add a utility function at the bottom of the file:
+Let's add a utility function at the bottom of the file in `src/app/services/joke.service.ts`:
 
 ```ts
 function convertJokeResponseToJoke(response: JokeResponse): Joke {
@@ -1491,14 +1517,14 @@ function convertJokeResponseToJoke(response: JokeResponse): Joke {
 ---
 ### Transforming Observable streams
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#54">Making HTTP calls</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#55">Making HTTP calls</a>]
 
 Similarly to the [`map`][js-array-map] method of JavaScript arrays, Observables have a [`map`][observable-map] operator,
 which allows you to transform each item emitted in the stream:
 
 <p class='center'><img src='images/observable-map.png' class='w50' /></p>
 
-To use it, you need to import it and use the Observable's `pipe` method:
+To use it, you need to import it and use the Observable's `pipe` method in `JokeService` in `src/app/services/joke.service.ts`:
 
 ```ts
 // Other imports...
@@ -1515,13 +1541,13 @@ To use it, you need to import it and use the Observable's `pipe` method:
 ---
 ### Reacting to errors in observable streams
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#54">Making HTTP calls</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#55">Making HTTP calls</a>]
 
 An observable stream may emit an **error**.
-You can be notified of that error by passing a second callback function to `subscribe`:
+You can be notified of that error by passing a second callback function to `subscribe` in `AppComponent` in `src/app/app.component.ts`:
 
 ```ts
-getJoke(): Observable<Joke> {}
+addJoke() {
   this.jokeService.getJoke().subscribe(joke => {
     this.jokes.push(joke);
   }`, err => {`
@@ -1530,7 +1556,10 @@ getJoke(): Observable<Joke> {}
 }
 ```
 
-For the purpose of testing this new behavior, you can produce an error by changing the URL in `JokeService`, so that the call fails:
+For the purpose of testing this new behavior,
+you can produce an error by changing the URL in `JokeService`in `src/app/services/joke.service.ts`,
+so that the call fails.
+You should then see an error in the console when adding a joke:
 
 ```ts
 getJoke(): Observable<Joke> {
@@ -1540,12 +1569,15 @@ getJoke(): Observable<Joke> {
 }
 ```
 
+You can then change it back to the correct URL.
+
 ---
 ### Getting the HTTP response
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#54">Making HTTP calls</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#55">Making HTTP calls</a>]
 
-We've seen that by default, Angular's `HttpClient` returns only the **body of the response**:
+We've seen that by default, Angular's `HttpClient` returns only the **body of the response**
+(this is a *generic example*; do **not** make this change to the project):
 
 ```ts
 function getJoke(): Observable<JokeResponse> {
@@ -1565,11 +1597,11 @@ That's nice, but in some cases we might need access to the **HTTP status** or **
 ---
 #### Observing the response
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#54">Making HTTP calls</a> > <a href="#62">Getting the HTTP response</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#55">Making HTTP calls</a> > <a href="#63">Getting the HTTP response</a>]
 
 To get Angular's `HttpClient` to give you the full [`HttpResponse`][angular-docs-http-response] object,
 you need to pass an additional options object to your HTTP call,
-with the `observe` property set to `"response"`:
+with the `observe` property set to `"response"` (this is also a *generic example*):
 
 ```ts
 function getJoke(): Observable<`HttpResponse<JokeResponse>`> {
@@ -1626,9 +1658,9 @@ it's good practice to **isolate each part into a component**:
 ---
 ### Adding votes to the model
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#64">Component interaction</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#65">Component interaction</a>]
 
-Update the `Joke` model to have an additional `votes` property:
+Update the `Joke` model in `src/app/models/joke.ts` to have a `votes` property:
 
 ```ts
 export class Joke {
@@ -1660,7 +1692,7 @@ function convertJokeResponseToJoke(response: JokeResponse): Joke {
 ---
 ### Creating a child component
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#64">Component interaction</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#65">Component interaction</a>]
 
 Let's generate our **new component**, the `JokeComponent`:
 
@@ -1674,12 +1706,12 @@ with its own TypeScript definition, HTML template and CSS styles.
 ---
 #### The `JokeComponent`
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#64">Component interaction</a> > <a href="#66">Creating a child component</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#65">Component interaction</a> > <a href="#67">Creating a child component</a>]
 
 The responsibility of the new `JokeComponent` will be to display a `Joke` object,
 and to provide a button to vote on the joke.
 
-Let's add a `joke` property to the new component:
+Let's add a `joke` property to the new component in `src/app/components/joke/joke.component.ts`:
 
 ```ts
 // Other imports...
@@ -1696,7 +1728,7 @@ export class JokeComponent implements OnInit {
 }
 ```
 
-And update the component's template to display the joke's text:
+And update the component's template in `src/app/components/joke/joke.component.html` to display the joke's text:
 
 ```html
 {{ joke.text }}
@@ -1705,11 +1737,12 @@ And update the component's template to display the joke's text:
 ---
 ### Passing data from parent to child with input binding
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#64">Component interaction</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#65">Component interaction</a>]
 
-We want the joke to be provided by the parent component (`AppComponent`).
+We want the joke to be provided by the parent component, `AppComponent`.
 It's an **input** of the `JokeComponent`.
-Annotating a component's property with the [`@Input`][angular-docs-input] decorator marks it as an **input property** which can be set by a parent component:
+Annotating a component's property with the [`@Input`][angular-docs-input] decorator marks it as an **input property** which can be set by a parent component.
+You can do this in `src/app/components/joke/joke.component.ts`:
 
 ```ts
 // Other imports...
@@ -1723,7 +1756,7 @@ export class JokeComponent implements OnInit {
 }
 ```
 
-You can now use the `JokeComponent` in the main component's template.
+You can now use the `JokeComponent` in the main component's template in `src/app/app.component.html`.
 You need to create an `<app-joke>` tag (matching the component's selector),
 and to set the `joke` input property:
 
@@ -1736,9 +1769,11 @@ and to set the `joke` input property:
 ---
 ### Voting on jokes
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#64">Component interaction</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#65">Component interaction</a>]
 
-Add a `vote()` method to `JokeComponent`:
+Now that `JokeComponent` is working, we can use it to **handle the logic related to one joke**, like voting.
+
+Add a `vote()` method to `JokeComponent` in `src/app/components/joke/joke.component.ts`:
 
 ```ts
 vote() {
@@ -1746,11 +1781,12 @@ vote() {
 }
 ```
 
-Add these 2 lines to the component's template:
+Add these 2 lines to the component's template in `src/app/components/joke/joke.component.html`:
 
 ```html
-({{ joke.votes }} votes)
-<button type='button' (click)='vote()'>+1</button>
+{{ joke.text }}
+*({{ joke.votes }} votes)
+*<button type='button' (click)='vote()'>+1</button>
 ```
 
 You can now vote!
@@ -1758,13 +1794,13 @@ You can now vote!
 ---
 ### Displaying global voting information
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#64">Component interaction</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#65">Component interaction</a>]
 
 Let's now display the **total number of votes** and the **best vote** on the page.
-That's the job of the main component, since a `JokeComponent` only knows about its own joke,
+That's the job of the **main component**, since a `JokeComponent` only knows about its own joke,
 so it can't know the total number of votes or whether its number of votes is the highest.
 
-Add this information to the component:
+Add this information to `AppComponent` in `src/app/app.component.ts`:
 
 ```ts
 export class AppComponent {
@@ -1781,7 +1817,7 @@ export class AppComponent {
 }
 ```
 
-And display it in the template:
+And display it in the template in `src/app/app.component.html`:
 
 ```html
 <p>Total votes: {{ totalVotes }}, best vote: {{ bestVote }}</p>
@@ -1790,17 +1826,17 @@ And display it in the template:
 ---
 ### Output from child components
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#64">Component interaction</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#65">Component interaction</a>]
 
 The vote button is in the child component's template, so `AppComponent` can't put an event listener on it directly.
 Instead, we need our `JokeComponent` to have an **output** that its parent can listen to.
 
 Annotating a component's property with the [`@Output`][angular-docs-output] decorator marks it as an **output property**.
-An output property must be an [`EventEmitter`][angular-docs-event-emitter] (or an Observable).
-Let's add one to `JokeComponent` now:
+It must be an [`EventEmitter`][angular-docs-event-emitter] (or an Observable).
+Let's add one to `JokeComponent` in `src/app/components/joke/joke.component.ts` now:
 
 ```ts
-import { Component, `EventEmitter`, Input, OnInit, Output } from '@angular/core';
+import { Component, `EventEmitter`, Input, OnInit, `Output` } from '@angular/core';
 
 // ...
 export class JokeComponent implements OnInit {
@@ -1822,9 +1858,9 @@ export class JokeComponent implements OnInit {
 ---
 ### Listening to child component events from a parent
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#64">Component interaction</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#65">Component interaction</a>]
 
-Let's add an `onJokeVoted()` method to `AppComponent`:
+Let's add an `onJokeVoted()` method to `AppComponent` in `src/app/app.component.ts`:
 
 ```ts
 onJokeVoted(joke: Joke) {
@@ -1837,8 +1873,9 @@ onJokeVoted(joke: Joke) {
 
 We want this method to be called every time a vote button is clicked in a child `JokeComponent`.
 
-From the parent's point of view, an **output property** of a child component is **just like any other event**.
-You bind to it using Angular's `(event)='expression'` syntax, exactly like you bind to `(click)` on a `<button>` tag:
+From the parent's point of view, an **output property** of a child component is **just like any other DOM event**.
+You bind to it using Angular's `(event)='expression'` syntax, exactly like you bind to `(click)` on a `<button>` tag.
+Do that in `src/app/app.component.html`:
 
 ```html
 <app-joke [joke]='joke' `(voted)='onJokeVoted(joke)'`></app-joke>
@@ -1847,12 +1884,11 @@ You bind to it using Angular's `(event)='expression'` syntax, exactly like you b
 ---
 ### Clearing the votes
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#64">Component interaction</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#65">Component interaction</a>]
 
 Now that our components are already plugged together,
 adding the functionality to **clear the votes** is trivial.
-
-Add the `clearVotes()` method to the main component.
+Add a `clearVotes()` method to the main component in `src/app/app.component.ts`.
 It simply resets all votes to zero, including the jokes':
 
 ```ts
@@ -1863,7 +1899,7 @@ clearVotes() {
 }
 ```
 
-And add a button to call it in the template:
+And add a button to call it in the template in `src/app/app.component.html`:
 
 ```html
 <button type='button' (click)='clearVotes()'>Clear votes</button>
@@ -1872,12 +1908,12 @@ And add a button to call it in the template:
 It just works!
 
 The `Joke` objects in the `JokeComponent` children are the same objects as the ones in the main component's `jokes` array, bound through Angular's input properties.
-When you modify them in any component, Angular automatically updates all the relevant templates.
+When you modify them in any component, Angular **automatically updates all the relevant templates**.
 
 ---
 ### More component interaction
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#64">Component interaction</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#65">Component interaction</a>]
 
 These were just a few examples of how to communicate between components.
 
@@ -1904,7 +1940,7 @@ However, keep in mind that although this provides a good user experience, it can
 ---
 ### HTML validations
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a>]
 
 HTML 5 has [built-in validation attributes][html-input] to define validations on your form inputs (e.g. `<input>`, `<textarea>`, etc):
 
@@ -1932,7 +1968,7 @@ This allows you to add **more complex validations and interaction**.
 ---
 ### Creating a form
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a>]
 
 Let's turn our lonely greeting input field into a proper form:
 
@@ -1955,7 +1991,7 @@ Let's turn our lonely greeting input field into a proper form:
 ---
 #### Updating the component
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a> > <a href="#77">Creating a form</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a> > <a href="#78">Creating a form</a>]
 
 Let's now make it so that the greeting will only be displayed if submitted through the form.
 We need to add a separate property to our component:
@@ -1983,7 +2019,7 @@ export class AppComponent {
 ---
 #### Listening to form submit events
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a> > <a href="#77">Creating a form</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a> > <a href="#78">Creating a form</a>]
 
 Update the component's template to reflect the fact that we now want to display `displayedGreeting` instead of `greeting`:
 
@@ -2004,7 +2040,7 @@ Bind the new `displayGreeting()` method to the form's `submit` event to make it 
 ---
 ### Checking the validation state
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a>]
 
 You might have noticed that we have marked the input field as **required**,
 but that the user can **still submit the form** when it is invalid (i.e. the input field is empty).
@@ -2020,7 +2056,7 @@ We're going to make the following improvements:
 ---
 #### Prevent the form's submission
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a> > <a href="#80">Checking the validation state</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a> > <a href="#81">Checking the validation state</a>]
 
 In Angular, any `<form>` tag is enriched by the [`NgForm`][angular-docs-ng-form] directive.
 You can retrieve the instance of the directive attached to the form by using a [**template reference variable**][angular-template-reference-variable]
@@ -2050,7 +2086,7 @@ displayGreeting(`form: NgForm`) {
 ---
 #### Disable the submit button
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a> > <a href="#80">Checking the validation state</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a> > <a href="#81">Checking the validation state</a>]
 
 The `#greetingForm` template reference variable is already available in the template from the previous modification,
 since we passed it to `displayGreeting()` as an argument.
@@ -2070,7 +2106,7 @@ We simply have to bind the value of the `<button>` tag's `disabled` attribute to
 ---
 #### Display an error message
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a> > <a href="#80">Checking the validation state</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a> > <a href="#81">Checking the validation state</a>]
 
 We've seen that the `<form>` tag is **enriched** with the [`NgForm`][angular-docs-ng-form] **directive**,
 and that it's possible to **retrieve that directive** to gain access to the **form's validation state**.
@@ -2100,7 +2136,7 @@ only display the message when the field is invalid.
 ---
 ##### Dirty, pristine, touched, untouched
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a> > <a href="#80">Checking the validation state</a> > <a href="#83">Display an error message</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a> > <a href="#81">Checking the validation state</a> > <a href="#84">Display an error message</a>]
 
 That's nice, but the error message is displayed right away.
 It makes sense, since the **initial value** of the input field's **is actually invalid**.
@@ -2125,7 +2161,7 @@ Make the following change to only display the error message after the user has s
 ---
 #### Set the input field background color to red
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a> > <a href="#80">Checking the validation state</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a> > <a href="#81">Checking the validation state</a>]
 
 Angular automatically **mirrors** many `NgModel` **properties** onto the `<input>` tag as **CSS classes**.
 You can use these classes to **style** form elements according to the state of the form.
@@ -2150,7 +2186,7 @@ input.ng-invalid.ng-dirty {
 ---
 ### Angular validators
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a>]
 
 These are some of the validators provided **out of the box** by Angular:
 
@@ -2175,7 +2211,7 @@ Here's a few usage examples:
 ---
 ### Custom validators
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a>]
 
 These validators are nice, but you might need **more complex validations**.
 
@@ -2205,7 +2241,7 @@ export function notInValidator(notIn: string[]): ValidatorFn {
 ---
 #### Registering a custom validator
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a> > <a href="#87">Custom validators</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a> > <a href="#88">Custom validators</a>]
 
 To use your validation function in a form, you need to wrap it in a directive:
 
@@ -2240,7 +2276,7 @@ export class NotInValidatorDirective implements Validator {
 ---
 #### Using a custom validator
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a> > <a href="#87">Custom validators</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a> > <a href="#88">Custom validators</a>]
 
 You must register the new directive in the module's `declarations` array:
 
@@ -2271,7 +2307,7 @@ You can then finally use it in the template:
 ---
 ### Displaying different messages for different errors
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a>]
 
 There's a little problem now.
 Since our error message is displayed as soon as there's an error on the `greetingInput` field,
@@ -2303,7 +2339,7 @@ in which case it will simply ignore the rest of the expression.
 ---
 ### Asynchronous validators
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#75">Forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#76">Forms</a>]
 
 The validator we implemented is actually a function that matches Angular's [`ValidatorFn`][angular-docs-validator-fn] interface.
 It is **synchronous**, i.e. it performs no I/O operation to validate its value and immediately returns its errors (or `null`):
@@ -2358,7 +2394,7 @@ export class AppModule { }
 ---
 ### Using reactive forms in the component
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#92">Reactive forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#93">Reactive forms</a>]
 
 With reactive forms, the form structure is also defined with code in the component:
 
@@ -2389,7 +2425,7 @@ export class AppComponent {
 ---
 #### Getting the form from the component
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#92">Reactive forms</a> > <a href="#93">Using reactive forms in the component</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#93">Reactive forms</a> > <a href="#94">Using reactive forms in the component</a>]
 
 Since the form is built directly in the component,
 you no longer have to retrieve it from the template.
@@ -2415,7 +2451,7 @@ export class AppComponent {
 ---
 #### Reacting to form value changes
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#92">Reactive forms</a> > <a href="#93">Using reactive forms in the component</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#93">Reactive forms</a> > <a href="#94">Using reactive forms in the component</a>]
 
 Reactive forms do not use `ngModel`, so there won't be two-way binding with the template any longer.
 There will only be **one-way binding** from the form group in the component to the template.
@@ -2442,7 +2478,7 @@ export class AppComponent {
 ---
 ### Using reactive forms in the template
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#92">Reactive forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#93">Reactive forms</a>]
 
 With reactive forms, your **template** is somewhat **simplified**.
 Remove `ngModel`, the validations, `#greetingForm` and `#greetingInput`.
@@ -2476,7 +2512,7 @@ instead of using the `#greetingInput` template reference variable you just remov
 ---
 ### Reactive form validations
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#92">Reactive forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#93">Reactive forms</a>]
 
 The validations are no longer applied since we removed them from the template.
 With reactive forms, **validation is configured in the component**:
@@ -2508,7 +2544,7 @@ export class AppComponent {
 ---
 #### Custom validators in reactive forms
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#92">Reactive forms</a> > <a href="#97">Reactive form validations</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#93">Reactive forms</a> > <a href="#98">Reactive form validations</a>]
 
 Note that we use our custom validator function (`notInValidator`) directly,
 instead of using the `NotInValidatorDirective` wrapper like before:
@@ -2531,7 +2567,7 @@ and the form will keep working.
 ---
 ### Which is better, reactive or template-driven?
 
-.breadcrumbs[<a href="#1">Angular</a> > <a href="#92">Reactive forms</a>]
+.breadcrumbs[<a href="#1">Angular</a> > <a href="#93">Reactive forms</a>]
 
 In [**template-driven forms**][angular-forms], form structure and validation are specified and handled **in the template**:
 
